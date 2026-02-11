@@ -17,6 +17,10 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 COPY . .
 RUN chmod +x bin/console
 
+# Copier les certificats SSL
+COPY localhost.crt /app/certs/
+COPY localhost.key /app/certs/
+
 # FrankenPHP avec Symfony
 ENV FRANKENPHP_CONFIG="worker /app/public/index.php"
 ENV APP_RUNTIME="Runtime\\FrankenPhpSymfony\\Runtime"
