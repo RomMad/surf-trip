@@ -1,0 +1,14 @@
+parameters:
+    level: 6
+    paths:
+        - bin/
+        - config/
+        - public/
+        - src/
+        - tests/
+    ignoreErrors:
+        - '#\$id \(int\|null\) is never assigned int so it can be removed from the property type.#'
+    bootstrapFiles:
+        - vendor/autoload.php
+    editorUrl: 'vscode://file/%%file%%:%%line%%'
+    tmpDir: ./var/.phpstan.tmp
