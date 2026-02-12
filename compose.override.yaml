@@ -1,6 +1,9 @@
 
 services:
-###> doctrine/doctrine-bundle ###
+  php:
+    environment:
+      - FRANKENPHP_CONFIG=
+  ###> doctrine/doctrine-bundle ###
   database:
     ports:
       - "5432"
