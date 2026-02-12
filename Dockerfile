@@ -8,20 +8,21 @@ RUN install-php-extensions \
     gd \
     intl \
     opcache \
+    xdebug \
     zip
 
-# Copier Composer
+# Copy Composer from the official Composer image
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Copier l'application
+# Copy the application code
 COPY . .
 RUN chmod +x bin/console
 
-# Copier les certificats SSL
+# Copy certificates for HTTPS
 COPY localhost.crt /app/certs/
 COPY localhost.key /app/certs/
 
-# FrankenPHP avec Symfony
+# Set environment variables for FrankenPHP and Symfony Runtime
 ENV FRANKENPHP_CONFIG="worker /app/public/index.php"
 ENV APP_RUNTIME="Runtime\\FrankenPhpSymfony\\Runtime"
 ENV SERVER_NAME=localhost

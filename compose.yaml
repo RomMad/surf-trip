@@ -5,7 +5,7 @@ services:
       dockerfile: Dockerfile
     volumes:
       - .:/app
-      # - ./docker/php.ini:/usr/local/etc/php/conf.d/app.ini
+      - ./docker/php.ini:/usr/local/etc/php/conf.d/app.ini
       # - ./docker/Caddyfile:/etc/caddy/Caddyfile
       - caddy_data:/data
       - caddy_config:/config
@@ -31,8 +31,7 @@ services:
     image: postgres:${POSTGRES_VERSION:-16}-alpine
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-app}
-      # You should definitely change the password in production
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-!ChangeMe!}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
       POSTGRES_USER: ${POSTGRES_USER:-app}
     healthcheck:
       test:
