@@ -83,12 +83,6 @@ services:
       MINIO_ROOT_PASSWORD: minioadmin
     command: server /data --console-address ":9001"
 
-  mailer:
-    image: schickling/mailcatcher
-    ports:
-      - "1025:1025"
-      - "1080:1080"
-
   ###> symfony/mercure-bundle ###
   mercure:
     image: dunglas/mercure
