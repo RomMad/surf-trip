@@ -88,7 +88,7 @@ function dump_env(
 #[AsTask(description: 'Create a migration file', namespace: 'app', aliases: ['make-migration', 'mm'])]
 function make_migration(): void
 {
-    docker_compose_run('make:migration');
+    symfony_console('make:migration');
 }
 
 #[AsTask(description: 'Execute all the migrations in database', namespace: 'app', aliases: ['migrate-migrations', 'migrate', 'dmm'])]
@@ -122,7 +122,7 @@ function clear_cache(
     #[AsArgument(name: 'env', autocomplete: ['dev', 'test', 'prod'])]
     ?string $env = 'dev'
 ): void {
-    symfony_console('cache:clear'.($env !== null ? " --env={$env}" : ''));
+    symfony_console('cache:clear'.(null !== $env ? " --env={$env}" : ''));
 }
 
 #[AsTask(description: 'Warms the application cache', namespace: 'app', aliases: ['cache-warmup', 'cw'])]
