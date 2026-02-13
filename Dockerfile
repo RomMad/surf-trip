@@ -14,6 +14,10 @@ RUN install-php-extensions \
 # Copy Composer from the official Composer image
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
+# Install Symfony CLI
+RUN curl -sS https://get.symfony.com/cli/installer | bash && \
+    mv /root/.symfony*/bin/symfony /usr/local/bin/symfony
+
 # Copy the application code
 COPY . .
 RUN chmod +x bin/console
