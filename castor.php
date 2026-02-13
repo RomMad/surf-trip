@@ -1,5 +1,6 @@
 <?php
 
+use Castor\Attribute\AsArgument;
 use Castor\Attribute\AsTask;
 
 use function Castor\capture;
@@ -60,17 +61,24 @@ function install(): void
     generate_fixtures();
 }
 
-#[AsTask(description: 'Copy env variables', namespace: 'app')]
+#[AsTask(description: 'Copy env variables', namespace: 'app', aliases: ['copy-env'])]
 function copy_env(): void
 {
-    run("php -r \"file_exists('.env.dev.local') || copy('.env', '.env.dev.local');\"");
-    run("php -r \"file_exists('.env.test.local') || copy('.env.test', '.env.test.local');\"");
+    if (!file_exists('.env.dev.local')) {
+        copy('.env', '.env.dev.local');
+    }
+
+    if (!file_exists('.env.test.local')) {
+        copy('.env.test', '.env.test.local');
+    }
 }
 
-#[AsTask(description: 'Generate an optimized .env.local.php file', namespace: 'app')]
-function dump_env(): void
-{
-    run('composer dump-env prod');
+#[AsTask(description: 'Generate an optimized .env.local.php file', namespace: 'app', aliases: ['dump-env'])]
+function dump_env(
+    #[AsArgument(name: 'env', autocomplete: ['dev', 'test', 'prod'])]
+    string $env = 'prod'
+): void {
+    run(sprintf('composer dump-env %s', $env));
 }
 
 // ========================================================
@@ -102,29 +110,19 @@ function generate_fixtures(): void
     symfony_console('doctrine:database:create --if-not-exists');
     symfony_console('doctrine:migrations:migrate --no-interaction');
     symfony_console('doctrine:fixtures:load --no-interaction');
-    cache_clear();
+    clear_cache();
 }
 
 // ========================================================
 //                       CACHE
 // ========================================================
 
-#[AsTask(description: 'Clear the application cache', namespace: 'app', aliases: ['cache-clear', 'cc'])]
-function cache_clear(?string $env = null): void
-{
-    symfony_console('cache:clear'.($env ? " --env={$env}" : ''));
-}
-
-#[AsTask(description: 'Clear the application cache for test environment', namespace: 'app', aliases: ['cache-clear-test', 'cc-test'])]
-function cc_test(): void
-{
-    symfony_console('cache:clear --env=test');
-}
-
-#[AsTask(description: 'Clear the application cache for prod environment', namespace: 'app', aliases: ['cache-clear-prod', 'cc-prod'])]
-function cc_prod(): void
-{
-    symfony_console('cache:clear');
+#[AsTask(description: 'Clear the application cache', namespace: 'app', aliases: ['clear-cache', 'cc'])]
+function clear_cache(
+    #[AsArgument(name: 'env', autocomplete: ['dev', 'test', 'prod'])]
+    ?string $env = 'dev'
+): void {
+    symfony_console('cache:clear'.($env !== null ? " --env={$env}" : ''));
 }
 
 #[AsTask(description: 'Warms the application cache', namespace: 'app', aliases: ['cache-warmup', 'cw'])]
@@ -138,11 +136,11 @@ function cache_warmup(): void
 // ========================================================
 
 #[AsTask(description: 'Deploy application for production', namespace: 'app', aliases: ['deploy'])]
-function deploy(): void
+function deploy(string $branch = 'main'): void
 {
-    run('git pull origin main');
+    run("git pull origin {$branch}");
     migrate_migrations();
-    cc_prod();
+    clear_cache();
 }
 
 // ========================================================
@@ -196,8 +194,10 @@ function phpstan(): void
 }
 
 #[AsTask(description: 'Run Rector to automatically refactor code', namespace: 'app', aliases: ['rector'])]
-function rector(?string $option = null): void
-{
+function rector(
+    #[AsArgument(name: 'option', autocomplete: ['--dry-run'])]
+    ?string $option = null
+): void {
     docker_compose_run('./vendor/bin/rector process'.($option ? " {$option}" : ''));
 }
 
@@ -288,7 +288,7 @@ function tests(): void
     lint_twig();
     twigcs();
     lint_js();
-    cc_test();
+    clear_cache('test');
     run('symfony php bin/phpunit tests --exclude-group=api');
 }
 
@@ -342,5 +342,5 @@ function symfony_console(string $command): void
 
 function docker_compose_run(string $command): void
 {
-    run(sprintf('docker-compose exec php %s', $command));
+    run(sprintf('docker compose exec php %s', $command));
 }
