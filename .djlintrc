@@ -1,0 +1,7 @@
+{
+    "max_blank_lines": 1,
+    "max_line_length": "90",
+    "no_set_formatting": true,
+    "no_function_formatting": true,
+    "ignore": "T002,T003"
+}
