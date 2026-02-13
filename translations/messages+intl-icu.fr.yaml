@@ -1,3 +1,31 @@
+# Actions
+create_new.label: Créer un nouveau
+delete.label: Supprimer
+edit.label: Modifier
+save.label: Enregistrer
+show.label: Voir
+update.label: Mettre à jour
+back_to_list.label: Retour à la liste
+
+# Trip
+id.label: Id
+trip.label: Trip
+trip:
+    new.label: Nouveau trip
+    edit.label: Edition du trip
+    delete.confirm: Êtes-vous sûr de vouloir supprimer ce voyage ?
+trips.label: Trips
+title.label: Titre
+description.label: Description
+location.label: Lieu
+start_at.label: Date de début
+end_at.label: Date de fin
+required_levels.label: Niveaux requis
+owner.label: Administrateur
+created_at.label: Créé le
+actions.label: Actions
+
+# Required levels
 beginner.label: Débutant
 intermediate.label: Intermédiaire
 advanced.label: Avancé

@@ -1,0 +1,9 @@
+<form method="post"
+      action="{{ path('app.trip.delete', {id: trip.id}) }}"
+      onsubmit="return confirm('{{ 'delete.confirm'|trans }}');"
+>
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ trip.id) }}">
+    <button class="btn">
+        {{- 'delete.label'|trans -}}
+    </button>
+</form>
