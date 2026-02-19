@@ -13,6 +13,8 @@
         {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+        <main class="{% block container_class %}container mx-auto{% endblock %} py-8">
+            {% block body %}{% endblock %}
+        </main>
     </body>
 </html>
