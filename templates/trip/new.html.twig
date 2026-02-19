@@ -9,7 +9,5 @@
 
     {{ include('trip/_form.html.twig') }}
 
-    <a href="{{ path('app.trip.index') }}">
-        {{- 'back_to_list.label'|trans -}}
-    </a>
+    <twig:Button:Trip:BackToIndex />
 {% endblock %}
