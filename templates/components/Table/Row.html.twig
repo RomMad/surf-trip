@@ -1,0 +1,7 @@
+{# @block content The default block #}
+<tr
+    class="{{ 'border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted ' ~ attributes.render('class')|tailwind_merge }}"
+    {{ attributes }}
+>
+    {%- block content %}{% endblock -%}
+</tr>
