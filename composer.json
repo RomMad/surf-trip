@@ -46,6 +46,7 @@
         "symfony/yaml": "7.4.*",
         "tales-from-a-dev/twig-tailwind-extra": "^1.0",
         "twig/extra-bundle": "^2.12|^3.23",
+        "twig/html-extra": "^3.23",
         "twig/twig": "^2.12|^3.23"
     },
     "config": {
