@@ -112,6 +112,7 @@
         "symfony/debug-bundle": "7.4.*",
         "symfony/maker-bundle": "^1.66",
         "symfony/stopwatch": "7.4.*",
+        "symfony/ux-toolkit": "^2.32",
         "symfony/web-profiler-bundle": "7.4.*",
         "vincentlanglet/twig-cs-fixer": "^3.13"
     }
