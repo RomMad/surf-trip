@@ -44,6 +44,7 @@
         "symfony/web-link": "7.4.*",
         "symfony/webpack-encore-bundle": "^2.4",
         "symfony/yaml": "7.4.*",
+        "tales-from-a-dev/twig-tailwind-extra": "^1.0",
         "twig/extra-bundle": "^2.12|^3.23",
         "twig/twig": "^2.12|^3.23"
     },
