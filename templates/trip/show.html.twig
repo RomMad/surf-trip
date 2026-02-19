@@ -5,47 +5,77 @@
 {% block title %}{{ title }}{% endblock %}
 
 {% block body %}
-    <h1>{{ title }}</h1>
+    <h1 class="heading-1">
+        {{- title -}}
+    </h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>{{ 'title.label'|trans }}</th>
-                <td>{{ trip.title }}</td>
-            </tr>
-            <tr>
-                <th>{{ 'location.label'|trans }}</th>
-                <td>{{ trip.location }}</td>
-            </tr>
-            <tr>
-                <th>{{ 'start_at.label'|trans }}</th>
-                <td>{{ trip.startAt|date('Y-m-d H:i') }}</td>
-            </tr>
-            <tr>
-                <th>{{ 'end_at.label'|trans }}</th>
-                <td>{{ trip.endAt|date('Y-m-d H:i') }}</td>
-            </tr>
-            <tr>
-                <th>{{ 'required_levels.label'|trans }}</th>
-                <td>{{ trip.requiredLevels|map(rl => rl.label|trans)|join(', ') }}</td>
-            </tr>
-            <tr>
-                <th>{{ 'description.label'|trans }}</th>
-                <td>{{ trip.description }}</td>
-            </tr>
-            <tr>
-                <th>{{ 'created_at.label'|trans }}</th>
-                <td>{{ trip.createdAt|date('Y-m-d H:i') }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <twig:Table>
+        <twig:Table:Body>
+            <twig:Table:Row>
+                <twig:Table:Head>
+                    {{ 'title.label'|trans }}
+                </twig:Table:Head>
+                <twig:Table:Cell>
+                    {{ trip.title }}
+                </twig:Table:Cell>
+            </twig:Table:Row>
+            <twig:Table:Row>
+                <twig:Table:Head>
+                    {{ 'location.label'|trans }}
+                </twig:Table:Head>
+                <twig:Table:Cell>
+                    {{ trip.location }}
+                </twig:Table:Cell>
+            </twig:Table:Row>
+            <twig:Table:Row>
+                <twig:Table:Head>
+                    {{ 'start_at.label'|trans }}
+                </twig:Table:Head>
+                <twig:Table:Cell>
+                    {{ trip.startAt|date('Y-m-d H:i') }}
+                </twig:Table:Cell>
+            </twig:Table:Row>
+            <twig:Table:Row>
+                <twig:Table:Head>
+                    {{ 'end_at.label'|trans }}
+                </twig:Table:Head>
+                <twig:Table:Cell>
+                    {{ trip.endAt|date('Y-m-d H:i') }}
+                </twig:Table:Cell>
+            </twig:Table:Row>
+            <twig:Table:Row>
+                <twig:Table:Head>
+                    {{ 'required_levels.label'|trans }}
+                </twig:Table:Head>
+                <twig:Table:Cell>
+                    {{ trip.requiredLevels|map(rl => rl.label|trans)|join(', ') }}
+                </twig:Table:Cell>
+            </twig:Table:Row>
+            <twig:Table:Row>
+                <twig:Table:Head>
+                    {{ 'description.label'|trans }}
+                </twig:Table:Head>
+                <twig:Table:Cell>
+                    {{ trip.description }}
+                </twig:Table:Cell>
+            </twig:Table:Row>
+            <twig:Table:Row>
+                <twig:Table:Head>
+                    {{ 'created_at.label'|trans }}
+                </twig:Table:Head>
+                <twig:Table:Cell>
+                    {{ trip.createdAt|date('Y-m-d H:i') }}
+                </twig:Table:Cell>
+            </twig:Table:Row>
+        </twig:Table:Body>
+    </twig:Table>
 
-    <a href="{{ path('app.trip.index') }}">
-        {{- 'back_to_list.label'|trans -}}
-    </a>
-    <a href="{{ path('app.trip.edit', {id: trip.id}) }}">
-        {{- 'edit.label'|trans -}}
-    </a>
-
-    {{ include('trip/_delete_form.html.twig') }}
+    <div class="flex flex-wrap items-center gap-2">
+        <twig:Button:Trip:BackToIndex />
+        <twig:Button as="a" href="{{ path('app.trip.edit', {id: trip.id}) }}">
+            <twig:ux:icon name="lucide:edit-2" />
+            {{- 'edit.label'|trans -}}
+        </twig:Button>
+        {{ include('trip/_delete_form.html.twig') }}
+    </div>
 {% endblock %}
