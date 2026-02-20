@@ -1,0 +1,42 @@
+{% use 'form_div_layout.html.twig' %}
+
+{% block form_row %}
+    {% set row_attr = row_attr|merge({
+        class: ('mb-4 ' ~ (row_attr.class|default('')))|tailwind_merge
+    }) %}
+
+    {{ parent() }}
+{% endblock %}
+
+{% block form_widget_simple %}
+    {% set type = type|default('text') %}
+    {% set attr = attr|merge({
+        class: ('flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ' ~ (attr.class|default('')))|tailwind_merge
+    }) %}
+
+    <input type="{{ type }}" {{ block('widget_attributes') }}{% if value is not empty %} value="{{ value }}"{% endif %}>
+{% endblock %}
+
+{% block textarea_widget %}
+    {% set attr = attr|merge({
+        class: ('flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm ' ~ (attr.class|default('')))|tailwind_merge
+    }) %}
+
+    {{ parent() }}
+{% endblock %}
+
+{% block choice_widget_collapsed %}
+    {% set attr = attr|merge({
+        class: ('flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background data-[placeholder]:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1 ' ~ (attr.class|default('')))|tailwind_merge
+    }) %}
+
+    {{ parent() }}
+{% endblock %}
+
+{% block checkbox_widget %}
+    {% set attr = attr|merge({
+        class: ('peer size-4 inline-block align-middle accent-primary ' ~ (attr.class|default('')))|tailwind_merge
+    }) %}
+
+    {{ parent() }}
+{% endblock %}
