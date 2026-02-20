@@ -1,3 +1,5 @@
 <h1 class="heading-1">
-    {{- title -}}
+    {% block content %}
+        {{- title|default('') -}}
+    {% endblock %}
 </h1>
