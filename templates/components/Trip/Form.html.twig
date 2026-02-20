@@ -12,7 +12,7 @@
     {{ form_row(form.owner) }}
     {{ form_rest(form) }}
 
-    <twig:Button type="submit">
+    <twig:Button type="submit" class="mb-4">
         <twig:ux:icon name="lucide:save" />
         {{- button_label|default('save.label')|trans -}}
     </twig:Button>

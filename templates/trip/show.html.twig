@@ -7,7 +7,7 @@
     <twig:Trip:ShowTable :trip="trip" />
 
     <div class="flex flex-wrap items-center gap-2">
-        <twig:Button as="a" href="{{ path('app.trip.edit', {id: trip.id}) }}">
+        <twig:Button as="a" href="{{ path('app.trip.edit', {id: trip.id}) }}" class="mb-4">
             <twig:ux:icon name="lucide:edit-2" />
             {{- 'edit.label'|trans -}}
         </twig:Button>
