@@ -3,8 +3,6 @@ import { Controller } from '@hotwired/stimulus';
 const STORAGE_KEY = 'theme';
 
 export default class extends Controller {
-    static targets = ['label'];
-
     connect() {
         const storedTheme = localStorage.getItem(STORAGE_KEY);
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
