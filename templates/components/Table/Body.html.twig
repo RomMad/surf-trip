@@ -1,6 +1,6 @@
 {# @block content The default block #}
 <tbody
-    class="{{ '[&_tr:last-child]:border-0 ' ~ attributes.render('class')|tailwind_merge }}"
+    class="{{ 'ui-table-body ' ~ attributes.render('class')|tailwind_merge }}"
     {{ attributes }}
 >
     {%- block content %}{% endblock -%}
