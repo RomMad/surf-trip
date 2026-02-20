@@ -1,6 +1,8 @@
 <div class="flex items-center space-x-2" data-controller="dark-mode">
     <twig:Form:Switch id="dark-mode" data-action="dark-mode#toggle" />
     <twig:Form:Label for="dark-mode">
-        <span data-dark-mode-target="label">Mode sombre</span>
+        <span data-dark-mode-target="label">
+            {{- 'dark_mode.label'|trans -}}
+        </span>
     </twig:Form:Label>
 </div>

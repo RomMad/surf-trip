@@ -7,6 +7,9 @@ show.label: Voir
 update.label: Mettre à jour
 back_to_list.label: Retour à la liste
 
+# Common
+dark_mode.label: Mode sombre
+
 # Trip
 id.label: Id
 trip.label: Trip
