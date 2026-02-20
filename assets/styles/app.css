@@ -205,6 +205,52 @@
         @apply pointer-events-none w-11 h-6 bg-input rounded-full peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary peer-disabled:opacity-50 peer-disabled:cursor-not-allowed;
     }
 
+    /** Button */
+
+    .ui-btn {
+        @apply bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2 has-[>svg]:px-3 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive;
+    }
+
+    .ui-btn-secondary {
+        @apply bg-secondary text-secondary-foreground hover:bg-secondary/80;
+    }
+
+    .ui-btn-destructive {
+        @apply bg-destructive text-white hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60;
+    }
+
+    .ui-btn-outline {
+        @apply border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50;
+    }
+
+    .ui-btn-ghost {
+        @apply hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50;
+    }
+
+    .ui-btn-link {
+        @apply text-primary underline-offset-4 hover:underline;
+    }
+
+    .ui-btn-sm {
+        @apply h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5;
+    }
+
+    .ui-btn-lg {
+        @apply h-10 rounded-md px-6 has-[>svg]:px-4;
+    }
+
+    .ui-btn-icon {
+        @apply size-9;
+    }
+
+    .ui-btn-icon-sm {
+        @apply size-8;
+    }
+
+    .ui-btn-icon-lg {
+        @apply size-10;
+    }
+
     /* Titles */
 
     .heading-1 {
