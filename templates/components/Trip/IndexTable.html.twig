@@ -2,9 +2,6 @@
     <twig:Table:Header>
         <twig:Table:Row>
             <twig:Table:Head>
-                {{ 'id.label'|trans }}
-            </twig:Table:Head>
-            <twig:Table:Head>
                 {{ 'title.label'|trans }}
             </twig:Table:Head>
             <twig:Table:Head>
@@ -33,9 +30,6 @@
     <twig:Table:Body>
         {% for trip in trips %}
             <twig:Table:Row>
-                <twig:Table:Cell>
-                    {{ trip.id }}
-                </twig:Table:Cell>
                 <twig:Table:Cell>
                     {{ trip.title }}
                 </twig:Table:Cell>
