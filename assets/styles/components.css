@@ -1,0 +1,10 @@
+@import "./components/_button.css";
+@import "./components/_heading.css";
+@import "./components/_form.css";
+@import "./components/_table.css";
+
+@layer components {
+    .app-container {
+        @apply max-w-6xl px-2 sm:px-4 lg:px-6 mx-auto;
+    }
+}
