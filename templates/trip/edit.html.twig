@@ -9,9 +9,7 @@
       {{- title -}}
     </h1>
 
-    {{ include('trip/_form.html.twig', {button_label: 'update.label'}) }}
-
+    <twig:Trip:Form :form="form" button_label="update.label" />
+    <twig:Trip:Form:Delete :trip="trip" />
     <twig:Button:Trip:BackToIndex />
-
-    {{ include('trip/_delete_form.html.twig') }}
 {% endblock %}

@@ -9,7 +9,6 @@
       {{- title -}}
     </h1>
 
-    {{ include('trip/_form.html.twig') }}
-
+    <twig:Trip:Form :form="form" />
     <twig:Button:Trip:BackToIndex />
 {% endblock %}
