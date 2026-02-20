@@ -129,6 +129,8 @@
         @apply max-w-6xl px-2 sm:px-4 lg:px-6 mx-auto;
     }
 
+    /** Table */
+
     .ui-table-wrapper {
         @apply relative w-full overflow-auto mb-4;
     }
@@ -163,6 +165,28 @@
 
     .ui-table-row {
         @apply border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted;
+    }
+
+    /** Form */
+
+    .ui-form-row {
+        @apply mb-4;
+    }
+
+    .ui-form-input {
+        @apply flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50;
+    }
+
+    .ui-form-textarea {
+        @apply flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm;
+    }
+
+    .ui-form-select {
+        @apply flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background data-[placeholder]:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1;
+    }
+
+    .ui-form-checkbox {
+        @apply size-4 inline-block align-middle accent-primary;
     }
 
     /* Titles */
