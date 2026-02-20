@@ -2,13 +2,8 @@
 
 {% set title = 'trip.edit.label'|trans %}
 
-{% block title %}{{ title }}{% endblock %}
-
 {% block body %}
-    <h1 class="heading-1">
-      {{- title -}}
-    </h1>
-
+    <twig:Heading1 :title="title" />
     <twig:Trip:Form :form="form" button_label="update.label" />
     <twig:Trip:Form:Delete :trip="trip" />
     <twig:Button:Trip:BackToIndex />

@@ -2,17 +2,9 @@
 
 {% set title = 'trips.label'|trans %}
 
-{% block title %}
-    {{ title }}
-{% endblock %}
-
 {% block body %}
-    <h1 class="heading-1">
-      {{- title -}}
-    </h1>
-
+    <twig:Heading1 :title="title" />
     <twig:Trip:IndexTable :trips="trips" />
-
     <twig:Button as="a" href="{{ path('app.trip.new') }}">
         <twig:ux:icon name="lucide:plus" />
         {{- 'create_new.label'|trans -}}
