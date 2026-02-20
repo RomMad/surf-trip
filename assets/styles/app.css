@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "./tom-select";
 @source not "../../public";
 
 @custom-variant dark (&:is(.dark *));
