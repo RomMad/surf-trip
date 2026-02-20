@@ -1,6 +1,19 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">
+{{ form_start(form, {attr: {
+    class: 'mb-4'
+}}) }}
+    {{ form_row(form.title) }}
+    {{ form_row(form.location) }}
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+        {{ form_row(form.startAt) }}
+        {{ form_row(form.endAt) }}
+    </div>
+    {{ form_row(form.requiredLevels) }}
+    {{ form_row(form.description) }}
+    {{ form_row(form.owner) }}
+    {{ form_rest(form) }}
+
+    <twig:Button type="submit">
+        <twig:ux:icon name="lucide:save" />
         {{- button_label|default('save.label')|trans -}}
-    </button>
+    </twig:Button>
 {{ form_end(form) }}
