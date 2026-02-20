@@ -1,5 +1,7 @@
 @import "tailwindcss";
-@import "./components.css";
+@import "./_layout.css";
+@import "./_typography.css";
+@import "./_components.css";
 @import "./tom-select";
 
 @source not "../../public";
