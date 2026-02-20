@@ -1,0 +1,7 @@
+{# @block content The default block #}
+<tr
+    class="{{ 'ui-table-row ' ~ attributes.render('class')|tailwind_merge }}"
+    {{ attributes }}
+>
+    {%- block content %}{% endblock -%}
+</tr>

@@ -1,0 +1,33 @@
+{# @prop variant 'default'|'secondary'|'destructive'|'outline'|'ghost'|'link' The variant, default to `default` #}
+{# @prop size 'default'|'sm'|'lg'|'icon'|'icon-sm'|'icon-lg' The size, default to `default` #}
+{# @prop as 'button' The HTML tag to use, default to `button` #}
+{# @block content The default block #}
+{%- props variant = 'default', size = 'default', as = 'button' -%}
+{%- set style = html_cva(
+    base: 'ui-btn',
+    variants: {
+        variant: {
+            default: '',
+            secondary: 'ui-btn-secondary',
+            destructive: 'ui-btn-destructive',
+            outline: 'ui-btn-outline',
+            ghost: 'ui-btn-ghost',
+            link: 'ui-btn-link',
+        },
+        size: {
+            default: '',
+            sm: 'ui-btn-sm',
+            lg: 'ui-btn-lg',
+            icon: 'ui-btn-icon',
+            'icon-sm': 'ui-btn-icon-sm',
+            'icon-lg': 'ui-btn-icon-lg',
+        },
+    },
+) -%}
+<{{ as }}
+    data-slot="button"
+    class="{{ style.apply({variant: variant, size: size}, attributes.render('class'))|tailwind_merge }}"
+    {{ attributes }}
+>
+    {%- block content %}{% endblock -%}
+</{{ as }}>

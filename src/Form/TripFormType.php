@@ -34,6 +34,7 @@ class TripFormType extends AbstractType
                 'class' => RequiredLevel::class,
                 'label' => 'required_levels.label',
                 'multiple' => true,
+                'autocomplete' => true,
             ])
             ->add('description', null, [
                 'label' => 'description.label',
@@ -43,6 +44,7 @@ class TripFormType extends AbstractType
                 'choice_label' => 'email',
                 'label' => 'owner.label',
                 'multiple' => true,
+                'autocomplete' => true,
             ])
         ;
     }

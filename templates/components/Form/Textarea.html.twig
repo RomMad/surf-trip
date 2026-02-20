@@ -1,0 +1,7 @@
+{# @block content The default block #}
+<textarea
+    class="{{ 'ui-form-textarea ' ~ attributes.render('class')|tailwind_merge }}"
+    {{ attributes }}
+>
+    {%- block content %}{% endblock -%}
+</textarea>

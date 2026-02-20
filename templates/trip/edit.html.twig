@@ -2,16 +2,9 @@
 
 {% set title = 'trip.edit.label'|trans %}
 
-{% block title %}{{ title }}{% endblock %}
-
 {% block body %}
-    <h1>{{ title }}</h1>
-
-    {{ include('trip/_form.html.twig', {button_label: 'update.label'}) }}
-
-    <a href="{{ path('app.trip.index') }}">
-        {{- 'back_to_list.label'|trans -}}
-    </a>
-
-    {{ include('trip/_delete_form.html.twig') }}
+    <twig:Heading1 :title="title" />
+    <twig:Trip:Form :form="form" button_label="update.label" />
+    <twig:Trip:Form:Delete :trip="trip" />
+    <twig:Trip:BackToIndexButton />
 {% endblock %}

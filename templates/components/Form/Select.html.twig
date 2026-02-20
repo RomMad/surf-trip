@@ -1,0 +1,7 @@
+{# @block content The default block #}
+<select
+    class="{{ 'ui-form-select ' ~ attributes.render('class')|tailwind_merge }}"
+    {{ attributes }}
+>
+    {%- block content %}{% endblock -%}
+</select>

@@ -2,50 +2,16 @@
 
 {% set title = 'trip.label'|trans %}
 
-{% block title %}{{ title }}{% endblock %}
-
 {% block body %}
-    <h1>{{ title }}</h1>
+    <twig:Heading1 :title="title" />
+    <twig:Trip:ShowTable :trip="trip" />
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>{{ 'title.label'|trans }}</th>
-                <td>{{ trip.title }}</td>
-            </tr>
-            <tr>
-                <th>{{ 'location.label'|trans }}</th>
-                <td>{{ trip.location }}</td>
-            </tr>
-            <tr>
-                <th>{{ 'start_at.label'|trans }}</th>
-                <td>{{ trip.startAt|date('Y-m-d H:i') }}</td>
-            </tr>
-            <tr>
-                <th>{{ 'end_at.label'|trans }}</th>
-                <td>{{ trip.endAt|date('Y-m-d H:i') }}</td>
-            </tr>
-            <tr>
-                <th>{{ 'required_levels.label'|trans }}</th>
-                <td>{{ trip.requiredLevels|map(rl => rl.label|trans)|join(', ') }}</td>
-            </tr>
-            <tr>
-                <th>{{ 'description.label'|trans }}</th>
-                <td>{{ trip.description }}</td>
-            </tr>
-            <tr>
-                <th>{{ 'created_at.label'|trans }}</th>
-                <td>{{ trip.createdAt|date('Y-m-d H:i') }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('app.trip.index') }}">
-        {{- 'back_to_list.label'|trans -}}
-    </a>
-    <a href="{{ path('app.trip.edit', {id: trip.id}) }}">
-        {{- 'edit.label'|trans -}}
-    </a>
-
-    {{ include('trip/_delete_form.html.twig') }}
+    <div class="flex flex-wrap items-center gap-2">
+        <twig:Button as="a" href="{{ path('app.trip.edit', {id: trip.id}) }}" class="mb-4">
+            <twig:ux:icon name="lucide:edit-2" />
+            {{- 'edit.label'|trans -}}
+        </twig:Button>
+        <twig:Trip:Form:Delete :trip="trip" />
+        <twig:Trip:BackToIndexButton />
+    </div>
 {% endblock %}

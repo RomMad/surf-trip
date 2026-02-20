@@ -1,0 +1,65 @@
+/*
+  Use the following to reproduce a Tailwind UI Select field with Tom Select
+*/
+
+@import "tom-select/dist/css/tom-select";
+
+.ts-control {
+    @apply w-full border-none py-1 px-3 h-9 sm:text-sm sm:leading-6 bg-background text-foreground focus:border-ring focus:outline-none focus:ring-ring;
+}
+
+.ts-control input {
+    @apply pr-5 text-sm m-0 text-foreground;
+}
+
+.ts-wrapper.plugin-remove_button .item {
+    @apply rounded-md bg-primary/10 text-primary;
+}
+.ts-wrapper.multi .ts-control > div {
+    @apply p-0 m-0 mr-1 pl-1;
+}
+
+.ts-wrapper.plugin-remove_button .item .remove {
+    @apply border-none text-lg leading-none py-1 rounded-r-lg text-primary/70 hover:text-primary;
+}
+
+.ts-dropdown {
+    @apply rounded-md border border-solid border-t border-input bg-background text-foreground;
+}
+
+.ts-dropdown [data-selectable].option,
+.ts-dropdown .no-results {
+    @apply py-2 text-foreground;
+}
+.ts-dropdown [data-selectable].option:first-child {
+    @apply rounded-t-md;
+}
+
+.ts-dropdown [data-selectable].option:last-child {
+    @apply rounded-b-md;
+}
+.ts-dropdown .create:hover,
+.ts-dropdown .option:hover,
+.ts-dropdown .active {
+    @apply bg-primary/15 text-primary;
+}
+
+.ts-dropdown .spinner {
+    @apply h-auto w-auto;
+}
+
+.ts-dropdown .spinner:after {
+    @apply h-5 w-5 border-2 p-0 my-0 inline-block;
+}
+
+.ts-wrapper:not(.form-control):not(.form-select).single .ts-control {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.5rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+    print-color-adjust: exact;
+}
+
+.dark .ts-wrapper:not(.form-control):not(.form-select).single .ts-control {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%239ca3af' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+}

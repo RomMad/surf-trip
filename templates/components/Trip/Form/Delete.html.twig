@@ -1,9 +1,11 @@
 <form method="post"
       action="{{ path('app.trip.delete', {id: trip.id}) }}"
-      onsubmit="return confirm('{{ 'delete.confirm'|trans }}');"
+      class="mb-4"
+      onsubmit="return confirm('{{ 'trip.delete.confirm'|trans }}');"
 >
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ trip.id) }}">
-    <button class="btn">
+    <twig:Button variant="destructive">
+        <twig:ux:icon name="lucide:trash" />
         {{- 'delete.label'|trans -}}
-    </button>
+    </twig:Button>
 </form>

@@ -1,0 +1,15 @@
+@layer base {
+    * {
+        @apply border-border outline-ring/50;
+    }
+
+    body {
+        @apply bg-background text-foreground;
+    }
+}
+
+@layer components {
+    .app-container {
+        @apply max-w-6xl px-2 sm:px-4 lg:px-6 mx-auto;
+    }
+}

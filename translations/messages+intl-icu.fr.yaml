@@ -7,6 +7,10 @@ show.label: Voir
 update.label: Mettre à jour
 back_to_list.label: Retour à la liste
 
+# Common
+dark_mode.label: Mode sombre
+no_records_found.label: Aucun enregistrement trouvé
+
 # Trip
 id.label: Id
 trip.label: Trip

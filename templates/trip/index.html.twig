@@ -2,56 +2,11 @@
 
 {% set title = 'trips.label'|trans %}
 
-{% block title %}{{ title }}{% endblock %}
-
 {% block body %}
-    <h1>{{ title }}</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>{{ 'id.label'|trans }}</th>
-                <th>{{ 'title.label'|trans }}</th>
-                <th>{{ 'location.label'|trans }}</th>
-                <th>{{ 'start_at.label'|trans }}</th>
-                <th>{{ 'end_at.label'|trans }}</th>
-                <th>{{ 'required_levels.label'|trans }}</th>
-                <th>{{ 'description.label'|trans }}</th>
-                <th>{{ 'created_at.label'|trans }}</th>
-                <th>{{ 'actions.label'|trans }}</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for trip in trips %}
-            <tr>
-                <td>{{ trip.id }}</td>
-                <td>{{ trip.title }}</td>
-                <td>{{ trip.location }}</td>
-                <td>{{ trip.startAt|date('Y-m-d') }}</td>
-                <td>{{ trip.endAt|date('Y-m-d') }}</td>
-                <td>{{ trip.requiredLevels|map(rl => rl.label|trans)|join(', ') }}</td>
-                <td>{{ trip.description }}</td>
-                <td>{{ trip.createdAt|date('Y-m-d H:i:s') }}</td>
-                <td>
-                    <a href="{{ path('app.trip.show', {id: trip.id}) }}">
-                        {{- 'show.label'|trans -}}
-                    </a>
-                    <a href="{{ path('app.trip.edit', {id: trip.id}) }}">
-                        {{- 'edit.label'|trans -}}
-                    </a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="9">
-                    {{- 'no_records_found.label'|trans -}}
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('app.trip.new') }}">
+    <twig:Heading1 :title="title" />
+    <twig:Trip:IndexTable :trips="trips" />
+    <twig:Button as="a" href="{{ path('app.trip.new') }}">
+        <twig:ux:icon name="lucide:plus" />
         {{- 'create_new.label'|trans -}}
-    </a>
+    </twig:Button>
 {% endblock %}

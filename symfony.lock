@@ -98,21 +98,6 @@
             "phpcs.xml.dist"
         ]
     },
-    "symfony/asset-mapper": {
-        "version": "8.0",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "main",
-            "version": "6.4",
-            "ref": "5ad1308aa756d58f999ffbe1540d1189f5d7d14a"
-        },
-        "files": [
-            "assets/app.js",
-            "assets/styles/app.css",
-            "config/packages/asset_mapper.yaml",
-            "importmap.php"
-        ]
-    },
     "symfony/console": {
         "version": "8.0",
         "recipe": {
@@ -318,6 +303,34 @@
             "templates/base.html.twig"
         ]
     },
+    "symfony/ux-autocomplete": {
+        "version": "2.32",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "2.6",
+            "ref": "07d9602b7231ba355f484305d6cea58310c01741"
+        },
+        "files": [
+            "config/routes/ux_autocomplete.yaml"
+        ]
+    },
+    "symfony/ux-icons": {
+        "version": "2.32",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "2.19",
+            "ref": "c965ca0bf8a40e03420d57e08cff0bf6045e4ae7"
+        },
+        "files": [
+            "assets/icons/symfony.svg",
+            "config/packages/ux_icons.yaml"
+        ]
+    },
+    "symfony/ux-toolkit": {
+        "version": "v2.32.0"
+    },
     "symfony/ux-turbo": {
         "version": "2.32",
         "recipe": {
@@ -328,6 +341,18 @@
         },
         "files": [
             "config/packages/ux_turbo.yaml"
+        ]
+    },
+    "symfony/ux-twig-component": {
+        "version": "2.32",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "2.13",
+            "ref": "f367ae2a1faf01c503de2171f1ec22567febeead"
+        },
+        "files": [
+            "config/packages/twig_component.yaml"
         ]
     },
     "symfony/validator": {
@@ -366,6 +391,31 @@
         "files": [
             "config/packages/messenger.yaml"
         ]
+    },
+    "symfony/webpack-encore-bundle": {
+        "version": "2.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "2.0",
+            "ref": "719f6110345acb6495e496601fc1b4977d7102b3"
+        },
+        "files": [
+            "assets/app.js",
+            "assets/styles/app.css",
+            "config/packages/webpack_encore.yaml",
+            "package.json",
+            "webpack.config.js"
+        ]
+    },
+    "tales-from-a-dev/twig-tailwind-extra": {
+        "version": "1.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "0.2",
+            "ref": "7243ab070ed66198eb82c026684e9b9773e7b64a"
+        }
     },
     "twig/extra-bundle": {
         "version": "v3.23.0"

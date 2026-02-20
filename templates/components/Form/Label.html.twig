@@ -1,0 +1,7 @@
+{# @block content The default block #}
+<label
+    class="{{ ('ui-form-label ' ~ attributes.render('class'))|tailwind_merge }}"
+    {{ attributes }}
+>
+    {%- block content %}{% endblock -%}
+</label>
