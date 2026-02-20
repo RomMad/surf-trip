@@ -16,7 +16,7 @@
     trip.endAt|date('Y-m-d'),
     trip.requiredLevels|map(rl => rl.label|trans),
     trip.description,
-    trip.createdAt|date('Y-m-d H:i:s'),
+    trip.createdAt|date('Y-m-d'),
     {raw: include('components/Trip/IndexActionsCell.html.twig', {trip: trip})},
 ]) %}
 
