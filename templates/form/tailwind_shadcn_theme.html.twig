@@ -2,7 +2,7 @@
 
 {% block form_row %}
     {% set row_attr = row_attr|merge({
-        class: ('ui-form-row ' ~ (row_attr.class|default('')))|tailwind_merge
+        class: ('app-row ' ~ (row_attr.class|default('')))|tailwind_merge
     }) %}
 
     {{ parent() }}
@@ -11,7 +11,7 @@
 {% block form_widget_simple %}
     {% set type = type|default('text') %}
     {% set attr = attr|merge({
-        class: ('ui-form-input ' ~ (attr.class|default('')))|tailwind_merge
+        class: ('app-input ' ~ (attr.class|default('')))|tailwind_merge
     }) %}
 
     <input type="{{ type }}" {{ block('widget_attributes') }}{% if value is not empty %} value="{{ value }}"{% endif %}>
@@ -19,7 +19,7 @@
 
 {% block textarea_widget %}
     {% set attr = attr|merge({
-        class: ('ui-form-textarea ' ~ (attr.class|default('')))|tailwind_merge
+        class: ('app-textarea ' ~ (attr.class|default('')))|tailwind_merge
     }) %}
 
     {{ parent() }}
@@ -27,7 +27,7 @@
 
 {% block choice_widget_collapsed %}
     {% set attr = attr|merge({
-        class: ('ui-form-select ' ~ (attr.class|default('')))|tailwind_merge
+        class: ('app-select ' ~ (attr.class|default('')))|tailwind_merge
     }) %}
 
     {{ parent() }}
@@ -35,7 +35,7 @@
 
 {% block checkbox_widget %}
     {% set attr = attr|merge({
-        class: ('ui-form-checkbox ' ~ (attr.class|default('')))|tailwind_merge
+        class: ('app-checkbox ' ~ (attr.class|default('')))|tailwind_merge
     }) %}
 
     {{ parent() }}
