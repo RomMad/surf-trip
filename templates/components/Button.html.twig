@@ -4,23 +4,23 @@
 {# @block content The default block #}
 {%- props variant = 'default', size = 'default', as = 'button' -%}
 {%- set style = html_cva(
-    base: 'ui-btn',
+    base: 'app-btn',
     variants: {
         variant: {
             default: '',
-            secondary: 'ui-btn-secondary',
-            destructive: 'ui-btn-destructive',
-            outline: 'ui-btn-outline',
-            ghost: 'ui-btn-ghost',
-            link: 'ui-btn-link',
+            secondary: 'app-btn-secondary',
+            destructive: 'app-btn-destructive',
+            outline: 'app-btn-outline',
+            ghost: 'app-btn-ghost',
+            link: 'app-btn-link',
         },
         size: {
             default: '',
-            sm: 'ui-btn-sm',
-            lg: 'ui-btn-lg',
-            icon: 'ui-btn-icon',
-            'icon-sm': 'ui-btn-icon-sm',
-            'icon-lg': 'ui-btn-icon-lg',
+            sm: 'app-btn-sm',
+            lg: 'app-btn-lg',
+            icon: 'app-btn-icon',
+            'icon-sm': 'app-btn-icon-sm',
+            'icon-lg': 'app-btn-icon-lg',
         },
     },
 ) -%}
