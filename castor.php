@@ -309,10 +309,10 @@ function tests_coverage(): void
 //                      SECURITY
 // ========================================================
 
-#[AsTask(description: 'Run symfony check-security', namespace: 'app', aliases: ['security-check', 'security'])]
+#[AsTask(description: 'Run security checks with Composer Audit', namespace: 'app', aliases: ['security-check', 'security'])]
 function check_security(): void
 {
-    run('symfony check:security');
+    run('composer audit');
 }
 
 // ========================================================
