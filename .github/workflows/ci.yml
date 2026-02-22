@@ -53,7 +53,6 @@ jobs:
 
             - name: Cache warmup
               run: |
-                  php bin/console cache:warmup --env=dev
                   php bin/console cache:warmup --env=test --no-debug
 
             - name: Security audit

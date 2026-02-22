@@ -25,7 +25,6 @@ return static function (RectorConfig $rectorConfig): void {
     ]);
 
     $rectorConfig->phpVersion(PhpVersion::PHP_85);
-    $rectorConfig->symfonyContainerXml(__DIR__.'/var/cache/dev/App_KernelDevDebugContainer.xml');
     $rectorConfig->phpstanConfig(__DIR__.'/phpstan.dist.neon');
     $rectorConfig->parallel();
 
