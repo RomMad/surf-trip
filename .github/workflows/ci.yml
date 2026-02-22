@@ -1,0 +1,89 @@
+name: CI
+
+on:
+    pull_request:
+    push:
+        branches:
+            - main
+    workflow_dispatch:
+
+concurrency:
+    group: ci-${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
+
+jobs:
+    static-tests:
+        name: "Static Tests (PHP ${{ matrix.php }})"
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                php: [8.5]
+        env:
+            APP_ENV: test
+            APP_DEBUG: 0
+            DATABASE_URL: sqlite:///%kernel.project_dir%/var/data_ci.db
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: ${{ matrix.php }}
+                  coverage: none
+                  extensions: ctype, iconv, intl, pdo_sqlite
+
+            - name: Validate composer.json
+              run: composer validate --strict --no-check-publish
+
+            - name: Cache Composer dependencies
+              uses: actions/cache@v4
+              with:
+                  path: |
+                      ~/.composer/cache/files
+                      var/.phpstan.tmp
+                      var/.phpcs-cache
+                  key: "${{ runner.os }}-php${{ matrix.php }}-composer-${{ hashFiles('**/composer.lock') }}"
+                  restore-keys: |
+                      ${{ runner.os }}-php${{ matrix.php }}-composer-
+
+            - name: Install PHP dependencies
+              run: composer install --prefer-dist --no-interaction --no-progress
+
+            - name: Cache warmup
+              run: |
+                  php bin/console cache:warmup --env=test --no-debug
+
+            - name: Security audit
+              run: composer audit
+
+            - name: PHPStan
+              run: ./vendor/bin/phpstan analyse -c phpstan.dist.neon --memory-limit=1G
+
+            - name: Rector (dry-run)
+              run: ./vendor/bin/rector process --dry-run
+
+            - name: PHP-CS-Fixer (dry-run)
+              run: ./vendor/bin/php-cs-fixer fix --dry-run --verbose
+
+            - name: PHP_CodeSniffer
+              run: ./vendor/bin/phpcs --runtime-set ignore_warnings_on_exit 1
+
+            - name: Missing translations
+              run: php bin/console debug:translation fr --only-missing
+
+            - name: Lint translations
+              run: php bin/console lint:translations --locale=en --locale=fr
+
+            - name: Lint Doctrine schema
+              run: php bin/console doctrine:schema:validate --skip-sync -vvv --no-interaction
+
+            - name: Lint YAML
+              run: php bin/console lint:yaml ./config --parse-tags
+
+            - name: Lint Twig
+              run: php bin/console lint:twig ./templates
+
+            - name: Twig CS
+              run: ./vendor/bin/twig-cs-fixer lint

@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Trip;
 use App\Form\TripFormType;
-use App\Form\TripType;
 use App\Repository\TripRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\ExpressionLanguage\Expression;
