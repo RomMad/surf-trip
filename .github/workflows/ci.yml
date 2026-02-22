@@ -51,6 +51,11 @@ jobs:
             - name: Install PHP dependencies
               run: composer install --prefer-dist --no-interaction --no-progress
 
+            - name: Cache warmup
+              run: |
+                  php bin/console cache:warmup --env=dev
+                  php bin/console cache:warmup --env=test --no-debug
+
             - name: Security audit
               run: composer audit
 
