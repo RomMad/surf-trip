@@ -3,6 +3,8 @@ name: CI
 on:
     pull_request:
     push:
+        branches:
+            - main
     workflow_dispatch:
 
 concurrency:
@@ -11,8 +13,11 @@ concurrency:
 
 jobs:
     static-tests:
-        name: Static Tests (PHP)
+        name: "Static Tests (PHP ${{ matrix.php }})"
         runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                php: [8.5]
         env:
             APP_ENV: test
             APP_DEBUG: 0
@@ -25,7 +30,7 @@ jobs:
             - name: Setup PHP
               uses: shivammathur/setup-php@v2
               with:
-                  php-version: "8.5"
+                  php-version: ${{ matrix.php }}
                   coverage: none
                   extensions: ctype, iconv, intl, pdo_sqlite
 
@@ -39,15 +44,18 @@ jobs:
                       ~/.composer/cache/files
                       var/.phpstan.tmp
                       var/.phpcs-cache
-                  key: ${{ runner.os }}-php84-composer-${{ hashFiles('**/composer.lock') }}
+                  key: "${{ runner.os }}-php${{ matrix.php }}-composer-${{ hashFiles('**/composer.lock') }}"
                   restore-keys: |
-                      ${{ runner.os }}-php84-composer-
+                      ${{ runner.os }}-php${{ matrix.php }}-composer-
 
             - name: Install PHP dependencies
               run: composer install --prefer-dist --no-interaction --no-progress
 
+            - name: Security audit
+              run: composer audit
+
             - name: PHPStan
-              run: ./vendor/bin/phpstan analyse -c phpstan.dist.neon
+              run: ./vendor/bin/phpstan analyse -c phpstan.dist.neon --memory-limit=1G
 
             - name: Rector (dry-run)
               run: ./vendor/bin/rector process --dry-run
