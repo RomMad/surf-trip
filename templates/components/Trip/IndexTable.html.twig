@@ -1,11 +1,11 @@
 {% set headers = [
-    'title.label'|trans,
-    'location.label'|trans,
-    'start_at.label'|trans,
-    'end_at.label'|trans,
+    ['title.label'|trans, 't.title'],
+    ['location.label'|trans, 't.location'],
+    ['start_at.label'|trans, 't.startAt'],
+    ['end_at.label'|trans, 't.endAt'],
     'required_levels.label'|trans,
     'description.label'|trans,
-    'created_at.label'|trans,
+    ['created_at.label'|trans, 't.createdAt'],
     'actions.label'|trans,
 ] %}
 
@@ -15,7 +15,7 @@
     trip.startAt|date('Y-m-d'),
     trip.endAt|date('Y-m-d'),
     trip.requiredLevels|map(rl => rl.label|trans),
-    trip.description,
+    trip.description|u.truncate(120, '…', false),
     trip.createdAt|date('Y-m-d'),
     {raw: include('components/Trip/IndexActionsCell.html.twig', {trip: trip})},
 ]) %}

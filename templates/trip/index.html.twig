@@ -4,7 +4,9 @@
 
 {% block body %}
     <twig:Heading1 :title="title" />
-    <twig:Trip:IndexTable :trips="trips" />
+    <twig:Trip:IndexTable :trips="pager" />
+    <twig:AppPagination :pager="pager" />
+
     <twig:Button as="a" href="{{ path('app.trip.new') }}">
         <twig:ux:icon name="lucide:plus" />
         {{- 'create_new.label'|trans -}}

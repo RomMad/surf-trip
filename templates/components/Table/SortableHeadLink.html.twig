@@ -1,0 +1,19 @@
+{% set has_sort_name = app.request.query.get('sort') == name %}
+{% set has_direction_asc = name and app.request.query.get('direction') == 'asc' %}
+
+<a href="{{ path(
+        app.request.attributes.get('_route'),
+        app.request.query.all|merge({
+            sort: name,
+            direction: has_sort_name and has_direction_asc ? 'desc' : 'asc',
+        }),
+    ) }}"
+>
+    <span class="flex items-center gap-1">
+        {{- label -}}
+
+        {% if has_sort_name %}
+                <twig:ux:icon name="{{ has_direction_asc ? 'lucide:arrow-up' : 'lucide:arrow-down' }}" />
+        {% endif %}
+    </span>
+</a>
