@@ -9,6 +9,8 @@ export default class extends Controller {
         const isDark = storedTheme ? storedTheme === 'dark' : prefersDark;
 
         this.applyTheme(isDark);
+        this.initButton(isDark);
+
     }
 
     toggle() {
@@ -21,5 +23,13 @@ export default class extends Controller {
     applyTheme(isDark) {
         document.documentElement.classList.toggle('dark', isDark);
         document.documentElement.style.colorScheme = isDark ? 'dark' : 'light';
+    }
+
+    initButton(isDark) {
+        const inputElt = this.element.querySelector('input');
+
+        if (inputElt instanceof HTMLInputElement) {
+            inputElt.checked = isDark;
+        }
     }
 }
