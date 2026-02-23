@@ -3,7 +3,11 @@
         <twig:Table:Row>
             {% for header in headers %}
                 <twig:Table:Head>
-                    {{ header }}
+                    {% if header is iterable %}
+                        <twig:Table:SortableHeadLink label="{{ header.0 }}" name="{{ header.1 }}" />
+                    {% else %}
+                        {{- header -}}
+                    {% endif %}
                 </twig:Table:Head>
             {% endfor %}
         </twig:Table:Row>

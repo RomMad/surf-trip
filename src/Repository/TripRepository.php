@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Trip;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -32,5 +33,12 @@ class TripRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function createOrderedQueryBuilder(): QueryBuilder
+    {
+        return $this->createQueryBuilder('t')
+            ->orderBy('t.createdAt', 'DESC')
+        ;
     }
 }

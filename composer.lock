@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7f7b456a03cc5e2bc621bdbba4b66313",
+    "content-hash": "4aade23e5db92cf6403e5aa0154cbde6",
     "packages": [
         {
             "name": "doctrine/collections",
@@ -1288,6 +1288,107 @@
                 }
             ],
             "time": "2026-01-02T08:56:05+00:00"
+        },
+        {
+            "name": "pagerfanta/pagerfanta",
+            "version": "v4.8.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/BabDev/Pagerfanta.git",
+                "reference": "72881e6839330b2961c574b3b4b20d409d6a0955"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/BabDev/Pagerfanta/zipball/72881e6839330b2961c574b3b4b20d409d6a0955",
+                "reference": "72881e6839330b2961c574b3b4b20d409d6a0955",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "php": "^8.1",
+                "symfony/deprecation-contracts": "^2.1 || ^3.0"
+            },
+            "conflict": {
+                "doctrine/collections": "<1.8",
+                "doctrine/dbal": "<3.5",
+                "doctrine/mongodb-odm": "<2.4",
+                "doctrine/orm": "<2.14",
+                "doctrine/phpcr-odm": "<1.7",
+                "ruflin/elastica": "<7.3",
+                "solarium/solarium": "<6.2",
+                "twig/twig": "<2.13"
+            },
+            "replace": {
+                "pagerfanta/core": "self.version",
+                "pagerfanta/doctrine-collections-adapter": "self.version",
+                "pagerfanta/doctrine-dbal-adapter": "self.version",
+                "pagerfanta/doctrine-mongodb-odm-adapter": "self.version",
+                "pagerfanta/doctrine-orm-adapter": "self.version",
+                "pagerfanta/doctrine-phpcr-odm-adapter": "self.version",
+                "pagerfanta/elastica-adapter": "self.version",
+                "pagerfanta/solarium-adapter": "self.version",
+                "pagerfanta/twig": "self.version"
+            },
+            "require-dev": {
+                "dg/bypass-finals": "^1.9",
+                "doctrine/collections": "^1.8 || ^2.0 || ^3.0",
+                "doctrine/dbal": "^3.5 || ^4.0",
+                "doctrine/mongodb-odm": "^2.4",
+                "doctrine/orm": "^2.14 || ^3.0",
+                "doctrine/phpcr-odm": "^1.7 || ^2.0",
+                "jackalope/jackalope-doctrine-dbal": "^1.9 || ^2.0",
+                "phpstan/extension-installer": "^1.4",
+                "phpstan/phpstan": "2.1.36",
+                "phpstan/phpstan-phpunit": "2.0.11",
+                "phpunit/phpunit": "10.5.60",
+                "rector/rector": "2.3.4",
+                "ruflin/elastica": "^7.3 || ^8.0",
+                "solarium/solarium": "^6.2",
+                "symfony/cache": "^5.4 || ^6.4 || ^7.3 || ^8.0",
+                "twig/twig": "^2.13 || ^3.0"
+            },
+            "suggest": {
+                "twig/twig": "To integrate Pagerfanta with Twig"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Pagerfanta\\": "lib/Core/",
+                    "Pagerfanta\\Twig\\": "lib/Twig/",
+                    "Pagerfanta\\Elastica\\": "lib/Adapter/Elastica/",
+                    "Pagerfanta\\Solarium\\": "lib/Adapter/Solarium/",
+                    "Pagerfanta\\Doctrine\\ORM\\": "lib/Adapter/Doctrine/ORM/",
+                    "Pagerfanta\\Doctrine\\DBAL\\": "lib/Adapter/Doctrine/DBAL/",
+                    "Pagerfanta\\Doctrine\\PHPCRODM\\": "lib/Adapter/Doctrine/PHPCRODM/",
+                    "Pagerfanta\\Doctrine\\MongoDBODM\\": "lib/Adapter/Doctrine/MongoDBODM/",
+                    "Pagerfanta\\Doctrine\\Collections\\": "lib/Adapter/Doctrine/Collections/"
+                },
+                "exclude-from-classmap": [
+                    "lib/**/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Pagination for PHP",
+            "keywords": [
+                "page",
+                "pagination",
+                "paginator",
+                "paging"
+            ],
+            "support": {
+                "issues": "https://github.com/BabDev/Pagerfanta/issues",
+                "source": "https://github.com/BabDev/Pagerfanta/tree/v4.8.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/mbabker",
+                    "type": "github"
+                }
+            ],
+            "time": "2026-01-22T13:58:52+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -7819,16 +7920,16 @@
         },
         {
             "name": "tales-from-a-dev/tailwind-merge-php",
-            "version": "v0.1.1",
+            "version": "v0.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tales-from-a-dev/tailwind-merge-php.git",
-                "reference": "0ecc60f2c2a877fe9555779bd289af70163ccc3e"
+                "reference": "df42e7bafdf4628e92da752dafb175db28a77e82"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tales-from-a-dev/tailwind-merge-php/zipball/0ecc60f2c2a877fe9555779bd289af70163ccc3e",
-                "reference": "0ecc60f2c2a877fe9555779bd289af70163ccc3e",
+                "url": "https://api.github.com/repos/tales-from-a-dev/tailwind-merge-php/zipball/df42e7bafdf4628e92da752dafb175db28a77e82",
+                "reference": "df42e7bafdf4628e92da752dafb175db28a77e82",
                 "shasum": ""
             },
             "require": {
@@ -7871,29 +7972,29 @@
             ],
             "support": {
                 "issues": "https://github.com/tales-from-a-dev/tailwind-merge-php/issues",
-                "source": "https://github.com/tales-from-a-dev/tailwind-merge-php/tree/v0.1.1"
+                "source": "https://github.com/tales-from-a-dev/tailwind-merge-php/tree/v0.2.0"
             },
-            "time": "2026-02-16T10:54:42+00:00"
+            "time": "2026-02-20T01:12:11+00:00"
         },
         {
             "name": "tales-from-a-dev/twig-tailwind-extra",
-            "version": "v1.0.1",
+            "version": "v1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tales-from-a-dev/twig-tailwind-extra.git",
-                "reference": "2baabebb55530e2b9f43279fc07a6d4541a29090"
+                "reference": "3b5a3cc14178c4d837926eb8e35d7002f76717ee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tales-from-a-dev/twig-tailwind-extra/zipball/2baabebb55530e2b9f43279fc07a6d4541a29090",
-                "reference": "2baabebb55530e2b9f43279fc07a6d4541a29090",
+                "url": "https://api.github.com/repos/tales-from-a-dev/twig-tailwind-extra/zipball/3b5a3cc14178c4d837926eb8e35d7002f76717ee",
+                "reference": "3b5a3cc14178c4d837926eb8e35d7002f76717ee",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.1",
                 "symfony/cache": "^6.4 || ^7.0 || ^8.0",
                 "symfony/framework-bundle": "^6.4 || ^7.0 || ^8.0",
-                "tales-from-a-dev/tailwind-merge-php": "^0.1",
+                "tales-from-a-dev/tailwind-merge-php": "^0.2",
                 "twig/twig": "^3.0"
             },
             "require-dev": {
@@ -7927,9 +8028,9 @@
             ],
             "support": {
                 "issues": "https://github.com/tales-from-a-dev/twig-tailwind-extra/issues",
-                "source": "https://github.com/tales-from-a-dev/twig-tailwind-extra/tree/v1.0.1"
+                "source": "https://github.com/tales-from-a-dev/twig-tailwind-extra/tree/v1.1.0"
             },
-            "time": "2026-02-13T17:46:45+00:00"
+            "time": "2026-02-20T01:41:51+00:00"
         },
         {
             "name": "twig/extra-bundle",
@@ -8154,16 +8255,16 @@
         },
         {
             "name": "webmozart/assert",
-            "version": "2.1.2",
+            "version": "2.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/webmozarts/assert.git",
-                "reference": "ce6a2f100c404b2d32a1dd1270f9b59ad4f57649"
+                "reference": "79155f94852fa27e2f73b459f6503f5e87e2c188"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webmozarts/assert/zipball/ce6a2f100c404b2d32a1dd1270f9b59ad4f57649",
-                "reference": "ce6a2f100c404b2d32a1dd1270f9b59ad4f57649",
+                "url": "https://api.github.com/repos/webmozarts/assert/zipball/79155f94852fa27e2f73b459f6503f5e87e2c188",
+                "reference": "79155f94852fa27e2f73b459f6503f5e87e2c188",
                 "shasum": ""
             },
             "require": {
@@ -8210,9 +8311,9 @@
             ],
             "support": {
                 "issues": "https://github.com/webmozarts/assert/issues",
-                "source": "https://github.com/webmozarts/assert/tree/2.1.2"
+                "source": "https://github.com/webmozarts/assert/tree/2.1.5"
             },
-            "time": "2026-01-13T14:02:24+00:00"
+            "time": "2026-02-18T14:09:36+00:00"
         }
     ],
     "packages-dev": [
@@ -8719,6 +8820,69 @@
             "time": "2023-08-08T05:53:35+00:00"
         },
         {
+            "name": "fakerphp/faker",
+            "version": "v1.24.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/FakerPHP/Faker.git",
+                "reference": "e0ee18eb1e6dc3cda3ce9fd97e5a0689a88a64b5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/FakerPHP/Faker/zipball/e0ee18eb1e6dc3cda3ce9fd97e5a0689a88a64b5",
+                "reference": "e0ee18eb1e6dc3cda3ce9fd97e5a0689a88a64b5",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.4 || ^8.0",
+                "psr/container": "^1.0 || ^2.0",
+                "symfony/deprecation-contracts": "^2.2 || ^3.0"
+            },
+            "conflict": {
+                "fzaninotto/faker": "*"
+            },
+            "require-dev": {
+                "bamarni/composer-bin-plugin": "^1.4.1",
+                "doctrine/persistence": "^1.3 || ^2.0",
+                "ext-intl": "*",
+                "phpunit/phpunit": "^9.5.26",
+                "symfony/phpunit-bridge": "^5.4.16"
+            },
+            "suggest": {
+                "doctrine/orm": "Required to use Faker\\ORM\\Doctrine",
+                "ext-curl": "Required by Faker\\Provider\\Image to download images.",
+                "ext-dom": "Required by Faker\\Provider\\HtmlLorem for generating random HTML.",
+                "ext-iconv": "Required by Faker\\Provider\\ru_RU\\Text::realText() for generating real Russian text.",
+                "ext-mbstring": "Required for multibyte Unicode string functionality."
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Faker\\": "src/Faker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "François Zaninotto"
+                }
+            ],
+            "description": "Faker is a PHP library that generates fake data for you.",
+            "keywords": [
+                "data",
+                "faker",
+                "fixtures"
+            ],
+            "support": {
+                "issues": "https://github.com/FakerPHP/Faker/issues",
+                "source": "https://github.com/FakerPHP/Faker/tree/v1.24.1"
+            },
+            "time": "2024-11-21T13:46:39+00:00"
+        },
+        {
             "name": "fidry/cpu-core-counter",
             "version": "1.3.0",
             "source": {
@@ -8781,16 +8945,16 @@
         },
         {
             "name": "friendsofphp/php-cs-fixer",
-            "version": "v3.94.0",
+            "version": "v3.94.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer.git",
-                "reference": "883b20fb38c7866de9844ab6d0a205c423bde2d4"
+                "reference": "7787ceff91365ba7d623ec410b8f429cdebb4f63"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/883b20fb38c7866de9844ab6d0a205c423bde2d4",
-                "reference": "883b20fb38c7866de9844ab6d0a205c423bde2d4",
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/7787ceff91365ba7d623ec410b8f429cdebb4f63",
+                "reference": "7787ceff91365ba7d623ec410b8f429cdebb4f63",
                 "shasum": ""
             },
             "require": {
@@ -8873,7 +9037,7 @@
             ],
             "support": {
                 "issues": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/issues",
-                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.94.0"
+                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.94.2"
             },
             "funding": [
                 {
@@ -8881,7 +9045,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-02-11T16:44:33+00:00"
+            "time": "2026-02-20T16:13:53+00:00"
         },
         {
             "name": "masterminds/html5",
@@ -9188,11 +9352,11 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "2.1.39",
+            "version": "2.1.40",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/c6f73a2af4cbcd99c931d0fb8f08548cc0fa8224",
-                "reference": "c6f73a2af4cbcd99c931d0fb8f08548cc0fa8224",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/9b2c7aeb83a75d8680ea5e7c9b7fca88052b766b",
+                "reference": "9b2c7aeb83a75d8680ea5e7c9b7fca88052b766b",
                 "shasum": ""
             },
             "require": {
@@ -9237,7 +9401,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-02-11T14:48:56+00:00"
+            "time": "2026-02-23T15:04:35+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -9623,16 +9787,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "13.0.2",
+            "version": "13.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "87f0ca577a7056016741af70e7a7de9246c52e67"
+                "reference": "d57826e8921a534680c613924bfd921ded8047f4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/87f0ca577a7056016741af70e7a7de9246c52e67",
-                "reference": "87f0ca577a7056016741af70e7a7de9246c52e67",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/d57826e8921a534680c613924bfd921ded8047f4",
+                "reference": "d57826e8921a534680c613924bfd921ded8047f4",
                 "shasum": ""
             },
             "require": {
@@ -9701,7 +9865,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/13.0.2"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/13.0.5"
             },
             "funding": [
                 {
@@ -9725,7 +9889,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-02-10T12:33:24+00:00"
+            "time": "2026-02-18T12:40:03+00:00"
         },
         {
             "name": "react/cache",
@@ -10255,16 +10419,16 @@
         },
         {
             "name": "rector/rector",
-            "version": "2.3.6",
+            "version": "2.3.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rectorphp/rector.git",
-                "reference": "ca9ebb81d280cd362ea39474dabd42679e32ca6b"
+                "reference": "bbd37aedd8df749916cffa2a947cfc4714d1ba2c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rectorphp/rector/zipball/ca9ebb81d280cd362ea39474dabd42679e32ca6b",
-                "reference": "ca9ebb81d280cd362ea39474dabd42679e32ca6b",
+                "url": "https://api.github.com/repos/rectorphp/rector/zipball/bbd37aedd8df749916cffa2a947cfc4714d1ba2c",
+                "reference": "bbd37aedd8df749916cffa2a947cfc4714d1ba2c",
                 "shasum": ""
             },
             "require": {
@@ -10303,7 +10467,7 @@
             ],
             "support": {
                 "issues": "https://github.com/rectorphp/rector/issues",
-                "source": "https://github.com/rectorphp/rector/tree/2.3.6"
+                "source": "https://github.com/rectorphp/rector/tree/2.3.8"
             },
             "funding": [
                 {
@@ -10311,7 +10475,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-02-06T14:25:06+00:00"
+            "time": "2026-02-22T09:45:50+00:00"
         },
         {
             "name": "rector/swiss-knife",
@@ -12097,22 +12261,22 @@
         },
         {
             "name": "vincentlanglet/twig-cs-fixer",
-            "version": "3.13.0",
+            "version": "3.14.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/VincentLanglet/Twig-CS-Fixer.git",
-                "reference": "511e002e1e18203d26b173763ade29cbfd297750"
+                "reference": "599f110f192c31af5deb5736d6c1a970afdf51f3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/VincentLanglet/Twig-CS-Fixer/zipball/511e002e1e18203d26b173763ade29cbfd297750",
-                "reference": "511e002e1e18203d26b173763ade29cbfd297750",
+                "url": "https://api.github.com/repos/VincentLanglet/Twig-CS-Fixer/zipball/599f110f192c31af5deb5736d6c1a970afdf51f3",
+                "reference": "599f110f192c31af5deb5736d6c1a970afdf51f3",
                 "shasum": ""
             },
             "require": {
                 "composer-runtime-api": "^2.0.0",
                 "ext-ctype": "*",
-                "php": ">=8.0",
+                "php": ">=8.1",
                 "symfony/console": "^5.4.9 || ^6.4 || ^7.0 || ^8.0",
                 "symfony/filesystem": "^5.4 || ^6.4 || ^7.0 || ^8.0",
                 "symfony/finder": "^5.4 || ^6.4 || ^7.0 || ^8.0",
@@ -12127,6 +12291,7 @@
                 "friendsofphp/php-cs-fixer": "^3.13.0",
                 "infection/infection": "^0.26.16 || ^0.32.0",
                 "phpstan/phpstan": "^2.0",
+                "phpstan/phpstan-deprecation-rules": "^2.0",
                 "phpstan/phpstan-phpunit": "^2.0",
                 "phpstan/phpstan-strict-rules": "^2.0",
                 "phpstan/phpstan-symfony": "^2.0",
@@ -12161,7 +12326,7 @@
             "homepage": "https://github.com/VincentLanglet/Twig-CS-Fixer",
             "support": {
                 "issues": "https://github.com/VincentLanglet/Twig-CS-Fixer/issues",
-                "source": "https://github.com/VincentLanglet/Twig-CS-Fixer/tree/3.13.0"
+                "source": "https://github.com/VincentLanglet/Twig-CS-Fixer/tree/3.14.0"
             },
             "funding": [
                 {
@@ -12169,7 +12334,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-01-24T00:18:59+00:00"
+            "time": "2026-02-23T13:21:35+00:00"
         }
     ],
     "aliases": [],

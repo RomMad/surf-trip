@@ -1,13 +1,13 @@
 {% set headers = [
-    'title.label'|trans,
-    'location.label'|trans,
-    'start_at.label'|trans,
-    'end_at.label'|trans,
+    ['title.label'|trans, 't.title'],
+    ['location.label'|trans, 't.location'],
+    ['start_at.label'|trans, 't.startAt'],
+    ['end_at.label'|trans, 't.endAt'],
     'required_levels.label'|trans,
     'description.label'|trans,
-    'created_at.label'|trans,
+    ['created_at.label'|trans, 't.createdAt'],
     'actions.label'|trans,
-] %}
+ ] %}
 
 {% set data = trips|map(trip => [
     trip.title,

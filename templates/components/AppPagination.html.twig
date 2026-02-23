@@ -1,0 +1,62 @@
+
+{% props
+    pager = pager,
+    max_items = 5,
+    route = app.request.attributes.get('_route'),
+    route_attributes = app.request.query.all
+%}
+
+{% if pager.haveToPaginate %}
+    {% set start = max(1, pager.currentPage - (max_items // 2)) %}
+    {% set end = min(pager.nbPages, start + max_items - 1) %}
+    {% set start = max(1, end - max_items + 1) %}
+
+        <twig:Pagination>
+        <twig:Pagination:Content>
+            {% if pager.hasPreviousPage %}
+                <twig:Pagination:Previous href="{{ path(route, route_attributes|merge({page: pager.previousPage})) }}" />
+            {% endif %}
+
+            {% if start > 2 %}
+                {% if start > 1 %}
+                    <twig:Pagination:Item>
+                        <twig:Pagination:Link href="{{ path(route, route_attributes|merge({page: 1})) }}">
+                            {{- '1' -}}
+                        </twig:Pagination:Link>
+                    </twig:Pagination:Item>
+                {% endif %}
+
+                <twig:Pagination:Item>
+                    <twig:ux:icon name="lucide:more-horizontal" />
+                </twig:Pagination:Item>
+            {% endif %}
+
+            {% for page in start..end %}
+                {% set active = page == pager.currentPage %}
+                <twig:Pagination:Item>
+                    <twig:Pagination:Link href="{{ path(route, route_attributes|merge({page: page})) }}" :active="active" :disabled="active">
+                        {{- page -}}
+                    </twig:Pagination:Link>
+                </twig:Pagination:Item>
+            {% endfor %}
+
+            {% if end < pager.nbPages %}
+                {% if end < (pager.nbPages - 1) %}
+                    <twig:Pagination:Item>
+                        <twig:ux:icon name="lucide:more-horizontal" />
+                    </twig:Pagination:Item>
+                {% endif %}
+
+                <twig:Pagination:Item>
+                    <twig:Pagination:Link href="{{ path(route, route_attributes|merge({page: pager.nbPages})) }}">
+                        {{- pager.nbPages -}}
+                    </twig:Pagination:Link>
+                </twig:Pagination:Item>
+            {% endif %}
+
+            {% if pager.hasNextPage %}
+                <twig:Pagination:Next href="{{ path(route, route_attributes|merge({page: pager.nextPage})) }}" />
+            {% endif %}
+        </twig:Pagination:Content>
+    </twig:Pagination>
+{% endif %}

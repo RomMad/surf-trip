@@ -15,23 +15,9 @@ use Symfony\Component\Security\Http\Attribute\IsCsrfTokenValid;
 
 final class TripCrudController extends AbstractController
 {
-    public const string TRIP_INDEX_ROUTE = 'app.trip.index';
-
     public function __construct(
-        private readonly TripRepository $tripRepository
+        private readonly TripRepository $tripRepository,
     ) {}
-
-    #[Route(
-        path: '/trips',
-        name: self::TRIP_INDEX_ROUTE,
-        methods: [Request::METHOD_GET]
-    )]
-    public function index(): Response
-    {
-        return $this->render('trip/index.html.twig', [
-            'trips' => $this->tripRepository->findAll(),
-        ]);
-    }
 
     #[Route(
         path: '/trip/new',
@@ -48,7 +34,7 @@ final class TripCrudController extends AbstractController
             $trip->setCreatedAt(new \DateTimeImmutable());
             $this->tripRepository->save($trip, true);
 
-            return $this->redirectToRoute(self::TRIP_INDEX_ROUTE, [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute(IndexTripController::ROUTE, [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('trip/new.html.twig', [
@@ -84,7 +70,7 @@ final class TripCrudController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->tripRepository->save($trip, true);
 
-            return $this->redirectToRoute(self::TRIP_INDEX_ROUTE, [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute(IndexTripController::ROUTE, [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('trip/edit.html.twig', [
@@ -102,9 +88,8 @@ final class TripCrudController extends AbstractController
     #[IsCsrfTokenValid(new Expression('"delete" ~ args["trip"].getId()'))]
     public function delete(Trip $trip): Response
     {
-        dump($trip);
         $this->tripRepository->remove($trip, true);
 
-        return $this->redirectToRoute(self::TRIP_INDEX_ROUTE, [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute(IndexTripController::ROUTE, [], Response::HTTP_SEE_OTHER);
     }
 }
