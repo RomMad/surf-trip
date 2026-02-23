@@ -10,9 +10,14 @@ use App\Enum\RequiredLevel;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use Faker\Factory;
+use Faker\Generator;
 
 class TripFixtures extends Fixture implements DependentFixtureInterface
 {
+    private const int RANDOM_TRIPS_COUNT = 100;
+    private const int USER_REFERENCE_COUNT = 5;
+
     private const array TRIPS_DATA = [
         [
             'title' => 'Summer Surf Adventure Bali',
@@ -95,8 +100,12 @@ class TripFixtures extends Fixture implements DependentFixtureInterface
         ],
     ];
 
+    private Generator $faker;
+
     public function load(ObjectManager $manager): void
     {
+        $this->faker = Factory::create();
+
         foreach ($this->generateTrips() as $trip) {
             $manager->persist($trip);
         }
@@ -124,7 +133,7 @@ class TripFixtures extends Fixture implements DependentFixtureInterface
                 ->setEndAt(new \DateTimeImmutable($tripData['endAt']))
                 ->setRequiredLevels($tripData['requiredLevels'])
                 ->setDescription($tripData['description'])
-                ->setCreatedAt(new \DateTimeImmutable())
+                ->setCreatedAt(new \DateTimeImmutable()->createFromInterface($this->faker->dateTimeBetween('-1 month', 'today')))
             ;
 
             foreach ($tripData['owners'] as $ownerIndex) {
@@ -135,5 +144,43 @@ class TripFixtures extends Fixture implements DependentFixtureInterface
 
             yield $trip;
         }
+
+        for ($index = 0; $index < self::RANDOM_TRIPS_COUNT; ++$index) {
+            /** @var \DateTimeInterface $randomStart */
+            $randomStart = $this->faker->dateTimeBetween('-6 months', '+6 months');
+            $startAt = \DateTimeImmutable::createFromInterface($randomStart);
+
+            $trip = new Trip()
+                ->setTitle(sprintf('%s Surf Trip', ucfirst((string) $this->faker->words($this->faker->numberBetween(2, 4), true))))
+                ->setLocation(sprintf('%s, %s', $this->faker->city(), $this->faker->country()))
+                ->setStartAt($startAt)
+                ->setEndAt($startAt->modify(sprintf('+%d days', $this->faker->numberBetween(3, 14))))
+                ->setRequiredLevels($this->randomRequiredLevels())
+                ->setDescription($this->faker->paragraphs($this->faker->numberBetween(1, 3), true))
+                ->setCreatedAt(new \DateTimeImmutable()->createFromInterface($this->faker->dateTimeBetween('-1 year', '-1 month')))
+            ;
+
+            /** @var list<int> $owners */
+            $owners = $this->faker->randomElements(range(0, self::USER_REFERENCE_COUNT - 1), $this->faker->numberBetween(1, 2));
+
+            foreach ($owners as $ownerIndex) {
+                /** @var User $owner */
+                $owner = $this->getReference(UserFixtures::USER_REFERENCE.$ownerIndex, User::class);
+                $trip->addOwner($owner);
+            }
+
+            yield $trip;
+        }
+    }
+
+    /**
+     * @return list<RequiredLevel>
+     */
+    private function randomRequiredLevels(): array
+    {
+        return $this->faker->randomElements(
+            RequiredLevel::cases(),
+            $this->faker->numberBetween(1, count(RequiredLevel::cases()))
+        );
     }
 }
