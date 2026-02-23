@@ -133,7 +133,7 @@ class TripFixtures extends Fixture implements DependentFixtureInterface
                 ->setEndAt(new \DateTimeImmutable($tripData['endAt']))
                 ->setRequiredLevels($tripData['requiredLevels'])
                 ->setDescription($tripData['description'])
-                ->setCreatedAt(new \DateTimeImmutable()->createFromInterface($this->faker->dateTimeBetween('-1 month', 'today')))
+                ->setCreatedAt(\DateTimeImmutable::createFromInterface($this->faker->dateTimeBetween('-1 month', 'today')))
             ;
 
             foreach ($tripData['owners'] as $ownerIndex) {
@@ -157,7 +157,7 @@ class TripFixtures extends Fixture implements DependentFixtureInterface
                 ->setEndAt($startAt->modify(sprintf('+%d days', $this->faker->numberBetween(3, 14))))
                 ->setRequiredLevels($this->randomRequiredLevels())
                 ->setDescription($this->faker->paragraphs($this->faker->numberBetween(1, 3), true))
-                ->setCreatedAt(new \DateTimeImmutable()->createFromInterface($this->faker->dateTimeBetween('-1 year', '-1 month')))
+                ->setCreatedAt(\DateTimeImmutable::createFromInterface($this->faker->dateTimeBetween('-1 year', '-1 month')))
             ;
 
             /** @var list<int> $owners */

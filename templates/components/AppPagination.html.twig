@@ -11,7 +11,7 @@
     {% set end = min(pager.nbPages, start + max_items - 1) %}
     {% set start = max(1, end - max_items + 1) %}
 
-        <twig:Pagination>
+    <twig:Pagination>
         <twig:Pagination:Content>
             {% if pager.hasPreviousPage %}
                 <twig:Pagination:Previous href="{{ path(route, route_attributes|merge({page: pager.previousPage})) }}" />
@@ -27,7 +27,7 @@
                 {% endif %}
 
                 <twig:Pagination:Item>
-                    <twig:ux:icon name="lucide:more-horizontal" />
+                    <twig:Pagination:Ellipsis />
                 </twig:Pagination:Item>
             {% endif %}
 
@@ -43,7 +43,7 @@
             {% if end < pager.nbPages %}
                 {% if end < (pager.nbPages - 1) %}
                     <twig:Pagination:Item>
-                        <twig:ux:icon name="lucide:more-horizontal" />
+                        <twig:Pagination:Ellipsis />
                     </twig:Pagination:Item>
                 {% endif %}
 
