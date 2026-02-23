@@ -50,8 +50,9 @@
     .app-btn-icon-lg {
         @apply size-10;
     }
-}
 
-.app-btn[disabled] {
-    pointer-events: none;
+    .app-btn[disabled],
+    .app-btn[aria-disabled="true"] {
+        @apply pointer-events-none cursor-not-allowed opacity-50;
+    }
 }
