@@ -26,7 +26,7 @@ final class IndexTripController extends AbstractController
         methods: [Request::METHOD_GET],
     )]
     #[Route(path: '/', methods: [Request::METHOD_GET])]
-    public function index(Request $request): Response
+    public function __invoke(Request $request): Response
     {
         $filter = new TripFilter();
         $form = $this->createForm(TripFilterFormType::class, $filter);
