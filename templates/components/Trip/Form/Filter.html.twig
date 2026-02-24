@@ -9,14 +9,14 @@
 }}) }}
     <twig:ButtonGroup>
         {{ form_widget(form.search) }}
-        {{ form_label(form.search, null, { label_attr: { hidden: null } }) }}
+        {{ form_label(form.search, null, {label_attr: {hidden: null}}) }}
         <twig:Button type="submit" size="icon-lg" variant="outline" aria-label="{{ 'search.label'|trans }}">
             <twig:ux:icon name="lucide:search" class="size-4" />
         </twig:Button>
     </twig:ButtonGroup>
 
-    {{ form_row(form.requiredLevels, { label_attr: { hidden: null } }) }}
-    {{ form_row(form.location, { label_attr: { hidden: null } }) }}
+    {{ form_row(form.requiredLevels, {label_attr: {hidden: null}}) }}
+    {{ form_row(form.location, {label_attr: {hidden: null}}) }}
 
     {{ form_rest(form) }}
 {{ form_end(form) }}

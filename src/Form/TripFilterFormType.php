@@ -55,6 +55,7 @@ final class TripFilterFormType extends AbstractType
         ]);
     }
 
+    #[\Override]
     public function getBlockPrefix(): string
     {
         return '';
