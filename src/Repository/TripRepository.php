@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Trip;
+use App\Form\Model\TripFilter;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
@@ -12,6 +13,8 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class TripRepository extends ServiceEntityRepository
 {
+    use JsonContainsFilterTrait;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Trip::class);
@@ -35,10 +38,35 @@ class TripRepository extends ServiceEntityRepository
         }
     }
 
-    public function createOrderedQueryBuilder(): QueryBuilder
+    public function createOrderedQueryBuilder(TripFilter $filter): QueryBuilder
     {
-        return $this->createQueryBuilder('t')
+        $queryBuilder = $this->createQueryBuilder('t')
             ->orderBy('t.createdAt', 'DESC')
         ;
+
+        $this->applyFilters($queryBuilder, $filter);
+
+        return $queryBuilder;
+    }
+
+    private function applyFilters(QueryBuilder $queryBuilder, TripFilter $filter): void
+    {
+        if (null !== $filter->search) {
+            $queryBuilder
+                ->andWhere('LOWER(t.title) LIKE :search OR LOWER(t.description) LIKE :search')
+                ->setParameter('search', sprintf('%%%s%%', mb_strtolower($filter->search)))
+            ;
+        }
+
+        if (null !== $filter->location) {
+            $queryBuilder
+                ->andWhere('LOWER(t.location) LIKE :location')
+                ->setParameter('location', sprintf('%%%s%%', mb_strtolower($filter->location)))
+            ;
+        }
+
+        if ([] !== $filter->requiredLevels) {
+            $this->addJsonArrayContains($queryBuilder, 't.requiredLevels', $filter->requiredLevels);
+        }
     }
 }

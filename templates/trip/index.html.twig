@@ -4,6 +4,8 @@
 
 {% block body %}
     <twig:Heading1 :title="title" />
+
+    <twig:Trip:Form:Filter :form="form" />
     <twig:Trip:IndexTable :trips="pager" />
     <twig:AppPagination :pager="pager" />
 

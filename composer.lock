@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "36d6d72a845b1b793ee1efd80a06f2c5",
+    "content-hash": "6e578b73ec71723b07ceaf2531bf98a9",
     "packages": [
         {
             "name": "doctrine/collections",
@@ -1185,6 +1185,103 @@
                 }
             ],
             "time": "2025-03-06T22:45:56+00:00"
+        },
+        {
+            "name": "martin-georgiev/postgresql-for-doctrine",
+            "version": "v4.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/martin-georgiev/postgresql-for-doctrine.git",
+                "reference": "4177b941151b8cf8a2a47c254ebec928df011d51"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/martin-georgiev/postgresql-for-doctrine/zipball/4177b941151b8cf8a2a47c254ebec928df011d51",
+                "reference": "4177b941151b8cf8a2a47c254ebec928df011d51",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/dbal": "~2.10||~3.0||~4.0",
+                "ext-ctype": "*",
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "php": "^8.2 <8.6"
+            },
+            "require-dev": {
+                "deptrac/deptrac": "^4.0",
+                "doctrine/orm": "~2.14||~3.0",
+                "ekino/phpstan-banned-code": "^3.0",
+                "friendsofphp/php-cs-fixer": "^3.93.1",
+                "phpstan/phpstan": "^2.1.38",
+                "phpstan/phpstan-deprecation-rules": "^2.0.3",
+                "phpstan/phpstan-doctrine": "^2.0.14",
+                "phpstan/phpstan-phpunit": "^2.0.12",
+                "phpunit/phpunit": "^10.5.63",
+                "rector/rector": "^2.3.5",
+                "symfony/cache": "^6.4||^7.0",
+                "symfony/var-exporter": "^6.4||^7.0"
+            },
+            "suggest": {
+                "doctrine/orm": "~2.14||~3.0",
+                "php": "^8.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "MartinGeorgiev\\": "src/MartinGeorgiev/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Martin Georgiev",
+                    "email": "martin.georgiev@gmail.com",
+                    "role": "author"
+                }
+            ],
+            "description": "Extends Doctrine with native PostgreSQL support for arrays, JSONB, ranges, PostGIS geometries, text search, ltree, uuid, and 100+ PostgreSQL-specific functions.",
+            "keywords": [
+                "array-data-types",
+                "arrays",
+                "dbal",
+                "doctrine",
+                "doctrine-dbal",
+                "doctrine-orm",
+                "doctrine-types",
+                "json",
+                "json-data",
+                "jsonb",
+                "ltree",
+                "martin-georgiev",
+                "postgis",
+                "postgis-geometry",
+                "postgres",
+                "postgres-extension",
+                "postgresql",
+                "range",
+                "spatial",
+                "text-search",
+                "tsvector",
+                "uuid"
+            ],
+            "support": {
+                "issues": "https://github.com/martin-georgiev/postgresql-for-doctrine/issues",
+                "source": "https://github.com/martin-georgiev/postgresql-for-doctrine/tree/v4.2.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/sponsors/martin-georgiev",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/martin-georgiev",
+                    "type": "github"
+                }
+            ],
+            "time": "2026-02-11T14:44:47+00:00"
         },
         {
             "name": "monolog/monolog",

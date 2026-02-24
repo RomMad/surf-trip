@@ -10,6 +10,9 @@ back_to_list.label: Retour à la liste
 # Common
 dark_mode.label: Mode sombre
 no_records_found.label: Aucun enregistrement trouvé
+search:
+    label: Rechercher
+    placeholder: Rechercher...
 
 # Pagination
 next.label: Suivant
@@ -26,10 +29,14 @@ trip:
 trips.label: Trips
 title.label: Titre
 description.label: Description
-location.label: Lieu
+location:
+    label: Lieu
+    placeholder: Lieu du trip
 start_at.label: Date de début
 end_at.label: Date de fin
-required_levels.label: Niveaux requis
+required_levels:
+    label: Niveaux requis
+    placeholder: Sélectionnez les niveaux requis
 owner.label: Administrateur
 created_at.label: Créé le
 actions.label: Actions
