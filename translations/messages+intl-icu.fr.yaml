@@ -8,9 +8,12 @@ update.label: Mettre à jour
 back_to_list.label: Retour à la liste
 
 # Common
+app_name: Surf Trip
 dark_mode.label: Mode sombre
 no_records_found.label: Aucun enregistrement trouvé
-
+navigation:
+    main.label: Navigation principale
+    toggle.label: Voir la navigation
 # Pagination
 next.label: Suivant
 previous.label: Précédent
