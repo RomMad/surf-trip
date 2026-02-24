@@ -1,5 +1,5 @@
 import { startStimulusApp } from '@symfony/stimulus-bridge';
-import AutoSubmit from '@stimulus-components/auto-submit'
+import AutoSubmit from '@stimulus-components/auto-submit';
 
 
 // Registers Stimulus controllers from controllers.json and in the controllers/ directory
