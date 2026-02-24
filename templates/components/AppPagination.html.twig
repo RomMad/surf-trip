@@ -2,7 +2,7 @@
 {% props
     pager = pager,
     max_items = 5,
-    route = app.request.attributes.get('_route'),
+    route = app.current_route,
     route_attributes = app.request.query.all
 %}
 
