@@ -6,8 +6,11 @@
     <twig:Heading1 :title="title" />
 
     <twig:Trip:Form:Filter :form="form" />
-    <twig:Trip:IndexTable :trips="pager" />
-    <twig:AppPagination :pager="pager" />
+
+    <turbo-frame id="trip_results">
+        <twig:Trip:IndexTable :trips="pager" />
+        <twig:AppPagination :pager="pager" />
+    </turbo-frame>
 
     <twig:Button as="a" href="{{ path('app.trip.new') }}">
         <twig:ux:icon name="lucide:plus" />
