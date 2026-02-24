@@ -2,7 +2,7 @@
 {% set has_direction_asc = name and app.request.query.get('direction') == 'asc' %}
 
 <a href="{{ path(
-        app.request.attributes.get('_route'),
+        app.current_route,
         app.request.query.all|merge({
             sort: name,
             direction: has_sort_name and has_direction_asc ? 'desc' : 'asc',

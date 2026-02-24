@@ -21,8 +21,9 @@ final class IndexTripController extends AbstractController
     #[Route(
         path: '/trips',
         name: self::ROUTE,
-        methods: [Request::METHOD_GET]
+        methods: [Request::METHOD_GET],
     )]
+    #[Route(path: '/', methods: [Request::METHOD_GET])]
     public function index(Request $request): Response
     {
         $queryBuilder = $this->tripRepository->createOrderedQueryBuilder();

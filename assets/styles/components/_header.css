@@ -1,0 +1,21 @@
+@layer components {
+    .app-header-nav {
+        @apply relative flex w-full items-center justify-between bg-primary px-3 py-2 shadow-md text-primary-foreground sm:flex-wrap sm:justify-start sm:py-4;
+    }
+
+    .app-header-container {
+        @apply flex w-full flex-wrap items-center justify-between;
+    }
+
+    .app-header-toggle {
+        @apply block border-0 bg-transparent px-2 text-primary-foreground hover:no-underline hover:shadow-none focus:no-underline focus:shadow-none focus:outline-none focus:ring-0 sm:hidden;
+    }
+
+    .app-header-brand {
+        @apply text-xl font-semibold tracking-tight text-primary-foreground;
+    }
+
+    .app-header-menu {
+        @apply hidden grow basis-full items-center sm:flex sm:basis-auto sm:mx-5;
+    }
+}

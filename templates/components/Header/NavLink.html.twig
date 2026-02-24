@@ -1,0 +1,16 @@
+{# @prop route string Target URL #}
+{# @prop label string Translation key for link label #}
+{# @prop active boolean Whether the link is active or not, default to `false` #}
+{%- props route, label, active = route == app.current_route -%}
+
+<li>
+    <twig:Button
+        as="a"
+        href="{{ path(route) }}"
+        :disabled="active"
+        :aria-current="active ? 'page' : null"
+        {{ ...attributes.without('class') }}
+    >
+        {{- label|trans -}}
+    </twig:Button>
+</li>

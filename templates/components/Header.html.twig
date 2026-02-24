@@ -1,5 +1,32 @@
-<header class="p-4">
-    <div class="flex justify-end">
-        <twig:Header:DarkModeSwitch />
-    </div>
+<header>
+     <nav class="app-header-nav" aria-label="{{ 'navigation.main.label'|trans }}">
+        <div class="app-header-container">
+            <button
+                class="app-header-toggle"
+                type="button"
+                data-twe-collapse-init
+                data-twe-target="#main_navbar"
+                aria-controls="main_navbar"
+                aria-expanded="false"
+                aria-label="{{ 'navigation.toggle.label'|trans }}"
+            >
+                <twig:ux:icon name="lucide:menu" height="1.5em" width="1.5em" />
+            </button>
+
+            <a class="app-header-brand" href="/">
+                {{- 'app_name'|trans -}}
+            </a>
+
+            <div class="app-header-menu" id="main_navbar">
+                <ul class="flex">
+                    <twig:Header:NavLink label="trips.label" route="app.trip.index" />
+                    <twig:Header:NavLink label="trip.new.label" route="app.trip.new" />
+                </ul>
+            </div>
+
+            <div>
+                <twig:Header:DarkModeSwitch />
+            </div>
+        </div>
+    </nav>
 </header>
