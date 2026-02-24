@@ -8,7 +8,7 @@
         as="a"
         href="{{ path(route) }}"
         :disabled="active"
-        :aria-disabled="active"
+        :aria-current="active ? 'page' : null"
         {{ ...attributes.without('class') }}
     >
         {{- label|trans -}}
