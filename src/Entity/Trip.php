@@ -32,7 +32,7 @@ class Trip
     private ?\DateTimeImmutable $endAt = null;
 
     /** @var RequiredLevel[] */
-    #[ORM\Column(type: Types::JSON, enumType: RequiredLevel::class)]
+    #[ORM\Column(type: Types::JSONB, enumType: RequiredLevel::class)]
     private array $requiredLevels;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]

@@ -14,6 +14,10 @@ no_records_found.label: Aucun enregistrement trouvé
 navigation:
     main.label: Navigation principale
     toggle.label: Voir la navigation
+search:
+    label: Rechercher
+    placeholder: Rechercher...
+
 # Pagination
 next.label: Suivant
 previous.label: Précédent
@@ -29,10 +33,14 @@ trip:
 trips.label: Trips
 title.label: Titre
 description.label: Description
-location.label: Lieu
+location:
+    label: Lieu
+    placeholder: Lieu du trip
 start_at.label: Date de début
 end_at.label: Date de fin
-required_levels.label: Niveaux requis
+required_levels:
+    label: Niveaux requis
+    placeholder: Sélectionnez les niveaux requis
 owner.label: Administrateur
 created_at.label: Créé le
 actions.label: Actions

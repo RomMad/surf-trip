@@ -1,0 +1,22 @@
+{% props form %}
+
+{{ form_start(form, {attr: {
+    class: 'flex flex-col md:flex-row gap-4',
+    'data-controller': 'auto-submit',
+    'data-auto-submit-delay-value': 300,
+    'data-action': 'input->auto-submit#submit change->auto-submit#submit',
+    'data-turbo-frame': 'trip_results',
+}}) }}
+    <twig:ButtonGroup>
+        {{ form_widget(form.search) }}
+        {{ form_label(form.search, null, {label_attr: {hidden: null}}) }}
+        <twig:Button type="submit" size="icon-lg" variant="outline" aria-label="{{ 'search.label'|trans }}">
+            <twig:ux:icon name="lucide:search" class="size-4" />
+        </twig:Button>
+    </twig:ButtonGroup>
+
+    {{ form_row(form.requiredLevels, {label_attr: {hidden: null}}) }}
+    {{ form_row(form.location, {label_attr: {hidden: null}}) }}
+
+    {{ form_rest(form) }}
+{{ form_end(form) }}

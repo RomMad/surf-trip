@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Form\Model\TripFilter;
+use App\Form\TripFilterFormType;
 use App\Pagination\PagerFactory;
 use App\Repository\TripRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,11 +28,16 @@ final class IndexTripController extends AbstractController
     #[Route(path: '/', methods: [Request::METHOD_GET])]
     public function index(Request $request): Response
     {
-        $queryBuilder = $this->tripRepository->createOrderedQueryBuilder();
+        $filter = new TripFilter();
+        $form = $this->createForm(TripFilterFormType::class, $filter);
+        $form->handleRequest($request);
+
+        $queryBuilder = $this->tripRepository->createOrderedQueryBuilder($filter);
         $pager = $this->pagerFactory->create($queryBuilder, $request, 10);
 
         return $this->render('trip/index.html.twig', [
             'pager' => $pager,
+            'form' => $form,
         ]);
     }
 }
