@@ -35,11 +35,13 @@ class Trip
     private ?\DateTimeImmutable $startAt = null;
 
     #[ORM\Column]
-    #[Assert\NotNull(message: 'trip.end_at.not_null')]
-    #[Assert\Expression(
-        expression: 'value >= this.getStartAt()',
-        message: 'trip.end_at.before_start_at'
-    )]
+    #[Assert\Sequentially([
+        new Assert\NotNull(message: 'trip.end_at.not_null'),
+        new Assert\Expression(
+            expression: 'value >= this.getStartAt()',
+            message: 'trip.end_at.before_start_at'
+        ),
+    ])]
     private ?\DateTimeImmutable $endAt = null;
 
     /** @var RequiredLevel[] */
