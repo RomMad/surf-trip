@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Form;
 
-use App\Enum\RequiredLevel;
+use App\Enum\Trip\RequiredLevel;
 use App\Form\Model\TripFilter;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;

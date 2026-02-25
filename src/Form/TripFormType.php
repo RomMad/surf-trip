@@ -6,7 +6,7 @@ namespace App\Form;
 
 use App\Entity\Trip;
 use App\Entity\User;
-use App\Enum\RequiredLevel;
+use App\Enum\Trip\RequiredLevel;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;

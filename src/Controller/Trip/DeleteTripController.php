@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Controller\Trip;
 
 use App\Entity\Trip;
 use App\Repository\TripRepository;
