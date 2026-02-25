@@ -90,7 +90,7 @@ final class MissingLocaleRedirectListener
     {
         if (array_any(
             self::EXCLUDED_PREFIXES,
-            fn ($prefix) => str_starts_with($path, $prefix)
+            fn ($prefix) => str_starts_with($path, (string) $prefix)
         )
         ) {
             return true;
