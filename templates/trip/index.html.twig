@@ -7,10 +7,12 @@
 
     <twig:Trip:Form:Filter :form="form" />
 
-    <turbo-frame id="trip_results">
-        <twig:Trip:IndexTable :trips="pager" />
-        <twig:AppPagination :pager="pager" />
-    </turbo-frame>
+    {% block trip_results %}
+        <turbo-frame id="trip_results">
+            <twig:Trip:IndexTable :trips="pager" />
+            <twig:AppPagination :pager="pager" />
+        </turbo-frame>
+    {% endblock %}
 
     <twig:Button as="a" href="{{ path('app.trip.new') }}">
         <twig:ux:icon name="lucide:plus" />
