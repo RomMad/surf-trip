@@ -27,27 +27,24 @@
             </div>
 
             <div class="flex items-center gap-2">
-                <div class="flex items-center" aria-label="{{ 'language.switch.label'|trans }}">
-                    <twig:Button as="a"
-                        variant="link"
-                        class="p-1"
-                        href="{{ path(app.current_route, current_route_parameters|merge({_locale: 'fr'})) }}"
-                        title="{{ 'language.fr.label'|trans }}"
-                        disabled="{{ app.request.locale === 'fr' }}"
-                    >
-                        <twig:ux:icon name="circle-flags:lang-fr" />
-                    </twig:Button>
-                    <span>/</span>
-                    <twig:Button as="a"
-                        variant="link"
-                        class="p-1"
-                        href="{{ path(app.current_route, current_route_parameters|merge({_locale: 'en'})) }}"
-                        title="{{ 'language.en.label'|trans }}"
-                        disabled="{{ app.request.locale === 'en' }}"
-                    >
-                        <twig:ux:icon name="circle-flags:lang-en" />
-                    </twig:Button>
-                </div>
+                <ul class="flex items-center" aria-label="{{ 'language.switch.label'|trans }}">
+                    {% for locale in supported_locales %}
+                        <li>
+                            <twig:Button as="a"
+                                variant="link"
+                                class="p-1"
+                                href="{{ path(app.current_route, current_route_parameters|merge({_locale: locale})) }}"
+                                title="{{ 'language.%s.label'|replace({'%s': locale})|trans }}"
+                                disabled="{{ app.request.locale === locale }}"
+                            >
+                                <twig:ux:icon name="circle-flags:lang-{{ locale }}" />
+                            </twig:Button>
+                        </li>
+                        {% if not loop.last %}
+                            <li>|</li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
                 <twig:Header:DarkModeSwitch />
             </div>
         </div>
