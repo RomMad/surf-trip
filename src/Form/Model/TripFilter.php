@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Form\Model;
 
-use App\Enum\RequiredLevel;
+use App\Enum\Trip\RequiredLevel;
 
 final class TripFilter
 {
