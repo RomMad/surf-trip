@@ -52,6 +52,7 @@ final class TripFilterFormType extends AbstractType
             'data_class' => TripFilter::class,
             'method' => Request::METHOD_GET,
             'csrf_protection' => false,
+            'allow_extra_fields' => true,
         ]);
     }
 

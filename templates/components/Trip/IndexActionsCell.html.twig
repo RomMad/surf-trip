@@ -1,9 +1,9 @@
 <div class="flex flex-col gap-2">
-    <twig:Button as="a" size="sm" href="{{ path('app.trip.show', {id: trip.id}) }}">
+    <twig:Button as="a" size="sm" href="{{ path('app.trip.show', {id: trip.id}) }}" data-turbo-frame="_top">
         <twig:ux:icon name="lucide:eye" />
         {{- 'show.label'|trans -}}
     </twig:Button>
-    <twig:Button as="a" size="sm" href="{{ path('app.trip.edit', {id: trip.id}) }}">
+    <twig:Button as="a" size="sm" href="{{ path('app.trip.edit', {id: trip.id}) }}" data-turbo-frame="_top">
         <twig:ux:icon name="lucide:edit-2" />
         {{- 'edit.label'|trans -}}
     </twig:Button>

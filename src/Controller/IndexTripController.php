@@ -35,6 +35,12 @@ final class IndexTripController extends AbstractController
         $queryBuilder = $this->tripRepository->createOrderedQueryBuilder($filter);
         $pager = $this->pagerFactory->create($queryBuilder, $request, 10);
 
+        if ('trip_results' === $request->headers->get('Turbo-Frame')) {
+            return $this->renderBlock('trip/index.html.twig', 'trip_results', [
+                'pager' => $pager,
+            ]);
+        }
+
         return $this->render('trip/index.html.twig', [
             'pager' => $pager,
             'form' => $form,
