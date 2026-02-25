@@ -54,7 +54,14 @@ class TripRepository extends ServiceEntityRepository
                     t.endAt,
                     t.requiredLevels,
                     t.description,
-                    COALESCE(STRING_AGG(o.firstname, \', \' ORDER BY o.firstname), \'\'),
+                    COALESCE(
+                        STRING_AGG(
+                            CONCAT(o.firstname, \' \', o.lastname),
+                            \', \'
+                            ORDER BY o.firstname, o.lastname
+                        ),
+                        \'\'
+                    ),
                     t.createdAt
                 )',
                 TripIndexReadModel::class,
@@ -92,7 +99,14 @@ class TripRepository extends ServiceEntityRepository
                     t.endAt,
                     t.requiredLevels,
                     t.description,
-                    COALESCE(STRING_AGG(o.firstname, \', \' ORDER BY o.firstname), \'\'),
+                    COALESCE(
+                        STRING_AGG(
+                            CONCAT(o.firstname, \' \', SUBSTRING(o.lastname, 1, 1)),
+                            \', \'
+                            ORDER BY o.firstname, o.lastname
+                        ),
+                        \'\'
+                    ),
                     t.createdAt
                 )',
                 TripShowReadModel::class,
