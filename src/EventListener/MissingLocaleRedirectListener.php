@@ -75,13 +75,10 @@ final class MissingLocaleRedirectListener
 
     private function isLocalizedPath(string $path): bool
     {
-        foreach (self::SUPPORTED_LOCALES as $locale) {
-            if ($path === "/{$locale}" || str_starts_with($path, "/{$locale}/")) {
-                return true;
-            }
-        }
-
-        return false;
+        return array_any(
+            self::SUPPORTED_LOCALES,
+            fn ($locale) => $path === "/{$locale}" || str_starts_with($path, "/{$locale}/")
+        );
     }
 
     private function extractLocale(string $path): string
