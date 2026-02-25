@@ -13,12 +13,12 @@
 {% set data = trips|map(trip => [
     trip.title,
     trip.location,
-    trip.startAt|date('Y-m-d'),
-    trip.endAt|date('Y-m-d'),
+    trip.startAt|format_datetime(pattern: 'EEEE d MMM yy'),
+    trip.endAt|format_datetime(pattern: 'EEEE d MMM yy'),
     trip.requiredLevels|map(rl => rl.label|trans),
     trip.description|u.truncate(120, '…', false),
     trip.ownerNames,
-    trip.createdAt|date('Y-m-d'),
+    trip.createdAt|format_datetime(pattern: 'd MMM yy'),
     {raw: include('components/Trip/IndexActionsCell.html.twig', {trip: trip})},
 ]) %}
 

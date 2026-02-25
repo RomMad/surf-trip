@@ -21,7 +21,7 @@
                 {{- 'start_at.label'|trans -}}
             </twig:Table:Head>
             <twig:Table:Cell>
-                {{- trip.startAt|date('Y-m-d H:i') -}}
+                {{- trip.startAt|format_datetime(pattern: 'EEEE d MMMM yyyy HH:mm') -}}
             </twig:Table:Cell>
         </twig:Table:Row>
         <twig:Table:Row>
@@ -29,7 +29,7 @@
                 {{- 'end_at.label'|trans -}}
             </twig:Table:Head>
             <twig:Table:Cell>
-                {{- trip.endAt|date('Y-m-d H:i') -}}
+                {{- trip.endAt|format_datetime(pattern: 'EEEE d MMMM yyyy HH:mm') -}}
             </twig:Table:Cell>
         </twig:Table:Row>
         <twig:Table:Row>
@@ -61,7 +61,7 @@
                 {{- 'created_at.label'|trans -}}
             </twig:Table:Head>
             <twig:Table:Cell>
-                {{- trip.createdAt|date('Y-m-d H:i') -}}
+                {{- trip.createdAt|format_datetime(pattern: 'EEEE d MMMM yyyy HH:mm') -}}
             </twig:Table:Cell>
         </twig:Table:Row>
     </twig:Table:Body>
