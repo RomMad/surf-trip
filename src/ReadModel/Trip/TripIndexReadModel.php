@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\ReadModel\Trip;
 
-use App\Enum\RequiredLevel;
+use App\Enum\Trip\RequiredLevel;
 
 final readonly class TripIndexReadModel
 {

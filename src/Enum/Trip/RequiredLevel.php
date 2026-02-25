@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Enum;
+namespace App\Enum\Trip;
 
+use App\Enum\EnumTrait;
 use Symfony\Contracts\Translation\TranslatableInterface;
 
 enum RequiredLevel: int implements TranslatableInterface

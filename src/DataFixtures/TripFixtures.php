@@ -6,7 +6,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Trip;
 use App\Entity\User;
-use App\Enum\RequiredLevel;
+use App\Enum\Trip\RequiredLevel;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
