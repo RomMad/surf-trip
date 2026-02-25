@@ -23,12 +23,12 @@ class Trip
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: 'trip.title.not_blank')]
     #[Assert\Length(max: 255, maxMessage: 'trip.title.max_length')]
-    private ?string $title = null;
+    private string $title = '';
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: 'trip.location.not_blank')]
     #[Assert\Length(max: 255, maxMessage: 'trip.location.max_length')]
-    private ?string $location = null;
+    private string $location = '';
 
     #[ORM\Column]
     #[Assert\NotNull(message: 'trip.start_at.not_null')]
@@ -101,7 +101,7 @@ class Trip
         return $this->startAt;
     }
 
-    public function setStartAt(\DateTimeImmutable $startAt): static
+    public function setStartAt(?\DateTimeImmutable $startAt): static
     {
         $this->startAt = $startAt;
 
@@ -113,7 +113,7 @@ class Trip
         return $this->endAt;
     }
 
-    public function setEndAt(\DateTimeImmutable $endAt): static
+    public function setEndAt(?\DateTimeImmutable $endAt): static
     {
         $this->endAt = $endAt;
 

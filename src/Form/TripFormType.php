@@ -20,9 +20,11 @@ class TripFormType extends AbstractType
         $builder
             ->add('title', null, [
                 'label' => 'title.label',
+                'empty_data' => '',
             ])
             ->add('location', null, [
                 'label' => 'location.label',
+                'empty_data' => '',
             ])
             ->add('startAt', null, [
                 'label' => 'start_at.label',
