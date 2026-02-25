@@ -13,6 +13,14 @@
     </div>
 {% endblock %}
 
+{% block form_label %}
+    {% set label_attr = label_attr|merge({
+        class: ('app-label ' ~ (label_attr.class|default('')))|tailwind_merge,
+    }) %}
+
+    {{ parent() }}
+{% endblock %}
+
 {% block form_widget_simple %}
     {% set type = type|default('text') %}
     {% set attr = attr|merge({
