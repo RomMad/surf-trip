@@ -81,7 +81,7 @@ class TripRepository extends ServiceEntityRepository
                     t.requiredLevels,
                     t.description,
                     t.createdAt,
-                    COALESCE(STRING_AGG(o.email, \', \' ORDER BY o.email)) AS ownerEmails
+                    COALESCE(STRING_AGG(o.email, \', \' ORDER BY o.email), \'\')
                 )',
                 TripShowReadModel::class,
             ))
