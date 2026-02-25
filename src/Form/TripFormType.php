@@ -43,7 +43,7 @@ class TripFormType extends AbstractType
             ])
             ->add('owners', EntityType::class, [
                 'class' => User::class,
-                'choice_label' => 'email',
+                'choice_label' => 'fullName',
                 'label' => 'owners.label',
                 'multiple' => true,
                 'autocomplete' => true,
