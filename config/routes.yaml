@@ -9,3 +9,10 @@
 
 controllers:
     resource: routing.controllers
+    prefix:
+        en: /en
+        fr: /fr
+    requirements:
+        _locale: en|fr
+    defaults:
+        _locale: '%locale%'

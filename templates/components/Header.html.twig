@@ -1,3 +1,5 @@
+{% set current_route_parameters = app.current_route_parameters|default({}) %}
+
 <header>
      <nav class="app-header-nav" aria-label="{{ 'navigation.main.label'|trans }}">
         <div class="app-header-container">
@@ -24,7 +26,26 @@
                 </ul>
             </div>
 
-            <div>
+            <div class="flex items-center gap-2">
+                <div class="flex items-center" aria-label="{{ 'language.switch.label'|trans }}">
+                    <twig:Button as="a"
+                        variant="link"
+                        class="p-1"
+                        href="{{ path(app.current_route, current_route_parameters|merge({_locale: 'fr'})) }}"
+                        title="{{ 'language.fr.label'|trans }}"
+                    >
+                        <twig:ux:icon name="circle-flags:lang-fr" />
+                    </twig:Button>
+                    <span>/</span>
+                    <twig:Button as="a"
+                        variant="link"
+                        class="p-1"
+                        href="{{ path(app.current_route, current_route_parameters|merge({_locale: 'en'})) }}"
+                        title="{{ 'language.en.label'|trans }}"
+                    >
+                        <twig:ux:icon name="circle-flags:lang-en" />
+                    </twig:Button>
+                </div>
                 <twig:Header:DarkModeSwitch />
             </div>
         </div>

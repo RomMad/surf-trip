@@ -14,6 +14,10 @@ no_records_found.label: Aucun enregistrement trouvé
 navigation:
     main.label: Navigation principale
     toggle.label: Voir la navigation
+language:
+    switch.label: Changer de langue
+    fr.label: Français
+    en.label: Anglais
 search:
     label: Rechercher
     placeholder: Rechercher...
