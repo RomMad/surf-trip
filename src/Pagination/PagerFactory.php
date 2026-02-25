@@ -80,7 +80,7 @@ final readonly class PagerFactory
      *
      * @param AdapterInterface<T> $adapter
      *
-     * @return Pagerfanta<mixed>
+     * @return Pagerfanta<T>
      */
     private function createPager(AdapterInterface $adapter, Request $request, int $maxPerPage, string $pageParameter): Pagerfanta
     {
