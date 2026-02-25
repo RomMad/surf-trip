@@ -20,6 +20,6 @@ final readonly class TripShowReadModel
         public array $requiredLevels,
         public ?string $description,
         public \DateTimeImmutable $createdAt,
-        public string $ownerEmails,
+        public string $ownerNames,
     ) {}
 }
