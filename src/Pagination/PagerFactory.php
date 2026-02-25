@@ -1,13 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Pagination;
 
 use Doctrine\ORM\QueryBuilder;
+use Pagerfanta\Adapter\AdapterInterface;
+use Pagerfanta\Adapter\CallbackAdapter;
 use Pagerfanta\Doctrine\ORM\QueryAdapter;
 use Pagerfanta\Pagerfanta;
 use Symfony\Component\HttpFoundation\Request;
 
-final class PagerFactory
+final readonly class PagerFactory
 {
     private const int DEFAULT_MAX_PER_PAGE = 10;
     private const string DEFAULT_PAGE_PARAMETER = 'page';
@@ -23,13 +27,38 @@ final class PagerFactory
     ): Pagerfanta {
         $this->sortQueryBuilder($queryBuilder, $request);
 
-        return new Pagerfanta(
-            new QueryAdapter($queryBuilder)
-        )
-            ->setMaxPerPage($maxPerPage)
-            ->setCurrentPage($request->query->getInt($pageParameter, 1))
-            ->setNormalizeOutOfRangePages(true)
-        ;
+        $adapter = new QueryAdapter($queryBuilder);
+
+        return $this->createPager($adapter, $request, $maxPerPage, $pageParameter);
+    }
+
+    /**
+     * @return Pagerfanta<mixed>
+     */
+    public function createWithCountQueryBuilder(
+        QueryBuilder $resultQueryBuilder,
+        QueryBuilder $countQueryBuilder,
+        Request $request,
+        int $maxPerPage = self::DEFAULT_MAX_PER_PAGE,
+        string $pageParameter = self::DEFAULT_PAGE_PARAMETER,
+    ): Pagerfanta {
+        $this->sortQueryBuilder($resultQueryBuilder, $request);
+
+        $adapter = new CallbackAdapter(
+            static fn (): int => (int) $countQueryBuilder->getQuery()->getSingleScalarResult(),
+            static function (int $offset, int $length) use ($resultQueryBuilder): iterable {
+                $queryBuilder = clone $resultQueryBuilder;
+
+                return $queryBuilder
+                    ->setFirstResult($offset)
+                    ->setMaxResults($length)
+                    ->getQuery()
+                    ->getResult()
+                ;
+            },
+        );
+
+        return $this->createPager($adapter, $request, $maxPerPage, $pageParameter);
     }
 
     private function sortQueryBuilder(QueryBuilder $queryBuilder, Request $request): void
@@ -44,5 +73,21 @@ final class PagerFactory
         if (in_array($direction, ['asc', 'desc'], true)) {
             $queryBuilder->orderBy($sort, $direction);
         }
+    }
+
+    /**
+     * @template T
+     *
+     * @param AdapterInterface<T> $adapter
+     *
+     * @return Pagerfanta<mixed>
+     */
+    private function createPager(AdapterInterface $adapter, Request $request, int $maxPerPage, string $pageParameter): Pagerfanta
+    {
+        return new Pagerfanta($adapter)
+            ->setMaxPerPage($maxPerPage)
+            ->setCurrentPage($request->query->getInt($pageParameter, 1))
+            ->setNormalizeOutOfRangePages(true)
+        ;
     }
 }

@@ -4,8 +4,7 @@ namespace App\Controller;
 
 use App\Form\Model\TripFilter;
 use App\Form\TripFilterFormType;
-use App\Pagination\PagerFactory;
-use App\Repository\TripRepository;
+use App\Pagination\TripPager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,8 +15,7 @@ final class IndexTripController extends AbstractController
     public const string ROUTE = 'app.trip.index';
 
     public function __construct(
-        private readonly TripRepository $tripRepository,
-        private readonly PagerFactory $pagerFactory,
+        private readonly TripPager $tripPager,
     ) {}
 
     #[Route(
@@ -32,8 +30,7 @@ final class IndexTripController extends AbstractController
         $form = $this->createForm(TripFilterFormType::class, $filter);
         $form->handleRequest($request);
 
-        $queryBuilder = $this->tripRepository->createOrderedQueryBuilder($filter);
-        $pager = $this->pagerFactory->create($queryBuilder, $request, 10);
+        $pager = $this->tripPager->create($filter, $request, 10);
 
         if ('trip_results' === $request->headers->get('Turbo-Frame')) {
             return $this->renderBlock('trip/index.html.twig', 'trip_results', [
