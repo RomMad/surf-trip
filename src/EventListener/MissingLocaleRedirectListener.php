@@ -88,10 +88,12 @@ final class MissingLocaleRedirectListener
 
     private function isExcludedPath(string $path): bool
     {
-        foreach (self::EXCLUDED_PREFIXES as $prefix) {
-            if (str_starts_with($path, $prefix)) {
-                return true;
-            }
+        if (array_any(
+            self::EXCLUDED_PREFIXES,
+            fn ($prefix) => str_starts_with($path, $prefix)
+        )
+        ) {
+            return true;
         }
 
         return 1 === preg_match(self::ASSETS_REGEX, $path);
