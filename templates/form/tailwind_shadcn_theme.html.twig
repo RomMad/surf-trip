@@ -5,7 +5,12 @@
         class: ('app-row ' ~ (row_attr.class|default('')))|tailwind_merge,
     }) %}
 
-    {{ parent() }}
+    <div{% with {attr: row_attr} %}{{ block('attributes') }}{% endwith %}>
+        {{ form_label(form) }}
+        {{ form_widget(form) }}
+        {{ form_errors(form) }}
+        {{ form_help(form) }}
+    </div>
 {% endblock %}
 
 {% block form_widget_simple %}
@@ -39,4 +44,16 @@
     }) %}
 
     {{ parent() }}
+{% endblock %}
+
+{% block form_errors %}
+    {% if errors|length > 0 %}
+        <ul class="app-errors">
+            {% for error in errors %}
+                <li class="app-error-item">
+                    {{- error.message -}}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
 {% endblock %}
