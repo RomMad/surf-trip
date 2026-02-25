@@ -5,6 +5,7 @@
     ['end_at.label'|trans, 't.endAt'],
     'required_levels.label'|trans,
     'description.label'|trans,
+    ['owners.label'|trans, 't.ownerNames'],
     ['created_at.label'|trans, 't.createdAt'],
     'actions.label'|trans,
 ] %}
@@ -16,6 +17,7 @@
     trip.endAt|date('Y-m-d'),
     trip.requiredLevels|map(rl => rl.label|trans),
     trip.description|u.truncate(120, '…', false),
+    trip.ownerNames,
     trip.createdAt|date('Y-m-d'),
     {raw: include('components/Trip/IndexActionsCell.html.twig', {trip: trip})},
 ]) %}

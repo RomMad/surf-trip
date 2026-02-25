@@ -46,9 +46,28 @@ class TripRepository extends ServiceEntityRepository
     {
         $queryBuilder = $this->createQueryBuilder('t')
             ->select(sprintf(
-                'NEW %s(t.id, t.title, t.location, t.startAt, t.endAt, t.requiredLevels, t.description, t.createdAt)',
+                'NEW %s(
+                    t.id,
+                    t.title,
+                    t.location,
+                    t.startAt,
+                    t.endAt,
+                    t.requiredLevels,
+                    t.description,
+                    COALESCE(
+                        STRING_AGG(
+                            CONCAT(o.firstname, \' \', o.lastname),
+                            \', \'
+                            ORDER BY o.firstname, o.lastname
+                        ),
+                        \'\'
+                    ),
+                    t.createdAt
+                )',
                 TripIndexReadModel::class,
             ))
+            ->leftJoin('t.owners', 'o')
+            ->groupBy('t.id')
             ->orderBy('t.createdAt', 'DESC')
         ;
 
@@ -80,13 +99,20 @@ class TripRepository extends ServiceEntityRepository
                     t.endAt,
                     t.requiredLevels,
                     t.description,
-                    t.createdAt,
-                    COALESCE(STRING_AGG(o.email, \', \' ORDER BY o.email), \'\')
+                    COALESCE(
+                        STRING_AGG(
+                            CONCAT(o.firstname, \' \', SUBSTRING(o.lastname, 1, 1)),
+                            \', \'
+                            ORDER BY o.firstname, o.lastname
+                        ),
+                        \'\'
+                    ),
+                    t.createdAt
                 )',
                 TripShowReadModel::class,
             ))
+            ->leftJoin('t.owners', 'o')
             ->groupBy('t.id')
-            ->leftJoin('t.owner', 'o')
 
             ->andWhere('t.id = :id')
             ->setParameter('id', $id)

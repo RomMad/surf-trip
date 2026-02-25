@@ -43,11 +43,11 @@ class Trip
 
     /** @var Collection<int, User> */
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'trips')]
-    private Collection $owner;
+    private Collection $owners;
 
     public function __construct()
     {
-        $this->owner = new ArrayCollection();
+        $this->owners = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -148,15 +148,15 @@ class Trip
     /**
      * @return Collection<int, User>
      */
-    public function getOwner(): Collection
+    public function getOwners(): Collection
     {
-        return $this->owner;
+        return $this->owners;
     }
 
     public function addOwner(User $owner): static
     {
-        if (!$this->owner->contains($owner)) {
-            $this->owner->add($owner);
+        if (!$this->owners->contains($owner)) {
+            $this->owners->add($owner);
         }
 
         return $this;
@@ -164,7 +164,7 @@ class Trip
 
     public function removeOwner(User $owner): static
     {
-        $this->owner->removeElement($owner);
+        $this->owners->removeElement($owner);
 
         return $this;
     }
