@@ -41,7 +41,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var Collection<int, Trip>
      */
-    #[ORM\ManyToMany(targetEntity: Trip::class, mappedBy: 'owner')]
+    #[ORM\ManyToMany(targetEntity: Trip::class, mappedBy: 'owners')]
     private Collection $trips;
 
     public function __construct()

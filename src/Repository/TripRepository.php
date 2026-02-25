@@ -59,7 +59,7 @@ class TripRepository extends ServiceEntityRepository
                 TripIndexReadModel::class,
             ))
             ->groupBy('t.id')
-            ->leftJoin('t.owner', 'o')
+            ->leftJoin('t.owners', 'o')
             ->orderBy('t.createdAt', 'DESC')
         ;
 
@@ -97,7 +97,7 @@ class TripRepository extends ServiceEntityRepository
                 TripShowReadModel::class,
             ))
             ->groupBy('t.id')
-            ->leftJoin('t.owner', 'o')
+            ->leftJoin('t.owners', 'o')
 
             ->andWhere('t.id = :id')
             ->setParameter('id', $id)
