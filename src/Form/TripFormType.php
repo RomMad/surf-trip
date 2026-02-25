@@ -17,6 +17,8 @@ class TripFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $trip = $builder->getData();
+
         $builder
             ->add('title', null, [
                 'label' => 'title.label',
@@ -43,14 +45,17 @@ class TripFormType extends AbstractType
             ->add('description', null, [
                 'label' => 'description.label',
             ])
-            ->add('owners', EntityType::class, [
+        ;
+
+        if ($trip instanceof Trip && null !== $trip->getId()) {
+            $builder->add('owners', EntityType::class, [
                 'class' => User::class,
                 'choice_label' => 'fullName',
                 'label' => 'owners.label',
                 'multiple' => true,
                 'autocomplete' => true,
-            ])
-        ;
+            ]);
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver): void
