@@ -46,9 +46,20 @@ class TripRepository extends ServiceEntityRepository
     {
         $queryBuilder = $this->createQueryBuilder('t')
             ->select(sprintf(
-                'NEW %s(t.id, t.title, t.location, t.startAt, t.endAt, t.requiredLevels, t.description, t.createdAt)',
+                'NEW %s(
+                    t.id,
+                    t.title,
+                    t.location,
+                    t.startAt,
+                    t.endAt,
+                    t.requiredLevels,
+                    t.description, COALESCE(STRING_AGG(o.firstname, \', \' ORDER BY o.firstname), \'\'),
+                    t.createdAt
+                )',
                 TripIndexReadModel::class,
             ))
+            ->groupBy('t.id')
+            ->leftJoin('t.owner', 'o')
             ->orderBy('t.createdAt', 'DESC')
         ;
 
@@ -80,8 +91,8 @@ class TripRepository extends ServiceEntityRepository
                     t.endAt,
                     t.requiredLevels,
                     t.description,
-                    t.createdAt,
-                    COALESCE(STRING_AGG(o.firstname, \', \' ORDER BY o.firstname), \'\')
+                    COALESCE(STRING_AGG(o.firstname, \', \' ORDER BY o.firstname), \'\'),
+                    t.createdAt
                 )',
                 TripShowReadModel::class,
             ))

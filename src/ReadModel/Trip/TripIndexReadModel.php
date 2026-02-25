@@ -19,6 +19,7 @@ final readonly class TripIndexReadModel
         public \DateTimeImmutable $endAt,
         public array $requiredLevels,
         public ?string $description,
+        public string $ownerNames,
         public \DateTimeImmutable $createdAt,
     ) {}
 }

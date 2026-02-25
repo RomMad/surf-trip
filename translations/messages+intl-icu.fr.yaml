@@ -41,7 +41,7 @@ end_at.label: Date de fin
 required_levels:
     label: Niveaux requis
     placeholder: Sélectionnez les niveaux requis
-owner.label: Administrateur
+owners.label: Administrateurs
 created_at.label: Créé le
 actions.label: Actions
 
