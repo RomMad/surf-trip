@@ -10,6 +10,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TripRepository::class)]
 class Trip
@@ -20,22 +21,39 @@ class Trip
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $title = null;
+    #[Assert\NotBlank(message: 'trip.title.not_blank')]
+    #[Assert\Length(max: 255, maxMessage: 'trip.title.max_length')]
+    private string $title = '';
 
     #[ORM\Column(length: 255)]
-    private ?string $location = null;
+    #[Assert\NotBlank(message: 'trip.location.not_blank')]
+    #[Assert\Length(max: 255, maxMessage: 'trip.location.max_length')]
+    private string $location = '';
 
     #[ORM\Column]
+    #[Assert\NotNull(message: 'trip.start_at.not_null')]
     private ?\DateTimeImmutable $startAt = null;
 
     #[ORM\Column]
+    #[Assert\Sequentially([
+        new Assert\NotNull(message: 'trip.end_at.not_null'),
+        new Assert\Expression(
+            expression: 'value >= this.getStartAt()',
+            message: 'trip.end_at.before_start_at'
+        ),
+    ])]
     private ?\DateTimeImmutable $endAt = null;
 
     /** @var RequiredLevel[] */
     #[ORM\Column(type: Types::JSONB, enumType: RequiredLevel::class)]
-    private array $requiredLevels;
+    #[Assert\Count(min: 1, minMessage: 'trip.required_levels.min_count')]
+    #[Assert\All([
+        new Assert\Type(type: RequiredLevel::class, message: 'trip.required_levels.invalid_type'),
+    ])]
+    private array $requiredLevels = [];
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Assert\Length(max: 5000, maxMessage: 'trip.description.max_length')]
     private ?string $description = null;
 
     #[ORM\Column]
@@ -43,6 +61,7 @@ class Trip
 
     /** @var Collection<int, User> */
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'trips')]
+    #[Assert\Count(min: 1, minMessage: 'trip.owner.min_count')]
     private Collection $owners;
 
     public function __construct()
@@ -84,7 +103,7 @@ class Trip
         return $this->startAt;
     }
 
-    public function setStartAt(\DateTimeImmutable $startAt): static
+    public function setStartAt(?\DateTimeImmutable $startAt): static
     {
         $this->startAt = $startAt;
 
@@ -96,7 +115,7 @@ class Trip
         return $this->endAt;
     }
 
-    public function setEndAt(\DateTimeImmutable $endAt): static
+    public function setEndAt(?\DateTimeImmutable $endAt): static
     {
         $this->endAt = $endAt;
 
