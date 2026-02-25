@@ -100,15 +100,15 @@ class TripRepository extends ServiceEntityRepository
     {
         if (null !== $filter->search) {
             $queryBuilder
-                ->andWhere('LOWER(t.title) LIKE :search OR LOWER(t.description) LIKE :search')
-                ->setParameter('search', sprintf('%%%s%%', mb_strtolower($filter->search)))
+                ->andWhere('ILIKE(t.title, :search) = TRUE OR ILIKE(t.description, :search) = TRUE')
+                ->setParameter('search', '%'.$filter->search.'%')
             ;
         }
 
         if (null !== $filter->location) {
             $queryBuilder
-                ->andWhere('LOWER(t.location) LIKE :location')
-                ->setParameter('location', sprintf('%%%s%%', mb_strtolower($filter->location)))
+                ->andWhere('ILIKE(t.location, :location) = TRUE')
+                ->setParameter('location', '%'.$filter->location.'%')
             ;
         }
 
