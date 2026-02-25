@@ -53,13 +53,14 @@ class TripRepository extends ServiceEntityRepository
                     t.startAt,
                     t.endAt,
                     t.requiredLevels,
-                    t.description, COALESCE(STRING_AGG(o.firstname, \', \' ORDER BY o.firstname), \'\'),
+                    t.description,
+                    COALESCE(STRING_AGG(o.firstname, \', \' ORDER BY o.firstname), \'\'),
                     t.createdAt
                 )',
                 TripIndexReadModel::class,
             ))
-            ->groupBy('t.id')
             ->leftJoin('t.owners', 'o')
+            ->groupBy('t.id')
             ->orderBy('t.createdAt', 'DESC')
         ;
 
@@ -96,8 +97,8 @@ class TripRepository extends ServiceEntityRepository
                 )',
                 TripShowReadModel::class,
             ))
-            ->groupBy('t.id')
             ->leftJoin('t.owners', 'o')
+            ->groupBy('t.id')
 
             ->andWhere('t.id = :id')
             ->setParameter('id', $id)
