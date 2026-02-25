@@ -13,7 +13,7 @@ use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 #[AsEventListener(event: KernelEvents::REQUEST, priority: 40)]
-final class MissingLocaleRedirectListener
+final readonly class MissingLocaleRedirectListener
 {
     private const array EXCLUDED_PREFIXES = [
         '/api',
@@ -26,6 +26,9 @@ final class MissingLocaleRedirectListener
 
     private const string ASSETS_REGEX = '#\.(?:css|js|map|png|jpe?g|gif|svg|ico|webp|avif|woff2?|ttf|eot|json|txt|xml)$#i';
 
+    /**
+     * @param list<string> $supportedLocales
+     */
     public function __construct(
         #[Autowire('%app_locale%')]
         private string $locale,
