@@ -33,6 +33,7 @@
                         class="p-1"
                         href="{{ path(app.current_route, current_route_parameters|merge({_locale: 'fr'})) }}"
                         title="{{ 'language.fr.label'|trans }}"
+                        disabled="{{ app.request.locale === 'fr' }}"
                     >
                         <twig:ux:icon name="circle-flags:lang-fr" />
                     </twig:Button>
@@ -42,6 +43,7 @@
                         class="p-1"
                         href="{{ path(app.current_route, current_route_parameters|merge({_locale: 'en'})) }}"
                         title="{{ 'language.en.label'|trans }}"
+                        disabled="{{ app.request.locale === 'en' }}"
                     >
                         <twig:ux:icon name="circle-flags:lang-en" />
                     </twig:Button>
