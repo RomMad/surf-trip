@@ -1,0 +1,19 @@
+trip:
+    title:
+        not_blank: Le titre est obligatoire.
+        max_length: Le titre ne peut pas dépasser {limit} caractères.
+    location:
+        not_blank: Le lieu est obligatoire.
+        max_length: Le lieu ne peut pas dépasser {limit} caractères.
+    start_at:
+        not_null: La date de début est obligatoire.
+    end_at:
+        not_null: La date de fin est obligatoire.
+        before_start_at: La date de fin doit être postérieure ou égale à la date de début.
+    required_levels:
+        min_count: Sélectionnez au moins un niveau requis.
+        invalid_type: Un niveau requis sélectionné est invalide.
+    description:
+        max_length: La description ne peut pas dépasser {limit} caractères.
+    owner:
+        min_count: Sélectionnez au moins un administrateur.
