@@ -9,7 +9,9 @@
     </div>
     {{ form_row(form.requiredLevels) }}
     {{ form_row(form.description) }}
-    {{ form_row(form.owners) }}
+    {% if form.owners is defined %}
+        {{ form_row(form.owners) }}
+    {% endif %}
     {{ form_rest(form) }}
 
     <twig:Button type="submit" class="mb-4">
