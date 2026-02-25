@@ -1,0 +1,33 @@
+trip:
+    title:
+        not_blank: Title is required.
+        max_length: Title cannot exceed {limit} characters.
+    location:
+        not_blank: Location is required.
+        max_length: Location cannot exceed {limit} characters.
+    start_at:
+        not_null: Start date is required.
+    end_at:
+        not_null: End date is required.
+        before_start_at: End date must be greater than or equal to start date.
+    required_levels:
+        min_count: Select at least one required level.
+        invalid_type: A selected required level is invalid.
+    description:
+        max_length: Description cannot exceed {limit} characters.
+    owner:
+        min_count: Select at least one admin.
+
+user:
+    email:
+        not_blank: Email address is required.
+        invalid: Email address is not valid.
+        max_length: Email address cannot exceed {limit} characters.
+        unique: This email address is already used.
+    firstname:
+        not_blank: First name is required.
+        max_length: First name cannot exceed {limit} characters.
+    lastname:
+        max_length: Last name cannot exceed {limit} characters.
+    password:
+        not_blank: Password is required.

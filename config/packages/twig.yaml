@@ -2,6 +2,8 @@ twig:
     file_name_pattern: '*.twig'
     form_themes:
         - 'form/tailwind_shadcn_theme.html.twig'
+    globals:
+        supported_locales: '%supported_locales%'
 
 when@test:
     twig:

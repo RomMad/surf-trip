@@ -1,0 +1,55 @@
+# Actions
+create_new.label: Create new
+delete.label: Delete
+edit.label: Edit
+save.label: Save
+show.label: Show
+update.label: Update
+back_to_list.label: Back to list
+
+# Common
+app_name: Surf Trip
+dark_mode.label: Dark mode
+no_records_found.label: No records found
+navigation:
+    main.label: Main navigation
+    toggle.label: Toggle navigation
+language:
+    switch.label: Change language
+    fr.label: French
+    en.label: English
+search:
+    label: Search
+    placeholder: Search...
+
+# Pagination
+next.label: Next
+previous.label: Previous
+more_pages.label: More pages
+
+# Trip
+id.label: Id
+trip.label: Trip
+trip:
+    new.label: New trip
+    edit.label: Edit trip
+    delete.confirm: Are you sure you want to delete this trip?
+trips.label: Trips
+title.label: Title
+description.label: Description
+location:
+    label: Location
+    placeholder: Trip location
+start_at.label: Start date
+end_at.label: End date
+required_levels:
+    label: Required levels
+    placeholder: Select required levels
+owners.label: Admins
+created_at.label: Created at
+actions.label: Actions
+
+# Required levels
+beginner.label: Beginner
+intermediate.label: Intermediate
+advanced.label: Advanced

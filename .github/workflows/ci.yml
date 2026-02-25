@@ -71,7 +71,9 @@ jobs:
               run: ./vendor/bin/phpcs --runtime-set ignore_warnings_on_exit 1
 
             - name: Missing translations
-              run: php bin/console debug:translation fr --only-missing
+              run: |
+                  php bin/console debug:translation en --only-missing
+                  php bin/console debug:translation fr --only-missing
 
             - name: Lint translations
               run: php bin/console lint:translations --locale=en --locale=fr

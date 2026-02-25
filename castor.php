@@ -220,6 +220,7 @@ function rector_swiss_knife(): void
 #[AsTask(description: 'Debug translation files to find missing translations', namespace: 'app', aliases: ['debug-trans'])]
 function debug_translation(): void
 {
+    symfony_console('debug:translation en --only-missing');
     symfony_console('debug:translation fr --only-missing');
 }
 

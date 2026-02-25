@@ -1,0 +1,113 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\EventListener;
+
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
+use Symfony\Component\HttpKernel\KernelEvents;
+
+#[AsEventListener(event: KernelEvents::REQUEST, priority: 40)]
+final readonly class MissingLocaleRedirectListener
+{
+    private const array EXCLUDED_PREFIXES = [
+        '/api',
+        '/docs',
+        '/build',
+        '/bundles',
+        '/_wdt',
+        '/_profiler',
+    ];
+
+    private const string ASSETS_REGEX = '#\.(?:css|js|map|png|jpe?g|gif|svg|ico|webp|avif|woff2?|ttf|eot|json|txt|xml)$#i';
+
+    /**
+     * @param list<string> $supportedLocales
+     */
+    public function __construct(
+        #[Autowire('%app_locale%')]
+        private string $locale,
+        #[Autowire('%supported_locales%')]
+        private array $supportedLocales,
+    ) {}
+
+    public function onKernelRequest(RequestEvent $event): void
+    {
+        if (!$event->isMainRequest()) {
+            return;
+        }
+
+        $request = $event->getRequest();
+
+        if (!$this->supportsMethod($request)) {
+            return;
+        }
+
+        $path = $request->getPathInfo();
+
+        if ($this->isExcludedPath($path)) {
+            return;
+        }
+
+        if ($this->isLocalizedPath($path)) {
+            $request->setLocale($this->extractLocale($path));
+
+            return;
+        }
+
+        $locale = $request->getPreferredLanguage($this->supportedLocales) ?? $this->locale;
+        $targetPath = $this->buildLocalizedPath($locale, $path, $request);
+
+        $event->setResponse(
+            new RedirectResponse($targetPath, Response::HTTP_FOUND)
+        );
+    }
+
+    private function supportsMethod(Request $request): bool
+    {
+        return $request->isMethod(Request::METHOD_GET)
+            || $request->isMethod(Request::METHOD_HEAD);
+    }
+
+    private function isLocalizedPath(string $path): bool
+    {
+        return array_any(
+            $this->supportedLocales,
+            fn ($locale) => $path === "/{$locale}" || str_starts_with($path, "/{$locale}/")
+        );
+    }
+
+    private function extractLocale(string $path): string
+    {
+        return substr($path, 1, 2);
+    }
+
+    private function isExcludedPath(string $path): bool
+    {
+        if (array_any(
+            self::EXCLUDED_PREFIXES,
+            fn ($prefix) => str_starts_with($path, (string) $prefix)
+        )
+        ) {
+            return true;
+        }
+
+        return 1 === preg_match(self::ASSETS_REGEX, $path);
+    }
+
+    private function buildLocalizedPath(string $locale, string $path, Request $request): string
+    {
+        $localizedPath = '/'.$locale.('/' === $path ? '' : $path);
+
+        if (null !== $request->getQueryString()) {
+            $localizedPath .= '?'.$request->getQueryString();
+        }
+
+        return $localizedPath;
+    }
+}
