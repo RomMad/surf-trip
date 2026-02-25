@@ -50,6 +50,14 @@
         </twig:Table:Row>
         <twig:Table:Row>
             <twig:Table:Head>
+                {{ 'owner.label'|trans }}
+            </twig:Table:Head>
+            <twig:Table:Cell>
+                {{ trip.ownerEmails }}
+            </twig:Table:Cell>
+        </twig:Table:Row>
+        <twig:Table:Row>
+            <twig:Table:Head>
                 {{ 'created_at.label'|trans }}
             </twig:Table:Head>
             <twig:Table:Cell>
