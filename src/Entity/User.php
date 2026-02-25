@@ -8,12 +8,15 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
+#[UniqueEntity(fields: ['email'], message: 'user.email.unique')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface, \Stringable
 {
     #[ORM\Id]
@@ -22,12 +25,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
     private ?int $id = null;
 
     #[ORM\Column(length: 180)]
-    private ?string $email = null;
+    #[Assert\NotBlank(message: 'user.email.not_blank')]
+    #[Assert\Email(message: 'user.email.invalid')]
+    #[Assert\Length(max: 180, maxMessage: 'user.email.max_length')]
+    private string $email = '';
 
     #[ORM\Column(length: 100)]
-    private ?string $firstname = null;
+    #[Assert\NotBlank(message: 'user.firstname.not_blank')]
+    #[Assert\Length(max: 100, maxMessage: 'user.firstname.max_length')]
+    private string $firstname = '';
 
     #[ORM\Column(length: 100, nullable: true)]
+    #[Assert\Length(max: 100, maxMessage: 'user.lastname.max_length')]
     private ?string $lastname = null;
 
     /** @var list<string> The user roles */
@@ -36,7 +45,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
 
     /** @var string The hashed password */
     #[ORM\Column]
-    private ?string $password = null;
+    #[Assert\NotBlank(message: 'user.password.not_blank')]
+    private string $password = '';
 
     /**
      * @var Collection<int, Trip>
@@ -51,7 +61,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
 
     public function __toString(): string
     {
-        return $this->email ?? '';
+        return $this->email;
     }
 
     /**
