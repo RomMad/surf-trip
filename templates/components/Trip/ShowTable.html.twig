@@ -2,66 +2,66 @@
     <twig:Table:Body>
         <twig:Table:Row>
             <twig:Table:Head>
-                {{ 'title.label'|trans }}
+                {{- 'title.label'|trans -}}
             </twig:Table:Head>
             <twig:Table:Cell>
-                {{ trip.title }}
+                {{- trip.title -}}
             </twig:Table:Cell>
         </twig:Table:Row>
         <twig:Table:Row>
             <twig:Table:Head>
-                {{ 'location.label'|trans }}
+                {{- 'location.label'|trans -}}
             </twig:Table:Head>
             <twig:Table:Cell>
-                {{ trip.location }}
+                {{- trip.location -}}
             </twig:Table:Cell>
         </twig:Table:Row>
         <twig:Table:Row>
             <twig:Table:Head>
-                {{ 'start_at.label'|trans }}
+                {{- 'start_at.label'|trans -}}
             </twig:Table:Head>
             <twig:Table:Cell>
-                {{ trip.startAt|date('Y-m-d H:i') }}
+                {{- trip.startAt|date('Y-m-d H:i') -}}
             </twig:Table:Cell>
         </twig:Table:Row>
         <twig:Table:Row>
             <twig:Table:Head>
-                {{ 'end_at.label'|trans }}
+                {{- 'end_at.label'|trans -}}
             </twig:Table:Head>
             <twig:Table:Cell>
-                {{ trip.endAt|date('Y-m-d H:i') }}
+                {{- trip.endAt|date('Y-m-d H:i') -}}
             </twig:Table:Cell>
         </twig:Table:Row>
         <twig:Table:Row>
             <twig:Table:Head>
-                {{ 'required_levels.label'|trans }}
+                {{- 'required_levels.label'|trans -}}
             </twig:Table:Head>
             <twig:Table:Cell>
-                {{ trip.requiredLevels|map(rl => rl.label|trans)|join(', ') }}
+                {{- trip.requiredLevels|map(rl => rl.label|trans)|join(', ') -}}
             </twig:Table:Cell>
         </twig:Table:Row>
         <twig:Table:Row>
             <twig:Table:Head>
-                {{ 'description.label'|trans }}
+                {{- 'description.label'|trans -}}
             </twig:Table:Head>
             <twig:Table:Cell>
-                {{ trip.description }}
+                {{- trip.description -}}
             </twig:Table:Cell>
         </twig:Table:Row>
         <twig:Table:Row>
             <twig:Table:Head>
-                {{ 'owner.label'|trans }}
+                {{- 'owner.label'|trans -}}
             </twig:Table:Head>
             <twig:Table:Cell>
-                {{ trip.ownerEmails }}
+                {{- trip.ownerEmails -}}
             </twig:Table:Cell>
         </twig:Table:Row>
         <twig:Table:Row>
             <twig:Table:Head>
-                {{ 'created_at.label'|trans }}
+                {{- 'created_at.label'|trans -}}
             </twig:Table:Head>
             <twig:Table:Cell>
-                {{ trip.createdAt|date('Y-m-d H:i') }}
+                {{- trip.createdAt|date('Y-m-d H:i') -}}
             </twig:Table:Cell>
         </twig:Table:Row>
     </twig:Table:Body>
