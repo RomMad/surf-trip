@@ -63,7 +63,7 @@ final class MissingLocaleRedirectListener
         $targetPath = $this->buildLocalizedPath($locale, $path, $request);
 
         $event->setResponse(
-            new RedirectResponse($targetPath, Response::HTTP_MOVED_PERMANENTLY)
+            new RedirectResponse($targetPath, Response::HTTP_FOUND)
         );
     }
 
