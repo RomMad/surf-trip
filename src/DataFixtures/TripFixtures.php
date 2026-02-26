@@ -25,8 +25,10 @@ class TripFixtures extends Fixture implements DependentFixtureInterface
             'startAt' => '2025-06-01',
             'endAt' => '2025-06-15',
             'requiredLevels' => [RequiredLevel::BEGINNER, RequiredLevel::INTERMEDIATE],
-            'description' => 'Experience the best waves of Bali with experienced instructors.
-                Perfect for beginners looking to improve their skills.',
+            'description' => <<<'DESC'
+    Experience the best waves of Bali with experienced instructors.
+    Perfect for beginners looking to improve their skills.
+    DESC,
             'owners' => [0, 1],
         ],
         [
@@ -35,8 +37,10 @@ class TripFixtures extends Fixture implements DependentFixtureInterface
             'startAt' => '2025-07-10',
             'endAt' => '2025-07-20',
             'requiredLevels' => [RequiredLevel::ADVANCED],
-            'description' => 'Challenge yourself with some of the biggest waves in the world.
-                Only for experienced surfers.',
+            'description' => <<<'DESC'
+Challenge yourself with some of the biggest waves in the world.
+Only for experienced surfers.
+DESC,
             'owners' => [1],
         ],
         [
@@ -45,8 +49,10 @@ class TripFixtures extends Fixture implements DependentFixtureInterface
             'startAt' => '2025-08-01',
             'endAt' => '2025-08-10',
             'requiredLevels' => [RequiredLevel::INTERMEDIATE],
-            'description' => 'Ride the iconic waves of Hawaii with breathtaking views.
-                Great for intermediate surfers wanting to explore new breaks.',
+            'description' => <<<'DESC'
+Ride the iconic waves of Hawaii with breathtaking views.
+Great for intermediate surfers wanting to explore new breaks.
+DESC,
             'owners' => [2, 3],
         ],
         [
@@ -55,8 +61,10 @@ class TripFixtures extends Fixture implements DependentFixtureInterface
             'startAt' => '2025-09-05',
             'endAt' => '2025-09-18',
             'requiredLevels' => [RequiredLevel::BEGINNER, RequiredLevel::INTERMEDIATE, RequiredLevel::ADVANCED],
-            'description' => 'A comprehensive surf trip with waves for all levels.
-                Explore multiple breaks and tropical landscapes.',
+            'description' => <<<'DESC'
+A comprehensive surf trip with waves for all levels.
+Explore multiple breaks and tropical landscapes.
+DESC,
             'owners' => [0, 2],
         ],
         [
@@ -65,8 +73,10 @@ class TripFixtures extends Fixture implements DependentFixtureInterface
             'startAt' => '2025-05-15',
             'endAt' => '2025-05-25',
             'requiredLevels' => [RequiredLevel::BEGINNER],
-            'description' => 'Perfect destination for learning to surf.
-                Calm, consistent waves and beautiful beaches.',
+            'description' => <<<'DESC'
+Perfect destination for learning to surf.
+Calm, consistent waves and beautiful beaches.
+DESC,
             'owners' => [3, 4],
         ],
         [
@@ -75,8 +85,10 @@ class TripFixtures extends Fixture implements DependentFixtureInterface
             'startAt' => '2025-11-01',
             'endAt' => '2025-11-12',
             'requiredLevels' => [RequiredLevel::ADVANCED],
-            'description' => "Experience the legendary barrel at Teahupo'o.
-                For expert surfers only.",
+            'description' => <<<'DESC'
+Experience the legendary barrel at Teahupo'o.
+For expert surfers only.
+DESC,
             'owners' => [1, 4],
         ],
         [
@@ -85,8 +97,10 @@ class TripFixtures extends Fixture implements DependentFixtureInterface
             'startAt' => '2025-10-20',
             'endAt' => '2025-10-30',
             'requiredLevels' => [RequiredLevel::BEGINNER, RequiredLevel::INTERMEDIATE],
-            'description' => 'Discover the vibrant surf culture of East Australia.
-                Multiple breaks suitable for various skill levels.',
+            'description' => <<<'DESC'
+Discover the vibrant surf culture of East Australia.
+Multiple breaks suitable for various skill levels.
+DESC,
             'owners' => [0],
         ],
         [
