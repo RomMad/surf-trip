@@ -1,5 +1,5 @@
 api_platform:
-    title: Hello API Platform
+    title: Surf trip API
     version: 1.0.0
     defaults:
         stateless: true
@@ -7,3 +7,12 @@ api_platform:
             vary: ['Content-Type', 'Authorization', 'Origin']
         pagination_enabled: true
         pagination_items_per_page: 10
+    formats:
+        jsonld: ['application/ld+json']
+        json: ['application/json']
+
+    swagger:
+        api_keys:
+            JWT:
+                name: Authorization
+                type: header

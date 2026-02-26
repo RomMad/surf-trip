@@ -12,6 +12,7 @@
         "doctrine/doctrine-bundle": "^3.2.2",
         "doctrine/doctrine-migrations-bundle": "^4.0",
         "doctrine/orm": "^3.6.2",
+        "lexik/jwt-authentication-bundle": "^3.2",
         "martin-georgiev/postgresql-for-doctrine": "^4.2",
         "nelmio/cors-bundle": "^2.6",
         "pagerfanta/pagerfanta": "^4.8",
