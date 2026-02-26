@@ -14,6 +14,7 @@ class UserFixtures extends Fixture
     public const USER_REFERENCE = 'user_';
 
     private const array USERS_DATA = [
+        ['John', 'Doe'],
         ['Alice', 'Martin'],
         ['Bob', 'Bernard'],
         ['Charlie', 'Petit'],
@@ -43,7 +44,7 @@ class UserFixtures extends Fixture
         foreach (self::USERS_DATA as [$firstname, $lastname]) {
             $user = new User();
             $email = sprintf('%s.%s@example.com', strtolower($firstname), strtolower($lastname));
-            $password = $this->passwordHasher->hashPassword($user, 'password');
+            $password = $this->passwordHasher->hashPassword($user, 'test');
 
             $user
                 ->setEmail($email)

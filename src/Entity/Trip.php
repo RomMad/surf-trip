@@ -4,34 +4,77 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use ApiPlatform\Doctrine\Orm\Filter\FreeTextQueryFilter;
+use ApiPlatform\Doctrine\Orm\Filter\OrFilter;
+use ApiPlatform\Doctrine\Orm\Filter\PartialSearchFilter;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\QueryParameter;
 use App\Enum\Trip\RequiredLevel;
+use App\Filter\JsonContainsFilter;
 use App\Repository\TripRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TripRepository::class)]
+#[ApiResource(
+    operations: [
+        new Get(
+            normalizationContext: ['groups' => ['trip:read']],
+        ),
+        new GetCollection(
+            normalizationContext: ['groups' => ['trip:read']],
+            parameters: [
+                'q' => new QueryParameter(
+                    filter: new FreeTextQueryFilter(new OrFilter(new PartialSearchFilter())),
+                    properties: ['title', 'location']
+                ),
+                'levels' => new QueryParameter(
+                    filter: new JsonContainsFilter(),
+                    property: 'requiredLevels'
+                ),
+            ],
+        ),
+        new Patch(
+            denormalizationContext: ['groups' => ['trip:write']],
+        ),
+        new Post(
+            denormalizationContext: ['groups' => ['trip:write']],
+        ),
+        new Delete(),
+    ]
+)]
 class Trip
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['trip:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: 'trip.title.not_blank')]
-    #[Assert\Length(max: 255, maxMessage: 'trip.title.max_length')]
+    #[Assert\Length(min: 5, max: 255, minMessage: 'trip.title.min_length', maxMessage: 'trip.title.max_length')]
+    #[Groups(['trip:read', 'trip:write'])]
     private string $title = '';
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: 'trip.location.not_blank')]
     #[Assert\Length(max: 255, maxMessage: 'trip.location.max_length')]
+    #[Groups(['trip:read', 'trip:write'])]
     private string $location = '';
 
     #[ORM\Column]
     #[Assert\NotNull(message: 'trip.start_at.not_null')]
+    #[Groups(['trip:read', 'trip:write'])]
     private ?\DateTimeImmutable $startAt = null;
 
     #[ORM\Column]
@@ -42,6 +85,7 @@ class Trip
             message: 'trip.end_at.before_start_at'
         ),
     ])]
+    #[Groups(['trip:read', 'trip:write'])]
     private ?\DateTimeImmutable $endAt = null;
 
     /** @var RequiredLevel[] */
@@ -50,22 +94,25 @@ class Trip
     #[Assert\All([
         new Assert\Type(type: RequiredLevel::class, message: 'trip.required_levels.invalid_type'),
     ])]
+    #[Groups(['trip:read', 'trip:write'])]
     private array $requiredLevels = [];
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     #[Assert\Length(max: 5000, maxMessage: 'trip.description.max_length')]
+    #[Groups(['trip:read', 'trip:write'])]
     private ?string $description = null;
-
-    #[ORM\Column]
-    private ?\DateTimeImmutable $createdAt = null;
 
     /** @var Collection<int, User> */
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'trips')]
     #[Assert\Count(min: 1, minMessage: 'trip.owner.min_count')]
+    #[Groups(['trip:read', 'trip:write'])]
     private Collection $owners;
 
-    public function __construct()
-    {
+    public function __construct(
+        #[ORM\Column]
+        #[Groups(['trip:read'])]
+        private \DateTimeImmutable $createdAt = new \DateTimeImmutable()
+    ) {
         $this->owners = new ArrayCollection();
     }
 
@@ -74,7 +121,7 @@ class Trip
         return $this->id;
     }
 
-    public function getTitle(): ?string
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -86,7 +133,7 @@ class Trip
         return $this;
     }
 
-    public function getLocation(): ?string
+    public function getLocation(): string
     {
         return $this->location;
     }
@@ -134,16 +181,9 @@ class Trip
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): \DateTimeImmutable
     {
         return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTimeImmutable $createdAt): static
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
     }
 
     /**

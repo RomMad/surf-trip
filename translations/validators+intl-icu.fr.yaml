@@ -1,6 +1,7 @@
 trip:
     title:
         not_blank: Le titre est obligatoire.
+        min_length: Le titre doit comporter au moins {limit} caractères.
         max_length: Le titre ne peut pas dépasser {limit} caractères.
     location:
         not_blank: Le lieu est obligatoire.

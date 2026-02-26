@@ -30,7 +30,6 @@ final class NewTripController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $trip->setCreatedAt(new \DateTimeImmutable());
             $this->tripRepository->save($trip, true);
 
             return $this->redirectToRoute(IndexTripController::ROUTE, [], Response::HTTP_SEE_OTHER);
