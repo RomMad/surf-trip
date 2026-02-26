@@ -140,14 +140,15 @@ DESC,
     private function generateTrips(): \Generator
     {
         foreach (self::TRIPS_DATA as $tripData) {
-            $trip = new Trip()
+            $createdAt = \DateTimeImmutable::createFromInterface($this->faker->dateTimeBetween('-1 month', 'today'));
+
+            $trip = new Trip($createdAt)
                 ->setTitle($tripData['title'])
                 ->setLocation($tripData['location'])
                 ->setStartAt(new \DateTimeImmutable($tripData['startAt']))
                 ->setEndAt(new \DateTimeImmutable($tripData['endAt']))
                 ->setRequiredLevels($tripData['requiredLevels'])
                 ->setDescription($tripData['description'])
-                ->setCreatedAt(\DateTimeImmutable::createFromInterface($this->faker->dateTimeBetween('-1 month', 'today')))
             ;
 
             foreach ($tripData['owners'] as $ownerIndex) {
@@ -163,15 +164,15 @@ DESC,
             /** @var \DateTimeInterface $randomStart */
             $randomStart = $this->faker->dateTimeBetween('-6 months', '+6 months');
             $startAt = \DateTimeImmutable::createFromInterface($randomStart);
+            $createdAt = \DateTimeImmutable::createFromInterface($this->faker->dateTimeBetween('-1 year', '-1 month'));
 
-            $trip = new Trip()
+            $trip = new Trip($createdAt)
                 ->setTitle(sprintf('%s Surf Trip', ucfirst((string) $this->faker->words($this->faker->numberBetween(2, 4), true))))
                 ->setLocation(sprintf('%s, %s', $this->faker->city(), $this->faker->country()))
                 ->setStartAt($startAt)
                 ->setEndAt($startAt->modify(sprintf('+%d days', $this->faker->numberBetween(3, 14))))
                 ->setRequiredLevels($this->randomRequiredLevels())
                 ->setDescription($this->faker->paragraphs($this->faker->numberBetween(1, 3), true))
-                ->setCreatedAt(\DateTimeImmutable::createFromInterface($this->faker->dateTimeBetween('-1 year', '-1 month')))
             ;
 
             /** @var list<int> $owners */

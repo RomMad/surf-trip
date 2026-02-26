@@ -69,19 +69,16 @@ class Trip
     #[Groups(['trip:read', 'trip:write'])]
     private ?string $description = null;
 
-    #[ORM\Column]
-    #[Groups(['trip:read'])]
-    private ?\DateTimeImmutable $createdAt = null;
-
     /** @var Collection<int, User> */
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'trips')]
     #[Assert\Count(min: 1, minMessage: 'trip.owner.min_count')]
     #[Groups(['trip:read', 'trip:write'])]
     private Collection $owners;
 
-    public function __construct()
+    public function __construct(#[ORM\Column]
+        #[Groups(['trip:read'])]
+        private ?\DateTimeImmutable $createdAt = new \DateTimeImmutable())
     {
-        $this->createdAt = new \DateTimeImmutable();
         $this->owners = new ArrayCollection();
     }
 
@@ -90,7 +87,7 @@ class Trip
         return $this->id;
     }
 
-    public function getTitle(): ?string
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -102,7 +99,7 @@ class Trip
         return $this;
     }
 
-    public function getLocation(): ?string
+    public function getLocation(): string
     {
         return $this->location;
     }
@@ -150,16 +147,9 @@ class Trip
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): \DateTimeImmutable
     {
         return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTimeImmutable $createdAt): static
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
     }
 
     /**
