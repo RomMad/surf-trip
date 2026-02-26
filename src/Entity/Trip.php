@@ -4,8 +4,18 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use ApiPlatform\Doctrine\Orm\Filter\FreeTextQueryFilter;
+use ApiPlatform\Doctrine\Orm\Filter\OrFilter;
+use ApiPlatform\Doctrine\Orm\Filter\PartialSearchFilter;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\QueryParameter;
 use App\Enum\Trip\RequiredLevel;
+use App\Filter\JsonContainsFilter;
 use App\Repository\TripRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -14,11 +24,34 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
-#[ApiResource(
-    normalizationContext: ['groups' => ['trip:read']],
-    denormalizationContext: ['groups' => ['trip:write']],
-)]
 #[ORM\Entity(repositoryClass: TripRepository::class)]
+#[ApiResource(
+    operations: [
+        new Get(
+            normalizationContext: ['groups' => ['trip:read']],
+        ),
+        new GetCollection(
+            normalizationContext: ['groups' => ['trip:read']],
+            parameters: [
+                'q' => new QueryParameter(
+                    filter: new FreeTextQueryFilter(new OrFilter(new PartialSearchFilter())),
+                    properties: ['title', 'location']
+                ),
+                'levels' => new QueryParameter(
+                    filter: new JsonContainsFilter(),
+                    property: 'requiredLevels'
+                ),
+            ],
+        ),
+        new Patch(
+            denormalizationContext: ['groups' => ['trip:write']],
+        ),
+        new Post(
+            denormalizationContext: ['groups' => ['trip:write']],
+        ),
+        new Delete(),
+    ]
+)]
 class Trip
 {
     #[ORM\Id]
