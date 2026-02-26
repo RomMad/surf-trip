@@ -75,10 +75,11 @@ class Trip
     #[Groups(['trip:read', 'trip:write'])]
     private Collection $owners;
 
-    public function __construct(#[ORM\Column]
+    public function __construct(
+        #[ORM\Column]
         #[Groups(['trip:read'])]
-        private ?\DateTimeImmutable $createdAt = new \DateTimeImmutable())
-    {
+        private \DateTimeImmutable $createdAt = new \DateTimeImmutable()
+    ) {
         $this->owners = new ArrayCollection();
     }
 
