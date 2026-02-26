@@ -81,6 +81,7 @@ class Trip
 
     public function __construct()
     {
+        $this->createdAt = new \DateTimeImmutable();
         $this->owners = new ArrayCollection();
     }
 
