@@ -16,6 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ApiResource(
     normalizationContext: ['groups' => ['trip:read']],
+    denormalizationContext: ['groups' => ['trip:write']],
 )]
 #[ORM\Entity(repositoryClass: TripRepository::class)]
 class Trip
@@ -29,18 +30,18 @@ class Trip
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: 'trip.title.not_blank')]
     #[Assert\Length(max: 255, maxMessage: 'trip.title.max_length')]
-    #[Groups(['trip:read'])]
+    #[Groups(['trip:read', 'trip:write'])]
     private string $title = '';
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: 'trip.location.not_blank')]
     #[Assert\Length(max: 255, maxMessage: 'trip.location.max_length')]
-    #[Groups(['trip:read'])]
+    #[Groups(['trip:read', 'trip:write'])]
     private string $location = '';
 
     #[ORM\Column]
     #[Assert\NotNull(message: 'trip.start_at.not_null')]
-    #[Groups(['trip:read'])]
+    #[Groups(['trip:read', 'trip:write'])]
     private ?\DateTimeImmutable $startAt = null;
 
     #[ORM\Column]
@@ -51,7 +52,7 @@ class Trip
             message: 'trip.end_at.before_start_at'
         ),
     ])]
-    #[Groups(['trip:read'])]
+    #[Groups(['trip:read', 'trip:write'])]
     private ?\DateTimeImmutable $endAt = null;
 
     /** @var RequiredLevel[] */
@@ -60,12 +61,12 @@ class Trip
     #[Assert\All([
         new Assert\Type(type: RequiredLevel::class, message: 'trip.required_levels.invalid_type'),
     ])]
-    #[Groups(['trip:read'])]
+    #[Groups(['trip:read', 'trip:write'])]
     private array $requiredLevels = [];
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     #[Assert\Length(max: 5000, maxMessage: 'trip.description.max_length')]
-    #[Groups(['trip:read'])]
+    #[Groups(['trip:read', 'trip:write'])]
     private ?string $description = null;
 
     #[ORM\Column]
@@ -75,7 +76,7 @@ class Trip
     /** @var Collection<int, User> */
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'trips')]
     #[Assert\Count(min: 1, minMessage: 'trip.owner.min_count')]
-    #[Groups(['trip:read'])]
+    #[Groups(['trip:read', 'trip:write'])]
     private Collection $owners;
 
     public function __construct()
