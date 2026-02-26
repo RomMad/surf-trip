@@ -62,7 +62,7 @@ class Trip
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: 'trip.title.not_blank')]
-    #[Assert\Length(max: 255, maxMessage: 'trip.title.max_length')]
+    #[Assert\Length(min: 5, max: 255, minMessage: 'trip.title.min_length', maxMessage: 'trip.title.max_length')]
     #[Groups(['trip:read', 'trip:write'])]
     private string $title = '';
 
