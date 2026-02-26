@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -11,36 +12,45 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
 #[UniqueEntity(fields: ['email'], message: 'user.email.unique')]
+#[ApiResource(
+    normalizationContext: ['groups' => ['user:read']]
+)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface, \Stringable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['user:read', 'trip:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 180)]
     #[Assert\NotBlank(message: 'user.email.not_blank')]
     #[Assert\Email(message: 'user.email.invalid')]
     #[Assert\Length(max: 180, maxMessage: 'user.email.max_length')]
+    #[Groups(['user:read'])]
     private string $email = '';
 
     #[ORM\Column(length: 100)]
     #[Assert\NotBlank(message: 'user.firstname.not_blank')]
     #[Assert\Length(max: 100, maxMessage: 'user.firstname.max_length')]
+    #[Groups(['user:read', 'trip:read'])]
     private string $firstname = '';
 
     #[ORM\Column(length: 100, nullable: true)]
     #[Assert\Length(max: 100, maxMessage: 'user.lastname.max_length')]
+    #[Groups(['user:read', 'trip:read'])]
     private ?string $lastname = null;
 
     /** @var list<string> The user roles */
     #[ORM\Column]
+    #[Groups(['user:read'])]
     private array $roles = [];
 
     /** @var string The hashed password */
