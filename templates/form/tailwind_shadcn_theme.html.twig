@@ -21,6 +21,14 @@
     {{ parent() }}
 {% endblock %}
 
+{% block form_label_content %}
+    {{ parent() }}
+
+    {% if required %}
+        <span class="text-destructive" aria-hidden="true">*</span>
+    {% endif %}
+{% endblock %}
+
 {% block form_widget_simple %}
     {% set type = type|default('text') %}
     {% set attr = attr|merge({
