@@ -2,7 +2,7 @@
 
 <p>
     {{ 'security.registration.confirm_email.intro'|trans }} <br><br>
-    <a href="{{ signed_url|raw }}">
+    <a href="{{ signed_url|escape('html_attr') }}">
         {{- 'security.registration.confirm_email.cta'|trans -}}
     </a>.
     {{ 'security.registration.confirm_email.expires'|trans({'{expires}': expires_at_message_key|trans(expires_at_message_data, 'VerifyEmailBundle')}) }}
