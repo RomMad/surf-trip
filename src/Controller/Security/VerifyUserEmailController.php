@@ -51,7 +51,7 @@ class VerifyUserEmailController extends AbstractController
             return $this->redirectToRoute(RegisterController::ROUTE);
         }
 
-        $this->addFlash('success', $this->translator->trans('security.email_verified_successfully'));
+        $this->addFlash('success', 'security.email_verified_successfully');
 
         return $this->redirectToRoute(IndexTripController::ROUTE);
     }
