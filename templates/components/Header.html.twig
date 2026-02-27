@@ -23,15 +23,7 @@
                 <ul class="flex">
                     <twig:Header:NavLink label="trips.label" route="app.trip.index" />
                     <twig:Header:NavLink label="trip.new.label" route="app.trip.new" />
-                    {% if app.user %}
-                        <twig:Header:NavLink label="logout.label" route="app.logout" />
-                    {% else %}
-                        <twig:Header:NavLink label="login.label" route="app.login" />
-                    {% endif %}
                 </ul>
-            </div>
-
-            <div class="flex items-center gap-2">
                 <ul class="flex items-center" aria-label="{{ 'language.switch.label'|trans }}">
                     {% for locale in supported_locales %}
                         <li>
@@ -51,6 +43,24 @@
                     {% endfor %}
                 </ul>
                 <twig:Header:DarkModeSwitch />
+            </div>
+
+            <div class="flex items-center gap-2">
+                {% if app.user %}
+                    <twig:Button as="a" href="{{ path('app.logout') }}" class="text-primary-foreground" data-turbo="false">
+                        {{ 'logout.label'|trans }}
+                    </twig:Button>
+                    <div class="hidden items-center gap-2 rounded-md border border-primary-foreground/30 px-2 py-1 text-sm text-primary-foreground sm:flex">
+                        <twig:ux:icon name="lucide:user"  height="1.2em" width="1.2em" />
+                        <span class="max-w-40 truncate">
+                            {{- app.user.firstName -}}
+                        </span>
+                    </div>
+                {% else %}
+                    <twig:Button as="a" href="{{ path('app.login') }}" class="text-primary-foreground">
+                        {{ 'login.label'|trans }}
+                    </twig:Button>
+                {% endif %}
             </div>
         </div>
     </nav>
