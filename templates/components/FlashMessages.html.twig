@@ -1,0 +1,10 @@
+{# @prop flashes array<string, list<string>> Flash messages grouped by type, defaults to app.flashes #}
+{%- props flashes = app.flashes -%}
+
+{% for variant, messages in flashes %}
+    {% for message in messages %}
+        <twig:Alert :variant="variant">
+            {{- message|trans -}}
+        </twig:Alert>
+    {% endfor %}
+{% endfor %}

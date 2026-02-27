@@ -1,0 +1,3 @@
+security:
+    login:
+        email_not_verified: Your email address is not verified yet.

@@ -21,6 +21,14 @@
     {{ parent() }}
 {% endblock %}
 
+{% block form_label_content %}
+    {{ parent() }}
+
+    {% if required %}
+        <span class="text-destructive" aria-hidden="true">*</span>
+    {% endif %}
+{% endblock %}
+
 {% block form_widget_simple %}
     {% set type = type|default('text') %}
     {% set attr = attr|merge({
@@ -52,6 +60,21 @@
     }) %}
 
     {{ parent() }}
+{% endblock %}
+
+{% block checkbox_row %}
+    {% set row_attr = row_attr|merge({
+        class: ('app-row ' ~ (row_attr.class|default('')))|tailwind_merge,
+    }) %}
+
+    <div{% with {attr: row_attr} %}{{ block('attributes') }}{% endwith %}>
+        <div class="flex items-center gap-2">
+            {{ form_widget(form) }}
+            {{ form_label(form) }}
+        </div>
+        {{ form_errors(form) }}
+        {{ form_help(form) }}
+    </div>
 {% endblock %}
 
 {% block form_errors %}

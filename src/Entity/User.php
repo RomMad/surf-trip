@@ -31,13 +31,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
     private string $email = '';
 
     #[ORM\Column(length: 100)]
-    #[Assert\NotBlank(message: 'user.firstname.not_blank')]
-    #[Assert\Length(max: 100, maxMessage: 'user.firstname.max_length')]
-    private string $firstname = '';
+    #[Assert\NotBlank(message: 'user.first_name.not_blank')]
+    #[Assert\Length(max: 100, maxMessage: 'user.first_name.max_length')]
+    private string $firstName = '';
 
     #[ORM\Column(length: 100, nullable: true)]
-    #[Assert\Length(max: 100, maxMessage: 'user.lastname.max_length')]
-    private ?string $lastname = null;
+    #[Assert\Length(max: 100, maxMessage: 'user.last_name.max_length')]
+    private ?string $lastName = null;
 
     /** @var list<string> The user roles */
     #[ORM\Column]
@@ -45,7 +45,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
 
     /** @var string The hashed password */
     #[ORM\Column]
-    #[Assert\NotBlank(message: 'user.password.not_blank')]
     private string $password = '';
 
     /**
@@ -53,6 +52,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
      */
     #[ORM\ManyToMany(targetEntity: Trip::class, mappedBy: 'owners')]
     private Collection $trips;
+
+    #[ORM\Column]
+    private bool $isVerified = false;
 
     public function __construct()
     {
@@ -94,29 +96,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
 
     public function getFullName(): string
     {
-        return sprintf('%s %s', $this->firstname, $this->lastname);
+        return sprintf('%s %s', $this->firstName, $this->lastName);
     }
 
-    public function getFirstname(): ?string
+    public function getFirstName(): ?string
     {
-        return $this->firstname;
+        return $this->firstName;
     }
 
-    public function setFirstname(string $firstname): static
+    public function setFirstName(string $firstName): static
     {
-        $this->firstname = $firstname;
+        $this->firstName = $firstName;
 
         return $this;
     }
 
-    public function getLastname(): ?string
+    public function getLastName(): ?string
     {
-        return $this->lastname;
+        return $this->lastName;
     }
 
-    public function setLastname(?string $lastname): static
+    public function setLastName(?string $lastName): static
     {
-        $this->lastname = $lastname;
+        $this->lastName = $lastName;
 
         return $this;
     }
@@ -197,6 +199,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
         if ($this->trips->removeElement($trip)) {
             $trip->removeOwner($this);
         }
+
+        return $this;
+    }
+
+    public function isVerified(): bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setIsVerified(bool $isVerified): static
+    {
+        $this->isVerified = $isVerified;
 
         return $this;
     }

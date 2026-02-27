@@ -24,9 +24,6 @@
                     <twig:Header:NavLink label="trips.label" route="app.trip.index" />
                     <twig:Header:NavLink label="trip.new.label" route="app.trip.new" />
                 </ul>
-            </div>
-
-            <div class="flex items-center gap-2">
                 <ul class="flex items-center" aria-label="{{ 'language.switch.label'|trans }}">
                     {% for locale in supported_locales %}
                         <li>
@@ -34,8 +31,8 @@
                                 variant="link"
                                 class="p-1"
                                 href="{{ path(app.current_route, current_route_parameters|merge({_locale: locale})) }}"
-                                title="{{ 'language.%s.label'|replace({'%s': locale})|trans }}"
-                                disabled="{{ app.request.locale === locale }}"
+                                title="{{ ('language.' ~ locale ~ '.label')|trans }}"
+                                :disabled="app.request.locale is same as(locale)"
                             >
                                 <twig:ux:icon name="circle-flags:lang-{{ locale }}" />
                             </twig:Button>
@@ -46,6 +43,29 @@
                     {% endfor %}
                 </ul>
                 <twig:Header:DarkModeSwitch />
+            </div>
+
+            <div class="flex items-center">
+                {% if app.user %}
+                    <twig:Button as="a" href="{{ path('app.logout') }}" class="text-primary-foreground" data-turbo="false">
+                        {{- 'logout.label'|trans -}}
+                    </twig:Button>
+                    <div class="hidden items-center gap-2 rounded-md border border-primary-foreground/30 px-2 py-1 text-sm text-primary-foreground sm:flex">
+                        <twig:ux:icon name="lucide:user"  height="1.2em" width="1.2em" />
+                        <span class="max-w-40 truncate">
+                            {{- app.user.firstName -}}
+                        </span>
+                    </div>
+                {% else %}
+                    <div>
+                        <twig:Button as="a" href="{{ path('app.login') }}" class="text-primary-foreground">
+                            {{ 'login.label'|trans }}
+                            </twig:Button>
+                        <twig:Button as="a" href="{{ path('app.register') }}" class="text-primary-foreground">
+                            {{ 'register.label'|trans }}
+                        </twig:Button>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </nav>
