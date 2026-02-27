@@ -4,6 +4,7 @@ delete.label: Supprimer
 edit.label: Modifier
 login.label: Se connecter
 logout.label: Se déconnecter
+register.label: S'inscrire
 save.label: Enregistrer
 show.label: Voir
 update.label: Mettre à jour
@@ -12,7 +13,6 @@ back_to_list.label: Retour à la liste
 # Common
 app_name: Surf Trip
 dark_mode.label: Mode sombre
-email.label: E-mail
 no_records_found.label: Aucun enregistrement trouvé
 navigation:
     main.label: Navigation principale
@@ -21,14 +21,26 @@ language:
     switch.label: Changer de langue
     fr.label: Français
     en.label: Anglais
-password.label: Mot de passe
 search:
     label: Rechercher
     placeholder: Rechercher...
+
+# Security
 security:
     login:
         title: Connexion
         remember_me.label: Se souvenir de moi
+    registration:
+        agree_terms.label: J’accepte les conditions générales d’utilisation
+        title: Inscription
+        confirm_email:
+            subject: Confirme ton adresse e-mail
+            title: Salut ! Merci de confirmer ton adresse e-mail !
+            intro: "Merci de confirmer ton adresse e-mail en cliquant sur le lien suivant :"
+            cta: Confirmer mon e-mail
+            expires: Ce lien expirera dans {expires}.
+            outro: À bientôt !
+    email_verified_successfully: Ton adresse e-mail a été vérifiée.
 
 # Pagination
 next.label: Suivant
@@ -41,7 +53,7 @@ trip.label: Trip
 trip:
     new.label: Nouveau trip
     edit.label: Edition du trip
-    delete.confirm: Êtes-vous sûr de vouloir supprimer ce voyage ?
+    delete.confirm: Es-tu sûr de vouloir supprimer ce voyage ?
 trips.label: Trips
 title.label: Titre
 description.label: Description
@@ -61,3 +73,11 @@ actions.label: Actions
 beginner.label: Débutant
 intermediate.label: Intermédiaire
 advanced.label: Avancé
+
+# User
+user.label: Utilisateur
+email.label: E-mail
+first_name.label: Prénom
+last_name.label: Nom
+password.label: Mot de passe
+password_repeat.label: Répéter le mot de passe

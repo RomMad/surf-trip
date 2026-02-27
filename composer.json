@@ -47,6 +47,7 @@
         "symfony/web-link": "7.4.*",
         "symfony/webpack-encore-bundle": "^2.4",
         "symfony/yaml": "7.4.*",
+        "symfonycasts/verify-email-bundle": "^1.18",
         "tales-from-a-dev/twig-tailwind-extra": "^1.1.0",
         "twig/extra-bundle": "^3.23",
         "twig/html-extra": "^3.23.0",

@@ -45,7 +45,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
 
     /** @var string The hashed password */
     #[ORM\Column]
-    #[Assert\NotBlank(message: 'user.password.not_blank')]
     private string $password = '';
 
     /**
@@ -53,6 +52,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
      */
     #[ORM\ManyToMany(targetEntity: Trip::class, mappedBy: 'owners')]
     private Collection $trips;
+
+    #[ORM\Column]
+    private bool $isVerified = false;
 
     public function __construct()
     {
@@ -197,6 +199,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
         if ($this->trips->removeElement($trip)) {
             $trip->removeOwner($this);
         }
+
+        return $this;
+    }
+
+    public function isVerified(): bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setIsVerified(bool $isVerified): static
+    {
+        $this->isVerified = $isVerified;
 
         return $this;
     }

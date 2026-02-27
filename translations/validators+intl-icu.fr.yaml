@@ -1,3 +1,13 @@
+security:
+    registration:
+        agree_terms:
+            is_true: Tu dois accepter les conditions.
+        password:
+            invalid: Les mots de passe ne correspondent pas.
+            not_blank: Merci de saisir un mot de passe.
+            min_length: Le mot de passe doit contenir au moins {limit} caractères.
+            max_length: Le mot de passe ne peut pas dépasser {limit} caractères.
+
 trip:
     title:
         not_blank: Le titre est obligatoire.

@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% set title = 'security.registration.title'|trans %}
+
+{% block container_class %}app-centered-container{% endblock %}
+
+{% block body %}
+    <twig:Heading1 :title="title" />
+
+    {% for flash_error in app.flashes('verify_email_error') %}
+        <p class="app-error-item mb-4" role="alert">
+            {{- flash_error -}}
+        </p>
+    {% endfor %}
+
+    {{ form_errors(form) }}
+
+    {{ form_start(form, { attr: { class: 'space-y-4' } }) }}
+        {{ form_row(form.email) }}
+        {{ form_row(form.firstName) }}
+        {{ form_row(form.lastName) }}
+        {{ form_row(form.plainPassword) }}
+        {{ form_row(form.agreeTerms) }}
+
+        <twig:Button type="submit" class="w-full">
+            {{- 'register.label'|trans -}}
+        </twig:Button>
+    {{ form_end(form) }}
+{% endblock %}
