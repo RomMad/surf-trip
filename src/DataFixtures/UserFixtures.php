@@ -51,7 +51,7 @@ class UserFixtures extends Fixture
                 ->setLastName($lastName)
                 ->setRoles(['ROLE_USER'])
                 ->setPassword($password)
-                ->setVerified(true)
+                ->setIsVerified(true)
             ;
 
             yield $user;
