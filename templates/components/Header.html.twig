@@ -45,10 +45,10 @@
                 <twig:Header:DarkModeSwitch />
             </div>
 
-            <div class="flex items-center gap-2">
+            <div class="flex items-center">
                 {% if app.user %}
                     <twig:Button as="a" href="{{ path('app.logout') }}" class="text-primary-foreground" data-turbo="false">
-                        {{ 'logout.label'|trans }}
+                        {{- 'logout.label'|trans -}}
                     </twig:Button>
                     <div class="hidden items-center gap-2 rounded-md border border-primary-foreground/30 px-2 py-1 text-sm text-primary-foreground sm:flex">
                         <twig:ux:icon name="lucide:user"  height="1.2em" width="1.2em" />
@@ -57,9 +57,14 @@
                         </span>
                     </div>
                 {% else %}
-                    <twig:Button as="a" href="{{ path('app.login') }}" class="text-primary-foreground">
-                        {{ 'login.label'|trans }}
-                    </twig:Button>
+                    <div>
+                        <twig:Button as="a" href="{{ path('app.login') }}" class="text-primary-foreground">
+                            {{ 'login.label'|trans }}
+                            </twig:Button>
+                        <twig:Button as="a" href="{{ path('app.register') }}" class="text-primary-foreground">
+                            {{ 'register.label'|trans }}
+                        </twig:Button>
+                    </div>
                 {% endif %}
             </div>
         </div>
