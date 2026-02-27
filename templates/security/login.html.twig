@@ -56,5 +56,9 @@
         <twig:Button type="submit" class="w-full">
             {{- 'login.label'|trans -}}
         </twig:Button>
+
+        <twig:Button as="a" variant="link" href="{{ path('app.register') }}" class="w-full">
+            {{- 'register.label'|trans -}}
+        </twig:Button>
     </form>
 {% endblock %}
