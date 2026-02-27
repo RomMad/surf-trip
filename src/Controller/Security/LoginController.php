@@ -15,15 +15,18 @@ class LoginController extends AbstractController
 {
     public const string ROUTE = 'app.login';
 
+    public function __construct(
+        private readonly AuthenticationUtils $authenticationUtils
+    ) {}
+
     #[Route(path: '/login', name: self::ROUTE, methods: [Request::METHOD_GET, Request::METHOD_POST])]
-    public function __invoke(AuthenticationUtils $authenticationUtils): Response
+    public function __invoke(): Response
     {
-        if ($this->getUser()) {
+        if (null !== $this->getUser()) {
             return $this->redirectToRoute(IndexTripController::ROUTE);
         }
-
-        $error = $authenticationUtils->getLastAuthenticationError();
-        $lastUsername = $authenticationUtils->getLastUsername();
+        $error = $this->authenticationUtils->getLastAuthenticationError();
+        $lastUsername = $this->authenticationUtils->getLastUsername();
 
         return $this->render('security/login.html.twig', [
             'last_username' => $lastUsername,

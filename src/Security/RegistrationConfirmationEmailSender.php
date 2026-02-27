@@ -21,7 +21,7 @@ final readonly class RegistrationConfirmationEmailSender
         $this->emailVerifier->sendEmailConfirmation(
             VerifyUserEmailController::ROUTE,
             $user,
-            (new TemplatedEmail())
+            new TemplatedEmail()
                 ->to((string) $user->getEmail())
                 ->subject($this->translator->trans('security.registration.confirm_email.subject'))
                 ->htmlTemplate('security/registration/confirmation_email.html.twig')
