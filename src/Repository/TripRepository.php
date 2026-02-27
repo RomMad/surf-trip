@@ -56,9 +56,9 @@ class TripRepository extends ServiceEntityRepository
                     t.description,
                     COALESCE(
                         STRING_AGG(
-                            CONCAT(o.firstname, \' \', o.lastname),
+                            CONCAT(o.firstName, \' \', o.lastName),
                             \', \'
-                            ORDER BY o.firstname, o.lastname
+                            ORDER BY o.firstName, o.lastName
                         ),
                         \'\'
                     ),
@@ -101,9 +101,9 @@ class TripRepository extends ServiceEntityRepository
                     t.description,
                     COALESCE(
                         STRING_AGG(
-                            CONCAT(o.firstname, \' \', SUBSTRING(o.lastname, 1, 1)),
+                            CONCAT(o.firstName, \' \', SUBSTRING(o.lastName, 1, 1)),
                             \', \'
-                            ORDER BY o.firstname, o.lastname
+                            ORDER BY o.firstName, o.lastName
                         ),
                         \'\'
                     ),

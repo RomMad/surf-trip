@@ -40,15 +40,15 @@ class UserFixtures extends Fixture
      */
     private function generateUsers(): \Generator
     {
-        foreach (self::USERS_DATA as [$firstname, $lastname]) {
+        foreach (self::USERS_DATA as [$firstName, $lastName]) {
             $user = new User();
-            $email = sprintf('%s.%s@example.com', strtolower($firstname), strtolower($lastname));
+            $email = sprintf('%s.%s@example.com', strtolower($firstName), strtolower($lastName));
             $password = $this->passwordHasher->hashPassword($user, 'password');
 
             $user
                 ->setEmail($email)
-                ->setFirstname($firstname)
-                ->setLastname($lastname)
+                ->setFirstName($firstName)
+                ->setLastName($lastName)
                 ->setRoles(['ROLE_USER'])
                 ->setPassword($password)
             ;

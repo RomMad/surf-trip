@@ -34,10 +34,10 @@ user:
         invalid: Email address is not valid.
         max_length: Email address cannot exceed {limit} characters.
         unique: This email address is already used.
-    firstname:
+    first_name:
         not_blank: First name is required.
         max_length: First name cannot exceed {limit} characters.
-    lastname:
+    last_name:
         max_length: Last name cannot exceed {limit} characters.
     password:
         not_blank: Password is required.

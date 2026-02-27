@@ -31,13 +31,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
     private string $email = '';
 
     #[ORM\Column(length: 100)]
-    #[Assert\NotBlank(message: 'user.firstname.not_blank')]
-    #[Assert\Length(max: 100, maxMessage: 'user.firstname.max_length')]
-    private string $firstname = '';
+    #[Assert\NotBlank(message: 'user.first_name.not_blank')]
+    #[Assert\Length(max: 100, maxMessage: 'user.first_name.max_length')]
+    private string $firstName = '';
 
     #[ORM\Column(length: 100, nullable: true)]
-    #[Assert\Length(max: 100, maxMessage: 'user.lastname.max_length')]
-    private ?string $lastname = null;
+    #[Assert\Length(max: 100, maxMessage: 'user.last_name.max_length')]
+    private ?string $lastName = null;
 
     /** @var list<string> The user roles */
     #[ORM\Column]
@@ -96,29 +96,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
 
     public function getFullName(): string
     {
-        return sprintf('%s %s', $this->firstname, $this->lastname);
+        return sprintf('%s %s', $this->firstName, $this->lastName);
     }
 
-    public function getFirstname(): ?string
+    public function getFirstName(): ?string
     {
-        return $this->firstname;
+        return $this->firstName;
     }
 
-    public function setFirstname(string $firstname): static
+    public function setFirstName(string $firstName): static
     {
-        $this->firstname = $firstname;
+        $this->firstName = $firstName;
 
         return $this;
     }
 
-    public function getLastname(): ?string
+    public function getLastName(): ?string
     {
-        return $this->lastname;
+        return $this->lastName;
     }
 
-    public function setLastname(?string $lastname): static
+    public function setLastName(?string $lastName): static
     {
-        $this->lastname = $lastname;
+        $this->lastName = $lastName;
 
         return $this;
     }
