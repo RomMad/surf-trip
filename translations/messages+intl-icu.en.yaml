@@ -2,6 +2,8 @@
 create_new.label: Create new
 delete.label: Delete
 edit.label: Edit
+login.label: Log in
+logout.label: Log out
 save.label: Save
 show.label: Show
 update.label: Update
@@ -9,6 +11,7 @@ back_to_list.label: Back to list
 
 # Common
 app_name: Surf Trip
+email.label: Email
 dark_mode.label: Dark mode
 no_records_found.label: No records found
 navigation:
@@ -18,9 +21,14 @@ language:
     switch.label: Change language
     fr.label: French
     en.label: English
+password.label: Password
 search:
     label: Search
     placeholder: Search...
+security:
+    login:
+        title: Log in
+        remember_me.label: Remember me
 
 # Pagination
 next.label: Next

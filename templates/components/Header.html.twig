@@ -23,6 +23,11 @@
                 <ul class="flex">
                     <twig:Header:NavLink label="trips.label" route="app.trip.index" />
                     <twig:Header:NavLink label="trip.new.label" route="app.trip.new" />
+                    {% if app.user %}
+                        <twig:Header:NavLink label="logout.label" route="app.logout" />
+                    {% else %}
+                        <twig:Header:NavLink label="login.label" route="app.login" />
+                    {% endif %}
                 </ul>
             </div>
 
@@ -34,8 +39,8 @@
                                 variant="link"
                                 class="p-1"
                                 href="{{ path(app.current_route, current_route_parameters|merge({_locale: locale})) }}"
-                                title="{{ 'language.%s.label'|replace({'%s': locale})|trans }}"
-                                disabled="{{ app.request.locale === locale }}"
+                                title="{{ ('language.' ~ locale ~ '.label')|trans }}"
+                                :disabled="app.request.locale is same as(locale)"
                             >
                                 <twig:ux:icon name="circle-flags:lang-{{ locale }}" />
                             </twig:Button>

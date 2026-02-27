@@ -2,6 +2,8 @@
 create_new.label: Créer un nouveau
 delete.label: Supprimer
 edit.label: Modifier
+login.label: Se connecter
+logout.label: Se déconnecter
 save.label: Enregistrer
 show.label: Voir
 update.label: Mettre à jour
@@ -10,6 +12,7 @@ back_to_list.label: Retour à la liste
 # Common
 app_name: Surf Trip
 dark_mode.label: Mode sombre
+email.label: E-mail
 no_records_found.label: Aucun enregistrement trouvé
 navigation:
     main.label: Navigation principale
@@ -18,9 +21,14 @@ language:
     switch.label: Changer de langue
     fr.label: Français
     en.label: Anglais
+password.label: Mot de passe
 search:
     label: Rechercher
     placeholder: Rechercher...
+security:
+    login:
+        title: Connexion
+        remember_me.label: Se souvenir de moi
 
 # Pagination
 next.label: Suivant

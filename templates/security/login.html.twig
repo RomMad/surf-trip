@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% set title = 'security.login.title'|trans %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block container_class %}app-container max-w-md min-h-[calc(100vh-8rem)] flex flex-col justify-center{% endblock %}
+
+{% block body %}
+    <twig:Heading1 :title="title" />
+
+    {% if error %}
+        <p class="app-error-item mb-4" role="alert">
+            {{- error.messageKey|trans(error.messageData, 'security') -}}
+        </p>
+    {% endif %}
+
+    <form method="post" class="space-y-4">
+        <div class="app-row">
+            <twig:Form:Label for="email">
+                {{- 'email.label'|trans -}}
+            </twig:Form:Label>
+            <twig:Form:Input
+                type="email"
+                value="{{ last_username }}"
+                name="email"
+                id="email"
+                autocomplete="email"
+                required
+                autofocus
+            />
+        </div>
+
+        <div class="app-row">
+            <twig:Form:Label for="password">
+                {{- 'password.label'|trans -}}
+            </twig:Form:Label>
+            <twig:Form:Input
+                type="password"
+                name="password"
+                id="password"
+                autocomplete="current-password"
+                required
+            />
+        </div>
+
+        <input type="hidden" name="_csrf_token" data-controller="csrf-protection" value="{{ csrf_token('authenticate') }}">
+
+        <div class="flex items-center gap-2">
+            <twig:Form:Checkbox id="remember_me" name="_remember_me" />
+            <twig:Form:Label for="remember_me">
+                {{- 'security.login.remember_me.label'|trans -}}
+            </twig:Form:Label>
+        </div>
+
+        <twig:Button type="submit" class="w-full">
+            {{- 'login.label'|trans -}}
+        </twig:Button>
+    </form>
+{% endblock %}
