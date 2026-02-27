@@ -29,14 +29,15 @@ final readonly class EmailVerifier
             ['id' => $user->getId()]
         );
 
-        $context = $email->getContext();
-
         $email->context(
-            $context + [
-                'signed_url' => $signatureComponents->getSignedUrl(),
-                'expires_at_message_key' => $signatureComponents->getExpirationMessageKey(),
-                'expires_at_message_data' => $signatureComponents->getExpirationMessageData(),
-            ]
+            array_merge(
+                $email->getContext(),
+                [
+                    'signed_url' => $signatureComponents->getSignedUrl(),
+                    'expires_at_message_key' => $signatureComponents->getExpirationMessageKey(),
+                    'expires_at_message_data' => $signatureComponents->getExpirationMessageData(),
+                ]
+            )
         );
 
         $this->mailer->send($email);
