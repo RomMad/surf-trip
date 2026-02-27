@@ -17,6 +17,8 @@
         <twig:Header />
 
         <main class="{% block container_class %}app-container{% endblock %} py-8">
+            <twig:FlashMessages />
+
             {% block body %}{% endblock %}
         </main>
     </body>

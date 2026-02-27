@@ -1,0 +1,25 @@
+@layer components {
+    .app-alert {
+        @apply rounded-md border px-4 py-3 mb-4;
+    }
+
+    .app-alert-default {
+        @apply border-border bg-muted text-foreground;
+    }
+
+    .app-alert-success {
+        @apply border-emerald-500/40 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300;
+    }
+
+    .app-alert-danger {
+        @apply border-destructive/40 bg-destructive/10 text-destructive;
+    }
+
+    .app-alert-warning {
+        @apply border-amber-500/40 bg-amber-500/10 text-amber-700 dark:text-amber-300;
+    }
+
+    .app-alert-info {
+        @apply border-primary/30 bg-primary/10 text-primary;
+    }
+}
