@@ -30,11 +30,14 @@ final readonly class EmailVerifier
         );
 
         $context = $email->getContext();
-        $context['signedUrl'] = $signatureComponents->getSignedUrl();
-        $context['expiresAtMessageKey'] = $signatureComponents->getExpirationMessageKey();
-        $context['expiresAtMessageData'] = $signatureComponents->getExpirationMessageData();
 
-        $email->context($context);
+        $email->context(
+            $context + [
+                'signed_url' => $signatureComponents->getSignedUrl(),
+                'expires_at_message_key' => $signatureComponents->getExpirationMessageKey(),
+                'expires_at_message_data' => $signatureComponents->getExpirationMessageData(),
+            ]
+        );
 
         $this->mailer->send($email);
     }
