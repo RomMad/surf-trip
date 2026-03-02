@@ -12,7 +12,8 @@
 {% set data = trips|map(trip => [
     trip.title,
     trip.location,
-    trip.endAt|format_datetime(pattern: 'EEE d MMM yy') ~ ' -  ' ~ trip.startAt|format_datetime(pattern: 'EEE d MMM yy'),
+    trip.startAt|format_datetime(pattern: ('EEE d MMM' ~ (trip.startAt|date('Y') !== trip.endAt|date('Y') ? ' yy'))) ~ ' -  '
+        ~ trip.endAt|format_datetime(pattern: 'EEE d MMM yy'),
     trip.requiredLevels|map(rl => rl.label|trans),
     trip.description|u.truncate(120, '…', false),
     trip.ownerNames,
