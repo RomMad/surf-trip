@@ -15,7 +15,7 @@ use Faker\Generator;
 
 class TripFixtures extends Fixture implements DependentFixtureInterface
 {
-    private const int RANDOM_TRIPS_COUNT = 100;
+    private const int RANDOM_TRIPS_COUNT = 1000;
     private const int USER_REFERENCE_COUNT = 5;
 
     private const array TRIPS_DATA = [
