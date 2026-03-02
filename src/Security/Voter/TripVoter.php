@@ -26,7 +26,7 @@ final class TripVoter extends Voter
     }
 
     /**
-     * @param Trip $subject
+     * @param Trip|TripOwnershipAwareInterface $subject
      */
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
     {
