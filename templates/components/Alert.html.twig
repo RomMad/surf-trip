@@ -1,0 +1,25 @@
+{# @prop variant 'default'|'success'|'danger'|'warning'|'info' The variant, default to `default` #}
+{# @prop as 'p' The HTML tag to use, default to `p` #}
+{# @block content The default block #}
+{%- props variant = 'default', as = 'p' -%}
+{%- set style = html_cva(
+    base: 'app-alert',
+    variants: {
+        variant: {
+            default: 'app-alert-default',
+            success: 'app-alert-success',
+            danger: 'app-alert-danger',
+            warning: 'app-alert-warning',
+            info: 'app-alert-info',
+        },
+    },
+) -%}
+
+<{{ as }}
+    class="{{ style.apply({variant: variant}, attributes.render('class'))|tailwind_merge }}"
+    role="status"
+    aria-live="polite"
+    {{ attributes }}
+>
+    {%- block content %}{% endblock -%}
+</{{ as }}>

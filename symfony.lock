@@ -408,6 +408,9 @@
             "webpack.config.js"
         ]
     },
+    "symfonycasts/verify-email-bundle": {
+        "version": "v1.18.0"
+    },
     "tales-from-a-dev/twig-tailwind-extra": {
         "version": "1.0",
         "recipe": {

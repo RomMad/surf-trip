@@ -123,6 +123,17 @@ yarn install
 yarn dev
 ```
 
+### Local URLs
+
+* App (HTTPS): https://localhost
+* App (HTTP): http://localhost:8080
+* Mercure hub: https://localhost/.well-known/mercure
+* pgAdmin: http://localhost:5050
+* Mailpit (web UI): http://localhost:8025
+* MinIO API: http://localhost:9000
+* MinIO Console: http://localhost:9001
+* Redis: redis://localhost:6379
+
 ## Quality Pipeline
 
 ```bash
