@@ -29,7 +29,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Index(name: 'idx_trip_end_at', fields: ['endAt'])]
 #[ORM\Index(name: 'idx_trip_location', fields: ['location'])]
 #[ORM\Index(name: 'idx_trip_required_levels', fields: ['requiredLevels'], flags: ['gin'])]
-#[ORM\Index(name: 'idx_trip_search', fields: ['title', 'location'], flags: ['fulltext'])]
+#[ORM\Index(name: 'idx_trip_search', fields: ['title', 'location'])]
 #[ORM\Index(name: 'idx_trip_start_at', fields: ['startAt'])]
 #[ORM\Index(name: 'idx_trip_title', fields: ['title'])]
 #[ApiResource(
