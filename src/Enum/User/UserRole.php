@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Enum\Trip;
+namespace App\Enum\User;
 
 use App\Enum\EnumTrait;
 use Symfony\Contracts\Translation\TranslatableInterface;

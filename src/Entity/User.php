@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
-use App\Enum\Trip\UserRole;
+use App\Enum\User\UserRole;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;

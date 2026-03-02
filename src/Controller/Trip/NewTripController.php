@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Trip;
 
 use App\Entity\Trip;
-use App\Enum\Trip\UserRole;
+use App\Enum\User\UserRole;
 use App\Form\TripFormType;
 use App\Repository\TripRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

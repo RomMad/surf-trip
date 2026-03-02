@@ -6,7 +6,7 @@ namespace App\Security\Voter;
 
 use App\Entity\Trip;
 use App\Entity\User;
-use App\Enum\Trip\UserRole;
+use App\Enum\User\UserRole;
 use App\ReadModel\Trip\TripOwnershipAwareInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
