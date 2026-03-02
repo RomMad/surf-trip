@@ -19,7 +19,7 @@ final class Version20260302151944 extends AbstractMigration
         $this->addSql('CREATE INDEX idx_trip_created_at ON trip (created_at)');
         $this->addSql('CREATE INDEX idx_trip_end_at ON trip (end_at)');
         $this->addSql('CREATE INDEX idx_trip_location ON trip (location)');
-        $this->addSql('CREATE INDEX idx_trip_required_levels ON trip (required_levels)');
+        $this->addSql('CREATE INDEX idx_trip_required_levels ON trip USING GIN (required_levels)');
         $this->addSql('CREATE INDEX idx_trip_search ON trip (title, location)');
         $this->addSql('CREATE INDEX idx_trip_start_at ON trip (start_at)');
         $this->addSql('CREATE INDEX idx_trip_title ON trip (title)');
