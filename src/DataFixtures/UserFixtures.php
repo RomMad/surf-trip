@@ -50,7 +50,6 @@ class UserFixtures extends Fixture
                 ->setEmail($email)
                 ->setFirstName($firstName)
                 ->setLastName($lastName)
-                ->setRoles(['ROLE_USER'])
                 ->setPassword($password)
                 ->setIsVerified(true)
             ;
