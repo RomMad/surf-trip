@@ -25,6 +25,13 @@ use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TripRepository::class)]
+#[ORM\Index(name: 'idx_trip_created_at', fields: ['createdAt'])]
+#[ORM\Index(name: 'idx_trip_end_at', fields: ['endAt'])]
+#[ORM\Index(name: 'idx_trip_location', fields: ['location'])]
+#[ORM\Index(name: 'idx_trip_required_levels', fields: ['requiredLevels'], flags: ['gin'])]
+#[ORM\Index(name: 'idx_trip_search', fields: ['title', 'location'], flags: ['fulltext'])]
+#[ORM\Index(name: 'idx_trip_start_at', fields: ['startAt'])]
+#[ORM\Index(name: 'idx_trip_title', fields: ['title'])]
 #[ApiResource(
     operations: [
         new Get(
