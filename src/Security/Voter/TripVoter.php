@@ -40,7 +40,7 @@ final class TripVoter extends Voter
         if ($subject instanceof TripOwnershipAwareInterface) {
             return match ($attribute) {
                 self::SHOW => true,
-                self::EDIT, self::DELETE => null !== $user->getId() && $subject->isOwnedByUser($user),
+                self::EDIT, self::DELETE => $subject->isOwnedByUser($user) || $user->hasRole(UserRole::Admin),
                 default => false,
             };
         }
