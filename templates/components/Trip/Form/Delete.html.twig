@@ -1,11 +1,13 @@
-<form method="post"
-      action="{{ path('app.trip.delete', {id: trip.id}) }}"
-      class="mb-4"
-      onsubmit="return confirm('{{ 'trip.delete.confirm'|trans }}');"
->
-    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ trip.id) }}">
-    <twig:Button variant="destructive">
-        <twig:ux:icon name="lucide:trash" />
-        {{- 'delete.label'|trans -}}
-    </twig:Button>
-</form>
+{% if is_granted('DELETE', trip) %}
+    <form method="post"
+          action="{{ path('app.trip.delete', {id: trip.id}) }}"
+          class="mb-4"
+          onsubmit="return confirm('{{ 'trip.delete.confirm'|trans }}');"
+    >
+        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ trip.id) }}">
+        <twig:Button variant="destructive">
+            <twig:ux:icon name="lucide:trash" />
+            {{- 'delete.label'|trans -}}
+        </twig:Button>
+    </form>
+{% endif %}

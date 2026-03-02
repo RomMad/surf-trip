@@ -1,6 +1,6 @@
 {# @block content The default block #}
 <tfoot
-    class="{{ 'app-table-footer ' ~ attributes.render('class')|tailwind_merge }}"
+    class="{{ attributes.render('class')|tailwind_merge }}"
     {{ attributes }}
 >
     {%- block content %}{% endblock -%}

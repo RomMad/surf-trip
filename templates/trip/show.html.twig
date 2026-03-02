@@ -7,11 +7,13 @@
     <twig:Trip:ShowTable :trip="trip" />
 
     <div class="flex flex-wrap items-center gap-2">
-        <twig:Button as="a" href="{{ path('app.trip.edit', {id: trip.id}) }}" class="mb-4">
-            <twig:ux:icon name="lucide:edit-2" />
-            {{- 'edit.label'|trans -}}
-        </twig:Button>
-        <twig:Trip:Form:Delete :trip="trip" />
+        {% if is_granted('EDIT', trip) %}
+            <twig:Button as="a" href="{{ path('app.trip.edit', {id: trip.id}) }}" class="mb-4">
+                <twig:ux:icon name="lucide:edit-2" />
+                {{- 'edit.label'|trans -}}
+            </twig:Button>
+            <twig:Trip:Form:Delete :trip="trip" />
+        {% endif %}
         <twig:Trip:BackToIndexButton />
     </div>
 {% endblock %}

@@ -1,3 +1,7 @@
 framework:
     mailer:
         dsn: '%env(MAILER_DSN)%'
+        envelope:
+            sender: "%app_email%"
+        headers:
+            from: "Surf Trip <%app_email%>"

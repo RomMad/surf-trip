@@ -1,25 +1,25 @@
 {% set headers = [
     ['title.label'|trans, 't.title'],
     ['location.label'|trans, 't.location'],
-    ['start_at.label'|trans, 't.startAt'],
-    ['end_at.label'|trans, 't.endAt'],
+    ['start_at.label'|trans, 't.startAt', 'w-24'],
+    ['end_at.label'|trans, 't.endAt', 'w-24'],
     'required_levels.label'|trans,
     'description.label'|trans,
-    ['owners.label'|trans, 't.ownerNames'],
-    ['created_at.label'|trans, 't.createdAt'],
+    'owners.label'|trans,
+    ['created_at.label'|trans, 't.createdAt', 'w-32'],
     'actions.label'|trans,
 ] %}
 
 {% set data = trips|map(trip => [
     trip.title,
     trip.location,
-    trip.startAt|format_datetime(pattern: 'EEEE d MMM yy'),
-    trip.endAt|format_datetime(pattern: 'EEEE d MMM yy'),
+    trip.startAt|format_datetime(pattern: 'EEE d MMM yy'),
+    trip.endAt|format_datetime(pattern: 'EEE d MMM yy'),
     trip.requiredLevels|map(rl => rl.label|trans),
     trip.description|u.truncate(120, '…', false),
     trip.ownerNames,
     trip.createdAt|format_datetime(pattern: 'd MMM yy'),
-    {raw: include('components/Trip/IndexActionsCell.html.twig', {trip: trip})},
+    {component: 'Trip:IndexActionsCell', context: {trip: trip}},
 ]) %}
 
 <twig:DataTable :headers="headers" :data="data" />

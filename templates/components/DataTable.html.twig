@@ -1,38 +1,38 @@
 <twig:Table>
-    <twig:Table:Header>
-        <twig:Table:Row>
+    <thead>
+        <tr>
             {% for header in headers %}
-                <twig:Table:Head>
+                <th {% if header.2 is defined %}class="{{ header.2 }}"{% endif %}>
                     {% if header is iterable %}
                         <twig:Table:SortableHeadLink label="{{ header.0 }}" name="{{ header.1 }}" />
                     {% else %}
                         {{- header -}}
                     {% endif %}
-                </twig:Table:Head>
+                </th>
             {% endfor %}
-        </twig:Table:Row>
-    </twig:Table:Header>
-    <twig:Table:Body>
+        </tr>
+    </thead>
+    <tbody>
         {% for row in data %}
-            <twig:Table:Row>
+            <tr>
                 {% for cell in row %}
-                    <twig:Table:Cell>
-                        {% if cell?.raw is defined %}
-                            {{- cell.raw|raw -}}
-                        {% elseif cell is iterable %}
+                    <td>
+                        {%- if cell?.component is defined -%}
+                            {{- component(cell.component, cell.context|default({})) -}}
+                        {%- elseif cell is iterable -%}
                             {{- cell|join(', ') -}}
-                        {% else %}
+                        {%- else -%}
                             {{- cell -}}
-                        {% endif %}
-                    </twig:Table:Cell>
+                        {%- endif -%}
+                    </td>
                 {% endfor %}
-            </twig:Table:Row>
+            </tr>
         {% else %}
-            <twig:Table:Row>
-                <twig:Table:Cell :colspan="headers|length">
+            <tr>
+                <td colspan="{{ headers|length }}">
                     {{- empty_message|trans -}}
-                </twig:Table:Cell>
-            </twig:Table:Row>
+                </td>
+            </tr>
         {% endfor %}
-    </twig:Table:Body>
+    </tbody>
 </twig:Table>

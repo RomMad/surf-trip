@@ -9,6 +9,7 @@
 parameters:
     app_locale: 'fr'
     supported_locales: ['fr', 'en']
+    app_email: '%env(APP_EMAIL)%'
 
 services:
     # default configuration for services in *this* file

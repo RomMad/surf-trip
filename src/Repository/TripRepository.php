@@ -6,7 +6,6 @@ namespace App\Repository;
 
 use App\Entity\Trip;
 use App\Form\Model\TripFilter;
-use App\ReadModel\Trip\TripIndexReadModel;
 use App\ReadModel\Trip\TripShowReadModel;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
@@ -44,30 +43,7 @@ class TripRepository extends ServiceEntityRepository
 
     public function createOrderedQueryBuilder(TripFilter $filter): QueryBuilder
     {
-        $queryBuilder = $this->createQueryBuilder('t')
-            ->select(sprintf(
-                'NEW %s(
-                    t.id,
-                    t.title,
-                    t.location,
-                    t.startAt,
-                    t.endAt,
-                    t.requiredLevels,
-                    t.description,
-                    COALESCE(
-                        STRING_AGG(
-                            CONCAT(o.firstname, \' \', o.lastname),
-                            \', \'
-                            ORDER BY o.firstname, o.lastname
-                        ),
-                        \'\'
-                    ),
-                    t.createdAt
-                )',
-                TripIndexReadModel::class,
-            ))
-            ->leftJoin('t.owners', 'o')
-            ->groupBy('t.id')
+        $queryBuilder = $this->createDtoBaseQueryBuilder()
             ->orderBy('t.createdAt', 'DESC')
         ;
 
@@ -89,6 +65,17 @@ class TripRepository extends ServiceEntityRepository
 
     public function findShowReadModelById(int $id): ?TripShowReadModel
     {
+        return $this->createDtoBaseQueryBuilder()
+            ->andWhere('t.id = :id')
+            ->setParameter('id', $id)
+
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
+    private function createDtoBaseQueryBuilder(): QueryBuilder
+    {
         return $this->createQueryBuilder('t')
             ->select(sprintf(
                 'NEW %s(
@@ -99,26 +86,19 @@ class TripRepository extends ServiceEntityRepository
                     t.endAt,
                     t.requiredLevels,
                     t.description,
-                    COALESCE(
-                        STRING_AGG(
-                            CONCAT(o.firstname, \' \', SUBSTRING(o.lastname, 1, 1)),
-                            \', \'
-                            ORDER BY o.firstname, o.lastname
-                        ),
-                        \'\'
-                    ),
-                    t.createdAt
+                    t.createdAt,
+                    JSON_AGG(
+                        JSON_BUILD_ARRAY(
+                            o.id,
+                            CONCAT(o.firstName, \' \', o.lastName)
+                        )
+                        ORDER BY o.firstName, o.lastName
+                    )
                 )',
                 TripShowReadModel::class,
             ))
             ->leftJoin('t.owners', 'o')
             ->groupBy('t.id')
-
-            ->andWhere('t.id = :id')
-            ->setParameter('id', $id)
-
-            ->getQuery()
-            ->getOneOrNullResult()
         ;
     }
 
