@@ -7,11 +7,13 @@ namespace App\Controller\Trip;
 use App\Entity\Trip;
 use App\Form\TripFormType;
 use App\Repository\TripRepository;
+use App\Security\Voter\TripVoter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Requirement\Requirement;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 final class EditTripController extends AbstractController
 {
@@ -25,6 +27,7 @@ final class EditTripController extends AbstractController
         requirements: ['id' => Requirement::POSITIVE_INT],
         methods: [Request::METHOD_GET, Request::METHOD_POST],
     )]
+    #[IsGranted(TripVoter::EDIT, subject: 'trip')]
     public function __invoke(Request $request, Trip $trip): Response
     {
         $form = $this->createForm(TripFormType::class, $trip);

@@ -26,7 +26,8 @@ doctrine:
             string_functions:
                 CONTAINS: MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\Contains # @>
                 ILIKE: MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\Ilike
-                STRING_AGG: MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\StringAgg
+                JSON_AGG: MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\JsonAgg
+                JSON_BUILD_ARRAY: MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\JsonBuildArray
 
 when@test:
     doctrine:
