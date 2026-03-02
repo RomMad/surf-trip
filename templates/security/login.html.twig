@@ -10,9 +10,9 @@
     <twig:Heading1 :title="title" />
 
     {% if error %}
-        <p class="app-error-item mb-4" role="alert">
+        <twig:Alert variant="danger">
             {{- error.messageKey|trans(error.messageData, 'security') -}}
-        </p>
+        </twig:Alert>
     {% endif %}
 
     <form method="post" class="space-y-4">
