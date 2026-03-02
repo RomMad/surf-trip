@@ -6,6 +6,7 @@ namespace App\Controller\Trip;
 
 use App\Entity\Trip;
 use App\Repository\TripRepository;
+use App\Security\Voter\TripVoter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,6 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Requirement\Requirement;
 use Symfony\Component\Security\Http\Attribute\IsCsrfTokenValid;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 final class DeleteTripController extends AbstractController
 {
@@ -27,6 +29,7 @@ final class DeleteTripController extends AbstractController
         methods: [Request::METHOD_POST]
     )]
     #[IsCsrfTokenValid(new Expression('"delete" ~ args["trip"].getId()'))]
+    #[IsGranted(TripVoter::DELETE, subject: 'trip')]
     public function __invoke(Trip $trip): Response
     {
         $this->tripRepository->remove($trip, true);

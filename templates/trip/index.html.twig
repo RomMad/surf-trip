@@ -14,8 +14,10 @@
         </turbo-frame>
     {% endblock %}
 
-    <twig:Button as="a" href="{{ path('app.trip.new') }}">
-        <twig:ux:icon name="lucide:plus" />
-        {{- 'create_new.label'|trans -}}
-    </twig:Button>
+    {% if is_granted('ROLE_USER') %}
+        <twig:Button as="a" href="{{ path('app.trip.new') }}">
+            <twig:ux:icon name="lucide:plus" />
+            {{- 'create_new.label'|trans -}}
+        </twig:Button>
+    {% endif %}
 {% endblock %}
