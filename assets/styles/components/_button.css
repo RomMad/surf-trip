@@ -20,11 +20,11 @@
     }
 
     .app-btn-ghost {
-        @apply hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50;
+        @apply text-primary hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50;
     }
 
     .app-btn-link {
-        @apply text-primary underline-offset-4 hover:underline;
+        @apply justify-start text-primary hover:text-primary/80;
     }
 
     .app-btn-md {

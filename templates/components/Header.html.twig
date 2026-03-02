@@ -49,7 +49,7 @@
 
             <div class="flex items-center">
                 {% if app.user %}
-                    <twig:Button as="a" href="{{ path('app.logout') }}" class="text-primary-foreground" data-turbo="false">
+                    <twig:Button as="a" href="{{ path('app.logout') }}" class="hover:text-primary-foreground/80" data-turbo="false">
                         {{- 'logout.label'|trans -}}
                     </twig:Button>
                     <div class="hidden items-center gap-2 rounded-md border border-primary-foreground/30 px-2 py-1 text-sm text-primary-foreground sm:flex">
@@ -60,10 +60,10 @@
                     </div>
                 {% else %}
                     <div>
-                        <twig:Button as="a" href="{{ path('app.login') }}" class="text-primary-foreground">
+                        <twig:Button as="a" href="{{ path('app.login') }}" class="hover:text-primary-foreground/80">
                             {{ 'login.label'|trans }}
                             </twig:Button>
-                        <twig:Button as="a" href="{{ path('app.register') }}" class="text-primary-foreground">
+                        <twig:Button as="a" href="{{ path('app.register') }}" class="hover:text-primary-foreground/80">
                             {{ 'register.label'|trans }}
                         </twig:Button>
                     </div>

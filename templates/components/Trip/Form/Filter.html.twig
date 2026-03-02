@@ -15,7 +15,7 @@
         </twig:Button>
     </twig:ButtonGroup>
 
-    {{ form_row(form.requiredLevels, {label_attr: {hidden: null}}) }}
+    {{ form_row(form.requiredLevels, {attr: {class: 'min-w-64'}, label_attr: {hidden: null}}) }}
     {{ form_row(form.location, {label_attr: {hidden: null}}) }}
 
     {{ form_rest(form) }}
