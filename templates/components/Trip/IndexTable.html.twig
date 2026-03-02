@@ -19,7 +19,7 @@
     trip.description|u.truncate(120, '…', false),
     trip.ownerNames,
     trip.createdAt|format_datetime(pattern: 'd MMM yy'),
-    {component: 'Trip::IndexActionsCell', context: {trip: trip}},
+    {component: 'Trip:IndexActionsCell', context: {trip: trip}},
 ]) %}
 
 <twig:DataTable :headers="headers" :data="data" />
