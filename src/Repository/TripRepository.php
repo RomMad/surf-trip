@@ -92,6 +92,7 @@ class TripRepository extends ServiceEntityRepository
                             o.id,
                             CONCAT(o.firstName, \' \', o.lastName)
                         )
+                        ORDER BY o.firstName, o.lastName
                     )
                 )',
                 TripShowReadModel::class,
