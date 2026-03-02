@@ -45,11 +45,15 @@ use Symfony\Component\Validator\Constraints as Assert;
         ),
         new Patch(
             denormalizationContext: ['groups' => ['trip:write']],
+            security: 'is_granted("EDIT", object)',
         ),
         new Post(
             denormalizationContext: ['groups' => ['trip:write']],
+            security: 'is_granted("ROLE_USER")',
         ),
-        new Delete(),
+        new Delete(
+            security: 'is_granted("DELETE", object)',
+        ),
     ]
 )]
 class Trip
