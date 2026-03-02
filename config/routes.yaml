@@ -16,3 +16,6 @@ controllers:
         _locale: 'fr|en'
     defaults:
         _locale: '%app_locale%'
+
+api_login_check:
+    path: /api/login_check

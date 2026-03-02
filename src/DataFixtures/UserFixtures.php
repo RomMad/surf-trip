@@ -14,6 +14,7 @@ class UserFixtures extends Fixture
     public const USER_REFERENCE = 'user_';
 
     private const array USERS_DATA = [
+        ['John', 'Doe'],
         ['Alice', 'Martin'],
         ['Bob', 'Bernard'],
         ['Charlie', 'Petit'],
@@ -49,7 +50,6 @@ class UserFixtures extends Fixture
                 ->setEmail($email)
                 ->setFirstName($firstName)
                 ->setLastName($lastName)
-                ->setRoles(['ROLE_USER'])
                 ->setPassword($password)
                 ->setIsVerified(true)
             ;

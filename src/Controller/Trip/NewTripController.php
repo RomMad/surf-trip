@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Trip;
 
 use App\Entity\Trip;
+use App\Enum\User\UserRole;
 use App\Form\TripFormType;
 use App\Repository\TripRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -24,7 +25,7 @@ final class NewTripController extends AbstractController
         name: 'app.trip.new',
         methods: [Request::METHOD_GET, Request::METHOD_POST]
     )]
-    #[IsGranted('ROLE_USER')]
+    #[IsGranted(UserRole::USER)]
     public function __invoke(Request $request): Response
     {
         $trip = new Trip();
@@ -32,7 +33,6 @@ final class NewTripController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $trip->setCreatedAt(new \DateTimeImmutable());
             $this->tripRepository->save($trip, true);
 
             return $this->redirectToRoute(IndexTripController::ROUTE, [], Response::HTTP_SEE_OTHER);

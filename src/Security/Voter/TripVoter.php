@@ -6,6 +6,7 @@ namespace App\Security\Voter;
 
 use App\Entity\Trip;
 use App\Entity\User;
+use App\Enum\User\UserRole;
 use App\ReadModel\Trip\TripOwnershipAwareInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
@@ -46,7 +47,7 @@ final class TripVoter extends Voter
 
         return match ($attribute) {
             self::SHOW => true,
-            self::EDIT, self::DELETE => $subject->getOwners()->contains($user),
+            self::EDIT, self::DELETE => $subject->getOwners()->contains($user) || $user->hasRole(UserRole::Admin),
             default => false,
         };
     }

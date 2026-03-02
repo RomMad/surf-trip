@@ -11,6 +11,7 @@ security:
 trip:
     title:
         not_blank: Title is required.
+        min_length: Title must be at least {limit} characters long.
         max_length: Title cannot exceed {limit} characters.
     location:
         not_blank: Location is required.
