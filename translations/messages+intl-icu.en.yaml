@@ -60,6 +60,7 @@ description.label: Description
 location:
     label: Location
     placeholder: Trip location
+period.label: Period
 start_at.label: Start date
 end_at.label: End date
 required_levels:

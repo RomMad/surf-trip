@@ -1,8 +1,7 @@
 {% set headers = [
     ['title.label'|trans, 't.title'],
     ['location.label'|trans, 't.location'],
-    ['start_at.label'|trans, 't.startAt', 'w-24'],
-    ['end_at.label'|trans, 't.endAt', 'w-24'],
+    ['period.label'|trans, 't.startAt', 'w-32'],
     'required_levels.label'|trans,
     'description.label'|trans,
     'owners.label'|trans,
@@ -13,8 +12,7 @@
 {% set data = trips|map(trip => [
     trip.title,
     trip.location,
-    trip.startAt|format_datetime(pattern: 'EEE d MMM yy'),
-    trip.endAt|format_datetime(pattern: 'EEE d MMM yy'),
+    trip.endAt|format_datetime(pattern: 'EEE d MMM yy') ~ ' -  ' ~ trip.startAt|format_datetime(pattern: 'EEE d MMM yy'),
     trip.requiredLevels|map(rl => rl.label|trans),
     trip.description|u.truncate(120, '…', false),
     trip.ownerNames,
