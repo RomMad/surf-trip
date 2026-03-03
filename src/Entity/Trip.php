@@ -17,19 +17,16 @@ use ApiPlatform\Metadata\QueryParameter;
 use App\Doctrine\Type\SlugType;
 use App\Entity\ValueObject\Slug;
 use App\Enum\Trip\RequiredLevel;
-use App\EventListener\TripSlugListener;
 use App\Filter\JsonContainsFilter;
 use App\Repository\TripRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\EntityListeners;
 use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TripRepository::class)]
-#[EntityListeners([TripSlugListener::class])]
 #[ORM\Index(name: 'idx_trip_location', fields: ['location'])]
 #[ORM\Index(name: 'idx_trip_required_levels', fields: ['requiredLevels'], flags: ['gin'])]
 #[ORM\Index(name: 'idx_trip_search', fields: ['title', 'location'])]
