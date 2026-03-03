@@ -20,7 +20,13 @@ final readonly class TripSlugListener
 
     public function __invoke(Trip $trip): void
     {
-        $slug = Slug::tryFrom($this->slugger, $trip->getTitle());
+        $slugValue = $this->slugger
+            ->slug($trip->getTitle())
+            ->toString()
+         |> strtolower(...)
+        ;
+        $slug = Slug::tryFrom($slugValue);
+
         $trip->setSlug($slug);
     }
 }

@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Entity\ValueObject;
 
-use Symfony\Component\String\Slugger\SluggerInterface;
-
 final readonly class Slug implements \Stringable
 {
     private const string REGEX = '/^[a-z0-9]+(?:-[a-z0-9]+)*$/';
@@ -26,15 +24,9 @@ final readonly class Slug implements \Stringable
         return $this->value;
     }
 
-    public static function tryFrom(SluggerInterface $slugger, string $value): self
+    public static function tryFrom(?string $value): ?static
     {
-        $slugValue = $slugger
-            ->slug($value)
-            ->toString()
-         |> strtolower(...)
-        ;
-
-        return new self($slugValue);
+        return $value ? new self($value) : null;
     }
 
     private function validate(): void
