@@ -80,6 +80,7 @@ class TripRepository extends ServiceEntityRepository
             ->select(sprintf(
                 'NEW %s(
                     t.id,
+                    t.slug,
                     t.title,
                     t.location,
                     t.startAt,

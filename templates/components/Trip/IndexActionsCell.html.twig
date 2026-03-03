@@ -1,10 +1,16 @@
 <div class="flex flex-col gap-2">
-    <twig:Button as="a" variant="link" size="sm" href="{{ path('app.trip.show', {id: trip.id}) }}" data-turbo-frame="_top">
+    <twig:Button as="a" variant="link" size="sm"
+        href="{{ path('app.trip.show', {id: trip.id, slug: trip.slug}) }}"
+        data-turbo-frame="_top"
+    >
         <twig:ux:icon name="lucide:eye" />
         {{- 'show.label'|trans -}}
     </twig:Button>
     {% if is_granted('EDIT', trip) %}
-        <twig:Button as="a" variant="link" size="sm" href="{{ path('app.trip.edit', {id: trip.id}) }}" data-turbo-frame="_top">
+        <twig:Button as="a" variant="link" size="sm"
+            href="{{ path('app.trip.edit', {id: trip.id, slug: trip.slug}) }}"
+            data-turbo-frame="_top"
+        >
             <twig:ux:icon name="lucide:edit-2" />
             {{- 'edit.label'|trans -}}
         </twig:Button>

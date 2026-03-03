@@ -139,27 +139,7 @@ DESC,
      */
     private function generateTrips(): \Generator
     {
-        foreach (self::TRIPS_DATA as $tripData) {
-            $createdAt = \DateTimeImmutable::createFromInterface($this->faker->dateTimeBetween('-1 month', 'today'));
-
-            $trip = new Trip($createdAt)
-                ->setTitle($tripData['title'])
-                ->setLocation($tripData['location'])
-                ->setStartAt(new \DateTimeImmutable($tripData['startAt']))
-                ->setEndAt(new \DateTimeImmutable($tripData['endAt']))
-                ->setRequiredLevels($tripData['requiredLevels'])
-                ->setDescription($tripData['description'])
-            ;
-
-            foreach ($tripData['owners'] as $ownerIndex) {
-                /** @var User $owner */
-                $owner = $this->getReference(UserFixtures::USER_REFERENCE.$ownerIndex, User::class);
-                $trip->addOwner($owner);
-            }
-
-            yield $trip;
-        }
-
+        // Generate random trips
         for ($index = 0; $index < self::RANDOM_TRIPS_COUNT; ++$index) {
             /** @var \DateTimeInterface $randomStart */
             $randomStart = $this->faker->dateTimeBetween('-6 months', '+6 months');
@@ -179,6 +159,28 @@ DESC,
             $owners = $this->faker->randomElements(range(0, self::USER_REFERENCE_COUNT - 1), $this->faker->numberBetween(1, 2));
 
             foreach ($owners as $ownerIndex) {
+                /** @var User $owner */
+                $owner = $this->getReference(UserFixtures::USER_REFERENCE.$ownerIndex, User::class);
+                $trip->addOwner($owner);
+            }
+
+            yield $trip;
+        }
+
+        // Generate predefined trips
+        foreach (self::TRIPS_DATA as $tripData) {
+            $createdAt = \DateTimeImmutable::createFromInterface($this->faker->dateTimeBetween('-1 month', 'today'));
+
+            $trip = new Trip($createdAt)
+                ->setTitle($tripData['title'])
+                ->setLocation($tripData['location'])
+                ->setStartAt(new \DateTimeImmutable($tripData['startAt']))
+                ->setEndAt(new \DateTimeImmutable($tripData['endAt']))
+                ->setRequiredLevels($tripData['requiredLevels'])
+                ->setDescription($tripData['description'])
+            ;
+
+            foreach ($tripData['owners'] as $ownerIndex) {
                 /** @var User $owner */
                 $owner = $this->getReference(UserFixtures::USER_REFERENCE.$ownerIndex, User::class);
                 $trip->addOwner($owner);

@@ -14,6 +14,8 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\QueryParameter;
+use App\Doctrine\Type\SlugType;
+use App\Entity\ValueObject\Slug;
 use App\Enum\Trip\RequiredLevel;
 use App\Filter\JsonContainsFilter;
 use App\Repository\TripRepository;
@@ -110,6 +112,10 @@ class Trip
     #[Groups(['trip:read', 'trip:write'])]
     private ?string $description = null;
 
+    #[ORM\Column(type: SlugType::NAME, nullable: false)]
+    #[Groups(['trip:read'])]
+    private Slug $slug;
+
     /** @var Collection<int, User> */
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'trips')]
     #[Assert\Count(min: 1, minMessage: 'trip.owner.min_count')]
@@ -122,6 +128,7 @@ class Trip
         private \DateTimeImmutable $createdAt = new \DateTimeImmutable()
     ) {
         $this->owners = new ArrayCollection();
+        $this->slug = new Slug('');
     }
 
     public function getId(): ?int
@@ -208,6 +215,18 @@ class Trip
     public function setRequiredLevels(array $requiredLevels): static
     {
         $this->requiredLevels = $requiredLevels;
+
+        return $this;
+    }
+
+    public function getSlug(): Slug
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(Slug $slug): static
+    {
+        $this->slug = $slug;
 
         return $this;
     }

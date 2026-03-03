@@ -17,19 +17,31 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 final class EditTripController extends AbstractController
 {
+    public const string ROUTE = 'app.trip.edit';
+
     public function __construct(
         private readonly TripRepository $tripRepository,
     ) {}
 
     #[Route(
-        path: '/trip/{id:trip}/edit',
-        name: 'app.trip.edit',
-        requirements: ['id' => Requirement::POSITIVE_INT],
+        path: '/trip/{id:trip}/{slug}/edit',
+        name: self::ROUTE,
+        requirements: [
+            'id' => Requirement::POSITIVE_INT,
+            'slug' => Requirement::ASCII_SLUG,
+        ],
         methods: [Request::METHOD_GET, Request::METHOD_POST],
     )]
     #[IsGranted(TripVoter::EDIT, subject: 'trip')]
-    public function __invoke(Request $request, Trip $trip): Response
+    public function __invoke(Request $request, Trip $trip, string $slug): Response
     {
+        if ($trip->getSlug()->value() !== $slug) {
+            return $this->redirectToRoute(self::ROUTE, [
+                'id' => $trip->getId(),
+                'slug' => $trip->getSlug()->value(),
+            ], Response::HTTP_SEE_OTHER);
+        }
+
         $form = $this->createForm(TripFormType::class, $trip);
         $form->handleRequest($request);
 
