@@ -16,6 +16,7 @@ final class Version20260302151944 extends AbstractMigration
 
     public function up(Schema $schema): void
     {
+        $this->addSql('CREATE INDEX idx_trip_title ON trip (title)');
         $this->addSql('CREATE INDEX idx_trip_created_at ON trip (created_at)');
         $this->addSql('CREATE INDEX idx_trip_end_at ON trip (end_at)');
         $this->addSql('CREATE INDEX idx_trip_location ON trip (location)');
@@ -32,5 +33,6 @@ final class Version20260302151944 extends AbstractMigration
         $this->addSql('DROP INDEX idx_trip_required_levels');
         $this->addSql('DROP INDEX idx_trip_search');
         $this->addSql('DROP INDEX idx_trip_start_at');
+        $this->addSql('DROP INDEX idx_trip_title');
     }
 }
