@@ -51,6 +51,9 @@ more_pages.label: More pages
 id.label: Id
 trip.label: Trip
 trip:
+    created_successfully: The trip has been created.
+    updated_successfully: The trip has been updated.
+    deleted_successfully: The trip has been deleted.
     new.label: New trip
     edit.label: Edit trip
     delete.confirm: Are you sure you want to delete this trip?

@@ -36,6 +36,8 @@ final class EditTripController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->tripRepository->save($trip, true);
 
+            $this->addFlash('success', 'trip.updated_successfully');
+
             return $this->redirectToRoute(IndexTripController::ROUTE, [], Response::HTTP_SEE_OTHER);
         }
 

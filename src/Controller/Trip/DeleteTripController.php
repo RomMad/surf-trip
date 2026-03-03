@@ -34,6 +34,8 @@ final class DeleteTripController extends AbstractController
     {
         $this->tripRepository->remove($trip, true);
 
+        $this->addFlash('success', 'trip.deleted_successfully');
+
         return $this->redirectToRoute(IndexTripController::ROUTE, [], Response::HTTP_SEE_OTHER);
     }
 }
