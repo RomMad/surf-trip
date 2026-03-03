@@ -35,6 +35,8 @@ final class NewTripController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->tripRepository->save($trip, true);
 
+            $this->addFlash('success', 'trip.created_successfully');
+
             return $this->redirectToRoute(IndexTripController::ROUTE, [], Response::HTTP_SEE_OTHER);
         }
 
