@@ -14,17 +14,22 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\QueryParameter;
+use App\Doctrine\Type\SlugType;
+use App\Entity\ValueObject\Slug;
 use App\Enum\Trip\RequiredLevel;
+use App\EventListener\TripSlugListener;
 use App\Filter\JsonContainsFilter;
 use App\Repository\TripRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\EntityListeners;
 use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TripRepository::class)]
+#[EntityListeners([TripSlugListener::class])]
 #[ORM\Index(name: 'idx_trip_location', fields: ['location'])]
 #[ORM\Index(name: 'idx_trip_required_levels', fields: ['requiredLevels'], flags: ['gin'])]
 #[ORM\Index(name: 'idx_trip_search', fields: ['title', 'location'])]
@@ -110,6 +115,10 @@ class Trip
     #[Groups(['trip:read', 'trip:write'])]
     private ?string $description = null;
 
+    #[ORM\Column(type: SlugType::NAME, nullable: false)]
+    #[Groups(['trip:read'])]
+    private Slug $slug;
+
     /** @var Collection<int, User> */
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'trips')]
     #[Assert\Count(min: 1, minMessage: 'trip.owner.min_count')]
@@ -122,6 +131,7 @@ class Trip
         private \DateTimeImmutable $createdAt = new \DateTimeImmutable()
     ) {
         $this->owners = new ArrayCollection();
+        $this->slug = new Slug('');
     }
 
     public function getId(): ?int
@@ -208,6 +218,18 @@ class Trip
     public function setRequiredLevels(array $requiredLevels): static
     {
         $this->requiredLevels = $requiredLevels;
+
+        return $this;
+    }
+
+    public function getSlug(): Slug
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(Slug $slug): static
+    {
+        $this->slug = $slug;
 
         return $this;
     }

@@ -8,7 +8,7 @@
 
     <div class="flex flex-wrap items-center gap-2">
         {% if is_granted('EDIT', trip) %}
-            <twig:Button as="a" href="{{ path('app.trip.edit', {id: trip.id}) }}" class="mb-4">
+            <twig:Button as="a" href="{{ path('app.trip.edit', {id: trip.id, slug: trip.slug}) }}" class="mb-4">
                 <twig:ux:icon name="lucide:edit-2" />
                 {{- 'edit.label'|trans -}}
             </twig:Button>

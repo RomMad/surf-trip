@@ -13,22 +13,34 @@ use Symfony\Component\Routing\Requirement\Requirement;
 
 final class ShowTripController extends AbstractController
 {
+    public const string ROUTE = 'app.trip.show';
+
     public function __construct(
         private readonly TripRepository $tripRepository,
     ) {}
 
     #[Route(
-        path: '/trip/{id}',
-        name: 'app.trip.show',
-        requirements: ['id' => Requirement::POSITIVE_INT],
+        path: '/trip/{id}/{slug}',
+        name: self::ROUTE,
+        requirements: [
+            'id' => Requirement::POSITIVE_INT,
+            'slug' => Requirement::ASCII_SLUG,
+        ],
         methods: [Request::METHOD_GET]
     )]
-    public function __invoke(int $id): Response
+    public function __invoke(int $id, string $slug): Response
     {
         $trip = $this->tripRepository->findShowReadModelById($id);
 
         if (null === $trip) {
             throw $this->createNotFoundException();
+        }
+
+        if ($trip->slug->value() !== $slug) {
+            return $this->redirectToRoute(self::ROUTE, [
+                'id' => $trip->id,
+                'slug' => $trip->slug->value(),
+            ], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('trip/show.html.twig', [
