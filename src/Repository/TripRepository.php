@@ -44,7 +44,7 @@ class TripRepository extends ServiceEntityRepository
     public function createOrderedQueryBuilder(TripFilter $filter): QueryBuilder
     {
         $queryBuilder = $this->createDtoBaseQueryBuilder()
-            ->orderBy('t.createdAt', 'DESC')
+            ->orderBy('t.id', 'DESC')
         ;
 
         $this->applyFilters($queryBuilder, $filter);
