@@ -103,6 +103,7 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface, \
         return sprintf('%s %s', $this->firstName, $this->lastName);
     }
 
+    /** Keep this method for compatibility with Symfony's security and PasswordAuthenticatedUserInterface */
     public function getPassword(): string
     {
         return $this->password;
