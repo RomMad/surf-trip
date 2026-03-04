@@ -43,14 +43,14 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface, \
     #[Assert\Length(max: 100, maxMessage: 'user.first_name.max_length')]
     #[Groups(['user:read', 'trip:read'])]
     public string $firstName = '' {
-        get => ucfirst($this->firstName);
+        set(string $value) => $this->firstName = ucfirst($value);
     }
 
     #[ORM\Column(length: 100, nullable: true)]
     #[Assert\Length(max: 100, maxMessage: 'user.last_name.max_length')]
     #[Groups(['user:read', 'trip:read'])]
     public ?string $lastName = null {
-        get => strtoupper((string) $this->lastName);
+        set(?string $value) => $this->lastName = strtoupper((string) $value);
     }
 
     /** @var list<string> The user roles */
