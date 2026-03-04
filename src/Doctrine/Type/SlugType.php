@@ -22,12 +22,12 @@ class SlugType extends StringType
     #[\Override]
     public function convertToDatabaseValue(mixed $slug, AbstractPlatform $platform): ?string
     {
-        return $slug instanceof Slug ? $slug->value() : null;
+        return $slug instanceof Slug ? $slug->value : null;
     }
 
     #[\Override]
     public function convertToPHPValue(mixed $value, AbstractPlatform $platform): ?Slug
     {
-        return Slug::tryFrom($value);
+        return Slug::from($value);
     }
 }

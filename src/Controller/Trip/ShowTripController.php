@@ -36,10 +36,10 @@ final class ShowTripController extends AbstractController
             throw $this->createNotFoundException();
         }
 
-        if ($trip->slug->value() !== $slug) {
+        if ($trip->slug->value !== $slug) {
             return $this->redirectToRoute(self::ROUTE, [
                 'id' => $trip->id,
-                'slug' => $trip->slug->value(),
+                'slug' => $trip->slug->value,
             ], Response::HTTP_SEE_OTHER);
         }
 

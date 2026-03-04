@@ -14,8 +14,12 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\QueryParameter;
+use App\Doctrine\Type\LocationType;
 use App\Doctrine\Type\SlugType;
+use App\Doctrine\Type\TitleType;
+use App\Entity\ValueObject\Location;
 use App\Entity\ValueObject\Slug;
+use App\Entity\ValueObject\Title;
 use App\Enum\Trip\RequiredLevel;
 use App\Filter\JsonContainsFilter;
 use App\Repository\TripRepository;
@@ -70,17 +74,13 @@ class Trip
     #[Groups(['trip:read'])]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message: 'trip.title.not_blank')]
-    #[Assert\Length(min: 5, max: 255, minMessage: 'trip.title.min_length', maxMessage: 'trip.title.max_length')]
+    #[ORM\Column(type: TitleType::NAME)]
     #[Groups(['trip:read', 'trip:write'])]
-    private string $title = '';
+    private Title $title;
 
-    #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message: 'trip.location.not_blank')]
-    #[Assert\Length(max: 255, maxMessage: 'trip.location.max_length')]
+    #[ORM\Column(type: LocationType::NAME)]
     #[Groups(['trip:read', 'trip:write'])]
-    private string $location = '';
+    private Location $location;
 
     #[ORM\Column]
     #[Assert\NotNull(message: 'trip.start_at.not_null')]
@@ -128,7 +128,6 @@ class Trip
         private \DateTimeImmutable $createdAt = new \DateTimeImmutable()
     ) {
         $this->owners = new ArrayCollection();
-        $this->slug = new Slug('');
     }
 
     public function getId(): ?int
@@ -136,24 +135,24 @@ class Trip
         return $this->id;
     }
 
-    public function getTitle(): string
+    public function getTitle(): Title
     {
         return $this->title;
     }
 
-    public function setTitle(string $title): static
+    public function setTitle(Title $title): static
     {
         $this->title = $title;
 
         return $this;
     }
 
-    public function getLocation(): string
+    public function getLocation(): Location
     {
         return $this->location;
     }
 
-    public function setLocation(string $location): static
+    public function setLocation(Location $location): static
     {
         $this->location = $location;
 

@@ -8,7 +8,9 @@ doctrine:
 
         profiling_collect_backtrace: '%kernel.debug%'
         types:
+            location: App\Doctrine\Type\LocationType
             slug: App\Doctrine\Type\SlugType
+            title: App\Doctrine\Type\TitleType
 
     orm:
         validate_xml_mapping: true

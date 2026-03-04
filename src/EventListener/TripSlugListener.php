@@ -21,11 +21,11 @@ final readonly class TripSlugListener
     public function __invoke(Trip $trip): void
     {
         $slugValue = $this->slugger
-            ->slug($trip->getTitle())
+            ->slug($trip->getTitle()->value)
             ->toString()
          |> strtolower(...)
         ;
-        $slug = Slug::tryFrom($slugValue);
+        $slug = Slug::from($slugValue);
 
         $trip->setSlug($slug);
     }
