@@ -7,6 +7,8 @@ namespace App\Form;
 use App\Entity\Trip;
 use App\Entity\User;
 use App\Enum\Trip\RequiredLevel;
+use App\Form\Type\LocationType;
+use App\Form\Type\TitleType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
@@ -20,13 +22,9 @@ class TripFormType extends AbstractType
         $trip = $builder->getData();
 
         $builder
-            ->add('title', null, [
-                'label' => 'title.label',
-                'empty_data' => '',
+            ->add('title', TitleType::class, [
             ])
-            ->add('location', null, [
-                'label' => 'location.label',
-                'empty_data' => '',
+            ->add('location', LocationType::class, [
             ])
             ->add('startAt', null, [
                 'label' => 'start_at.label',

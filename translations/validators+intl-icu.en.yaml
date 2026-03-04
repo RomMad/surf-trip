@@ -11,11 +11,12 @@ security:
 trip:
     title:
         not_blank: Title is required.
-        min_length: Title must be at least {limit} characters long.
-        max_length: Title cannot exceed {limit} characters.
+        min_length: Title must be at least 5 characters long.
+        max_length: Title cannot exceed 255 characters.
     location:
         not_blank: Location is required.
-        max_length: Location cannot exceed {limit} characters.
+        min_length: Location must be at least 3 characters long.
+        max_length: Location cannot exceed 255 characters.
     start_at:
         not_null: Start date is required.
     end_at:

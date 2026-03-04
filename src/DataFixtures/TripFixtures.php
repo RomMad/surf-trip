@@ -6,6 +6,8 @@ namespace App\DataFixtures;
 
 use App\Entity\Trip;
 use App\Entity\User;
+use App\Entity\ValueObject\Location;
+use App\Entity\ValueObject\Title;
 use App\Enum\Trip\RequiredLevel;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -145,10 +147,12 @@ DESC,
             $randomStart = $this->faker->dateTimeBetween('-6 months', '+6 months');
             $startAt = \DateTimeImmutable::createFromInterface($randomStart);
             $createdAt = \DateTimeImmutable::createFromInterface($this->faker->dateTimeBetween('-1 year', '-1 month'));
+            $title = sprintf('%s Surf Trip', ucfirst((string) $this->faker->words($this->faker->numberBetween(2, 4), true)));
+            $location = sprintf('%s, %s', $this->faker->city(), $this->faker->country());
 
             $trip = new Trip($createdAt)
-                ->setTitle(sprintf('%s Surf Trip', ucfirst((string) $this->faker->words($this->faker->numberBetween(2, 4), true))))
-                ->setLocation(sprintf('%s, %s', $this->faker->city(), $this->faker->country()))
+                ->setTitle(Title::tryFrom($title))
+                ->setLocation(Location::tryFrom($location))
                 ->setStartAt($startAt)
                 ->setEndAt($startAt->modify(sprintf('+%d days', $this->faker->numberBetween(3, 14))))
                 ->setRequiredLevels($this->randomRequiredLevels())
@@ -172,8 +176,8 @@ DESC,
             $createdAt = \DateTimeImmutable::createFromInterface($this->faker->dateTimeBetween('-1 month', 'today'));
 
             $trip = new Trip($createdAt)
-                ->setTitle($tripData['title'])
-                ->setLocation($tripData['location'])
+                ->setTitle(Title::tryFrom($tripData['title']))
+                ->setLocation(Location::tryFrom($tripData['location']))
                 ->setStartAt(new \DateTimeImmutable($tripData['startAt']))
                 ->setEndAt(new \DateTimeImmutable($tripData['endAt']))
                 ->setRequiredLevels($tripData['requiredLevels'])

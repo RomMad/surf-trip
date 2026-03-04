@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\ReadModel\Trip;
 
 use App\Entity\User;
+use App\Entity\ValueObject\Location;
 use App\Entity\ValueObject\Slug;
+use App\Entity\ValueObject\Title;
 use App\Enum\Trip\RequiredLevel;
 
 abstract readonly class AbstractTripReadModel implements TripOwnershipAwareInterface
@@ -19,8 +21,8 @@ abstract readonly class AbstractTripReadModel implements TripOwnershipAwareInter
     public function __construct(
         public int $id,
         public Slug $slug,
-        public string $title,
-        public string $location,
+        public Title $title,
+        public Location $location,
         public \DateTimeImmutable $startAt,
         public \DateTimeImmutable $endAt,
         public array $requiredLevels,
