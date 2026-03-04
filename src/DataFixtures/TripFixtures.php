@@ -26,7 +26,7 @@ class TripFixtures extends Fixture implements DependentFixtureInterface
             'location' => 'Bali, Indonesia',
             'startAt' => '2025-06-01',
             'endAt' => '2025-06-15',
-            'requiredLevels' => [RequiredLevel::BEGINNER, RequiredLevel::INTERMEDIATE],
+            'requiredLevels' => [RequiredLevel::Beginner, RequiredLevel::Intermediate],
             'description' => <<<'DESC'
     Experience the best waves of Bali with experienced instructors.
     Perfect for beginners looking to improve their skills.
@@ -38,7 +38,7 @@ class TripFixtures extends Fixture implements DependentFixtureInterface
             'location' => 'Nazaré, Portugal',
             'startAt' => '2025-07-10',
             'endAt' => '2025-07-20',
-            'requiredLevels' => [RequiredLevel::ADVANCED],
+            'requiredLevels' => [RequiredLevel::Advanced],
             'description' => <<<'DESC'
 Challenge yourself with some of the biggest waves in the world.
 Only for experienced surfers.
@@ -50,7 +50,7 @@ DESC,
             'location' => 'Honolulu, Hawaii',
             'startAt' => '2025-08-01',
             'endAt' => '2025-08-10',
-            'requiredLevels' => [RequiredLevel::INTERMEDIATE],
+            'requiredLevels' => [RequiredLevel::Intermediate],
             'description' => <<<'DESC'
 Ride the iconic waves of Hawaii with breathtaking views.
 Great for intermediate surfers wanting to explore new breaks.
@@ -62,7 +62,7 @@ DESC,
             'location' => 'Guanacaste, Costa Rica',
             'startAt' => '2025-09-05',
             'endAt' => '2025-09-18',
-            'requiredLevels' => [RequiredLevel::BEGINNER, RequiredLevel::INTERMEDIATE, RequiredLevel::ADVANCED],
+            'requiredLevels' => [RequiredLevel::Beginner, RequiredLevel::Intermediate, RequiredLevel::Advanced],
             'description' => <<<'DESC'
 A comprehensive surf trip with waves for all levels.
 Explore multiple breaks and tropical landscapes.
@@ -74,7 +74,7 @@ DESC,
             'location' => 'Fuerteventura, Spain',
             'startAt' => '2025-05-15',
             'endAt' => '2025-05-25',
-            'requiredLevels' => [RequiredLevel::BEGINNER],
+            'requiredLevels' => [RequiredLevel::Beginner],
             'description' => <<<'DESC'
 Perfect destination for learning to surf.
 Calm, consistent waves and beautiful beaches.
@@ -86,7 +86,7 @@ DESC,
             'location' => "Teahupo'o, Tahiti",
             'startAt' => '2025-11-01',
             'endAt' => '2025-11-12',
-            'requiredLevels' => [RequiredLevel::ADVANCED],
+            'requiredLevels' => [RequiredLevel::Advanced],
             'description' => <<<'DESC'
 Experience the legendary barrel at Teahupo'o.
 For expert surfers only.
@@ -98,7 +98,7 @@ DESC,
             'location' => 'Byron Bay, Australia',
             'startAt' => '2025-10-20',
             'endAt' => '2025-10-30',
-            'requiredLevels' => [RequiredLevel::BEGINNER, RequiredLevel::INTERMEDIATE],
+            'requiredLevels' => [RequiredLevel::Beginner, RequiredLevel::Intermediate],
             'description' => <<<'DESC'
 Discover the vibrant surf culture of East Australia.
 Multiple breaks suitable for various skill levels.
@@ -110,7 +110,7 @@ DESC,
             'location' => 'Essaouira, Morocco',
             'startAt' => '2025-07-01',
             'endAt' => '2025-07-08',
-            'requiredLevels' => [RequiredLevel::INTERMEDIATE],
+            'requiredLevels' => [RequiredLevel::Intermediate],
             'description' => 'Enjoy the summer swells of Morocco with a perfect blend of culture and surfing.',
             'owners' => [3],
         ],
