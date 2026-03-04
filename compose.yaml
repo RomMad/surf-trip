@@ -17,27 +17,28 @@ services:
       - database
       - redis
     env_file:
-      - .env
+      - path: .env
+        required: true
+      - path: .env.local
+        required: false
     environment:
       - SERVER_NAME=localhost:443
 
   ###> doctrine/doctrine-bundle ###
   database:
     image: postgres:${POSTGRES_VERSION:-16}-alpine
+    env_file:
+      - path: .env
+        required: true
+      - path: .env.local
+        required: false
     environment:
-      POSTGRES_DB: ${POSTGRES_DB:-app}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
-      POSTGRES_USER: ${POSTGRES_USER:-app}
+      POSTGRES_DB: ${DB_DATABASE:-app}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-password}
+      POSTGRES_USER: ${DB_USER:-app}
     healthcheck:
       test:
-        [
-          "CMD",
-          "pg_isready",
-          "-d",
-          "${POSTGRES_DB:-app}",
-          "-U",
-          "${POSTGRES_USER:-app}",
-        ]
+        ["CMD", "pg_isready", "-d", "${POSTGRES_DB}", "-U", "${POSTGRES_USER}"]
       timeout: 5s
       retries: 5
       start_period: 60s
@@ -82,11 +83,16 @@ services:
   mercure:
     image: dunglas/mercure
     restart: unless-stopped
+    env_file:
+      - path: .env
+        required: true
+      - path: .env.local
+        required: false
     environment:
       # Uncomment the following line to disable HTTPS,
       #SERVER_NAME: ':80'
-      MERCURE_PUBLISHER_JWT_KEY: "!ChangeThisMercureHubJWTSecretKey!"
-      MERCURE_SUBSCRIBER_JWT_KEY: "!ChangeThisMercureHubJWTSecretKey!"
+      MERCURE_PUBLISHER_JWT_KEY: ${MERCURE_PUBLISHER_JWT_KEY}
+      MERCURE_SUBSCRIBER_JWT_KEY: ${MERCURE_SUBSCRIBER_JWT_KEY}
       # Set the URL of your Symfony project (without trailing slash!) as value of the cors_origins directive
       MERCURE_EXTRA_DIRECTIVES: |
         cors_origins http://127.0.0.1:8000

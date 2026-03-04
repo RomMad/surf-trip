@@ -1,8 +1,10 @@
 services:
   php:
     env_file:
-      - .env.dev
-      - .env.dev.local
+      - path: .env.dev
+        required: true
+      - path: .env.dev.local
+        required: false
   ###> doctrine/doctrine-bundle ###
   database:
     ports:
