@@ -1,7 +1,8 @@
 services:
   php:
-    environment:
-      - FRANKENPHP_CONFIG=
+    env_file:
+      - .env.dev
+      - .env.dev.local
   ###> doctrine/doctrine-bundle ###
   database:
     ports:

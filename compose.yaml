@@ -16,15 +16,10 @@ services:
     depends_on:
       - database
       - redis
+    env_file:
+      - .env
     environment:
-      - APP_ENV=dev
-      - APP_DEBUG=1
       - SERVER_NAME=localhost:443
-      - DATABASE_URL=postgresql://app:password@database:5432/app?serverVersion=16&charset=utf8
-      - MERCURE_URL=http://php/.well-known/mercure
-      - MERCURE_PUBLIC_URL=http://localhost/.well-known/mercure
-      - MERCURE_JWT_SECRET=!ChangeThisMercureHubJWTSecretKey!
-      - REDIS_URL=redis://redis:6379
 
   ###> doctrine/doctrine-bundle ###
   database:
