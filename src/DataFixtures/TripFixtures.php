@@ -151,8 +151,8 @@ DESC,
             $location = sprintf('%s, %s', $this->faker->city(), $this->faker->country());
 
             $trip = new Trip($createdAt)
-                ->setTitle(Title::tryFrom($title))
-                ->setLocation(Location::tryFrom($location))
+                ->setTitle(Title::from($title))
+                ->setLocation(Location::from($location))
                 ->setStartAt($startAt)
                 ->setEndAt($startAt->modify(sprintf('+%d days', $this->faker->numberBetween(3, 14))))
                 ->setRequiredLevels($this->randomRequiredLevels())
@@ -176,8 +176,8 @@ DESC,
             $createdAt = \DateTimeImmutable::createFromInterface($this->faker->dateTimeBetween('-1 month', 'today'));
 
             $trip = new Trip($createdAt)
-                ->setTitle(Title::tryFrom($tripData['title']))
-                ->setLocation(Location::tryFrom($tripData['location']))
+                ->setTitle(Title::from($tripData['title']))
+                ->setLocation(Location::from($tripData['location']))
                 ->setStartAt(new \DateTimeImmutable($tripData['startAt']))
                 ->setEndAt(new \DateTimeImmutable($tripData['endAt']))
                 ->setRequiredLevels($tripData['requiredLevels'])

@@ -28,6 +28,6 @@ class SlugType extends StringType
     #[\Override]
     public function convertToPHPValue(mixed $value, AbstractPlatform $platform): ?Slug
     {
-        return Slug::tryFrom($value);
+        return Slug::from($value);
     }
 }
