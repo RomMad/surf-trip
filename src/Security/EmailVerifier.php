@@ -24,9 +24,9 @@ final readonly class EmailVerifier
     {
         $signatureComponents = $this->verifyEmailHelper->generateSignature(
             $verifyEmailRouteName,
-            (string) $user->getId(),
-            (string) $user->getEmail(),
-            ['id' => $user->getId()]
+            (string) $user->id,
+            (string) $user->email,
+            ['id' => $user->id]
         );
 
         $email->context(
@@ -50,11 +50,11 @@ final readonly class EmailVerifier
     {
         $this->verifyEmailHelper->validateEmailConfirmationFromRequest(
             $request,
-            (string) $user->getId(),
-            (string) $user->getEmail()
+            (string) $user->id,
+            (string) $user->email
         );
 
-        $user->setIsVerified(true);
+        $user->isVerified = true;
 
         $this->entityManager->persist($user);
         $this->entityManager->flush();

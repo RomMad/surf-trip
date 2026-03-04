@@ -28,7 +28,7 @@ final class DeleteTripController extends AbstractController
         requirements: ['id' => Requirement::POSITIVE_INT],
         methods: [Request::METHOD_POST]
     )]
-    #[IsCsrfTokenValid(new Expression('"delete" ~ args["trip"].getId()'))]
+    #[IsCsrfTokenValid(new Expression('"delete" ~ args["trip"].id'))]
     #[IsGranted(TripVoter::DELETE, subject: 'trip')]
     public function __invoke(Trip $trip): Response
     {
