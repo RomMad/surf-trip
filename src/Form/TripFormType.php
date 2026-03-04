@@ -42,10 +42,11 @@ class TripFormType extends AbstractType
             ])
             ->add('description', null, [
                 'label' => 'description.label',
+                'empty_data' => '',
             ])
         ;
 
-        if ($trip instanceof Trip && null !== $trip->getId()) {
+        if ($trip instanceof Trip && null !== $trip->id) {
             $builder->add('owners', EntityType::class, [
                 'class' => User::class,
                 'choice_label' => 'fullName',

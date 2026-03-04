@@ -23,49 +23,59 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ApiResource(
     normalizationContext: ['groups' => ['user:read']]
 )]
-class User implements UserInterface, PasswordAuthenticatedUserInterface, \Stringable
+final class User implements UserInterface, PasswordAuthenticatedUserInterface, \Stringable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     #[Groups(['user:read'])]
-    private ?int $id = null;
+    public private(set) ?int $id = null;
 
     #[ORM\Column(length: 180)]
     #[Assert\NotBlank(message: 'user.email.not_blank')]
     #[Assert\Email(message: 'user.email.invalid')]
     #[Assert\Length(max: 180, maxMessage: 'user.email.max_length')]
     #[Groups(['user:read'])]
-    private string $email = '';
+    public string $email = '';
 
     #[ORM\Column(length: 100)]
     #[Assert\NotBlank(message: 'user.first_name.not_blank')]
     #[Assert\Length(max: 100, maxMessage: 'user.first_name.max_length')]
     #[Groups(['user:read', 'trip:read'])]
-    private string $firstName = '';
+    public string $firstName = '' {
+        get => ucfirst($this->firstName);
+    }
 
     #[ORM\Column(length: 100, nullable: true)]
     #[Assert\Length(max: 100, maxMessage: 'user.last_name.max_length')]
     #[Groups(['user:read', 'trip:read'])]
-    private ?string $lastName = null;
+    public ?string $lastName = null {
+        get => strtoupper((string) $this->lastName);
+    }
 
     /** @var list<string> The user roles */
     #[ORM\Column]
     #[Groups(['user:read'])]
-    private array $roles = [];
+    public array $roles = [] {
+        get {
+            $roles = $this->roles;
+            $roles[] = UserRole::USER;
 
+            return array_unique($roles);
+        }
+    }
     /** @var string The hashed password */
     #[ORM\Column]
-    private string $password = '';
+    public string $password = '';
 
     /**
      * @var Collection<int, Trip>
      */
     #[ORM\ManyToMany(targetEntity: Trip::class, mappedBy: 'owners')]
-    private Collection $trips;
+    public Collection $trips;
 
     #[ORM\Column]
-    private bool $isVerified = false;
+    public bool $isVerified = false;
 
     public function __construct()
     {
@@ -88,50 +98,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
         return $data;
     }
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): static
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
     public function getFullName(): string
     {
         return sprintf('%s %s', $this->firstName, $this->lastName);
     }
 
-    public function getFirstName(): ?string
+    public function getPassword(): string
     {
-        return $this->firstName;
+        return $this->password;
     }
 
-    public function setFirstName(string $firstName): static
+    public function getRoles(): array
     {
-        $this->firstName = $firstName;
+        $roles = $this->roles;
+        $roles[] = UserRole::USER;
 
-        return $this;
-    }
-
-    public function getLastName(): ?string
-    {
-        return $this->lastName;
-    }
-
-    public function setLastName(?string $lastName): static
-    {
-        $this->lastName = $lastName;
-
-        return $this;
+        return array_unique($roles);
     }
 
     /**
@@ -144,59 +126,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
         return (string) $this->email;
     }
 
-    /**
-     * @see UserInterface
-     */
-    public function getRoles(): array
-    {
-        $roles = $this->roles;
-        $roles[] = UserRole::USER;
-
-        return array_unique($roles);
-    }
-
     public function hasRole(UserRole $role): bool
     {
-        return in_array($role->value, $this->getRoles(), true);
-    }
-
-    /**
-     * @param list<string> $roles
-     */
-    public function setRoles(array $roles): static
-    {
-        $this->roles = $roles;
-
-        return $this;
-    }
-
-    /**
-     * @see PasswordAuthenticatedUserInterface
-     */
-    public function getPassword(): ?string
-    {
-        return $this->password;
-    }
-
-    public function setPassword(string $password): static
-    {
-        $this->password = $password;
-
-        return $this;
+        return in_array($role->value, $this->roles, true);
     }
 
     #[\Deprecated]
     public function eraseCredentials(): void
     {
         // @deprecated, to be removed when upgrading to Symfony 8
-    }
-
-    /**
-     * @return Collection<int, Trip>
-     */
-    public function getTrips(): Collection
-    {
-        return $this->trips;
     }
 
     public function addTrip(Trip $trip): static
@@ -214,18 +152,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
         if ($this->trips->removeElement($trip)) {
             $trip->removeOwner($this);
         }
-
-        return $this;
-    }
-
-    public function isVerified(): bool
-    {
-        return $this->isVerified;
-    }
-
-    public function setIsVerified(bool $isVerified): static
-    {
-        $this->isVerified = $isVerified;
 
         return $this;
     }

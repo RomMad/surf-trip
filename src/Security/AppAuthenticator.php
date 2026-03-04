@@ -46,7 +46,7 @@ final class AppAuthenticator extends AbstractLoginFormAuthenticator
                     throw new UserNotFoundException();
                 }
 
-                if (!$user->isVerified()) {
+                if (!$user->isVerified) {
                     throw new CustomUserMessageAuthenticationException('security.login.email_not_verified');
                 }
 

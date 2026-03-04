@@ -150,14 +150,13 @@ DESC,
             $title = sprintf('%s Surf Trip', ucfirst((string) $this->faker->words($this->faker->numberBetween(2, 4), true)));
             $location = sprintf('%s, %s', $this->faker->city(), $this->faker->country());
 
-            $trip = new Trip($createdAt)
-                ->setTitle(Title::from($title))
-                ->setLocation(Location::from($location))
-                ->setStartAt($startAt)
-                ->setEndAt($startAt->modify(sprintf('+%d days', $this->faker->numberBetween(3, 14))))
-                ->setRequiredLevels($this->randomRequiredLevels())
-                ->setDescription($this->faker->paragraphs($this->faker->numberBetween(1, 3), true))
-            ;
+            $trip = new Trip($createdAt);
+            $trip->title = Title::from($title);
+            $trip->location = Location::from($location);
+            $trip->startAt = $startAt;
+            $trip->endAt = $startAt->modify(sprintf('+%d days', $this->faker->numberBetween(3, 14)));
+            $trip->requiredLevels = $this->randomRequiredLevels();
+            $trip->description = $this->faker->paragraphs($this->faker->numberBetween(1, 3), true);
 
             /** @var list<int> $owners */
             $owners = $this->faker->randomElements(range(0, self::USER_REFERENCE_COUNT - 1), $this->faker->numberBetween(1, 2));
@@ -175,14 +174,13 @@ DESC,
         foreach (self::TRIPS_DATA as $tripData) {
             $createdAt = \DateTimeImmutable::createFromInterface($this->faker->dateTimeBetween('-1 month', 'today'));
 
-            $trip = new Trip($createdAt)
-                ->setTitle(Title::from($tripData['title']))
-                ->setLocation(Location::from($tripData['location']))
-                ->setStartAt(new \DateTimeImmutable($tripData['startAt']))
-                ->setEndAt(new \DateTimeImmutable($tripData['endAt']))
-                ->setRequiredLevels($tripData['requiredLevels'])
-                ->setDescription($tripData['description'])
-            ;
+            $trip = new Trip($createdAt);
+            $trip->title = Title::from($tripData['title']);
+            $trip->location = Location::from($tripData['location']);
+            $trip->startAt = new \DateTimeImmutable($tripData['startAt']);
+            $trip->endAt = new \DateTimeImmutable($tripData['endAt']);
+            $trip->requiredLevels = $tripData['requiredLevels'];
+            $trip->description = $tripData['description'];
 
             foreach ($tripData['owners'] as $ownerIndex) {
                 /** @var User $owner */

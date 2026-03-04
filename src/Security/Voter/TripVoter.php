@@ -47,7 +47,7 @@ final class TripVoter extends Voter
 
         return match ($attribute) {
             self::SHOW => true,
-            self::EDIT, self::DELETE => $subject->getOwners()->contains($user) || $user->hasRole(UserRole::Admin),
+            self::EDIT, self::DELETE => $subject->owners->contains($user) || $user->hasRole(UserRole::Admin),
             default => false,
         };
     }

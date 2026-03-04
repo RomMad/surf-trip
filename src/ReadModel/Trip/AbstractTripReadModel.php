@@ -38,7 +38,7 @@ abstract readonly class AbstractTripReadModel implements TripOwnershipAwareInter
 
     public function isOwnedByUser(User $user): bool
     {
-        return array_any($this->owners, static fn (TripOwnerReadModel $owner): bool => $owner->id === $user->getId());
+        return array_any($this->owners, static fn (TripOwnerReadModel $owner): bool => $owner->id === $user->id);
     }
 
     public function getOwnerNames(): string

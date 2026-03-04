@@ -44,17 +44,12 @@ class UserFixtures extends Fixture
     {
         foreach (self::USERS_DATA as [$firstName, $lastName, $role]) {
             $user = new User();
-            $email = sprintf('%s.%s@example.com', strtolower($firstName), strtolower($lastName));
-            $password = $this->passwordHasher->hashPassword($user, 'password');
-
-            $user
-                ->setEmail($email)
-                ->setFirstName($firstName)
-                ->setLastName($lastName)
-                ->setPassword($password)
-                ->setRoles([$role->value])
-                ->setIsVerified(true)
-            ;
+            $user->email = sprintf('%s.%s@example.com', strtolower($firstName), strtolower($lastName));
+            $user->firstName = $firstName;
+            $user->lastName = $lastName;
+            $user->password = $this->passwordHasher->hashPassword($user, 'password');
+            $user->roles = [$role->value];
+            $user->isVerified = true;
 
             yield $user;
         }

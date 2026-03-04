@@ -35,10 +35,10 @@ final class EditTripController extends AbstractController
     #[IsGranted(TripVoter::EDIT, subject: 'trip')]
     public function __invoke(Request $request, Trip $trip, string $slug): Response
     {
-        if ($trip->getSlug()->value !== $slug) {
+        if ($trip->slug->value !== $slug) {
             return $this->redirectToRoute(self::ROUTE, [
-                'id' => $trip->getId(),
-                'slug' => $trip->getSlug()->value,
+                'id' => $trip->id,
+                'slug' => $trip->slug->value,
             ], Response::HTTP_SEE_OTHER);
         }
 
