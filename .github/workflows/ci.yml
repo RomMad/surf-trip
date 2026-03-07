@@ -89,3 +89,6 @@ jobs:
 
             - name: Twig CS
               run: ./vendor/bin/twig-cs-fixer lint
+
+            - name: Tests (Paratest)
+              run: ./vendor/bin/paratest tests --runner WrapperRunner
