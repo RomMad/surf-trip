@@ -45,6 +45,7 @@ final class TripFactory extends PersistentObjectFactory
             'endAt' => $startAt->modify(sprintf('+%d days', self::faker()->numberBetween(3, 14))),
             'requiredLevels' => $requiredLevels,
             'description' => self::faker()->paragraphs(self::faker()->numberBetween(1, 3), true),
+            'owners' => [UserFactory::randomOrCreate()],
             'createdAt' => $createdAt,
         ];
     }
