@@ -12,16 +12,28 @@ concurrency:
     cancel-in-progress: true
 
 jobs:
-    static-tests:
-        name: "Static Tests (PHP ${{ matrix.php }})"
+    lint-and-tests:
+        name: "Lint and Tests (PHP ${{ matrix.php }})"
         runs-on: ubuntu-latest
+        services:
+            postgres:
+                image: postgres:16
+                env:
+                    POSTGRES_DB: app
+                    POSTGRES_USER: app
+                    POSTGRES_PASSWORD: password
+                ports:
+                    - 5432:5432
+                options: >-
+                    --health-cmd="pg_isready -U app -d app"
+                    --health-interval=10s
+                    --health-timeout=5s
+                    --health-retries=5
         strategy:
             matrix:
                 php: [8.5]
         env:
             APP_ENV: test
-            APP_DEBUG: 0
-            DATABASE_URL: sqlite:///%kernel.project_dir%/var/data_ci.db
 
         steps:
             - name: Checkout
@@ -32,7 +44,7 @@ jobs:
               with:
                   php-version: ${{ matrix.php }}
                   coverage: none
-                  extensions: ctype, iconv, intl, pdo_sqlite
+                  extensions: ctype, iconv, intl, pdo_pgsql
 
             - name: Validate composer.json
               run: composer validate --strict --no-check-publish
@@ -50,6 +62,30 @@ jobs:
 
             - name: Install PHP dependencies
               run: composer install --prefer-dist --no-interaction --no-progress
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 22
+                  cache: yarn
+                  cache-dependency-path: yarn.lock
+
+            - name: Enable Corepack
+              run: corepack enable
+
+            - name: Install JS dependencies
+              run: yarn install --immutable --non-interactive
+
+            - name: Cache frontend build
+              id: frontend-build-cache
+              uses: actions/cache@v4
+              with:
+                  path: public/build
+                  key: "${{ runner.os }}-frontend-build-v1-${{ hashFiles('yarn.lock', 'package.json', 'webpack.config.js', 'postcss.config.mjs', 'tailwind.config.js', 'assets/**') }}"
+
+            - name: Build frontend assets
+              if: steps.frontend-build-cache.outputs.cache-hit != 'true'
+              run: yarn build
 
             - name: Cache warmup
               run: |
@@ -89,3 +125,6 @@ jobs:
 
             - name: Twig CS
               run: ./vendor/bin/twig-cs-fixer lint
+
+            - name: Tests (Paratest)
+              run: ./vendor/bin/paratest tests --runner WrapperRunner

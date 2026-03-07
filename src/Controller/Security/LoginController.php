@@ -23,7 +23,7 @@ class LoginController extends AbstractController
     public function __invoke(): Response
     {
         if (null !== $this->getUser()) {
-            return $this->redirectToRoute(IndexTripController::ROUTE);
+            return $this->redirectToRoute(IndexTripController::ROUTE, status: Response::HTTP_SEE_OTHER);
         }
         $error = $this->authenticationUtils->getLastAuthenticationError();
         $lastUsername = $this->authenticationUtils->getLastUsername();
