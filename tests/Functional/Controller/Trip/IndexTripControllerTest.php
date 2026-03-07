@@ -39,7 +39,7 @@ final class IndexTripControllerTest extends CustomWebTestCase
     public function testIndexTripPageWithTurboFrameIsDisplayed(): void
     {
         $this->client->request(Request::METHOD_GET, self::PATH, server: [
-            'HTTP_Turbo-Frame' => 'trip_results',
+            'HTTP_TURBO_FRAME' => 'trip_results',
         ]);
 
         $this->assertResponseIsSuccessful();
