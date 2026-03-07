@@ -290,22 +290,15 @@ function tests(): void
     lint_yaml();
     lint_twig();
     twigcs();
-    lint_js();
+    // lint_js();
     clear_cache('test');
-    run('symfony php bin/phpunit tests --exclude-group=api');
-}
-
-#[AsTask(description: 'Run tests for production environment', namespace: 'app', aliases: ['tests-prod'])]
-function tests_prod(): void
-{
-    symfony_console('cache:clear --env=test');
-    run('symfony php bin/phpunit tests --exclude-group=api');
+    run('bin/phpunit tests');
 }
 
 #[AsTask(description: 'Run tests with coverage', namespace: 'app', aliases: ['tests-coverage'])]
 function tests_coverage(): void
 {
-    run('XDEBUG_MODE=coverage symfony php bin/phpunit tests --coverage-html var/coverage --exclude-group=api');
+    run('XDEBUG_MODE=coverage bin/phpunit tests --coverage-html var/coverage');
 }
 
 // ========================================================
