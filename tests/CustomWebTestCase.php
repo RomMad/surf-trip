@@ -10,6 +10,7 @@ use App\Tests\Traits\KernelTestCaseTrait;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Zenstruck\Foundry\Attribute\ResetDatabase;
+use Zenstruck\Foundry\Story;
 
 /**
  * @internal
@@ -32,15 +33,24 @@ abstract class CustomWebTestCase extends WebTestCase
 
     protected ?KernelBrowser $client = null;
 
-    protected function setUpTest(?callable $story = null, ?string $username = null, bool $clearCache = true): void
+    /**
+     * @param array<class-string<Story>>|class-string<Story> $stories
+     */
+    protected function setUpTest(array|string $stories = [], ?string $username = null, bool $clearCache = true): void
     {
         parent::setUp();
 
         $this->client = static::createClient();
         $this->client->followRedirects();
 
-        if (null !== $story) {
-            $story();
+        if (is_string($stories)) {
+            $stories = [$stories];
+        }
+
+        if ([] !== $stories) {
+            foreach ($stories as $story) {
+                $story::load();
+            }
         }
 
         if (null !== $username) {
