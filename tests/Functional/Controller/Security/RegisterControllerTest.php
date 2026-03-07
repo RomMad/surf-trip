@@ -30,8 +30,6 @@ final class RegisterControllerTest extends CustomWebTestCase
 
     protected function setUp(): void
     {
-        parent::setUp();
-
         $this->setUpTest(UserStory::class);
     }
 
