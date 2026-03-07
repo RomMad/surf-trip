@@ -20,8 +20,6 @@ jobs:
                 php: [8.5]
         env:
             APP_ENV: test
-            APP_DEBUG: 0
-            DATABASE_URL: sqlite:///%kernel.project_dir%/var/data_ci.db
 
         steps:
             - name: Checkout
