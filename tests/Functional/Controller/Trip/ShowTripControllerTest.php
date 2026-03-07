@@ -4,16 +4,21 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\Controller\Trip;
 
+use App\Controller\Trip\ShowTripController;
 use App\Entity\Trip;
 use App\Factory\TripFactory;
 use App\Tests\CustomWebTestCase;
 use App\Tests\Fixtures\DefaultStory;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Medium;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @internal
  */
+#[CoversClass(ShowTripController::class)]
+#[Medium]
 final class ShowTripControllerTest extends CustomWebTestCase
 {
     private const string PATH = '/en/trip/%d/%s';

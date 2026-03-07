@@ -4,17 +4,22 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\Controller\Trip;
 
+use App\Controller\Trip\EditTripController;
 use App\Entity\Trip;
 use App\Enum\Trip\RequiredLevel;
 use App\Factory\TripFactory;
 use App\Tests\CustomWebTestCase;
 use App\Tests\Fixtures\DefaultStory;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Medium;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @internal
  */
+#[CoversClass(EditTripController::class)]
+#[Medium]
 final class EditTripControllerTest extends CustomWebTestCase
 {
     // Paths

@@ -4,15 +4,20 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\Controller\Trip;
 
+use App\Controller\Trip\DeleteTripController;
 use App\Entity\Trip;
 use App\Factory\TripFactory;
 use App\Tests\CustomWebTestCase;
 use App\Tests\Fixtures\DefaultStory;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Medium;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @internal
  */
+#[CoversClass(DeleteTripController::class)]
+#[Medium]
 final class DeleteTripControllerTest extends CustomWebTestCase
 {
     private const string PATH_SHOW = '/trip/%d/%s';
