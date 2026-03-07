@@ -63,4 +63,10 @@ class TripFormType extends AbstractType
             'data_class' => Trip::class,
         ]);
     }
+
+    #[\Override]
+    public function getBlockPrefix(): string
+    {
+        return 'trip';
+    }
 }
