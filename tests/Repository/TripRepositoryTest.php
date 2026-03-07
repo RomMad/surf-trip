@@ -35,7 +35,7 @@ final class TripRepositoryTest extends CustomKernelTestCase
 
     public function testSaveTrip(): void
     {
-        $trip = TripFactory::createOne();
+        $trip = TripFactory::new()->withoutPersisting()->create();
 
         $this->repository->save($trip, true);
 
