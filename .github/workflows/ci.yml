@@ -12,8 +12,8 @@ concurrency:
     cancel-in-progress: true
 
 jobs:
-    static-tests:
-        name: "Static Tests (PHP ${{ matrix.php }})"
+    lint-and-tests:
+        name: "Lint and Tests (PHP ${{ matrix.php }})"
         runs-on: ubuntu-latest
         services:
             postgres:
