@@ -63,6 +63,30 @@ jobs:
             - name: Install PHP dependencies
               run: composer install --prefer-dist --no-interaction --no-progress
 
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 22
+                  cache: yarn
+                  cache-dependency-path: yarn.lock
+
+            - name: Enable Corepack
+              run: corepack enable
+
+            - name: Install JS dependencies
+              run: yarn install --immutable --non-interactive
+
+            - name: Cache frontend build
+              id: frontend-build-cache
+              uses: actions/cache@v4
+              with:
+                  path: public/build
+                  key: "${{ runner.os }}-frontend-build-v1-${{ hashFiles('yarn.lock', 'package.json', 'webpack.config.js', 'postcss.config.mjs', 'tailwind.config.js', 'assets/**') }}"
+
+            - name: Build frontend assets
+              if: steps.frontend-build-cache.outputs.cache-hit != 'true'
+              run: yarn build
+
             - name: Cache warmup
               run: |
                   php bin/console cache:warmup --env=test --no-debug
