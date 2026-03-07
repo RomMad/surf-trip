@@ -21,6 +21,8 @@ final class UserRepositoryTest extends CustomKernelTestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->repository = $this->getContainer()->get(UserRepository::class);
     }
 

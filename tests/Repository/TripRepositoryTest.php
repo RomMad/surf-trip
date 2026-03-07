@@ -26,6 +26,8 @@ final class TripRepositoryTest extends CustomKernelTestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         DefaultStory::load();
 
         $this->repository = $this->getContainer()->get(TripRepository::class);
