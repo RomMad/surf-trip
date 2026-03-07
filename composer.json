@@ -112,6 +112,8 @@
         }
     },
     "require-dev": {
+        "brianium/paratest": "^7.19",
+        "dama/doctrine-test-bundle": "^8.6",
         "doctrine/doctrine-fixtures-bundle": "^4.3.1",
         "fakerphp/faker": "^1.24.1",
         "friendsofphp/php-cs-fixer": "^3.94.2",
@@ -127,6 +129,7 @@
         "symfony/stopwatch": "7.4.*",
         "symfony/ux-toolkit": "^2.32",
         "symfony/web-profiler-bundle": "7.4.*",
-        "vincentlanglet/twig-cs-fixer": "^3.14"
+        "vincentlanglet/twig-cs-fixer": "^3.14",
+        "zenstruck/foundry": "^2.9"
     }
 }
