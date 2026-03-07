@@ -20,6 +20,7 @@ jobs:
                 php: [8.5]
         env:
             APP_ENV: test
+            DATABASE_URL: sqlite:///%kernel.project_dir%/var/data_ci.db
 
         steps:
             - name: Checkout
@@ -89,4 +90,6 @@ jobs:
               run: ./vendor/bin/twig-cs-fixer lint
 
             - name: Tests (Paratest)
-              run: ./vendor/bin/paratest tests --runner WrapperRunner
+              run: |
+                  rm -f var/data_ci.db
+                  ./vendor/bin/paratest tests --runner WrapperRunner --processes=1
