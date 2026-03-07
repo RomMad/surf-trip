@@ -28,7 +28,6 @@ COPY localhost.key /app/certs/
 
 # Set environment variables for FrankenPHP and Symfony Runtime
 ENV FRANKENPHP_CONFIG="worker /app/public/index.php"
-ENV APP_RUNTIME="Runtime\\FrankenPhpSymfony\\Runtime"
 ENV SERVER_NAME=localhost
 
 EXPOSE 80 443
