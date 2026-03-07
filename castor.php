@@ -276,8 +276,8 @@ function lint_js_fix(): void
 //                       TESTING
 // ========================================================
 
-#[AsTask(description: 'Run all the tests', namespace: 'app', aliases: ['tests'])]
-function tests(): void
+#[AsTask(description: 'Run all the tests', namespace: 'app', aliases: ['tests-all'])]
+function tests_all(): void
 {
     check_security();
     phpstan();
@@ -291,14 +291,19 @@ function tests(): void
     lint_twig();
     twigcs();
     // lint_js();
-    clear_cache('test');
-    run('bin/phpunit tests');
+    tests();
 }
 
-#[AsTask(description: 'Run tests with coverage', namespace: 'app', aliases: ['tests-coverage'])]
+#[AsTask(description: 'Run tests with Paratest', namespace: 'app', aliases: ['tests'])]
+function tests(): void
+{
+    run('./vendor/bin/paratest tests --runner WrapperRunner');
+}
+
+#[AsTask(description: 'Run tests coverage with Paratest', namespace: 'app', aliases: ['tests-coverage'])]
 function tests_coverage(): void
 {
-    run('XDEBUG_MODE=coverage bin/phpunit tests --coverage-html var/coverage');
+    run('XDEBUG_MODE=coverage ./vendor/bin/paratest tests --runner WrapperRunner --coverage-html var/coverage');
 }
 
 // ========================================================
