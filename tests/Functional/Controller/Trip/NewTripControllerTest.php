@@ -20,8 +20,8 @@ use Symfony\Component\HttpFoundation\Request;
 final class NewTripControllerTest extends CustomWebTestCase
 {
     // Paths
-    private const string PATH_INDEX = '/trips';
-    private const string PATH_NEW = '/trip/new';
+    private const string PATH_INDEX = '/en/trips';
+    private const string PATH_NEW = '/en/trip/new';
     // Selectors
     private const string FORM = 'form[name="trip"]';
     // Labels

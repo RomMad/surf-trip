@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 #[Medium]
 final class IndexTripControllerTest extends CustomWebTestCase
 {
-    private const string PATH = '/trips';
+    private const string PATH = '/en/trips';
     private const string TITLE = 'Trips';
 
     protected function setUp(): void

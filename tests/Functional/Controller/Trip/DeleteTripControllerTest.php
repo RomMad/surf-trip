@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
 #[Medium]
 final class DeleteTripControllerTest extends CustomWebTestCase
 {
-    private const string PATH_SHOW = '/trip/%d/%s';
+    private const string PATH_SHOW = '/en/trip/%d/%s';
     private const string SUBMIT_BUTTON = 'Delete';
     private const string MESSAGE_SUCCESS = 'The trip has been deleted.';
 

@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 #[Medium]
 final class LogoutControllerTest extends CustomWebTestCase
 {
-    private const string PATH = '/logout';
+    private const string PATH = '/en/logout';
 
     protected function setUp(): void
     {

@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 #[Medium]
 final class RegisterControllerTest extends CustomWebTestCase
 {
-    private const string PATH = '/register';
+    private const string PATH = '/en/register';
     private const string TITLE = 'Register';
     private const string SUBMIT_BUTTON = 'Register';
     private const string LOGOUT_LINK = 'Log out';

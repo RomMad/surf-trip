@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 #[Medium]
 final class LoginControllerTest extends CustomWebTestCase
 {
-    private const string PATH = '/login';
+    private const string PATH = '/en/login';
     private const string TITLE = 'Log in';
     private const string SUBMIT_BUTTON = 'Log in';
     private const string LOGOUT_LINK = 'Log out';
