@@ -9,6 +9,7 @@ use App\Entity\User;
 use App\Enum\User\UserRole;
 use App\ReadModel\Trip\TripOwnershipAwareInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Authorization\Voter\Vote;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 /**
@@ -29,7 +30,7 @@ final class TripVoter extends Voter
     /**
      * @param Trip|TripOwnershipAwareInterface $subject
      */
-    protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
+    protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token, ?Vote $vote = null): bool
     {
         $user = $token->getUser();
 
