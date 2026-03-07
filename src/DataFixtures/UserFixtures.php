@@ -44,7 +44,7 @@ class UserFixtures extends Fixture
     {
         foreach (self::USERS_DATA as [$firstName, $lastName, $role]) {
             $user = new User();
-            $user->email = sprintf('%s.%s@example.com', strtolower($firstName), strtolower($lastName));
+            $user->email = sprintf('%s.%s@test.com', strtolower($firstName), strtolower($lastName));
             $user->firstName = $firstName;
             $user->lastName = $lastName;
             $user->password = $this->passwordHasher->hashPassword($user, 'password');
