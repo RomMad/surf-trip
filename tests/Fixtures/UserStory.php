@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace App\Tests\Fixtures;
 
 use App\Entity\User;
+use App\Entity\ValueObject\Email;
+use App\Entity\ValueObject\FirstName;
+use App\Entity\ValueObject\LastName;
 use App\Factory\UserFactory;
 use Zenstruck\Foundry\Story;
 
@@ -16,9 +19,9 @@ final class UserStory extends Story
     public function build(): void
     {
         UserFactory::createOne([
-            'email' => self::JOHN_EMAIL,
-            'firstName' => 'John',
-            'lastName' => 'Doe',
+            'email' => Email::from(self::JOHN_EMAIL),
+            'firstName' => FirstName::from('John'),
+            'lastName' => LastName::from('Doe'),
         ]);
 
         UserFactory::createMany(5);
@@ -26,6 +29,6 @@ final class UserStory extends Story
 
     public static function getJohnUser(): User
     {
-        return UserFactory::find(['email' => self::JOHN_EMAIL]);
+        return UserFactory::find(['email' => Email::from(self::JOHN_EMAIL)]);
     }
 }

@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace App\Form\Security;
 
 use App\Entity\User;
+use App\Form\Type\EmailType;
+use App\Form\Type\FirstNameType;
+use App\Form\Type\LastNameType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -20,15 +23,9 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('email', null, [
-                'label' => 'email.label',
-            ])
-            ->add('firstName', null, [
-                'label' => 'first_name.label',
-            ])
-            ->add('lastName', null, [
-                'label' => 'last_name.label',
-            ])
+            ->add('email', EmailType::class)
+            ->add('firstName', FirstNameType::class)
+            ->add('lastName', LastNameType::class)
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'mapped' => false,

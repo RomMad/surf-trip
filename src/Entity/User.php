@@ -5,6 +5,12 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use App\Doctrine\Type\EmailType;
+use App\Doctrine\Type\FirstNameType;
+use App\Doctrine\Type\LastNameType;
+use App\Entity\ValueObject\Email;
+use App\Entity\ValueObject\FirstName;
+use App\Entity\ValueObject\LastName;
 use App\Enum\User\UserRole;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -14,7 +20,6 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Attribute\Groups;
-use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
@@ -31,27 +36,17 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface, \
     #[Groups(['user:read'])]
     public private(set) ?int $id = null;
 
-    #[ORM\Column(length: 180)]
-    #[Assert\NotBlank(message: 'user.email.not_blank')]
-    #[Assert\Email(message: 'user.email.invalid')]
-    #[Assert\Length(max: 180, maxMessage: 'user.email.max_length')]
+    #[ORM\Column(type: EmailType::NAME)]
     #[Groups(['user:read'])]
-    public string $email = '';
+    public Email $email;
 
-    #[ORM\Column(length: 100)]
-    #[Assert\NotBlank(message: 'user.first_name.not_blank')]
-    #[Assert\Length(max: 100, maxMessage: 'user.first_name.max_length')]
+    #[ORM\Column(type: FirstNameType::NAME)]
     #[Groups(['user:read', 'trip:read'])]
-    public string $firstName = '' {
-        set(string $value) => $this->firstName = ucfirst($value);
-    }
+    public FirstName $firstName;
 
-    #[ORM\Column(length: 100, nullable: true)]
-    #[Assert\Length(max: 100, maxMessage: 'user.last_name.max_length')]
+    #[ORM\Column(type: LastNameType::NAME, nullable: true)]
     #[Groups(['user:read', 'trip:read'])]
-    public ?string $lastName = null {
-        set(?string $value) => $this->lastName = strtoupper((string) $value);
-    }
+    public ?LastName $lastName = null;
 
     /** @var list<string> The user roles */
     #[ORM\Column]
@@ -84,7 +79,7 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface, \
 
     public function __toString(): string
     {
-        return $this->email;
+        return (string) $this->email;
     }
 
     /**
@@ -100,7 +95,7 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface, \
 
     public function getFullName(): string
     {
-        return sprintf('%s %s', $this->firstName, $this->lastName);
+        return sprintf('%s %s', (string) $this->firstName, (string) $this->lastName);
     }
 
     /** Keep this method for compatibility with Symfony's security and PasswordAuthenticatedUserInterface */

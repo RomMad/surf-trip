@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Fixtures;
 
+use App\Entity\ValueObject\Email;
 use App\Entity\ValueObject\Location;
 use App\Entity\ValueObject\Title;
 use App\Enum\Trip\RequiredLevel;
@@ -26,6 +27,8 @@ final class TripStory extends Story
             'owners' => [UserFactory::random()],
         ]);
 
+        $owner = UserFactory::find(['email' => Email::from(UserStory::JOHN_EMAIL)]);
+
         TripFactory::createOne([
             'title' => Title::from(self::TRIP_TITLE),
             'location' => Location::from(self::TRIP_LOCATION),
@@ -33,7 +36,7 @@ final class TripStory extends Story
             'endAt' => new \DateTimeImmutable('+1 month +10 days'),
             'description' => self::TRIP_DESCRIPTION,
             'requiredLevels' => [RequiredLevel::Beginner, RequiredLevel::Intermediate],
-            'owners' => [UserFactory::find(['email' => UserStory::JOHN_EMAIL])],
+            'owners' => [$owner],
         ]);
     }
 }

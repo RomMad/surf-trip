@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests;
 
+use App\Entity\ValueObject\Email;
 use App\Factory\UserFactory;
 use App\Tests\Traits\AssertsWebTestTrait;
 use App\Tests\Traits\KernelTestCaseTrait;
@@ -54,7 +55,7 @@ abstract class CustomWebTestCase extends WebTestCase
         }
 
         if (null !== $username) {
-            $user = UserFactory::find(['email' => $username]);
+            $user = UserFactory::find(['email' => Email::from($username)]);
             $this->client->loginUser($user);
         }
 

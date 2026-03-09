@@ -7,6 +7,7 @@ namespace App\Security;
 use App\Controller\Security\LoginController;
 use App\Controller\Trip\IndexTripController;
 use App\Entity\User;
+use App\Entity\ValueObject\Email;
 use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -40,7 +41,7 @@ final class AppAuthenticator extends AbstractLoginFormAuthenticator
 
         return new Passport(
             new UserBadge($email, function (string $userIdentifier): User {
-                $user = $this->userRepository->findOneBy(['email' => $userIdentifier]);
+                $user = $this->userRepository->findOneBy(['email' => Email::from($userIdentifier)]);
 
                 if (!$user instanceof User) {
                     throw new UserNotFoundException();
