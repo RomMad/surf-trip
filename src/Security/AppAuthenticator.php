@@ -41,7 +41,13 @@ final class AppAuthenticator extends AbstractLoginFormAuthenticator
 
         return new Passport(
             new UserBadge($email, function (string $userIdentifier): User {
-                $user = $this->userRepository->findOneBy(['email' => Email::from($userIdentifier)]);
+                try {
+                    $email = Email::from($userIdentifier);
+                } catch (\InvalidArgumentException) {
+                    throw new UserNotFoundException();
+                }
+
+                $user = $this->userRepository->findOneByEmail($email);
 
                 if (!$user instanceof User) {
                     throw new UserNotFoundException();
