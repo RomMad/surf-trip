@@ -6,6 +6,8 @@ namespace App\Tests\Functional\Controller\Security;
 
 use App\Controller\Security\RegisterController;
 use App\Entity\User;
+use App\Entity\ValueObject\Email;
+use App\Repository\UserRepository;
 use App\Tests\CustomWebTestCase;
 use App\Tests\Fixtures\UserStory;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -58,9 +60,9 @@ final class RegisterControllerTest extends CustomWebTestCase
             ],
         ]);
 
-        $user = $this->getRepository(User::class)->findOneBy([
-            'email' => self::USER_EMAIL,
-        ]);
+        /** @var UserRepository $userRepository */
+        $userRepository = $this->getRepository(User::class);
+        $user = $userRepository->findOneByEmail(Email::from(self::USER_EMAIL));
 
         $this->assertResponseIsSuccessful();
         $this->assertSelectorTextContains('nav', self::LOGOUT_LINK);

@@ -8,6 +8,9 @@ doctrine:
 
         profiling_collect_backtrace: '%kernel.debug%'
         types:
+            email: App\Doctrine\Type\EmailType
+            first_name: App\Doctrine\Type\FirstNameType
+            last_name: App\Doctrine\Type\LastNameType
             location: App\Doctrine\Type\LocationType
             slug: App\Doctrine\Type\SlugType
             title: App\Doctrine\Type\TitleType

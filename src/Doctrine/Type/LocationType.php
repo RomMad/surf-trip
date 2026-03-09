@@ -28,6 +28,6 @@ class LocationType extends StringType
     #[\Override]
     public function convertToPHPValue(mixed $value, AbstractPlatform $platform): ?Location
     {
-        return $value ? new Location($value) : null;
+        return null !== $value ? new Location($value) : null;
     }
 }

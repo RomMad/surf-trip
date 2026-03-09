@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace App\DataFixtures;
 
 use App\Entity\User;
+use App\Entity\ValueObject\Email;
+use App\Entity\ValueObject\FirstName;
+use App\Entity\ValueObject\LastName;
 use App\Enum\User\UserRole;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -44,9 +47,9 @@ class UserFixtures extends Fixture
     {
         foreach (self::USERS_DATA as [$firstName, $lastName, $role]) {
             $user = new User();
-            $user->email = sprintf('%s.%s@test.com', strtolower($firstName), strtolower($lastName));
-            $user->firstName = $firstName;
-            $user->lastName = $lastName;
+            $user->email = Email::from(sprintf('%s.%s@test.com', strtolower($firstName), strtolower($lastName)));
+            $user->firstName = FirstName::from($firstName);
+            $user->lastName = LastName::from($lastName);
             $user->password = $this->passwordHasher->hashPassword($user, 'password');
             $user->roles = [$role->value];
             $user->isVerified = true;
