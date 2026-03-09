@@ -10,7 +10,6 @@ use App\Entity\ValueObject\FirstName;
 use App\Tests\CustomKernelTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Small;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Webmozart\Assert\InvalidArgumentException;
 
 /**
@@ -20,22 +19,13 @@ use Webmozart\Assert\InvalidArgumentException;
 #[Small]
 final class UserTest extends CustomKernelTestCase
 {
-    private ValidatorInterface $validator;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->validator = self::getContainer()->get(ValidatorInterface::class);
-    }
-
     public function testInvalidUserWithInvalidEmail(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('user.email.invalid');
 
         $user = new User();
-        $user->email = (new Email('invalid-email'));
+        $user->email = new Email('invalid-email');
     }
 
     public function testInvalidUserWithEmptyFirstName(): void
