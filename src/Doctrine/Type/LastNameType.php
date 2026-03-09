@@ -28,6 +28,6 @@ class LastNameType extends StringType
     #[\Override]
     public function convertToPHPValue(mixed $value, AbstractPlatform $platform): ?LastName
     {
-        return null !== $value && '' !== $value ? new LastName($value) : null;
+        return null !== $value ? new LastName($value) : null;
     }
 }
