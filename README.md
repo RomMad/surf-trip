@@ -3,7 +3,7 @@
 Surf Trip is a web application designed to connect people who want to **organize** or **join** surf trips — from short getaways to multi-week surf journeys.
 
 The project is built as an evolving MVP with a clear architectural trajectory:
-**Symfony core → API Platform → React SPA.**
+**Symfony core → API Platform ✓ → React SPA** (in progress).
 
 ## Product Vision
 
@@ -20,16 +20,17 @@ The goal is to build a focused, extensible platform with a clean domain model an
 
 ## Core Features (Current MVP)
 
-* User authentication
+* User authentication (JWT-based API, session-based web UI)
+* Trip REST API with search and filtering
 * Trip creation (location, dates, level requirements, description)
-* Trip discovery
+* Trip discovery and detail views
 * Participation management
 * Admin tools
 * Fixtures for realistic development data
 
 ## Domain Model
 
-The application is structured around a clear domain foundation:
+The application is structured around a clear domain foundation with value objects ensuring type safety and business logic encapsulation:
 
 * **User**
 * **Trip**
@@ -37,70 +38,86 @@ The application is structured around a clear domain foundation:
 * (Planned) Message / Discussion
 * (Planned) Notification
 
-The objective is to keep business logic encapsulated and progressively expose it through an API layer.
+The objective is to keep business logic encapsulated and progressively expose it through the API Platform layer.
 
 ## Architecture Strategy
 
-### Current Architecture (MVP)
+### Current Architecture (Post-MVP Evolution)
 
-* Symfony 7 (monolithic)
-* Twig rendering
-* Doctrine ORM
-* Session-based authentication
-* Modular UX components (Stimulus, Turbo, Twig Components)
-
-### Target Architecture
-
-* Symfony as API core
-* API Platform for resource exposure
+* **Symfony 8** (monolithic with API Platform)
+* **API Platform 4.2** (fully integrated)
+  - REST resources for User & Trip
+  - OpenAPI / Swagger documentation
+  - Search, filtering & pagination
+  - Granular serialization groups
+  - Security-aware operations
 * JWT-based authentication
+* Twig rendering
+* Modular UX components (Stimulus, Turbo, Twig Components)
+* Doctrine ORM
+* PostgreSQL
+* Redis
+* FrankenPHP
+* CORS-enabled
+
+### Target Architecture (React SPA)
+
+* Symfony API Platform as backend
 * React SPA consuming the API
 * Mercure for real-time updates (planned)
+* Full JWT authentication
 
 This staged evolution ensures:
 
 * incremental complexity
-* controlled refactoring
-* backward compatibility during transition
+* controlled refactoring & backward compatibility
+* clean separation between API and UI layers
 
 ## Technical Stack
 
 ### Backend
 
-* PHP 8.4+
-* Symfony 7.4
-* Doctrine ORM
+* **PHP 8.5**
+* **Symfony 8.0**
+* **API Platform 4.2** (REST, OpenAPI/Swagger, filters, pagination)
+* Lexik JWT Authentication (token-based API auth)
+* Doctrine ORM (with custom types for value objects)
 * PostgreSQL
 * Redis
 * FrankenPHP
-* API Platform (target integration)
 
-### Frontend
+### Current Frontend
 
-* Twig (current)
+* Twig (server-side rendering)
 * Symfony UX (Stimulus, Turbo, Components)
 * Tailwind CSS
 * Webpack Encore
-* React (target integration)
+
+### Target Frontend
+
+* React SPA
+* TypeScript
+* TanStack Query (data fetching)
 
 ### Infrastructure
 
-* Docker
-* MinIO
-* Mailpit
+* Docker (reproducible environment)
+* MinIO (object storage)
+* Mailpit (email testing)
 * Castor (task automation)
 
 ### Code Quality & Tooling
 
-* PHPStan
-* Rector
-* PHP-CS-Fixer
-* PHPCS
-* Twig CS Fixer
-* PHPUnit
+* PHPStan (static analysis)
+* Rector (automated refactoring)
+* PHP-CS-Fixer (code formatting)
+* PHPCS (code standards)
+* Twig CS Fixer (Twig template formatting)
+* PHPUnit (with Paratest for parallel execution)
+* DAMA Doctrine Test Bundle (test isolation)
 * Symfony linters
 
-Focus: static analysis, automated refactoring, reproducibility.
+Focus: type safety, static analysis, automated refactoring, reproducibility.
 
 ## Development Workflow
 
@@ -127,6 +144,7 @@ yarn dev
 
 * App (HTTPS): https://localhost
 * App (HTTP): http://localhost:8080
+* **API Platform (Swagger UI)**: https://localhost/api/docs
 * Mercure hub: https://localhost/.well-known/mercure
 * pgAdmin: http://localhost:5050
 * Mailpit (web UI): http://localhost:8025
@@ -146,17 +164,21 @@ The goal is to maintain a production-grade codebase even during MVP evolution.
 
 ## Roadmap
 
-### Short Term
+### Short Term (In Progress)
 
-* Introduce API Platform for `Trip` and `User`
-* Define granular access control rules
-* Expose filtered search endpoints
+* ✓ Define granular access control rules (security voters)
+* ✓ Implement value objects
+* ✓ Integrate API Platform for `Trip` and `User`
+* Finalize React frontend (list / detail / create / edit flows)
+* Migrate web UI to consume API Platform endpoints
 
 ### Mid Term
 
-* React front-end (list / detail / create / edit flows)
-* Authentication migration to JWT
-* Real-time trip participation updates
+* Complete React SPA migration
+* JWT-only authentication (remove session fallback)
+* Real-time trip participation updates (Mercure)
+* Extend API with more resources (Messages, Notifications, Reviews)
+* API versioning strategy
 
 ### Long Term
 
@@ -175,5 +197,6 @@ The goal is to maintain a production-grade codebase even during MVP evolution.
 
 ## Project Status
 
-Evolving MVP with a stable Symfony foundation.
-Architecture intentionally prepared for API-first expansion and SPA transition.
+**Active MVP evolution** with stable Symfony + API Platform foundation.
+
+Architecture is production-ready for API-first development and incremental SPA migration.
