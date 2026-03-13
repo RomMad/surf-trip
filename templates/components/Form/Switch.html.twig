@@ -1,4 +1,4 @@
 <label class="app-switch-label">
-    <input type="checkbox" class="app-switch-input peer" {{ attributes }}>
+      <input type="checkbox" class="app-switch-input peer" {{ attributes.without('class') }}>
     <div class="{{ 'app-switch-div ' ~ attributes.render('class')|tailwind_merge }}"></div>
 </label>
