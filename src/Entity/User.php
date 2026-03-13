@@ -127,12 +127,6 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface, \
         return in_array($role->value, $this->roles, true);
     }
 
-    #[\Deprecated]
-    public function eraseCredentials(): void
-    {
-        // @deprecated, to be removed when upgrading to Symfony 8
-    }
-
     public function addTrip(Trip $trip): static
     {
         if (!$this->trips->contains($trip)) {
