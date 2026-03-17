@@ -12,6 +12,7 @@ use Symfony\Contracts\Cache\ItemInterface;
 final readonly class TripReadModelProvider
 {
     private const string CACHE_KEY_PATTERN = 'trip.read_model.%d';
+    private const string CACHE_TTL = 'PT24H';
 
     public function __construct(
         private TripRepository $tripRepository,
@@ -23,7 +24,7 @@ final readonly class TripReadModelProvider
         return $this->cache->get(
             sprintf(self::CACHE_KEY_PATTERN, $id),
             function (ItemInterface $item) use ($id): ?TripShowReadModel {
-                $item->expiresAfter(new \DateInterval('PT24H'));
+                $item->expiresAfter(new \DateInterval(self::CACHE_TTL));
 
                 return $this->tripRepository->findShowReadModelById($id);
             },
