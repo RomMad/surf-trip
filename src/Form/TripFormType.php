@@ -54,6 +54,9 @@ class TripFormType extends AbstractType
                 'choice_label' => 'fullName',
                 'choice_value' => 'id',
                 'choice_translation_domain' => false,
+                'attr' => [
+                    'placeholder' => 'owners.placeholder',
+                ],
                 'label' => 'owners.label',
                 'multiple' => true,
                 'autocomplete' => true,
