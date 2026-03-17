@@ -6,8 +6,8 @@ namespace App\Service\Trip;
 
 use App\ReadModel\Trip\TripShowReadModel;
 use App\Repository\TripRepository;
+use Symfony\Contracts\Cache\CacheInterface;
 use Symfony\Contracts\Cache\ItemInterface;
-use Symfony\Contracts\Cache\TagAwareCacheInterface;
 
 final readonly class TripReadModelProvider
 {
@@ -15,7 +15,7 @@ final readonly class TripReadModelProvider
 
     public function __construct(
         private TripRepository $tripRepository,
-        private TagAwareCacheInterface $cache,
+        private CacheInterface $cache,
     ) {}
 
     public function getById(int $id): ?TripShowReadModel
