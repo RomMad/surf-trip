@@ -8,7 +8,6 @@ use App\Enum\Trip\RequiredLevel;
 use App\Form\Model\TripWriteModel;
 use App\Form\Type\LocationType;
 use App\Form\Type\TitleType;
-use App\ReadModel\Trip\TripOwnerReadModel;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
@@ -52,8 +51,8 @@ class TripFormType extends AbstractType
         if ($trip instanceof TripWriteModel && [] !== $trip->owners) {
             $builder->add('owners', ChoiceType::class, [
                 'choices' => $trip->owners,
-                'choice_label' => fn (TripOwnerReadModel $owner): string => $owner->fullName,
-                'choice_value' => fn (TripOwnerReadModel $owner): int => $owner->id,
+                'choice_label' => 'fullName',
+                'choice_value' => 'id',
                 'choice_translation_domain' => false,
                 'label' => 'owners.label',
                 'multiple' => true,
