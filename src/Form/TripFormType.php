@@ -23,10 +23,8 @@ class TripFormType extends AbstractType
         $trip = $builder->getData();
 
         $builder
-            ->add('title', TitleType::class, [
-            ])
-            ->add('location', LocationType::class, [
-            ])
+            ->add('title', TitleType::class)
+            ->add('location', LocationType::class)
             ->add('startAt', DateTimeImmutableType::class, [
                 'label' => 'start_at.label',
             ])
