@@ -41,6 +41,28 @@ class TripRepository extends ServiceEntityRepository
         }
     }
 
+    public function findOneByIdWithOwners(int $id): ?Trip
+    {
+        return $this->createQueryBuilder('t')
+            ->leftJoin('t.owners', 'o')
+            ->addSelect('o')
+            ->andWhere('t.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
+    public function findShowReadModelById(int $id): ?TripShowReadModel
+    {
+        return $this->createDtoBaseQueryBuilder()
+            ->andWhere('t.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
     public function createOrderedQueryBuilder(TripFilter $filter): QueryBuilder
     {
         $queryBuilder = $this->createDtoBaseQueryBuilder()
@@ -61,17 +83,6 @@ class TripRepository extends ServiceEntityRepository
         $this->applyFilters($queryBuilder, $filter);
 
         return $queryBuilder;
-    }
-
-    public function findShowReadModelById(int $id): ?TripShowReadModel
-    {
-        return $this->createDtoBaseQueryBuilder()
-            ->andWhere('t.id = :id')
-            ->setParameter('id', $id)
-
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
     }
 
     private function createDtoBaseQueryBuilder(): QueryBuilder
