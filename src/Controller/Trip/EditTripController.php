@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Trip;
 
+use App\Exception\TripNotFoundHttpException;
 use App\Form\Model\TripWriteModel;
 use App\Form\TripFormType;
 use App\Security\Voter\TripVoter;
@@ -40,7 +41,7 @@ final class EditTripController extends AbstractController
         $trip = $this->tripReadModelProvider->getById($id);
 
         if (null === $trip) {
-            throw $this->createNotFoundException();
+            throw new TripNotFoundHttpException($id);
         }
 
         if ($trip->slug->value !== $slug) {

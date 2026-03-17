@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\Service\Trip;
 
 use App\Entity\Trip;
+use App\Exception\TripNotFoundHttpException;
 use App\Form\Model\TripWriteModel;
 use App\Mapper\Trip\TripOwnersMapper;
 use App\Repository\TripRepository;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\ObjectMapper\ObjectMapperInterface;
 
 final readonly class TripUpdater
@@ -24,7 +24,7 @@ final readonly class TripUpdater
         $trip = $this->tripRepository->findOneByIdWithOwners($tripId);
 
         if (null === $trip) {
-            throw new NotFoundHttpException(sprintf('Trip with id %d not found', $tripId));
+            throw new TripNotFoundHttpException($tripId);
         }
 
         $this->objectMapper->map($tripWriteModel, $trip);
