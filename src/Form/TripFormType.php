@@ -6,11 +6,11 @@ namespace App\Form;
 
 use App\Enum\Trip\RequiredLevel;
 use App\Form\Model\TripWriteModel;
+use App\Form\Type\DateTimeImmutableType;
 use App\Form\Type\LocationType;
 use App\Form\Type\TitleType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -27,13 +27,11 @@ class TripFormType extends AbstractType
             ])
             ->add('location', LocationType::class, [
             ])
-            ->add('startAt', DateTimeType::class, [
+            ->add('startAt', DateTimeImmutableType::class, [
                 'label' => 'start_at.label',
-                'widget' => 'single_text',
             ])
-            ->add('endAt', DateTimeType::class, [
+            ->add('endAt', DateTimeImmutableType::class, [
                 'label' => 'end_at.label',
-                'widget' => 'single_text',
             ])
             ->add('requiredLevels', EnumType::class, [
                 'class' => RequiredLevel::class,
