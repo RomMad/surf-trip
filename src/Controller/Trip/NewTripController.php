@@ -50,7 +50,6 @@ final class NewTripController extends AbstractController
         }
 
         return $this->render('trip/new.html.twig', [
-            'trip' => $tripWriteModel,
             'form' => $form,
         ]);
     }
