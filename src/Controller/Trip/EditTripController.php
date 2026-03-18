@@ -44,14 +44,14 @@ final class EditTripController extends AbstractController
             throw new TripNotFoundHttpException($id);
         }
 
+        $this->denyAccessUnlessGranted(TripVoter::EDIT, $trip);
+
         if ($trip->slug->value !== $slug) {
             return $this->redirectToRoute(self::ROUTE, [
                 'id' => $trip->id,
                 'slug' => $trip->slug->value,
             ], Response::HTTP_SEE_OTHER);
         }
-
-        $this->denyAccessUnlessGranted(TripVoter::EDIT, $trip);
 
         $tripWriteModel = $this->objectMapper->map($trip, TripWriteModel::class);
 
