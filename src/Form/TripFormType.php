@@ -42,10 +42,7 @@ class TripFormType extends AbstractType
                 'empty_data' => '',
                 'required' => false,
             ])
-        ;
-
-        if ($trip instanceof TripWriteModel && [] !== $trip->owners) {
-            $builder->add('owners', ChoiceType::class, [
+            ->add('owners', ChoiceType::class, [
                 'choices' => $trip->owners,
                 'choice_label' => 'fullName',
                 'choice_value' => 'id',
@@ -56,8 +53,8 @@ class TripFormType extends AbstractType
                 'label' => 'owners.label',
                 'multiple' => true,
                 'autocomplete' => true,
-            ]);
-        }
+            ])
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

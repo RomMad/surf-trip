@@ -28,7 +28,6 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
-use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TripRepository::class)]
 #[ORM\Index(name: 'idx_trip_location', fields: ['location'])]
@@ -83,32 +82,19 @@ final class Trip
     public Location $location;
 
     #[ORM\Column]
-    #[Assert\NotNull(message: 'trip.start_at.not_null')]
     #[Groups(['trip:read', 'trip:write'])]
     public ?\DateTimeImmutable $startAt = null;
 
     #[ORM\Column]
-    #[Assert\Sequentially([
-        new Assert\NotNull(message: 'trip.end_at.not_null'),
-        new Assert\Expression(
-            expression: 'value >= this.startAt',
-            message: 'trip.end_at.before_start_at'
-        ),
-    ])]
     #[Groups(['trip:read', 'trip:write'])]
     public ?\DateTimeImmutable $endAt = null;
 
     /** @var RequiredLevel[] */
     #[ORM\Column(type: Types::JSONB, enumType: RequiredLevel::class)]
-    #[Assert\Count(min: 1, minMessage: 'trip.required_levels.min_count')]
-    #[Assert\All([
-        new Assert\Type(type: RequiredLevel::class, message: 'trip.required_levels.invalid_type'),
-    ])]
     #[Groups(['trip:read', 'trip:write'])]
     public array $requiredLevels = [];
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    #[Assert\Length(max: 5000, maxMessage: 'trip.description.max_length')]
     #[Groups(['trip:read', 'trip:write'])]
     public ?string $description = null;
 
@@ -118,7 +104,6 @@ final class Trip
 
     /** @var Collection<int, User> */
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'trips')]
-    #[Assert\Count(min: 1, minMessage: 'trip.owner.min_count')]
     #[Groups(['trip:read', 'trip:write'])]
     public private(set) Collection $owners;
 

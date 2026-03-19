@@ -9,6 +9,7 @@ use App\Entity\User;
 use App\Enum\User\UserRole;
 use App\Form\Model\TripWriteModel;
 use App\Form\TripFormType;
+use App\ReadModel\Trip\TripOwnerReadModel;
 use App\Repository\TripRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,13 +35,14 @@ final class NewTripController extends AbstractController
     public function __invoke(Request $request, #[CurrentUser()] User $currentUser): Response
     {
         $tripWriteModel = new TripWriteModel();
+        $ownerReadModel = $this->objectMapper->map($currentUser, TripOwnerReadModel::class);
+        $tripWriteModel->owners = [$ownerReadModel];
 
         $form = $this->createForm(TripFormType::class, $tripWriteModel);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $trip = $this->objectMapper->map($tripWriteModel, Trip::class);
-            $trip->addOwner($currentUser);
 
             $this->tripRepository->save($trip, true);
 
