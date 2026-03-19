@@ -52,7 +52,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     /**
      * @return TripOwnerReadModel[]
      */
-    public function findOwnerReadModelsByQuery(string $query): array
+    public function findOwnerReadModelsByQuery(string $query, int $limit = 10): array
     {
         return $this->createOwnerReadModelQueryBuilder()
             ->andWhere('
@@ -60,6 +60,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
                     OR ILIKE(CONCAT(u.lastName, \' \', u.firstName), :filter) = TRUE
                 ')
             ->setParameter('filter', '%'.$query.'%')
+            ->setMaxResults($limit)
             ->getQuery()
             ->getResult()
         ;
