@@ -30,6 +30,7 @@ final class OwnersAutocompleteType extends AbstractType
                 'autocomplete_url' => $this->router->generate(UserSearchController::class),
                 'max_results' => 10,
                 'min_characters' => 3,
+                'preload' => false,
                 'attr' => [
                     'placeholder' => 'owners.placeholder',
                 ],
