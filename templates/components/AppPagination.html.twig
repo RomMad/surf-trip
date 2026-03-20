@@ -17,15 +17,15 @@
                 <twig:Pagination:Previous href="{{ path(route, route_attributes|merge({page: pager.previousPage})) }}" />
             {% endif %}
 
-            {% if start > 2 %}
-                {% if start > 1 %}
-                    <twig:Pagination:Item>
-                        <twig:Pagination:Link href="{{ path(route, route_attributes|merge({page: 1})) }}">
-                            {{- '1' -}}
-                        </twig:Pagination:Link>
-                    </twig:Pagination:Item>
-                {% endif %}
+            {% if start > 1 %}
+                <twig:Pagination:Item>
+                    <twig:Pagination:Link href="{{ path(route, route_attributes|merge({page: 1})) }}">
+                        {{- '1' -}}
+                    </twig:Pagination:Link>
+                </twig:Pagination:Item>
+            {% endif %}
 
+            {% if start > 2 %}
                 <twig:Pagination:Item>
                     <twig:Pagination:Ellipsis />
                 </twig:Pagination:Item>
