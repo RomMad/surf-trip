@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App\Controller\Trip;
 
-use App\Repository\TripRepository;
+use App\Exception\TripNotFoundHttpException;
+use App\Service\Trip\TripReadModelProvider;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,7 +17,7 @@ final class ShowTripController extends AbstractController
     public const string ROUTE = 'app.trip.show';
 
     public function __construct(
-        private readonly TripRepository $tripRepository,
+        private readonly TripReadModelProvider $tripReadModelProvider,
     ) {}
 
     #[Route(
@@ -30,10 +31,10 @@ final class ShowTripController extends AbstractController
     )]
     public function __invoke(int $id, string $slug): Response
     {
-        $trip = $this->tripRepository->findShowReadModelById($id);
+        $trip = $this->tripReadModelProvider->getById($id);
 
         if (null === $trip) {
-            throw $this->createNotFoundException();
+            throw new TripNotFoundHttpException($id);
         }
 
         if ($trip->slug->value !== $slug) {

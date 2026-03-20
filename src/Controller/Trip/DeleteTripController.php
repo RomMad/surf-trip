@@ -7,6 +7,7 @@ namespace App\Controller\Trip;
 use App\Entity\Trip;
 use App\Repository\TripRepository;
 use App\Security\Voter\TripVoter;
+use App\Service\Trip\TripReadModelProvider;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,6 +21,7 @@ final class DeleteTripController extends AbstractController
 {
     public function __construct(
         private readonly TripRepository $tripRepository,
+        private readonly TripReadModelProvider $tripReadModelProvider,
     ) {}
 
     #[Route(
@@ -32,7 +34,11 @@ final class DeleteTripController extends AbstractController
     #[IsGranted(TripVoter::DELETE, subject: 'trip')]
     public function __invoke(Trip $trip): Response
     {
+        $tripId = $trip->id;
+
         $this->tripRepository->remove($trip, true);
+
+        $this->tripReadModelProvider->invalidate($tripId);
 
         $this->addFlash('success', 'trip.deleted_successfully');
 

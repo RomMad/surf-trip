@@ -145,4 +145,20 @@ final class Trip
 
         return $this;
     }
+
+    /**
+     * @param Collection<int, User> $users
+     */
+    public function setOwners(Collection $users): void
+    {
+        foreach ($this->owners as $owner) {
+            if (!$users->contains($owner)) {
+                $this->removeOwner($owner);
+            }
+        }
+
+        foreach ($users as $owner) {
+            $this->addOwner($owner);
+        }
+    }
 }

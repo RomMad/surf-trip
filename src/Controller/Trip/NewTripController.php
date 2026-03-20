@@ -7,11 +7,14 @@ namespace App\Controller\Trip;
 use App\Entity\Trip;
 use App\Entity\User;
 use App\Enum\User\UserRole;
+use App\Form\Model\TripWriteModel;
 use App\Form\TripFormType;
+use App\ReadModel\Trip\TripOwnerReadModel;
 use App\Repository\TripRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\ObjectMapper\ObjectMapperInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -20,6 +23,7 @@ final class NewTripController extends AbstractController
 {
     public function __construct(
         private readonly TripRepository $tripRepository,
+        private readonly ObjectMapperInterface $objectMapper,
     ) {}
 
     #[Route(
@@ -30,13 +34,16 @@ final class NewTripController extends AbstractController
     #[IsGranted(UserRole::USER)]
     public function __invoke(Request $request, #[CurrentUser()] User $currentUser): Response
     {
-        $trip = new Trip();
-        $trip->addOwner($currentUser);
+        $tripWriteModel = new TripWriteModel();
+        $ownerReadModel = $this->objectMapper->map($currentUser, TripOwnerReadModel::class);
+        $tripWriteModel->owners = [$ownerReadModel];
 
-        $form = $this->createForm(TripFormType::class, $trip);
+        $form = $this->createForm(TripFormType::class, $tripWriteModel);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $trip = $this->objectMapper->map($tripWriteModel, Trip::class);
+
             $this->tripRepository->save($trip, true);
 
             $this->addFlash('success', 'trip.created_successfully');
@@ -45,7 +52,6 @@ final class NewTripController extends AbstractController
         }
 
         return $this->render('trip/new.html.twig', [
-            'trip' => $trip,
             'form' => $form,
         ]);
     }

@@ -69,7 +69,9 @@ end_at.label: End date
 required_levels:
     label: Required levels
     placeholder: Select required levels
-owners.label: Admins
+owners:
+    label: Admins
+    placeholder: Select admins
 created_at.label: Created at
 actions.label: Actions
 
