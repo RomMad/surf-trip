@@ -3,11 +3,11 @@ FROM dunglas/frankenphp:latest
 WORKDIR /app
 
 RUN install-php-extensions \
-    pdo_pgsql \
     apcu \
     gd \
     intl \
     opcache \
+    pdo_pgsql \
     redis \
     xdebug \
     zip
