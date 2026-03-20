@@ -80,6 +80,9 @@ final readonly class PagerFactory
         return (int) $queryBuilder->getQuery()->getSingleScalarResult();
     }
 
+    /**
+     * @return mixed[]
+     */
     private function getSlice(QueryBuilder $queryBuilder, int $offset, int $limit): array
     {
         return $queryBuilder
