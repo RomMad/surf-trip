@@ -6,7 +6,7 @@ namespace App\Pagination;
 
 use Doctrine\ORM\QueryBuilder;
 use Pagerfanta\Adapter\AdapterInterface;
-use Pagerfanta\Adapter\CallbackAdapter;
+use Pagerfanta\Adapter\FixedAdapter;
 use Pagerfanta\Doctrine\ORM\QueryAdapter;
 use Pagerfanta\Pagerfanta;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,8 +28,9 @@ final readonly class PagerFactory
         $this->sortQueryBuilder($queryBuilder, $request);
 
         $adapter = new QueryAdapter($queryBuilder);
+        $currentPage = $this->getCurrentPage($request, $pageParameter);
 
-        return $this->createPager($adapter, $request, $maxPerPage, $pageParameter);
+        return $this->createPager($adapter, $currentPage, $maxPerPage);
     }
 
     /**
@@ -44,21 +45,15 @@ final readonly class PagerFactory
     ): Pagerfanta {
         $this->sortQueryBuilder($resultQueryBuilder, $request);
 
-        $adapter = new CallbackAdapter(
-            static fn (): int => (int) $countQueryBuilder->getQuery()->getSingleScalarResult(),
-            static function (int $offset, int $length) use ($resultQueryBuilder): iterable {
-                $queryBuilder = clone $resultQueryBuilder;
+        $currentPage = $this->getCurrentPage($request, $pageParameter);
+        $offset = ($currentPage - 1) * $maxPerPage;
 
-                return $queryBuilder
-                    ->setFirstResult($offset)
-                    ->setMaxResults($length)
-                    ->getQuery()
-                    ->getResult()
-                ;
-            },
-        );
+        $nbResults = $this->getCount($countQueryBuilder);
+        $results = $this->getSlice($resultQueryBuilder, $offset, $maxPerPage);
 
-        return $this->createPager($adapter, $request, $maxPerPage, $pageParameter);
+        $adapter = new FixedAdapter($nbResults, $results);
+
+        return $this->createPager($adapter, $currentPage, $maxPerPage);
     }
 
     private function sortQueryBuilder(QueryBuilder $queryBuilder, Request $request): void
@@ -75,6 +70,26 @@ final readonly class PagerFactory
         }
     }
 
+    private function getCurrentPage(Request $request, string $pageParameter): int
+    {
+        return max(1, $request->query->getInt($pageParameter, 1));
+    }
+
+    private function getCount(QueryBuilder $queryBuilder): int
+    {
+        return (int) $queryBuilder->getQuery()->getSingleScalarResult();
+    }
+
+    private function getSlice(QueryBuilder $queryBuilder, int $offset, int $limit): array
+    {
+        return $queryBuilder
+            ->setFirstResult($offset)
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     /**
      * @template T
      *
@@ -82,11 +97,11 @@ final readonly class PagerFactory
      *
      * @return Pagerfanta<T>
      */
-    private function createPager(AdapterInterface $adapter, Request $request, int $maxPerPage, string $pageParameter): Pagerfanta
+    private function createPager(AdapterInterface $adapter, int $currentPage, int $maxPerPage): Pagerfanta
     {
         return new Pagerfanta($adapter)
+            ->setCurrentPage($currentPage)
             ->setMaxPerPage($maxPerPage)
-            ->setCurrentPage($request->query->getInt($pageParameter, 1))
             ->setNormalizeOutOfRangePages(true)
         ;
     }
