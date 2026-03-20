@@ -8,6 +8,7 @@ RUN install-php-extensions \
     gd \
     intl \
     opcache \
+    redis \
     xdebug \
     zip
 
