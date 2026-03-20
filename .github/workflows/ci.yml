@@ -44,7 +44,7 @@ jobs:
               with:
                   php-version: ${{ matrix.php }}
                   coverage: none
-                  extensions: ctype, iconv, intl, pdo_pgsql
+                  extensions: ctype, iconv, intl, pdo_pgsql, redis
 
             - name: Validate composer.json
               run: composer validate --strict --no-check-publish

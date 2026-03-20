@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Castor\Attribute\AsArgument;
+use Castor\Attribute\AsOption;
 use Castor\Attribute\AsTask;
 
 use function Castor\capture;
@@ -124,7 +125,20 @@ function clear_cache(
     #[AsArgument(name: 'env', autocomplete: ['dev', 'test', 'prod'])]
     ?string $env = 'dev'
 ): void {
-    symfony_console('cache:clear'.(null !== $env ? " --env={$env}" : ''));
+    $envOption = null !== $env ? " --env={$env}" : '';
+
+    symfony_console('cache:clear'.$envOption);
+    symfony_console('cache:pool:clear cache.app'.$envOption);
+}
+
+#[AsTask(description: 'Clear the Redis cache', namespace: 'app', aliases: ['clear-cache-redis', 'cc-redis'])]
+function clear_redis_cache(
+    #[AsArgument(name: 'pool')]
+    ?string $pool = 'cache.app',
+    #[AsOption(name: 'env', autocomplete: ['dev', 'test', 'prod'])]
+    ?string $env = 'dev'
+): void {
+    symfony_console("cache:pool:clear {$pool}".(null !== $env ? " --env={$env}" : ''));
 }
 
 #[AsTask(description: 'Warms the application cache', namespace: 'app', aliases: ['cache-warmup', 'cw'])]

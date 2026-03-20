@@ -151,6 +151,35 @@ yarn dev
 * MinIO API: http://localhost:9000
 * MinIO Console: http://localhost:9001
 * Redis: redis://localhost:6379
+* RedisInsight: http://localhost:5540
+
+### Redis & RedisInsight
+
+Redis is used by Symfony for framework cache (`cache.adapter.redis`).
+
+Useful local commands:
+
+```bash
+# Redis health check (expected result: PONG)
+docker compose exec redis redis-cli PING
+
+# List keys safely (preferred over KEYS * on large datasets)
+docker compose exec redis redis-cli --scan
+
+# Filter keys (example)
+docker compose exec redis redis-cli --scan --pattern '*cache*'
+
+# Flush current database (development only)
+docker compose exec redis redis-cli FLUSHDB
+```
+
+RedisInsight connection settings:
+
+* Host: `redis` (from another container) or `localhost` (from host machine)
+* Port: `6379`
+* TLS: disabled (local development)
+
+Tip: when connecting from another Docker container, use `redis`; when connecting from your host machine (browser/app), use `localhost`.
 
 ## Quality Pipeline
 

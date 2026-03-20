@@ -74,6 +74,15 @@ services:
     volumes:
       - redis_data:/data
 
+  redisinsight:
+    image: redis/redisinsight:latest
+    ports:
+      - "5540:5540"
+    depends_on:
+      - redis
+    volumes:
+      - redisinsight_data:/data
+
   minio:
     image: minio/minio
     ports:
@@ -120,6 +129,7 @@ volumes:
   database_data:
   ###< doctrine/doctrine-bundle ###
   redis_data:
+  redisinsight_data:
   minio_data:
   caddy_data:
   caddy_config:
