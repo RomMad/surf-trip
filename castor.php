@@ -125,6 +125,15 @@ function clear_cache(
     ?string $env = 'dev'
 ): void {
     symfony_console('cache:clear'.(null !== $env ? " --env={$env}" : ''));
+    symfony_console('cache:pool:clear cache.app');
+}
+
+#[AsTask(description: 'Clear the Redis cache', namespace: 'app', aliases: ['clear-cache-redis', 'cc-redis'])]
+function clear_redis_cache(
+    #[AsArgument(name: 'pool')]
+    ?string $pool = 'cache.app'
+): void {
+    symfony_console("cache:pool:clear {$pool}");
 }
 
 #[AsTask(description: 'Warms the application cache', namespace: 'app', aliases: ['cache-warmup', 'cw'])]
