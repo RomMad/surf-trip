@@ -15,8 +15,8 @@ use Symfony\Contracts\Cache\TagAwareCacheInterface;
 
 final readonly class TripPager
 {
-    public const string CACHE_TAG = 'trip.pagination';
-    private const string CACHE_KEY_PATTERN = 'trip.pagination.%s';
+    public const string CACHE_TAG = 'trip.list';
+    private const string CACHE_KEY_PATTERN = 'trip.list.%s';
     private const string CACHE_TTL = 'PT5M';
 
     public function __construct(
