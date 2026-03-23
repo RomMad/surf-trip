@@ -45,10 +45,12 @@ final readonly class PagerFactory
     ): Pagerfanta {
         $this->sortQueryBuilder($resultQueryBuilder, $request);
 
-        $currentPage = $this->getCurrentPage($request, $pageParameter);
+        $nbResults = $this->getCount($countQueryBuilder);
+        $lastPage = max(1, (int) ceil($nbResults / $maxPerPage));
+        $currentPage = $this->getCurrentPage($request, $pageParameter)
+            |> (fn ($currentPage) => min($currentPage, $lastPage));
         $offset = ($currentPage - 1) * $maxPerPage;
 
-        $nbResults = $this->getCount($countQueryBuilder);
         $results = $this->getSlice($resultQueryBuilder, $offset, $maxPerPage);
 
         $adapter = new FixedAdapter($nbResults, $results);
