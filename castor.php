@@ -128,7 +128,10 @@ function clear_cache(
     $envOption = null !== $env ? " --env={$env}" : '';
 
     symfony_console('cache:clear'.$envOption);
-    symfony_console('cache:pool:clear cache.app'.$envOption);
+
+    if ('prod' !== $env) {
+        clear_redis_cache(env: $env);
+    }
 }
 
 #[AsTask(description: 'Clear the Redis cache', namespace: 'app', aliases: ['clear-cache-redis', 'cc-redis'])]
