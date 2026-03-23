@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\Trip;
 
-use App\Pagination\TripPager;
+use App\Cache\Trip\TripCacheTags;
 use App\ReadModel\Trip\TripShowReadModel;
 use App\Repository\TripRepository;
 use Symfony\Contracts\Cache\ItemInterface;
@@ -35,6 +35,6 @@ final readonly class TripReadModelProvider
     public function invalidate(int $id): void
     {
         $this->cache->delete(sprintf(self::CACHE_KEY_PATTERN, $id));
-        $this->cache->invalidateTags([TripPager::CACHE_TAG]);
+        $this->cache->invalidateTags([TripCacheTags::LIST]);
     }
 }

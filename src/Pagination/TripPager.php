@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Pagination;
 
+use App\Cache\Trip\TripCacheTags;
 use App\Form\Model\TripFilter;
 use App\ReadModel\Trip\TripIndexReadModel;
 use App\Repository\TripRepository;
@@ -15,7 +16,6 @@ use Symfony\Contracts\Cache\TagAwareCacheInterface;
 
 final readonly class TripPager
 {
-    public const string CACHE_TAG = 'trip.list';
     private const string CACHE_KEY_PATTERN = 'trip.list.%s';
     private const string CACHE_TTL = 'PT5M';
 
@@ -34,7 +34,7 @@ final readonly class TripPager
         return $this->cache->get(
             $this->generateCacheKey($request),
             function (ItemInterface $item) use ($filter, $request, $maxPerPage): Pagerfanta {
-                $item->tag(self::CACHE_TAG);
+                $item->tag(TripCacheTags::LIST);
                 $item->expiresAfter(new \DateInterval(self::CACHE_TTL));
 
                 $queryBuilder = $this->tripRepository->createOrderedQueryBuilder($filter);
@@ -52,7 +52,7 @@ final readonly class TripPager
 
     public function invalidate(): void
     {
-        $this->cache->invalidateTags([self::CACHE_TAG]);
+        $this->cache->invalidateTags([TripCacheTags::LIST]);
     }
 
     private function generateCacheKey(Request $request): string
