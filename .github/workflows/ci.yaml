@@ -44,9 +44,8 @@ jobs:
       - name: Check HTTP reachability
         run: curl -v --fail-with-body http://localhost
 
-      # Uncomment when the homepage is configured, or change the path to check
-      # - name: Check HTTPS reachability
-      #   run: curl -v --insecure --fail-with-body https://localhost
+      - name: Check HTTPS reachability
+        run: curl -v --insecure --fail-with-body https://localhost
 
       - name: Check Mercure reachability
         run: curl -vI --insecure --fail-with-body https://localhost/.well-known/mercure?topic=test
@@ -88,7 +87,7 @@ jobs:
         run: docker compose exec -T php bin/console cache:warmup --env=test --no-debug
 
       - name: Security audit
-        run: composer audit
+        run: docker compose exec -T php composer audit
 
       - name: PHPStan
         run: docker compose exec -T php vendor/bin/phpstan analyse -c phpstan.dist.neon --memory-limit=1G
