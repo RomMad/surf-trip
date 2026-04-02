@@ -83,9 +83,6 @@ jobs:
         if: steps.frontend-build-cache.outputs.cache-hit != 'true'
         run: yarn build
 
-      - name: Cache warmup
-        run: docker compose exec -T php bin/console cache:warmup --env=test --no-debug
-
       - name: Security audit
         run: docker compose exec -T php composer audit
 
