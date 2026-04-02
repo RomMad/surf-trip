@@ -120,4 +120,4 @@ jobs:
         run: docker compose exec -T php vendor/bin/twig-cs-fixer lint
 
       - name: Run Paratest
-        run: docker compose exec -T php bin/paratest tests --runner WrapperRunner
+        run: docker compose exec -T php vendor/bin/paratest tests --runner WrapperRunner
