@@ -7,6 +7,13 @@ security:
             not_blank: Please enter a password.
             min_length: The password should be at least {limit} characters.
             max_length: The password cannot be longer than {limit} characters.
+    reset_password:
+        email:
+            not_blank: Please enter your email.
+        password:
+            invalid: The password fields must match.
+            not_blank: Please enter a password.
+            min_length: Your password should be at least {limit} characters.
 
 trip:
     title:

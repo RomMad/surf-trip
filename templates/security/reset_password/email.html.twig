@@ -1,0 +1,15 @@
+{% extends 'emails/base.html.twig' %}
+
+{% block body %}
+    <p>{{ 'security.reset_password.email.intro'|trans }}</p>
+
+    <a href="{{ url('app.reset_password', {token: reset_token.token}) }}">
+        {{- url('app.reset_password', {token: reset_token.token}) -}}
+    </a>
+
+    <p>
+        {{- 'security.reset_password.email.expires'|trans({
+            expires: reset_token.expirationMessageKey|trans(reset_token.expirationMessageData, 'ResetPasswordBundle')
+        }) -}}
+    </p>
+{% endblock %}

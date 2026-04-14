@@ -7,6 +7,13 @@ security:
             not_blank: Merci de saisir un mot de passe.
             min_length: Le mot de passe doit contenir au moins {limit} caractères.
             max_length: Le mot de passe ne peut pas dépasser {limit} caractères.
+    reset_password:
+        email:
+            not_blank: Merci de saisir ton adresse e-mail.
+        password:
+            invalid: Les champs du mot de passe doivent correspondre.
+            not_blank: Merci de saisir un mot de passe.
+            min_length: Ton mot de passe doit contenir au moins {limit} caractères.
 
 trip:
     title:

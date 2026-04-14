@@ -57,6 +57,10 @@
             {{- 'login.label'|trans -}}
         </twig:Button>
 
+        <twig:Button as="a" variant="link" href="{{ path('app.forgot_password_request') }}" class="w-full justify-center">
+            {{- 'security.forgot_password.label'|trans -}}
+        </twig:Button>
+
         <twig:Button as="a" variant="link" href="{{ path('app.register') }}" class="w-full justify-center">
             {{- 'register.label'|trans -}}
         </twig:Button>
