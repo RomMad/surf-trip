@@ -8,7 +8,6 @@
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
     app_locale: 'fr'
-    supported_locales: ['fr', 'en']
     app_email: '%env(APP_EMAIL)%'
 
 services:

@@ -11,6 +11,7 @@ use App\Doctrine\Type\LastNameType;
 use App\Entity\ValueObject\Email;
 use App\Entity\ValueObject\FirstName;
 use App\Entity\ValueObject\LastName;
+use App\Enum\User\Locale;
 use App\Enum\User\UserRole;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -71,6 +72,9 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface, \
 
     #[ORM\Column]
     public bool $isVerified = false;
+
+    #[ORM\Column(enumType: Locale::class)]
+    public Locale $locale = Locale::DEFAULT;
 
     public function __construct()
     {
