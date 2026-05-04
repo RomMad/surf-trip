@@ -19,8 +19,6 @@ navigation:
     toggle.label: Toggle navigation
 language:
     switch.label: Change language
-    fr.label: French
-    en.label: English
 search:
     label: Search
     placeholder: Search...

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\EventListener;
 
-use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use App\Enum\User\Locale;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,16 +25,6 @@ final readonly class MissingLocaleRedirectListener
     ];
 
     private const string ASSETS_REGEX = '#\.(?:css|js|map|png|jpe?g|gif|svg|ico|webp|avif|woff2?|ttf|eot|json|txt|xml)$#i';
-
-    /**
-     * @param list<string> $supportedLocales
-     */
-    public function __construct(
-        #[Autowire('%app_locale%')]
-        private string $locale,
-        #[Autowire('%supported_locales%')]
-        private array $supportedLocales,
-    ) {}
 
     public function onKernelRequest(RequestEvent $event): void
     {
@@ -60,7 +50,7 @@ final readonly class MissingLocaleRedirectListener
             return;
         }
 
-        $locale = $request->getPreferredLanguage($this->supportedLocales) ?? $this->locale;
+        $locale = $request->getPreferredLanguage(Locale::SUPPORTED_LOCALES) ?? Locale::DEFAULT->value;
         $targetPath = $this->buildLocalizedPath($locale, $path, $request);
 
         $event->setResponse(
@@ -77,7 +67,7 @@ final readonly class MissingLocaleRedirectListener
     private function isLocalizedPath(string $path): bool
     {
         return array_any(
-            $this->supportedLocales,
+            Locale::SUPPORTED_LOCALES,
             fn ($locale) => $path === "/{$locale}" || str_starts_with($path, "/{$locale}/")
         );
     }
