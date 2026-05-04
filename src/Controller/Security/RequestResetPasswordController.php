@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use SymfonyCasts\Bundle\ResetPassword\Controller\ResetPasswordControllerTrait;
+use SymfonyCasts\Bundle\ResetPassword\Model\ResetPasswordToken;
 
 final class RequestResetPasswordController extends AbstractController
 {
@@ -37,7 +38,7 @@ final class RequestResetPasswordController extends AbstractController
             $email = Email::from($form->get('email')->getData());
             $resetToken = $this->resetPasswordService->processSendingPasswordResetEmail($email);
 
-            if (!$resetToken) {
+            if (!$resetToken instanceof ResetPasswordToken) {
                 return $this->redirectToRoute(CheckEmailResetPasswordController::ROUTE);
             }
 

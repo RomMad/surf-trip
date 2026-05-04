@@ -6,7 +6,6 @@ namespace App\Service\Security;
 
 use App\Entity\User;
 use App\Entity\ValueObject\Email;
-use App\Enum\User\Locale;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
@@ -15,13 +14,13 @@ use SymfonyCasts\Bundle\ResetPassword\Exception\ResetPasswordExceptionInterface;
 use SymfonyCasts\Bundle\ResetPassword\Model\ResetPasswordToken;
 use SymfonyCasts\Bundle\ResetPassword\ResetPasswordHelperInterface;
 
-final class ResetPasswordService
+final readonly class ResetPasswordService
 {
     public function __construct(
-        private readonly ResetPasswordHelperInterface $resetPasswordHelper,
-        private readonly EntityManagerInterface $entityManager,
-        private readonly MailerInterface $mailer,
-        private readonly TranslatorInterface $translator,
+        private ResetPasswordHelperInterface $resetPasswordHelper,
+        private EntityManagerInterface $entityManager,
+        private MailerInterface $mailer,
+        private TranslatorInterface $translator,
     ) {}
 
     public function processSendingPasswordResetEmail(Email $email): ?ResetPasswordToken
@@ -37,7 +36,7 @@ final class ResetPasswordService
 
         try {
             $resetToken = $this->resetPasswordHelper->generateResetToken($user);
-        } catch (ResetPasswordExceptionInterface $e) {
+        } catch (ResetPasswordExceptionInterface) {
             return null;
         }
 

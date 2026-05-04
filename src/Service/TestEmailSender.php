@@ -26,7 +26,7 @@ final readonly class TestEmailSender
 
         if ($user instanceof User) {
             $to = $user->email->value;
-            $locale = $user->locale?->value;
+            $locale = $user->locale->value;
         }
 
         $email = new TemplatedEmail()

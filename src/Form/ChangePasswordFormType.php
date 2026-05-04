@@ -33,9 +33,9 @@ class ChangePasswordFormType extends AbstractType
                         ),
                         new Length(
                             min: 12,
-                            minMessage: 'security.reset_password.password.min_length',
                             // max length allowed by Symfony for security reasons
                             max: 4096,
+                            minMessage: 'security.reset_password.password.min_length',
                         ),
                         new PasswordStrength(),
                         new NotCompromisedPassword(),
