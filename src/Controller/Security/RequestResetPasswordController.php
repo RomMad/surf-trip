@@ -6,7 +6,7 @@ namespace App\Controller\Security;
 
 use App\Entity\ValueObject\Email;
 use App\Form\ResetPasswordRequestFormType;
-use App\Service\ResetPasswordService;
+use App\Service\Security\ResetPasswordService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
