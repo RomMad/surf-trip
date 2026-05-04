@@ -73,7 +73,7 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface, \
     #[ORM\Column]
     public bool $isVerified = false;
 
-    #[ORM\Column(enumType: Locale::class)]
+    #[ORM\Column(length: 2, enumType: Locale::class)]
     public Locale $locale = Locale::DEFAULT;
 
     public function __construct()
