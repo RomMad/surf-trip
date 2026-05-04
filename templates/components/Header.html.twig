@@ -15,7 +15,7 @@
                 <twig:ux:icon name="lucide:menu" height="1.5em" width="1.5em" />
             </button>
 
-            <a class="app-header-brand" href="/">
+            <a class="app-header-brand" href="{{ path('app.trip.index') }}">
                 {{- 'app_name'|trans -}}
             </a>
 
@@ -27,16 +27,22 @@
                     {% endif %}
                 </ul>
                 <ul class="flex items-center" aria-label="{{ 'language.switch.label'|trans }}">
-                    {% for locale in supported_locales %}
+                    {% for locale in enum('App\\Enum\\User\\Locale').cases %}
+                        {% set target_path = path(app.current_route, current_route_parameters|merge({_locale: locale.value})) %}
+                        {% set is_same_locale = app.request.locale is same as(locale.value) %}
+
                         <li>
                             <twig:Button as="a"
                                 variant="link"
                                 class="p-1"
-                                href="{{ path(app.current_route, current_route_parameters|merge({_locale: locale})) }}"
-                                title="{{ ('language.' ~ locale ~ '.label')|trans }}"
-                                :disabled="app.request.locale is same as(locale)"
+                                href="{{ app.user and not is_same_locale
+                                    ? path('app.user.locale.set', {_locale: locale.value, target: target_path})
+                                    : target_path
+                                 }}"
+                                title="{{ locale.value|locale_name(app.locale)|u.title }}"
+                                :disabled="is_same_locale"
                             >
-                                <twig:ux:icon name="circle-flags:lang-{{ locale }}" />
+                                <twig:ux:icon name="circle-flags:lang-{{ locale.value }}" />
                             </twig:Button>
                         </li>
                         {% if not loop.last %}
