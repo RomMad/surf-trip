@@ -22,9 +22,11 @@ final readonly class TestEmailSender
         ?string $to = 'test@surftrip.com',
     ): void {
         $user = $this->security->getUser();
+        $locale = null;
 
         if ($user instanceof User) {
             $to = $user->email->value;
+            $locale = $user->locale?->value;
         }
 
         $email = new TemplatedEmail()
@@ -34,7 +36,7 @@ final readonly class TestEmailSender
             ->context([
                 'message' => $message,
             ])
-            ->locale($user?->locale?->value)
+            ->locale($locale)
         ;
 
         $this->mailer->send($email);
