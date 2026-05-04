@@ -4,13 +4,8 @@ declare(strict_types=1);
 
 namespace App\Enum\User;
 
-use App\Enum\EnumTrait;
-use Symfony\Contracts\Translation\TranslatableInterface;
-
-enum Locale: string implements TranslatableInterface
+enum Locale: string
 {
-    use EnumTrait;
-
     case French = 'fr';
     case English = 'en';
 
