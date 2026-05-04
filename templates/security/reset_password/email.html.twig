@@ -9,7 +9,7 @@
 
     <p>
         {{- 'security.reset_password.email.expires'|trans({
-            expires: reset_token.expirationMessageKey|trans(reset_token.expirationMessageData, 'ResetPasswordBundle')
+            expires: reset_token.expirationMessageKey|trans(reset_token.expirationMessageData, 'ResetPasswordBundle'),
         }) -}}
     </p>
 {% endblock %}

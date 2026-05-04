@@ -29,7 +29,7 @@
             {% block greeting %}
                 <p>
                     {% if user is defined %}
-                        {{ 'email.greeting.with_firstname'|trans({'firstname': user.firstname}) }}
+                        {{ 'email.greeting.with_firstname'|trans({firstname: user.firstname}) }}
                     {% else %}
                         {{ 'email.greeting.generic'|trans }}
                     {% endif %}
@@ -48,7 +48,7 @@
                 <div class="footer">
                     <hr>
                     <p>
-                        {{ 'email.copyright'|trans({'year': 'now'|date('Y')}) }}
+                        {{ 'email.copyright'|trans({year: 'now'|date('Y')}) }}
                     </p>
                 </div>
             {% endblock %}
