@@ -80,7 +80,7 @@ final class ResetPasswordController extends AbstractController
         }
 
         return $this->render('security/reset_password/reset.html.twig', [
-            'resetForm' => $form,
+            'form' => $form,
         ]);
     }
 }

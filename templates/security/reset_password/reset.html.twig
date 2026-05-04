@@ -7,11 +7,11 @@
 {% block body %}
     <twig:Heading1 :title="title" />
 
-    {{ form_start(resetForm) }}
-        {{ form_row(resetForm.plainPassword) }}
+    {{ form_start(form) }}
+        {{ form_row(form.plainPassword) }}
 
         <twig:Button type="submit" class="w-full">
             {{- 'security.reset_password.reset.submit'|trans -}}
         </twig:Button>
-    {{ form_end(resetForm) }}
+    {{ form_end(form) }}
 {% endblock %}
