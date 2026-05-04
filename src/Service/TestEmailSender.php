@@ -34,7 +34,7 @@ final readonly class TestEmailSender
             ->context([
                 'message' => $message,
             ])
-            ->locale('en')
+            ->locale($user?->locale?->value)
         ;
 
         $this->mailer->send($email);

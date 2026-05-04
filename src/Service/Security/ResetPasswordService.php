@@ -6,6 +6,7 @@ namespace App\Service\Security;
 
 use App\Entity\User;
 use App\Entity\ValueObject\Email;
+use App\Enum\User\Locale;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
@@ -54,6 +55,7 @@ final class ResetPasswordService
             ->context([
                 'reset_token' => $resetToken,
             ])
+            ->locale($user->locale->value)
         ;
 
         $this->mailer->send($email);
