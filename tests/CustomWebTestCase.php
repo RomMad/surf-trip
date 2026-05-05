@@ -37,8 +37,12 @@ abstract class CustomWebTestCase extends WebTestCase
     /**
      * @param array<class-string<Story>>|class-string<Story> $stories
      */
-    protected function setUpTest(array|string $stories = [], ?string $username = null, bool $clearCache = true, bool $followRedirects = true): void
-    {
+    protected function setUpTest(
+        array|string $stories = [],
+        ?string $username = null,
+        bool $clearCache = true,
+        bool $followRedirects = true
+    ): void {
         parent::setUp();
 
         $this->client = static::createClient();
