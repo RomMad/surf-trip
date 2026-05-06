@@ -6,7 +6,9 @@
 
 {% block body %}
     {% for flash_error in app.flashes('reset_password_error') %}
-        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+        <twig:Alert variant="danger">
+            {{- flash_error|trans -}}
+        </twig:Alert>
     {% endfor %}
 
     <twig:Heading1 :title="title" />
