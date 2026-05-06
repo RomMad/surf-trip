@@ -349,6 +349,13 @@ function dump_error(): void
     run_symfony_console('error:dump var/cache/prod/error_pages/ --env=prod');
 }
 
+// consume messages
+#[AsTask(description: 'Consume messages from message queue', namespace: 'app', aliases: ['consume', 'consume-messages'])]
+function consume(string $options = 'async'): void
+{
+    run_symfony_console('messenger:consume '.$options);
+}
+
 // ========================================================
 //                       HELPERS
 // ========================================================

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="{{ app.locale }}">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background: #f5f5f5;
+                margin: 0;
+                padding: 0;
+            }
+            .container {
+                max-width: 600px;
+                margin: auto;
+                background: #ffffff;
+                padding: 24px;
+            }
+            .footer {
+                font-size: 12px;
+                color: #888;
+                margin-top: 24px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="container">
+            {% block greeting %}
+                <p>
+                    {% if user is defined %}
+                        {{ 'email.greeting.with_firstname'|trans({firstname: user.firstname}) }}
+                    {% else %}
+                        {{ 'email.greeting.generic'|trans }}
+                    {% endif %}
+                </p>
+            {% endblock %}
+
+            {% block body %}{% endblock %}
+
+            {% block signature %}
+                <p>
+                    {{ 'email.signature'|trans }}
+                </p>
+            {% endblock %}
+
+            {% block footer %}
+                <div class="footer">
+                    <hr>
+                    <p>
+                        {{ 'email.copyright'|trans({year: 'now'|date('Y')}) }}
+                    </p>
+                </div>
+            {% endblock %}
+        </div>
+    </body>
+</html>

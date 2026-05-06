@@ -23,11 +23,38 @@ search:
     label: Search
     placeholder: Search...
 
+# Email
+email:
+    greeting:
+        generic: Hi!
+        with_firstname: Hi {firstname}!
+    signature: Cheers!
+    copyright: © {year} Surf Trip. All rights reserved.
+
 # Security
 security:
     login:
         title: Log in
         remember_me.label: Remember me
+    forgot_password.label: Forgot password?
+    reset_password:
+        request:
+            title: Reset your password
+            help: Enter your email address, and we will send you a link to reset your password.
+            submit: Send password reset email
+            email:
+                subject: Your password reset request
+        check_email:
+            title: Password Reset Email Sent
+            description: If an account matching your email exists, then an email was just sent that contains a link that you can use to reset your password. This link will expire in {expires}.
+            retry: If you don't receive an email please check your spam folder or {link}.
+            retry_link: try again
+        reset:
+            title: Reset your password
+            submit: Reset password
+        email:
+            intro: To reset your password, please visit the following link.
+            expires: This link will expire in {expires}.
     registration:
         agree_terms.label: I agree to the terms
         title: Register

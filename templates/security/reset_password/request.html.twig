@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% set title = 'security.reset_password.request.title'|trans %}
+
+{% block container_class %}app-centered-container{% endblock %}
+
+{% block body %}
+    {% for flash_error in app.flashes('reset_password_error') %}
+        <twig:Alert variant="danger">
+            {{- flash_error|trans -}}
+        </twig:Alert>
+    {% endfor %}
+
+    <twig:Heading1 :title="title" />
+
+    {{ form_start(form) }}
+        {{ form_row(form.email) }}
+        <twig:Button type="submit" class="w-full">
+            {{- 'security.reset_password.request.submit'|trans -}}
+        </twig:Button>
+    {{ form_end(form) }}
+{% endblock %}

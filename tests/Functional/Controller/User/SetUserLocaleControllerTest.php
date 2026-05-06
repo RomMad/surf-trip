@@ -21,8 +21,8 @@ use Symfony\Component\HttpFoundation\Request;
 #[Medium]
 final class SetUserLocaleControllerTest extends CustomWebTestCase
 {
-    private const string TARGET = '/en/trips';
-    private const string PATH = '/en/locale?target='.self::TARGET;
+    private const string TARGET = '/fr/trips';
+    private const string PATH = '/fr/locale?target='.self::TARGET;
 
     private UserRepository $userRepository;
 
@@ -35,13 +35,13 @@ final class SetUserLocaleControllerTest extends CustomWebTestCase
 
     public function testLocaleIsSavedForAuthenticatedUserAndRedirectsToTarget(): void
     {
-        $this->assertSame(Locale::French->value, UserStory::getJohnUser()->locale->value);
+        $this->assertSame(Locale::English->value, UserStory::getJohnUser()->locale->value);
 
         $this->client->request(Request::METHOD_GET, self::PATH);
 
         $user = $this->userRepository->findOneByEmail(Email::from(UserStory::JOHN_EMAIL));
 
         $this->assertResponseRedirects(self::TARGET);
-        $this->assertSame(Locale::English->value, $user->locale->value);
+        $this->assertSame(Locale::French->value, $user->locale->value);
     }
 }

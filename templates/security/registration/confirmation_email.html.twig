@@ -1,13 +1,11 @@
-<h1>{{ 'security.registration.confirm_email.title'|trans }}</h1>
+{% extends 'emails/base.html.twig' %}
 
-<p>
-    {{ 'security.registration.confirm_email.intro'|trans }} <br><br>
-    <a href="{{ signed_url|escape('html_attr') }}">
-        {{- 'security.registration.confirm_email.cta'|trans -}}
-    </a>.
-    {{ 'security.registration.confirm_email.expires'|trans({'{expires}': expires_at_message_key|trans(expires_at_message_data, 'VerifyEmailBundle')}) }}
-</p>
-
-<p>
-    {{- 'security.registration.confirm_email.outro'|trans -}}
-</p>
+{% block body %}
+    <p>
+        {{ 'security.registration.confirm_email.intro'|trans }} <br><br>
+        <a href="{{ signed_url|escape('html_attr') }}">
+            {{- 'security.registration.confirm_email.cta'|trans -}}
+        </a>.
+        {{ 'security.registration.confirm_email.expires'|trans({'{expires}': expires_at_message_key|trans(expires_at_message_data, 'VerifyEmailBundle')}) }}
+    </p>
+{% endblock %}

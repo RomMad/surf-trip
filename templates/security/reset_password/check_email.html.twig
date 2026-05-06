@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% set retry_link %}
+    <a href="{{ path('app.forgot_password_request') }}">
+        {{- 'security.reset_password.check_email.retry_link'|trans -}}
+    </a>
+{% endset %}
+
+{% block container_class %}app-centered-container{% endblock %}
+
+{% block title %}{{ 'security.reset_password.check_email.title'|trans }}{% endblock %}
+
+{% block body %}
+    <p>
+        {{- 'security.reset_password.check_email.description'|trans({
+            expires: reset_token.expirationMessageKey|trans(reset_token.expirationMessageData, 'ResetPasswordBundle'),
+        }) -}}
+    </p>
+    <p>{{ 'security.reset_password.check_email.retry'|trans({link: retry_link})|raw }}</p>
+{% endblock %}

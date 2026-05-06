@@ -25,21 +25,46 @@ search:
     label: Rechercher
     placeholder: Rechercher...
 
+# Email
+email:
+    greeting:
+        generic: Salut !
+        with_firstname: Salut {firstname} !
+    signature: À bientôt !
+    copyright: © {year} Surf Trip. Tous droits réservés.
+
 # Security
 security:
     login:
         title: Connexion
         remember_me.label: Se souvenir de moi
+    forgot_password.label: Mot de passe oublié ?
+    reset_password:
+        request:
+            title: Réinitialiser ton mot de passe
+            help: Saisis ton adresse e-mail et nous t’enverrons un lien pour réinitialiser ton mot de passe.
+            submit: Envoyer l’e-mail de réinitialisation
+            email:
+                subject: Ta demande de réinitialisation de mot de passe
+        check_email:
+            title: E-mail de réinitialisation envoyé
+            description: Si un compte correspondant à ton adresse e-mail existe, un e-mail contenant un lien pour réinitialiser ton mot de passe vient d’être envoyé. Ce lien expirera dans {expires}.
+            retry: Si tu ne reçois pas d’e-mail, vérifie ton dossier spam ou {link}.
+            retry_link: essaie à nouveau
+        reset:
+            title: Réinitialiser ton mot de passe
+            submit: Réinitialiser le mot de passe
+        email:
+            intro: Pour réinitialiser ton mot de passe, clique sur le lien suivant.
+            expires: Ce lien expirera dans {expires}.
     registration:
         agree_terms.label: J’accepte les conditions générales d’utilisation
         title: Inscription
         confirm_email:
             subject: Confirme ton adresse e-mail
-            title: Salut ! Merci de confirmer ton adresse e-mail !
             intro: "Merci de confirmer ton adresse e-mail en cliquant sur le lien suivant :"
             cta: Confirmer mon e-mail
             expires: Ce lien expirera dans {expires}.
-            outro: À bientôt !
     email_verified_successfully: Ton adresse e-mail a été vérifiée.
 
 # Pagination
