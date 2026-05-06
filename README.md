@@ -150,8 +150,8 @@ yarn dev
 * Mailpit (web UI): http://localhost:8025
 * MinIO API: http://localhost:9000
 * MinIO Console: http://localhost:9001
-* Redis: redis://localhost:6379
 * RedisInsight: http://localhost:5540
+* RabbitMQ Management: http://localhost:15672
 
 ### Redis & RedisInsight
 

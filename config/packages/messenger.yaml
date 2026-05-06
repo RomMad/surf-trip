@@ -9,7 +9,11 @@ framework:
                 retry_strategy:
                     max_retries: 3
                     multiplier: 2
-            failed: 'doctrine://default?queue_name=failed'
+            failed:
+                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                options:
+                    queues:
+                        failed: ~
             # sync: 'sync://'
 
         default_bus: messenger.bus.default
