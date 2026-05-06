@@ -19,7 +19,7 @@ final readonly class TestEmailSender
     public function send(
         string $subject = 'Test email',
         string $message = 'This is a test email.',
-        ?string $to = 'test@surftrip.com',
+        string $to = 'test@surftrip.com',
     ): void {
         $user = $this->security->getUser();
         $locale = null;
