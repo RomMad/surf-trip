@@ -91,6 +91,20 @@ services:
       - redisinsight_data:/data
   ###< snc/redis-bundle ###
 
+  rabbitmq:
+    image: rabbitmq:4-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+
   minio:
     image: minio/minio
     ports:
@@ -106,6 +120,7 @@ services:
 volumes:
   caddy_data:
   caddy_config:
+  rabbitmq_data:
 
   ###> symfony/mercure-bundle ###
   ###< symfony/mercure-bundle ###
