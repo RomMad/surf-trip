@@ -80,7 +80,7 @@ trip:
     updated_successfully: Le trip a été mis à jour.
     deleted_successfully: Le trip a été supprimé.
     new.label: Nouveau trip
-    edit.label: Edition du trip
+    edit.label: Édition du trip
     delete.confirm: Es-tu sûr de vouloir supprimer ce voyage ?
 trips.label: Trips
 title.label: Titre
@@ -119,5 +119,5 @@ surf_level.label: Niveau de surf
 username.label: Nom d'utilisateur
 user:
     profile:
-        edit.label: Edition du profil
+        edit.label: Édition du profil
         updated_successfully: Ton profil a été mis à jour.
