@@ -41,6 +41,7 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface, \
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[ApiProperty(identifier: false)]
     #[Groups(['user:read'])]
     public private(set) ?int $id = null;
 
