@@ -14,6 +14,7 @@ doctrine:
             location: App\Doctrine\Type\LocationType
             slug: App\Doctrine\Type\SlugType
             title: App\Doctrine\Type\TitleType
+            username: App\Doctrine\Type\UsernameType
 
     orm:
         validate_xml_mapping: true

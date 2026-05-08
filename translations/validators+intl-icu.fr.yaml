@@ -38,6 +38,11 @@ trip:
         min_count: Sélectionnez au moins un administrateur.
 
 user:
+    avatar:
+        max_length: Le chemin de l'avatar ne peut pas dépasser {limit} caractères.
+        invalid_path: L'avatar doit être un chemin ou nom de fichier, pas une URL.
+    description:
+        max_length: La description ne peut pas dépasser {limit} caractères.
     email:
         not_blank: L’adresse e-mail est obligatoire.
         invalid: L’adresse e-mail n’est pas valide.
@@ -46,7 +51,17 @@ user:
     first_name:
         not_blank: Le prénom est obligatoire.
         max_length: Le prénom ne peut pas dépasser {limit} caractères.
+    instagram:
+        invalid_format: Le format du compte Instagram est invalide.
     last_name:
         max_length: Le nom ne peut pas dépasser {limit} caractères.
+    location:
+        max_length: Le lieu ne peut pas dépasser {limit} caractères.
     password:
         not_blank: Le mot de passe est obligatoire.
+    username:
+        not_blank: Le nom d'utilisateur est obligatoire.
+        min_length: Le nom d'utilisateur doit contenir au moins {limit} caractères.
+        max_length: Le nom d'utilisateur ne peut pas dépasser {limit} caractères.
+        invalid_format: Le nom d'utilisateur ne peut contenir que des lettres, chiffres, points et underscores.
+        unique: Ce nom d'utilisateur est déjà utilisé.

@@ -108,8 +108,16 @@ expert.label: Expert
 
 # User
 user.label: Utilisateur
+avatar.label: Avatar
 email.label: E-mail
 first_name.label: Prénom
+instagram.label: Instagram
 last_name.label: Nom
 password.label: Mot de passe
 password_repeat.label: Répéter le mot de passe
+surf_level.label: Niveau de surf
+username.label: Nom d'utilisateur
+user:
+    profile:
+        edit.label: Edition du profil
+        updated_successfully: Ton profil a été mis à jour.

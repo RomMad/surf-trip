@@ -8,6 +8,7 @@ use App\Entity\User;
 use App\Entity\ValueObject\Email;
 use App\Entity\ValueObject\FirstName;
 use App\Entity\ValueObject\LastName;
+use App\Entity\ValueObject\Username;
 use App\Enum\User\Locale;
 use App\Factory\UserFactory;
 use Zenstruck\Foundry\Story;
@@ -21,6 +22,7 @@ final class UserStory extends Story
     {
         UserFactory::createOne([
             'email' => Email::from(self::JOHN_EMAIL),
+            'username' => Username::from('john.doe'),
             'firstName' => FirstName::from('John'),
             'lastName' => LastName::from('Doe'),
             'locale' => Locale::English,

@@ -4,18 +4,23 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 use App\Doctrine\Type\EmailType;
 use App\Doctrine\Type\FirstNameType;
 use App\Doctrine\Type\LastNameType;
+use App\Doctrine\Type\UsernameType;
 use App\Entity\ValueObject\Email;
 use App\Entity\ValueObject\FirstName;
 use App\Entity\ValueObject\LastName;
+use App\Entity\ValueObject\Username;
 use App\Enum\User\Locale;
+use App\Enum\User\SurfLevel;
 use App\Enum\User\UserRole;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -25,7 +30,9 @@ use Symfony\Component\Serializer\Attribute\Groups;
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
+#[ORM\UniqueConstraint(name: 'UNIQ_USER_USERNAME', fields: ['username'])]
 #[UniqueEntity(fields: ['email'], message: 'user.email.unique')]
+#[UniqueEntity(fields: ['username'], message: 'user.username.unique')]
 #[ApiResource(
     normalizationContext: ['groups' => ['user:read']]
 )]
@@ -38,8 +45,12 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface, \
     public private(set) ?int $id = null;
 
     #[ORM\Column(type: EmailType::NAME)]
-    #[Groups(['user:read'])]
     public Email $email;
+
+    #[ORM\Column(type: UsernameType::NAME)]
+    #[ApiProperty(identifier: true)]
+    #[Groups(['user:read', 'trip:read'])]
+    public Username $username;
 
     #[ORM\Column(type: FirstNameType::NAME)]
     #[Groups(['user:read', 'trip:read'])]
@@ -48,6 +59,26 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface, \
     #[ORM\Column(type: LastNameType::NAME, nullable: true)]
     #[Groups(['user:read', 'trip:read'])]
     public ?LastName $lastName = null;
+
+    #[ORM\Column(nullable: true)]
+    #[Groups(['user:read'])]
+    public ?string $avatar = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Groups(['user:read'])]
+    public ?string $description = null;
+
+    #[ORM\Column(type: Types::INTEGER, nullable: true, enumType: SurfLevel::class)]
+    #[Groups(['user:read'])]
+    public ?SurfLevel $level = null;
+
+    #[ORM\Column(nullable: true)]
+    #[Groups(['user:read'])]
+    public ?string $location = null;
+
+    #[ORM\Column(length: 64, nullable: true)]
+    #[Groups(['user:read'])]
+    public ?string $instagram = null;
 
     /** @var list<string> The user roles */
     #[ORM\Column]
@@ -76,8 +107,21 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface, \
     #[ORM\Column(length: 2, enumType: Locale::class)]
     public Locale $locale = Locale::DEFAULT;
 
+    #[ORM\Column]
+    public \DateTimeImmutable $createdAt;
+
+    #[ORM\Column]
+    public \DateTimeImmutable $updatedAt;
+
+    #[ORM\Column(nullable: true)]
+    public ?\DateTimeImmutable $lastActiveAt = null;
+
     public function __construct()
     {
+        $now = new \DateTimeImmutable();
+
+        $this->createdAt = $now;
+        $this->updatedAt = $now;
         $this->trips = new ArrayCollection();
     }
 
