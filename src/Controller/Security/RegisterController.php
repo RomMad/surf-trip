@@ -5,14 +5,16 @@ declare(strict_types=1);
 namespace App\Controller\Security;
 
 use App\Entity\User;
+use App\Form\Model\User\RegistrationWriteModel;
 use App\Form\Security\RegistrationFormType;
+use App\Repository\UserRepository;
 use App\Security\AppAuthenticator;
 use App\Security\RegistrationConfirmationEmailSender;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\ObjectMapper\ObjectMapperInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -24,23 +26,26 @@ class RegisterController extends AbstractController
         private readonly RegistrationConfirmationEmailSender $registrationConfirmationEmailSender,
         private readonly UserPasswordHasherInterface $userPasswordHasher,
         private readonly Security $security,
-        private readonly EntityManagerInterface $entityManager,
+        private readonly UserRepository $userRepository,
+        private readonly ObjectMapperInterface $objectMapper,
     ) {}
 
-    #[Route('/register', name: self::ROUTE)]
+    #[Route('/register', name: self::ROUTE, methods: [Request::METHOD_GET, Request::METHOD_POST])]
     public function __invoke(Request $request): Response
     {
-        $user = new User();
-        $form = $this->createForm(RegistrationFormType::class, $user);
+        $registrationWriteModel = new RegistrationWriteModel();
+
+        $form = $this->createForm(RegistrationFormType::class, $registrationWriteModel);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $user = $this->objectMapper->map($registrationWriteModel, User::class);
+
             /** @var string $plainPassword */
             $plainPassword = $form->get('plainPassword')->getData();
             $user->password = $this->userPasswordHasher->hashPassword($user, $plainPassword);
 
-            $this->entityManager->persist($user);
-            $this->entityManager->flush();
+            $this->userRepository->save($user, true);
 
             $this->registrationConfirmationEmailSender->send($user);
 
