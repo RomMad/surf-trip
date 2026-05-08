@@ -16,6 +16,7 @@ final class LastNameType extends AbstractType
             'class' => LastName::class,
             'label' => 'last_name.label',
             'empty_data' => '',
+            'required' => false,
         ]);
     }
 
