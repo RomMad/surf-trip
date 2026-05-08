@@ -6,7 +6,7 @@ namespace App\Tests\Repository;
 
 use App\Enum\User\SurfLevel;
 use App\Factory\TripFactory;
-use App\Form\Model\TripFilter;
+use App\Form\Model\Trip\TripFilter;
 use App\ReadModel\Trip\TripShowReadModel;
 use App\Repository\TripRepository;
 use App\Tests\CustomKernelTestCase;

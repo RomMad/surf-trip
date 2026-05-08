@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Form\Model;
+namespace App\Form\Model\Trip;
 
 use App\Entity\Trip;
 use App\Entity\ValueObject\Location;

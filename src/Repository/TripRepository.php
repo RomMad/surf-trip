@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Repository;
 
 use App\Entity\Trip;
-use App\Form\Model\TripFilter;
+use App\Form\Model\Trip\TripFilter;
 use App\ReadModel\Trip\TripShowReadModel;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;

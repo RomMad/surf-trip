@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Form;
 
 use App\Enum\User\SurfLevel;
-use App\Form\Model\TripWriteModel;
+use App\Form\Model\Trip\TripWriteModel;
 use App\Form\Type\DateTimeImmutableType;
 use App\Form\Type\LocationType;
 use App\Form\Type\OwnersAutocompleteType;

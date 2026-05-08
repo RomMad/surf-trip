@@ -6,7 +6,7 @@ namespace App\Service\Trip;
 
 use App\Entity\Trip;
 use App\Exception\TripNotFoundHttpException;
-use App\Form\Model\TripWriteModel;
+use App\Form\Model\Trip\TripWriteModel;
 use App\Repository\TripRepository;
 use Symfony\Component\ObjectMapper\ObjectMapperInterface;
 

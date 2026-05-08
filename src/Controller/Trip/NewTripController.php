@@ -8,7 +8,7 @@ use App\Cache\Trip\TripCacheTags;
 use App\Entity\Trip;
 use App\Entity\User;
 use App\Enum\User\UserRole;
-use App\Form\Model\TripWriteModel;
+use App\Form\Model\Trip\TripWriteModel;
 use App\Form\TripFormType;
 use App\ReadModel\Trip\TripOwnerReadModel;
 use App\Repository\TripRepository;

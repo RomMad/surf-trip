@@ -8,7 +8,7 @@ use App\Entity\ValueObject\Location;
 use App\Entity\ValueObject\Title;
 use App\Enum\User\SurfLevel;
 use App\Factory\TripFactory;
-use App\Form\Model\TripWriteModel;
+use App\Form\Model\Trip\TripWriteModel;
 use App\ReadModel\Trip\TripOwnerReadModel;
 use App\Tests\CustomKernelTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
