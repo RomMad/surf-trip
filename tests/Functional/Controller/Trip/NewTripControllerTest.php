@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Functional\Controller\Trip;
 
 use App\Controller\Trip\NewTripController;
-use App\Enum\Trip\RequiredLevel;
+use App\Enum\User\SurfLevel;
 use App\Tests\CustomWebTestCase;
 use App\Tests\Fixtures\DefaultStory;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -60,7 +60,7 @@ final class NewTripControllerTest extends CustomWebTestCase
             'trip[location]' => self::TRIP_LOCATION,
             'trip[startAt]' => new \DateTimeImmutable('+1 month')->format(self::FORMAT_DATETIME),
             'trip[endAt]' => new \DateTimeImmutable('+1 month +1 week')->format(self::FORMAT_DATETIME),
-            'trip[requiredLevels]' => [RequiredLevel::Beginner->value],
+            'trip[requiredLevels]' => [SurfLevel::Beginner->value],
         ]);
 
         $this->assertResponseIsSuccessful();

@@ -8,7 +8,7 @@ use App\Entity\User;
 use App\Entity\ValueObject\Location;
 use App\Entity\ValueObject\Slug;
 use App\Entity\ValueObject\Title;
-use App\Enum\Trip\RequiredLevel;
+use App\Enum\User\SurfLevel;
 
 abstract readonly class AbstractTripReadModel implements TripOwnershipAwareInterface
 {
@@ -16,7 +16,7 @@ abstract readonly class AbstractTripReadModel implements TripOwnershipAwareInter
     public array $owners;
 
     /**
-     * @param RequiredLevel[] $requiredLevels
+     * @param SurfLevel[] $requiredLevels
      */
     public function __construct(
         public int $id,

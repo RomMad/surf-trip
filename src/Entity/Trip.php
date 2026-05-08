@@ -20,7 +20,7 @@ use App\Doctrine\Type\TitleType;
 use App\Entity\ValueObject\Location;
 use App\Entity\ValueObject\Slug;
 use App\Entity\ValueObject\Title;
-use App\Enum\Trip\RequiredLevel;
+use App\Enum\User\SurfLevel;
 use App\Filter\JsonContainsFilter;
 use App\Repository\TripRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -98,11 +98,11 @@ final class Trip
     #[Groups(['trip:read', 'trip:write'])]
     public ?\DateTimeImmutable $endAt = null;
 
-    /** @var RequiredLevel[] */
-    #[ORM\Column(type: Types::JSONB, enumType: RequiredLevel::class)]
+    /** @var SurfLevel[] */
+    #[ORM\Column(type: Types::JSONB, enumType: SurfLevel::class)]
     #[Assert\Count(min: 1, minMessage: 'trip.required_levels.min_count')]
     #[Assert\All([
-        new Assert\Type(type: RequiredLevel::class, message: 'trip.required_levels.invalid_type'),
+        new Assert\Type(type: SurfLevel::class, message: 'trip.required_levels.invalid_type'),
     ])]
     #[Groups(['trip:read', 'trip:write'])]
     public array $requiredLevels = [];

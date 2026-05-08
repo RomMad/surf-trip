@@ -7,7 +7,7 @@ namespace App\Tests\Fixtures;
 use App\Entity\ValueObject\Email;
 use App\Entity\ValueObject\Location;
 use App\Entity\ValueObject\Title;
-use App\Enum\Trip\RequiredLevel;
+use App\Enum\User\SurfLevel;
 use App\Factory\TripFactory;
 use App\Factory\UserFactory;
 use Zenstruck\Foundry\Story;
@@ -35,7 +35,7 @@ final class TripStory extends Story
             'startAt' => new \DateTimeImmutable('+1 month'),
             'endAt' => new \DateTimeImmutable('+1 month +10 days'),
             'description' => self::TRIP_DESCRIPTION,
-            'requiredLevels' => [RequiredLevel::Beginner, RequiredLevel::Intermediate],
+            'requiredLevels' => [SurfLevel::Beginner, SurfLevel::Intermediate],
             'owners' => [$owner],
         ]);
     }

@@ -7,7 +7,7 @@ namespace App\Factory;
 use App\Entity\Trip;
 use App\Entity\ValueObject\Location;
 use App\Entity\ValueObject\Title;
-use App\Enum\Trip\RequiredLevel;
+use App\Enum\User\SurfLevel;
 use Zenstruck\Foundry\Persistence\PersistentObjectFactory;
 
 /**
@@ -34,8 +34,8 @@ final class TripFactory extends PersistentObjectFactory
         $title = sprintf('%s Surf Trip', ucfirst((string) self::faker()->words(random_int(2, 4), true)));
         $location = sprintf('%s, %s', self::faker()->city(), self::faker()->country());
         $requiredLevels = self::faker()->randomElements(
-            RequiredLevel::cases(),
-            self::faker()->numberBetween(1, count(RequiredLevel::cases()))
+            SurfLevel::cases(),
+            self::faker()->numberBetween(1, count(SurfLevel::cases()))
         );
 
         return [

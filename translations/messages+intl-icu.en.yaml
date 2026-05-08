@@ -100,10 +100,11 @@ owners:
 created_at.label: Created at
 actions.label: Actions
 
-# Required levels
+# Surf level
 beginner.label: Beginner
 intermediate.label: Intermediate
 advanced.label: Advanced
+expert.label: Expert
 
 # User
 user.label: User

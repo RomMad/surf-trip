@@ -7,7 +7,7 @@ namespace App\Form\Model;
 use App\Entity\Trip;
 use App\Entity\ValueObject\Location;
 use App\Entity\ValueObject\Title;
-use App\Enum\Trip\RequiredLevel;
+use App\Enum\User\SurfLevel;
 use App\ObjectMapper\OwnerReadModelToUserTransformer;
 use App\ReadModel\Trip\TripOwnerReadModel;
 use App\ReadModel\Trip\TripShowReadModel;
@@ -35,10 +35,10 @@ final class TripWriteModel
     ])]
     public ?\DateTimeImmutable $endAt = null;
 
-    /** @var RequiredLevel[] */
+    /** @var SurfLevel[] */
     #[Assert\Count(min: 1, minMessage: 'trip.required_levels.min_count')]
     #[Assert\All([
-        new Assert\Type(type: RequiredLevel::class, message: 'trip.required_levels.invalid_type'),
+        new Assert\Type(type: SurfLevel::class, message: 'trip.required_levels.invalid_type'),
     ])]
     public array $requiredLevels = [];
 

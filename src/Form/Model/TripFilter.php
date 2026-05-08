@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Form\Model;
 
-use App\Enum\Trip\RequiredLevel;
+use App\Enum\User\SurfLevel;
 
 final class TripFilter
 {
@@ -12,6 +12,6 @@ final class TripFilter
 
     public ?string $location = null;
 
-    /** @var list<RequiredLevel> */
+    /** @var list<SurfLevel> */
     public array $requiredLevels = [];
 }

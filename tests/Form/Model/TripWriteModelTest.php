@@ -6,7 +6,7 @@ namespace App\Tests\Entity;
 
 use App\Entity\ValueObject\Location;
 use App\Entity\ValueObject\Title;
-use App\Enum\Trip\RequiredLevel;
+use App\Enum\User\SurfLevel;
 use App\Factory\TripFactory;
 use App\Form\Model\TripWriteModel;
 use App\ReadModel\Trip\TripOwnerReadModel;
@@ -70,7 +70,7 @@ final class TripWriteModelTest extends CustomKernelTestCase
         $this->assertCount(1, $violations);
     }
 
-    public function testInvalidTripWithEmptyRequiredLevels(): void
+    public function testInvalidTripWithEmptySurfLevels(): void
     {
         $trip = $this->createValidTrip();
         $trip->requiredLevels = [];
@@ -89,7 +89,7 @@ final class TripWriteModelTest extends CustomKernelTestCase
         $trip->location = new Location('Test Location');
         $trip->startAt = new \DateTimeImmutable('+1 week');
         $trip->endAt = new \DateTimeImmutable('+2 weeks');
-        $trip->requiredLevels = [RequiredLevel::Beginner];
+        $trip->requiredLevels = [SurfLevel::Beginner];
         $trip->description = 'Test Description';
         $trip->owners = [new TripOwnerReadModel(1, 'Test Owner')];
 
