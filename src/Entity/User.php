@@ -10,6 +10,7 @@ use App\Doctrine\Type\EmailType;
 use App\Doctrine\Type\FirstNameType;
 use App\Doctrine\Type\LastNameType;
 use App\Doctrine\Type\UsernameType;
+use App\Entity\Traits\TimestampableTrait;
 use App\Entity\ValueObject\Email;
 use App\Entity\ValueObject\FirstName;
 use App\Entity\ValueObject\LastName;
@@ -31,6 +32,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
 #[ORM\Table(name: '`user`')]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
 #[ORM\UniqueConstraint(name: 'UNIQ_USER_USERNAME', fields: ['username'])]
+#[ORM\HasLifecycleCallbacks]
 #[UniqueEntity(fields: ['email'], message: 'user.email.unique')]
 #[UniqueEntity(fields: ['username'], message: 'user.username.unique')]
 #[ApiResource(
@@ -38,6 +40,8 @@ use Symfony\Component\Serializer\Attribute\Groups;
 )]
 final class User implements UserInterface, PasswordAuthenticatedUserInterface, \Stringable
 {
+    use TimestampableTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -108,21 +112,11 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface, \
     #[ORM\Column(length: 2, enumType: Locale::class)]
     public Locale $locale = Locale::DEFAULT;
 
-    #[ORM\Column]
-    public \DateTimeImmutable $createdAt;
-
-    #[ORM\Column]
-    public \DateTimeImmutable $updatedAt;
-
     #[ORM\Column(nullable: true)]
     public ?\DateTimeImmutable $lastActiveAt = null;
 
     public function __construct()
     {
-        $now = new \DateTimeImmutable();
-
-        $this->createdAt = $now;
-        $this->updatedAt = $now;
         $this->trips = new ArrayCollection();
     }
 

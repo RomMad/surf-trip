@@ -26,8 +26,6 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
     public function save(User $user, bool $flush = false): void
     {
-        $user->updatedAt = new \DateTimeImmutable();
-
         $this->getEntityManager()->persist($user);
 
         if ($flush) {
