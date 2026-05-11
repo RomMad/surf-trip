@@ -6,7 +6,7 @@ namespace App\Tests\Functional\Controller\Trip;
 
 use App\Controller\Trip\EditTripController;
 use App\Entity\Trip;
-use App\Enum\Trip\RequiredLevel;
+use App\Enum\User\SurfLevel;
 use App\Factory\TripFactory;
 use App\Tests\CustomWebTestCase;
 use App\Tests\Fixtures\DefaultStory;
@@ -82,7 +82,7 @@ final class EditTripControllerTest extends CustomWebTestCase
             'trip[location]' => self::UPDATED_TRIP_LOCATION,
             'trip[startAt]' => new \DateTimeImmutable('+2 month')->format(self::FORMAT_DATETIME),
             'trip[endAt]' => new \DateTimeImmutable('+2 month +1 week')->format(self::FORMAT_DATETIME),
-            'trip[requiredLevels]' => [RequiredLevel::Intermediate->value],
+            'trip[requiredLevels]' => [SurfLevel::Intermediate->value],
         ]);
 
         $this->assertResponseIsSuccessful();

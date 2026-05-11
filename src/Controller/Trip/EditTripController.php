@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Trip;
 
 use App\Exception\TripNotFoundHttpException;
-use App\Form\Model\TripWriteModel;
+use App\Form\Model\Trip\TripWriteModel;
 use App\Form\TripFormType;
 use App\Security\Voter\TripVoter;
 use App\Service\Trip\TripReadModelProvider;

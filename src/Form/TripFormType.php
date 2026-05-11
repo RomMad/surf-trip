@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Form;
 
-use App\Enum\Trip\RequiredLevel;
-use App\Form\Model\TripWriteModel;
+use App\Enum\User\SurfLevel;
+use App\Form\Model\Trip\TripWriteModel;
 use App\Form\Type\DateTimeImmutableType;
 use App\Form\Type\LocationType;
 use App\Form\Type\OwnersAutocompleteType;
@@ -40,7 +40,7 @@ class TripFormType extends AbstractType
                 'label' => 'end_at.label',
             ])
             ->add('requiredLevels', EnumType::class, [
-                'class' => RequiredLevel::class,
+                'class' => SurfLevel::class,
                 'label' => 'required_levels.label',
                 'multiple' => true,
                 'autocomplete' => true,

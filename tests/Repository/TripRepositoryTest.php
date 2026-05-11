@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Tests\Repository;
 
-use App\Enum\Trip\RequiredLevel;
+use App\Enum\User\SurfLevel;
 use App\Factory\TripFactory;
-use App\Form\Model\TripFilter;
+use App\Form\Model\Trip\TripFilter;
 use App\ReadModel\Trip\TripShowReadModel;
 use App\Repository\TripRepository;
 use App\Tests\CustomKernelTestCase;
@@ -92,10 +92,10 @@ final class TripRepositoryTest extends CustomKernelTestCase
         $this->assertSame(TripStory::TRIP_LOCATION, $results[0]->location->value);
     }
 
-    public function testCreateOrderedQueryBuilderWithRequiredLevelsFilter(): void
+    public function testCreateOrderedQueryBuilderWithSurfLevelsFilter(): void
     {
         $filter = new TripFilter();
-        $filter->requiredLevels = [RequiredLevel::Intermediate];
+        $filter->requiredLevels = [SurfLevel::Intermediate];
 
         $results = $this->repository
             ->createOrderedQueryBuilder($filter)
@@ -104,7 +104,7 @@ final class TripRepositoryTest extends CustomKernelTestCase
         ;
 
         $this->assertGreaterThan(1, count($results));
-        $this->assertContains(RequiredLevel::Intermediate, $results[0]->requiredLevels);
+        $this->assertContains(SurfLevel::Intermediate, $results[0]->requiredLevels);
     }
 
     public function testCreateOrderedQueryBuilderWithCombinedFilters(): void
@@ -112,7 +112,7 @@ final class TripRepositoryTest extends CustomKernelTestCase
         $filter = new TripFilter();
         $filter->search = 'Bali';
         $filter->location = 'Indonesia';
-        $filter->requiredLevels = [RequiredLevel::Beginner];
+        $filter->requiredLevels = [SurfLevel::Beginner];
 
         $results = $this->repository
             ->createOrderedQueryBuilder($filter)

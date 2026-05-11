@@ -80,7 +80,7 @@ trip:
     updated_successfully: Le trip a été mis à jour.
     deleted_successfully: Le trip a été supprimé.
     new.label: Nouveau trip
-    edit.label: Edition du trip
+    edit.label: Édition du trip
     delete.confirm: Es-tu sûr de vouloir supprimer ce voyage ?
 trips.label: Trips
 title.label: Titre
@@ -100,15 +100,24 @@ owners:
 created_at.label: Créé le
 actions.label: Actions
 
-# Required levels
+# Surf level
 beginner.label: Débutant
 intermediate.label: Intermédiaire
 advanced.label: Avancé
+expert.label: Expert
 
 # User
 user.label: Utilisateur
+avatar.label: Avatar
 email.label: E-mail
 first_name.label: Prénom
+instagram.label: Instagram
 last_name.label: Nom
 password.label: Mot de passe
 password_repeat.label: Répéter le mot de passe
+surf_level.label: Niveau de surf
+username.label: Nom d'utilisateur
+user:
+    profile:
+        edit.label: Édition du profil
+        updated_successfully: Ton profil a été mis à jour.

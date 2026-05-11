@@ -6,7 +6,7 @@ namespace App\ObjectMapper;
 
 use App\Entity\Trip;
 use App\Entity\User;
-use App\Form\Model\TripWriteModel;
+use App\Form\Model\Trip\TripWriteModel;
 use App\ReadModel\Trip\TripOwnerReadModel;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;

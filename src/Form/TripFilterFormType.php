@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Form;
 
-use App\Enum\Trip\RequiredLevel;
-use App\Form\Model\TripFilter;
+use App\Enum\User\SurfLevel;
+use App\Form\Model\Trip\TripFilter;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\SearchType;
@@ -27,7 +27,7 @@ final class TripFilterFormType extends AbstractType
                 ],
             ])
             ->add('requiredLevels', EnumType::class, [
-                'class' => RequiredLevel::class,
+                'class' => SurfLevel::class,
                 'label' => 'required_levels.label',
                 'attr' => [
                     'placeholder' => 'required_levels.placeholder',

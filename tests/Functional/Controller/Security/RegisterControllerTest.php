@@ -26,8 +26,8 @@ final class RegisterControllerTest extends CustomWebTestCase
     private const string SUBMIT_BUTTON = 'Register';
     private const string LOGOUT_LINK = 'Log out';
     private const string USER_EMAIL = 'new.user@test.com';
+    private const string USER_USERNAME = 'new.user';
     private const string USER_FIRST_NAME = 'New';
-    private const string USER_LAST_NAME = 'User';
     private const string USER_PASSWORD = 'Password123!';
 
     protected function setUp(): void
@@ -50,8 +50,8 @@ final class RegisterControllerTest extends CustomWebTestCase
         $this->client->submitForm(self::SUBMIT_BUTTON, [
             'registration_form' => [
                 'email' => self::USER_EMAIL,
+                'username' => self::USER_USERNAME,
                 'firstName' => self::USER_FIRST_NAME,
-                'lastName' => self::USER_LAST_NAME,
                 'plainPassword' => [
                     'first' => self::USER_PASSWORD,
                     'second' => self::USER_PASSWORD,

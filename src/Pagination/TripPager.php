@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Pagination;
 
 use App\Cache\Trip\TripCacheTags;
-use App\Form\Model\TripFilter;
+use App\Form\Model\Trip\TripFilter;
 use App\ReadModel\Trip\TripIndexReadModel;
 use App\Repository\TripRepository;
 use Pagerfanta\Pagerfanta;

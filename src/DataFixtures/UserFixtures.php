@@ -8,9 +8,13 @@ use App\Entity\User;
 use App\Entity\ValueObject\Email;
 use App\Entity\ValueObject\FirstName;
 use App\Entity\ValueObject\LastName;
+use App\Entity\ValueObject\Username;
+use App\Enum\User\SurfLevel;
 use App\Enum\User\UserRole;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Faker\Factory;
+use Faker\Generator;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserFixtures extends Fixture
@@ -26,9 +30,13 @@ class UserFixtures extends Fixture
         ['Eve', 'Leroy', UserRole::User],
     ];
 
+    private readonly Generator $faker;
+
     public function __construct(
         private readonly UserPasswordHasherInterface $passwordHasher
-    ) {}
+    ) {
+        $this->faker = Factory::create();
+    }
 
     public function load(ObjectManager $manager): void
     {
@@ -48,11 +56,15 @@ class UserFixtures extends Fixture
         foreach (self::USERS_DATA as [$firstName, $lastName, $role]) {
             $user = new User();
             $user->email = Email::from(sprintf('%s.%s@test.com', strtolower($firstName), strtolower($lastName)));
+            $user->username = Username::from(strtolower(sprintf('%s.%s', $firstName, $lastName)));
             $user->firstName = FirstName::from($firstName);
             $user->lastName = LastName::from($lastName);
             $user->password = $this->passwordHasher->hashPassword($user, 'password');
             $user->roles = [$role->value];
             $user->isVerified = true;
+            $user->level = $this->faker->randomElement(SurfLevel::cases());
+            $user->location = $this->faker->city();
+            $user->description = $this->faker->paragraph();
 
             yield $user;
         }

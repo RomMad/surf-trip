@@ -8,6 +8,8 @@ use App\Entity\User;
 use App\Entity\ValueObject\Email;
 use App\Entity\ValueObject\FirstName;
 use App\Entity\ValueObject\LastName;
+use App\Entity\ValueObject\Username;
+use App\Enum\User\SurfLevel;
 use App\Enum\User\UserRole;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Zenstruck\Foundry\Persistence\PersistentObjectFactory;
@@ -42,11 +44,15 @@ final class UserFactory extends PersistentObjectFactory
     {
         return [
             'email' => Email::from(self::faker()->unique()->safeEmail()),
+            'username' => Username::from(preg_replace('/[^a-zA-Z0-9.]/', '.', self::faker()->unique()->userName())),
             'firstName' => FirstName::from(self::faker()->firstName()),
             'lastName' => LastName::from(self::faker()->lastName()),
             'isVerified' => true,
             'password' => self::DEFAULT_PASSWORD,
             'roles' => [UserRole::USER],
+            'level' => self::faker()->randomElement(SurfLevel::cases()),
+            'location' => self::faker()->city(),
+            'description' => self::faker()->paragraph(),
         ];
     }
 
