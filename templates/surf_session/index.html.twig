@@ -3,13 +3,9 @@
 {% set title = 'surf_sessions.label'|trans %}
 
 {% block body %}
-    <div class="mb-6 flex flex-wrap items-center justify-between gap-3">
+    <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
         <twig:Heading1 :title="title" />
-
-        <twig:Button as="a" href="{{ path('app.surf_session.new') }}" id="new_session_btn">
-            <twig:ux:icon name="lucide:plus" />
-            {{- 'create_new.label'|trans -}}
-        </twig:Button>
+        <twig:Button:New href="{{ path('app.surf_session.new') }}" />
     </div>
 
     {% if pager.nbResults == 0 %}

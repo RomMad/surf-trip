@@ -1,0 +1,14 @@
+{# @prop href string Target URL #}
+{# @prop id string The id attribute for the button, default to `new_btn` #}
+{# @prop label string Translation key for the button label, default to `create_new.label` #}
+{%- props href, id = 'new_btn' , label = 'create_new.label' -%}
+
+<twig:Button
+    as="a"
+    href="{{ href }}"
+    id="{{ id }}"
+    {{ ...attributes.without('class') }}
+>
+    <twig:ux:icon name="lucide:plus" />
+    {{- label|trans -}}
+</twig:Button>
