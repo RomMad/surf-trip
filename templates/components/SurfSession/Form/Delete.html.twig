@@ -1,0 +1,7 @@
+<form method="post"
+      action="{{ path('app.surf_session.delete', {id: session.id}) }}"
+      onsubmit="return confirm('{{ 'surf_session.delete.confirm'|trans }}');"
+>
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ session.id) }}">
+    <twig:Button:Delete />
+</form>

@@ -15,6 +15,24 @@ security:
             not_blank: Merci de saisir un mot de passe.
             min_length: Ton mot de passe doit contenir au moins {limit} caractères.
 
+surf_session:
+    spot:
+        not_blank: Le spot est obligatoire.
+        max_length: Le spot ne peut pas dépasser {limit} caractères.
+    board:
+        max_length: La planche ne peut pas dépasser {limit} caractères.
+    start_at:
+        not_null: La date de début est obligatoire.
+    end_at:
+        not_null: La date de fin est obligatoire.
+        after_start_at: La date de fin doit être strictement postérieure à la date de début.
+    rating:
+        range: La note doit être comprise entre {min} et {max}.
+    objective:
+        max_length: L'objectif ne peut pas dépasser {limit} caractères.
+    comment:
+        max_length: Le commentaire ne peut pas dépasser {limit} caractères.
+
 trip:
     title:
         not_blank: Le titre est obligatoire.

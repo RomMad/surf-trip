@@ -1,0 +1,10 @@
+{% if value is not null %}
+    <dl>
+        <dt class="app-label">
+            {{- label|trans -}}
+        </dt>
+        <dd class="app-value">
+            {{- value -}}
+        </dd>
+    </dl>
+{% endif %}

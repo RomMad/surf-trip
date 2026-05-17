@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% set title = 'surf_session.new.label'|trans %}
+
+{% block body %}
+    <twig:Heading1 :title="title" />
+
+    <twig:SurfSession:Form :form="form" />
+
+    <twig:Button:Back href="{{ path('app.surf_session.index') }}" />
+{% endblock %}

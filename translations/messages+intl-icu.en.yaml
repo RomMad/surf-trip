@@ -72,6 +72,31 @@ next.label: Next
 previous.label: Previous
 more_pages.label: More pages
 
+# Surf Session
+surf_sessions.label: Sessions
+surf_session:
+    created_successfully: The session has been created.
+    updated_successfully: The session has been updated.
+    deleted_successfully: The session has been deleted.
+    new.label: New session
+    edit.label: Edit session
+    delete.confirm: Are you sure you want to delete this session?
+    board:
+        label: Board
+        placeholder: Ex. Fish 5'8
+    spot:
+        label: Spot
+        placeholder: Ex. La Nord
+    rating:
+        label: Rating
+        placeholder: Not rated
+    objective:
+        label: Objective
+        placeholder: Ex. Improve backside take-offs
+    comment:
+        label: Comment
+        placeholder: Free notes about feelings, conditions and improvements...
+
 # Trip
 id.label: Id
 trip.label: Trip
@@ -105,6 +130,13 @@ beginner.label: Beginner
 intermediate.label: Intermediate
 advanced.label: Advanced
 expert.label: Expert
+
+# Surf session rating
+very_bad.label: Very bad
+bad.label: Bad
+average.label: Average
+good.label: Good
+excellent.label: Excellent
 
 # User
 user.label: User

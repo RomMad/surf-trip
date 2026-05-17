@@ -62,6 +62,33 @@
     {{ parent() }}
 {% endblock %}
 
+{% block radio_widget %}
+    {% set attr = attr|merge({
+        class: ('app-radio ' ~ (attr.class|default('')))|tailwind_merge,
+    }) %}
+
+    {{ parent() }}
+{% endblock %}
+
+{% block choice_widget_expanded %}
+    {% set attr = attr|merge({
+        class: ((multiple ? 'space-y-2' : 'flex flex-wrap items-center gap-4') ~ ' ' ~ (attr.class|default('')))|tailwind_merge,
+    }) %}
+
+    <div {{ block('widget_container_attributes') }}>
+        {% for child in form %}
+            <div class="inline-flex items-center gap-2">
+                {{ form_widget(child) }}
+                {{ form_label(child, null, {
+                    label_attr: {
+                        class: 'font-normal',
+                    },
+                }) }}
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+
 {% block checkbox_row %}
     {% set row_attr = row_attr|merge({
         class: ('app-row ' ~ (row_attr.class|default('')))|tailwind_merge,

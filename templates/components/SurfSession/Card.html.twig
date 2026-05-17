@@ -1,0 +1,36 @@
+<twig:Card class="flex h-full flex-col">
+    <twig:Card:Header>
+        <twig:Card:Title>
+            <div class="flex items-center gap-2">
+                <h3 class="heading-3 mt-0">
+                    {{- session.spot -}}
+                </h3>
+                {% if session.rating is not null %}
+                    <twig:Badge variant="secondary">
+                         {{- session.rating.label|trans -}}
+                    </twig:Badge>
+                {% endif %}
+            </div>
+        </twig:Card:Title>
+        <twig:Card:Description>
+            {{- session.startAt|format_datetime(pattern: 'dd MMM yyyy HH:mm') }}
+            -
+            {{ session.endAt|format_datetime(pattern: 'HH:mm') -}}
+        </twig:Card:Description>
+    </twig:Card:Header>
+    <twig:Card:Content class="space-y-2">
+        <twig:Field label="surf_session.board.label" value="{{ session.board }}" />
+        <twig:Field
+            label="surf_session.objective.label"
+            value="{{ session.objective ? session.objective|u.truncate(120, '...', false) : null }}"
+        />
+        <twig:Field
+            label="surf_session.comment.label"
+            value="{{ session.comment ? session.comment|u.truncate(120, '...', false) : null }}"
+        />
+    </twig:Card:Content>
+    <twig:Card:Footer class="mt-auto space-x-2">
+        <twig:Button:Edit href="{{ path('app.surf_session.edit', {id: session.id}) }}"/>
+        <twig:SurfSession:Form:Delete :session="session" />
+    </twig:Card:Footer>
+</twig:Card>

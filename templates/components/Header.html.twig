@@ -22,6 +22,7 @@
             <div class="app-header-menu" id="main_navbar">
                 <ul class="flex">
                     <twig:Header:NavLink label="trips.label" route="app.trip.index" />
+                    <twig:Header:NavLink label="surf_sessions.label" route="app.surf_session.index" />
                     {% if is_granted('ROLE_USER') %}
                         <twig:Header:NavLink label="trip.new.label" route="app.trip.new" />
                     {% endif %}
