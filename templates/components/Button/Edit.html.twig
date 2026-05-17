@@ -1,0 +1,13 @@
+{# @prop href string Target URL #}
+{# @prop label string Translation key #}
+{%- props href, label = 'edit.label' -%}
+
+<twig:Button
+    as="a"
+    href="{{ href }}"
+    class="{{ attributes.render('class')|tailwind_merge }}"
+    {{ ...attributes.without('class') }}
+>
+    <twig:ux:icon name="lucide:pencil" />
+    {{- label|trans -}}
+</twig:Button>
