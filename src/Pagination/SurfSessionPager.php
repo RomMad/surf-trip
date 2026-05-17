@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Pagination;
 
+use App\Entity\User;
 use App\ReadModel\SurfSession\SurfSessionIndexReadModel;
 use App\Repository\SurfSessionRepository;
 use Pagerfanta\Pagerfanta;
@@ -19,10 +20,10 @@ final readonly class SurfSessionPager
     /**
      * @return Pagerfanta<SurfSessionIndexReadModel>
      */
-    public function create(Request $request, int $maxPerPage = 10): Pagerfanta
+    public function create(Request $request, User $user, int $maxPerPage = 10): Pagerfanta
     {
-        $queryBuilder = $this->surfSessionRepository->createOrderedQueryBuilder();
-        $countQueryBuilder = $this->surfSessionRepository->getCountQueryBuilder();
+        $queryBuilder = $this->surfSessionRepository->createOrderedQueryBuilder($user);
+        $countQueryBuilder = $this->surfSessionRepository->getCountQueryBuilder($user);
 
         return $this->pagerFactory->createWithCountQueryBuilder(
             $queryBuilder,

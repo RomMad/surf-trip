@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Repository;
 
 use App\Entity\SurfSession;
+use App\Entity\User;
 use App\ReadModel\SurfSession\SurfSessionIndexReadModel;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
@@ -38,7 +39,7 @@ final class SurfSessionRepository extends ServiceEntityRepository
         }
     }
 
-    public function createOrderedQueryBuilder(): QueryBuilder
+    public function createOrderedQueryBuilder(User $user): QueryBuilder
     {
         return $this->createQueryBuilder('s')
             ->select(sprintf(
@@ -55,13 +56,17 @@ final class SurfSessionRepository extends ServiceEntityRepository
                 SurfSessionIndexReadModel::class,
             ))
             ->orderBy('s.startAt', 'DESC')
+            ->where('s.user = :user')
+            ->setParameter('user', $user)
         ;
     }
 
-    public function getCountQueryBuilder(): QueryBuilder
+    public function getCountQueryBuilder(User $user): QueryBuilder
     {
         return $this->createQueryBuilder('s')
             ->select('COUNT(s.id)')
+            ->where('s.user = :user')
+            ->setParameter('user', $user)
         ;
     }
 }

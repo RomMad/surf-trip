@@ -95,4 +95,10 @@ final class SurfSession
     #[Assert\Length(max: 5000, maxMessage: 'surf_session.comment.max_length')]
     #[Groups(['surf_session:read', 'surf_session:write'])]
     public ?string $comment = null;
+
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotNull()]
+    #[Groups(['surf_session:read'])]
+    public ?User $user = null;
 }
