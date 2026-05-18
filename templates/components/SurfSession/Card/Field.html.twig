@@ -1,0 +1,14 @@
+{% if value ?? false %}
+    <dl class="flex items-center gap-2">
+        {% if label is defined %}
+            <dt title="{{ label|trans }}">
+                {% if icon is defined %}
+                    <twig:ux:icon name="{{ icon }}" />
+                {% endif %}
+            </dt>
+        {% endif %}
+        <dd class="app-value">
+            {{- value -}}
+        </dd>
+    </dl>
+{% endif %}

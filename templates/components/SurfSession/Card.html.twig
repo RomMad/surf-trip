@@ -12,20 +12,24 @@
                 {% endif %}
             </div>
         </twig:Card:Title>
-        <twig:Card:Description>
-            {{- session.startAt|format_datetime(pattern: 'dd MMM yyyy HH:mm') }}
-            -
-            {{ session.endAt|format_datetime(pattern: 'HH:mm') -}}
-        </twig:Card:Description>
     </twig:Card:Header>
     <twig:Card:Content class="space-y-2">
-        <twig:Field label="surf_session.board.label" value="{{ session.board }}" />
-        <twig:Field
+        <twig:SurfSession:Card:Field
+            label="surf_session.date.label"
+            icon="lucide:calendar-1"
+            value="{{ session.startAt|format_datetime(pattern: 'dd MMM yyyy HH:mm') ~ ' - ' ~ session.endAt|date('H:i') }}"
+        />
+        <twig:SurfSession:Card:Field
+            label="surf_session.board.label"
+            icon="boxicons:surfboard-filled"
+            value="{{ session.board }}"
+        />
+        <twig:SurfSession:Card:Field
             label="surf_session.objective.label"
+            icon="lucide:goal"
             value="{{ session.objective ? session.objective|u.truncate(120, '...', false) : null }}"
         />
-        <twig:Field
-            label="surf_session.comment.label"
+        <twig:SurfSession:Card:Field
             value="{{ session.comment ? session.comment|u.truncate(120, '...', false) : null }}"
         />
     </twig:Card:Content>
