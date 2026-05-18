@@ -6,7 +6,7 @@
                     {{- session.spot -}}
                 </h3>
                 {% if session.rating is not null %}
-                    <twig:Badge variant="secondary">
+                    <twig:Badge variant="{{ session.rating.color }}">
                          {{- session.rating.label|trans -}}
                     </twig:Badge>
                 {% endif %}

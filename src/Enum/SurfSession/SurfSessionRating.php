@@ -27,4 +27,15 @@ enum SurfSessionRating: int implements TranslatableInterface
             self::Excellent => 'excellent.label',
         };
     }
+
+    public function color(): string
+    {
+        return match ($this) {
+            self::VeryBad => 'red',
+            self::Bad => 'orange',
+            self::Average => 'yellow',
+            self::Good => 'lightgreen',
+            self::Excellent => 'green',
+        };
+    }
 }
