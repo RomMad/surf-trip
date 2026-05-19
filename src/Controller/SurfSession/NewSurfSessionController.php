@@ -7,11 +7,13 @@ namespace App\Controller\SurfSession;
 use App\Entity\SurfSession;
 use App\Entity\User;
 use App\Enum\User\UserRole;
+use App\Form\Model\SurfSession\SurfSessionWriteModel;
 use App\Form\SurfSessionFormType;
 use App\Repository\SurfSessionRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\ObjectMapper\ObjectMapperInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -20,6 +22,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 final class NewSurfSessionController extends AbstractController
 {
     public function __construct(
+        private readonly ObjectMapperInterface $objectMapper,
         private readonly SurfSessionRepository $surfSessionRepository,
     ) {}
 
@@ -28,15 +31,17 @@ final class NewSurfSessionController extends AbstractController
         name: 'app.surf_session.new',
         methods: [Request::METHOD_GET, Request::METHOD_POST],
     )]
-    public function __invoke(Request $request, #[CurrentUser()] User $user): Response
+    public function __invoke(Request $request, #[CurrentUser()] User $currentUser): Response
     {
-        $surfSession = new SurfSession();
-        $surfSession->user = $user;
+        $surfSessionWriteModel = new SurfSessionWriteModel();
 
-        $form = $this->createForm(SurfSessionFormType::class, $surfSession);
+        $form = $this->createForm(SurfSessionFormType::class, $surfSessionWriteModel);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $surfSession = $this->objectMapper->map($surfSessionWriteModel, SurfSession::class);
+            $surfSession->user = $currentUser;
+
             $this->surfSessionRepository->save($surfSession, true);
 
             $this->addFlash('success', 'surf_session.created_successfully');

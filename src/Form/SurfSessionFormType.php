@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Form;
 
-use App\Entity\SurfSession;
 use App\Enum\SurfSession\SurfSessionRating;
+use App\Form\Model\SurfSession\SurfSessionWriteModel;
 use App\Form\Type\DateTimeImmutableType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
@@ -71,7 +71,7 @@ final class SurfSessionFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => SurfSession::class,
+            'data_class' => SurfSessionWriteModel::class,
         ]);
     }
 
