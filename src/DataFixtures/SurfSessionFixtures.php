@@ -41,7 +41,7 @@ class SurfSessionFixtures extends Fixture implements DependentFixtureInterface
         "Funboard 7'2",
         "Longboard 9'0",
         "Mid-length 7'0",
-        'Mini Malibu 7\'6',
+        "Mini Malibu 7'6",
     ];
 
     private const array OBJECTIVES = [
