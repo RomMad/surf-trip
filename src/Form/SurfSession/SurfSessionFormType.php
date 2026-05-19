@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Form;
+namespace App\Form\SurfSession;
 
 use App\Enum\SurfSession\SurfSessionRating;
 use App\Form\Model\SurfSession\SurfSessionWriteModel;

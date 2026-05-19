@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Security;
 
 use App\Entity\ValueObject\Email;
-use App\Form\ResetPasswordRequestFormType;
+use App\Form\Security\ResetPasswordRequestFormType;
 use App\Service\Security\ResetPasswordService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

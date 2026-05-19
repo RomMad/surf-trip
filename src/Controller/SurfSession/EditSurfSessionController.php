@@ -7,7 +7,7 @@ namespace App\Controller\SurfSession;
 use App\Entity\SurfSession;
 use App\Enum\User\UserRole;
 use App\Form\Model\SurfSession\SurfSessionWriteModel;
-use App\Form\SurfSessionFormType;
+use App\Form\SurfSession\SurfSessionFormType;
 use App\Repository\SurfSessionRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

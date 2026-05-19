@@ -6,7 +6,7 @@ namespace App\Controller\Security;
 
 use App\Controller\Trip\IndexTripController;
 use App\Entity\User;
-use App\Form\ChangePasswordFormType;
+use App\Form\Security\ChangePasswordFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
