@@ -84,6 +84,7 @@ surf_session:
     board:
         label: Board
         placeholder: Ex. Fish 5'8
+    date.label: Date
     spot:
         label: Spot
         placeholder: Ex. La Nord
