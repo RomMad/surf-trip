@@ -1,4 +1,8 @@
 @layer components {
+    .app-grid-cards {
+        @apply grid gap-4 sm:grid-cols-2 xl:grid-cols-3;
+    }
+
     .app-card {
         @apply rounded-lg border bg-card text-card-foreground shadow-sm flex h-full flex-col;
     }
