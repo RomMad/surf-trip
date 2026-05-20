@@ -28,7 +28,7 @@ final class EditTripControllerTest extends CustomWebTestCase
     private const string FORM = 'form[name="trip"]';
     // Labels
     private const string TITLE = 'Edit trip';
-    private const string SAVE_BUTTON = 'save_btn';
+    private const string SUBMIT_BUTTON = 'Update';
     // Messages
     private const string MESSAGE_SUCCESS = 'The trip has been updated.';
     // Data
@@ -77,7 +77,7 @@ final class EditTripControllerTest extends CustomWebTestCase
 
         $this->assertResponseIsSuccessful();
 
-        $this->client->submitForm(self::SAVE_BUTTON, [
+        $this->client->submitForm(self::SUBMIT_BUTTON, [
             'trip[title]' => self::UPDATED_TRIP_TITLE,
             'trip[location]' => self::UPDATED_TRIP_LOCATION,
             'trip[startAt]' => new \DateTimeImmutable('+2 month')->format(self::FORMAT_DATETIME),

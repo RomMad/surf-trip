@@ -31,7 +31,7 @@ final class EditSurfSessionControllerTest extends CustomWebTestCase
     private const string CARD_ID = '#surf_session_%d';
     // Labels
     private const string TITLE = 'Edit session';
-    private const string SUBMIT_BUTTON = 'Save';
+    private const string SUBMIT_BUTTON = 'Update';
     // Messages
     private const string MESSAGE_SUCCESS = 'The session has been updated.';
     // Data
