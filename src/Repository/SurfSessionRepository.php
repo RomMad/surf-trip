@@ -6,6 +6,7 @@ namespace App\Repository;
 
 use App\Entity\SurfSession;
 use App\Entity\User;
+use App\Form\Model\SurfSession\SurfSessionSearchInput;
 use App\ReadModel\SurfSession\SurfSessionIndexReadModel;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
@@ -39,9 +40,9 @@ final class SurfSessionRepository extends ServiceEntityRepository
         }
     }
 
-    public function createOrderedQueryBuilder(User $user): QueryBuilder
+    public function createOrderedQueryBuilder(User $user, SurfSessionSearchInput $searchInput): QueryBuilder
     {
-        return $this->createQueryBuilder('s')
+        $queryBuilder = $this->createQueryBuilder('s')
             ->select(sprintf(
                 'NEW %s(
                     s.id,
@@ -59,14 +60,48 @@ final class SurfSessionRepository extends ServiceEntityRepository
             ->where('s.user = :user')
             ->setParameter('user', $user)
         ;
+
+        $this->applyFilters($queryBuilder, $searchInput);
+
+        return $queryBuilder;
     }
 
-    public function getCountQueryBuilder(User $user): QueryBuilder
+    public function getCountQueryBuilder(User $user, SurfSessionSearchInput $searchInput): QueryBuilder
     {
-        return $this->createQueryBuilder('s')
+        $queryBuilder = $this->createQueryBuilder('s')
             ->select('COUNT(s.id)')
             ->where('s.user = :user')
             ->setParameter('user', $user)
         ;
+
+        $this->applyFilters($queryBuilder, $searchInput);
+
+        return $queryBuilder;
+    }
+
+    private function applyFilters(QueryBuilder $queryBuilder, SurfSessionSearchInput $searchInput): QueryBuilder
+    {
+        if ($searchInput->query) {
+            $queryBuilder->andWhere('LOWER(s.spot) LIKE :query OR LOWER(s.board) LIKE :query')
+                ->setParameter(
+                    'query',
+                    '%'.mb_strtolower(trim($searchInput->query)).'%'
+                )
+            ;
+        }
+
+        if ($searchInput->startAtFrom instanceof \DateTimeImmutable) {
+            $queryBuilder->andWhere('s.startAt >= :startAtFrom')
+                ->setParameter('startAtFrom', $searchInput->startAtFrom)
+            ;
+        }
+
+        if ($searchInput->endAtTo instanceof \DateTimeImmutable) {
+            $queryBuilder->andWhere('s.endAt <= :endAtTo')
+                ->setParameter('endAtTo', $searchInput->endAtTo)
+            ;
+        }
+
+        return $queryBuilder;
     }
 }

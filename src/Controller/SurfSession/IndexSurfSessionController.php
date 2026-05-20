@@ -6,6 +6,8 @@ namespace App\Controller\SurfSession;
 
 use App\Entity\User;
 use App\Enum\User\UserRole;
+use App\Form\Model\SurfSession\SurfSessionSearchInput;
+use App\Form\SurfSession\SurfSessionSearchFormType;
 use App\Pagination\SurfSessionPager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,10 +32,21 @@ final class IndexSurfSessionController extends AbstractController
     )]
     public function __invoke(Request $request, #[CurrentUser()] User $currentUser): Response
     {
-        $pager = $this->surfSessionPager->create($request, $currentUser);
+        $searchInput = new SurfSessionSearchInput();
+        $form = $this->createForm(SurfSessionSearchFormType::class, $searchInput);
+        $form->handleRequest($request);
+
+        $pager = $this->surfSessionPager->create($request, $currentUser, $searchInput);
+
+        if ('surf_session_results' === $request->headers->get('Turbo-Frame')) {
+            return $this->renderBlock('surf_session/index.html.twig', 'surf_session_results', [
+                'pager' => $pager,
+            ]);
+        }
 
         return $this->render('surf_session/index.html.twig', [
             'pager' => $pager,
+            'form' => $form,
         ]);
     }
 }
