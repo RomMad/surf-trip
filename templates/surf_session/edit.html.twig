@@ -6,7 +6,7 @@
     <twig:Heading1 :title="title" />
 
     <twig:SurfSession:Form :form="form" button_label="update.label" />
-    <twig:SurfSession:Form:Delete :session="session" />
+    <twig:SurfSession:Form:Delete :surf_session="surf_session" />
 
     <div class="mt-4">
         <twig:Button:Back href="{{ path('app.surf_session.index') }}" />

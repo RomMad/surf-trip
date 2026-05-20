@@ -12,8 +12,8 @@
         <p class="text-muted-foreground">{{ 'no_records_found.label'|trans }}</p>
     {% else %}
         <div class="app-grid-cards">
-            {% for session in pager %}
-                <twig:SurfSession:Card :session="session" />
+            {% for surf_session in pager %}
+                <twig:SurfSession:Card :surf_session="surf_session" />
             {% endfor %}
         </div>
 

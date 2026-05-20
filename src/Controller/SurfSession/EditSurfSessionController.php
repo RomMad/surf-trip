@@ -49,7 +49,7 @@ final class EditSurfSessionController extends AbstractController
         }
 
         return $this->render('surf_session/edit.html.twig', [
-            'session' => $surfSession,
+            'surf_session' => $surfSession,
             'form' => $form,
         ]);
     }
