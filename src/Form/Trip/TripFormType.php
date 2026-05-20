@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Form;
+namespace App\Form\Trip;
 
 use App\Enum\User\SurfLevel;
 use App\Form\Model\Trip\TripWriteModel;

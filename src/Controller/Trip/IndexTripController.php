@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Trip;
 
 use App\Form\Model\Trip\TripFilter;
-use App\Form\TripFilterFormType;
+use App\Form\Trip\TripFilterFormType;
 use App\Pagination\TripPager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

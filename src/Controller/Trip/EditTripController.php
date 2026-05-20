@@ -6,7 +6,7 @@ namespace App\Controller\Trip;
 
 use App\Exception\TripNotFoundHttpException;
 use App\Form\Model\Trip\TripWriteModel;
-use App\Form\TripFormType;
+use App\Form\Trip\TripFormType;
 use App\Security\Voter\TripVoter;
 use App\Service\Trip\TripReadModelProvider;
 use App\Service\Trip\TripUpdater;

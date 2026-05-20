@@ -77,6 +77,22 @@ function dump_env(
 }
 
 // ========================================================
+//                 COMPOSER DEPENDENCIES
+// ========================================================
+
+#[AsTask(description: 'Install Composer dependencies', namespace: 'composer', aliases: ['composer-install', 'ci'])]
+function composer_install(string $options = '--no-interaction'): void
+{
+    run_php('composer install '.$options);
+}
+
+#[AsTask(description: 'Update Composer dependencies', namespace: 'composer', aliases: ['composer-update', 'cu'])]
+function composer_update(string $options = '--no-interaction'): void
+{
+    run_php('composer update '.$options);
+}
+
+// ========================================================
 //                  DATABASE & MIGRATIONS
 // ========================================================
 
@@ -312,9 +328,9 @@ function test_all(): void
 }
 
 #[AsTask(description: 'Run tests with Paratest', namespace: 'app', aliases: ['test'])]
-function test(string $options = ''): void
+function test(#[AsArgument()] string $options = 'tests'): void
 {
-    run_php('./vendor/bin/paratest tests --runner WrapperRunner '.$options);
+    run_php('./vendor/bin/paratest --runner WrapperRunner '.$options);
 }
 
 #[AsTask(description: 'Run tests coverage with Paratest', namespace: 'app', aliases: ['test-coverage'])]

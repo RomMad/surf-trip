@@ -1,0 +1,29 @@
+@layer components {
+    .app-grid-cards {
+        @apply grid gap-4 sm:grid-cols-2 xl:grid-cols-3;
+    }
+
+    .app-card {
+        @apply rounded-lg border bg-card text-card-foreground shadow-sm flex h-full flex-col;
+    }
+
+    .app-card-content {
+        @apply flex-1 p-6 pt-0;
+    }
+
+    .app-card-description {
+        @apply text-muted-foreground text-sm;
+    }
+
+    .app-card-footer {
+        @apply flex items-center p-6 pt-0;
+    }
+
+    .app-card-header {
+        @apply flex flex-col space-y-2 p-6;
+    }
+
+    .app-card-title {
+        @apply leading-none font-semibold;
+    }
+}

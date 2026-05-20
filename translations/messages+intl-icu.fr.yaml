@@ -1,5 +1,5 @@
 # Actions
-create_new.label: Créer un nouveau
+create_new.label: Créer
 delete.label: Supprimer
 edit.label: Modifier
 login.label: Se connecter
@@ -72,6 +72,32 @@ next.label: Suivant
 previous.label: Précédent
 more_pages.label: Plus de pages
 
+# Surf Session
+surf_sessions.label: Sessions
+surf_session:
+    created_successfully: La session a été créée.
+    updated_successfully: La session a été mise à jour.
+    deleted_successfully: La session a été supprimée.
+    new.label: Nouvelle session
+    edit.label: Édition de la session
+    delete.confirm: Es-tu sûr de vouloir supprimer cette session ?
+    board:
+        label: Planche
+        placeholder: Ex. Fish 5'8
+    date.label: Date
+    spot:
+        label: Spot
+        placeholder: Ex. La Nord
+    rating:
+        label: Note
+        placeholder: Non notée
+    objective:
+        label: Objectif
+        placeholder: Ex. Travailler les take-offs backside
+    comment:
+        label: Commentaire
+        placeholder: Notes libres sur les sensations, conditions, points d'amélioration...
+
 # Trip
 id.label: Id
 trip.label: Trip
@@ -105,6 +131,13 @@ beginner.label: Débutant
 intermediate.label: Intermédiaire
 advanced.label: Avancé
 expert.label: Expert
+
+# Surf session rating
+very_bad.label: Très mauvais
+bad.label: Mauvais
+average.label: Moyen
+good.label: Bon
+excellent.label: Excellent
 
 # User
 user.label: Utilisateur

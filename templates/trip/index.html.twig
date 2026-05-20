@@ -3,7 +3,10 @@
 {% set title = 'trips.label'|trans %}
 
 {% block body %}
-    <twig:Heading1 :title="title" />
+    <div class="app-page-header">
+        <twig:Heading1 :title="title" />
+        <twig:Button:New href="{{ path('app.trip.new') }}" />
+    </div>
 
     <twig:Trip:Form:Filter :form="form" />
 
@@ -13,9 +16,4 @@
             <twig:AppPagination :pager="pager" />
         </turbo-frame>
     {% endblock %}
-
-    <twig:Button as="a" href="{{ path('app.trip.new') }}" id="new_trip_btn">
-        <twig:ux:icon name="lucide:plus" />
-        {{- 'create_new.label'|trans -}}
-    </twig:Button>
 {% endblock %}

@@ -22,9 +22,7 @@
             <div class="app-header-menu" id="main_navbar">
                 <ul class="flex">
                     <twig:Header:NavLink label="trips.label" route="app.trip.index" />
-                    {% if is_granted('ROLE_USER') %}
-                        <twig:Header:NavLink label="trip.new.label" route="app.trip.new" />
-                    {% endif %}
+                    <twig:Header:NavLink label="surf_sessions.label" route="app.surf_session.index" />
                 </ul>
                 <ul class="flex items-center" aria-label="{{ 'language.switch.label'|trans }}">
                     {% for locale in enum('App\\Enum\\User\\Locale').cases %}

@@ -1,5 +1,7 @@
 @import "./components/_alert.css";
+@import "./components/_badge.css";
 @import "./components/_button.css";
+@import "./components/_card.css";
 @import "./components/_form.css";
 @import "./components/_header.css";
 @import "./components/_table.css";

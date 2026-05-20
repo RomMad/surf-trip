@@ -1,0 +1,12 @@
+{# @prop label string Translation key #}
+{%- props label = 'save.label' -%}
+
+<twig:Button
+    type="submit"
+    class="{{ attributes.render('class')|tailwind_merge }}"
+    id="save_btn"
+    {{ ...attributes.without('class') }}
+>
+    <twig:ux:icon name="lucide:save" />
+    {{- label|trans -}}
+</twig:Button>

@@ -1,0 +1,26 @@
+{# @prop variant 'default'|'secondary'|'destructive'|'outline'|'red'|'orange'|'yellow'|'lightgreen'|'green' The visual style variant. Defaults to `default` #}
+{# @prop as 'div' The HTML tag to render. Defaults to `div` #}
+{# @block content The badge label or content #}
+{%- props variant = 'default', as = 'div' -%}
+{%- set style = html_cva(
+    base: 'app-badge',
+    variants: {
+        variant: {
+            default: 'app-badge-default',
+            secondary: 'app-badge-secondary',
+            destructive: 'app-badge-destructive',
+            outline: 'app-badge-outline',
+            green: 'app-badge-green',
+            lightgreen: 'app-badge-lightgreen',
+            yellow: 'app-badge-yellow',
+            orange: 'app-badge-orange',
+            red: 'app-badge-red',
+        },
+    },
+) -%}
+<{{ as }}
+    class="{{ style.apply({variant: variant}, attributes.render('class'))|tailwind_merge }}"
+    {{ attributes }}
+>
+    {%- block content %}{% endblock -%}
+</{{ as }}>

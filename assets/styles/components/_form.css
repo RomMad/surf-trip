@@ -19,12 +19,17 @@
         @apply flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background data-placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1;
     }
 
-    .app-checkbox {
+    .app-checkbox,
+    .app-radio {
         @apply size-4 inline-block align-middle accent-primary;
     }
 
     .app-label {
         @apply flex items-center py-2 gap-1 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50;
+    }
+
+    .app-value {
+        @apply text-sm text-muted-foreground;
     }
 
     .app-switch-label {

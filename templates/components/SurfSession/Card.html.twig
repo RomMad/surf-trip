@@ -1,0 +1,39 @@
+<twig:Card id="surf_session_{{ surf_session.id }}">
+    <twig:Card:Header>
+        <twig:Card:Title>
+            <div class="flex items-center gap-2">
+                <h3 class="heading-3 mt-0">
+                    {{- surf_session.spot -}}
+                </h3>
+                {% if surf_session.rating is not null %}
+                    <twig:Badge variant="{{ surf_session.rating.color }}">
+                         {{- surf_session.rating.label|trans -}}
+                    </twig:Badge>
+                {% endif %}
+            </div>
+        </twig:Card:Title>
+    </twig:Card:Header>
+    <twig:Card:Content class="space-y-2">
+        <twig:SurfSession:Card:Field
+            label="surf_session.date.label"
+            icon="lucide:calendar-1"
+            value="{{ surf_session.startAt|format_datetime(pattern: 'dd MMM yyyy HH:mm') ~ ' - ' ~ surf_session.endAt|date('H:i') }}"
+        />
+        <twig:SurfSession:Card:Field
+            label="surf_session.board.label"
+            icon="boxicons:surfboard-filled"
+            value="{{ surf_session.board }}"
+        />
+        <twig:SurfSession:Card:Field
+            label="surf_session.objective.label"
+            icon="lucide:goal"
+            value="{{ surf_session.objective ? surf_session.objective|u.truncate(120, '...', false) : null }}"
+        />
+        <twig:SurfSession:Card:Field
+            value="{{ surf_session.comment ? surf_session.comment|u.truncate(120, '...', false) : null }}"
+        />
+    </twig:Card:Content>
+    <twig:Card:Footer class="mt-auto">
+        <twig:Button:Edit href="{{ path('app.surf_session.edit', {id: surf_session.id}) }}"/>
+    </twig:Card:Footer>
+</twig:Card>
