@@ -3,7 +3,7 @@
 {% set title = 'trips.label'|trans %}
 
 {% block body %}
-    <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+    <div class="app-page-header">
         <twig:Heading1 :title="title" />
         <twig:Button:New href="{{ path('app.trip.new') }}" />
     </div>
