@@ -25,6 +25,6 @@ final class Version20260517165005 extends AbstractMigration
     {
         $this->addSql('ALTER TABLE surf_session DROP CONSTRAINT FK_BB9F2D91A76ED395');
         $this->addSql('DROP INDEX IDX_BB9F2D91A76ED395');
-        $this->addSql('ALTER TABLE surf_session DROP user_id');
+        $this->addSql('ALTER TABLE surf_session DROP COLUMN user_id');
     }
 }
