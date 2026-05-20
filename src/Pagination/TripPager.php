@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Pagination;
 
 use App\Cache\Trip\TripCacheTags;
-use App\Form\Model\Trip\TripFilter;
+use App\Form\Model\Trip\TripSearchInput;
 use App\ReadModel\Trip\TripIndexReadModel;
 use App\Repository\TripRepository;
 use Pagerfanta\Pagerfanta;
@@ -29,16 +29,16 @@ final readonly class TripPager
     /**
      * @return Pagerfanta<TripIndexReadModel>
      */
-    public function create(TripFilter $filter, Request $request, int $maxPerPage = 10): Pagerfanta
+    public function create(TripSearchInput $searchInput, Request $request, int $maxPerPage = 10): Pagerfanta
     {
         return $this->cache->get(
             $this->generateCacheKey($request),
-            function (ItemInterface $item) use ($filter, $request, $maxPerPage): Pagerfanta {
+            function (ItemInterface $item) use ($searchInput, $request, $maxPerPage): Pagerfanta {
                 $item->tag(TripCacheTags::LIST);
                 $item->expiresAfter(new \DateInterval(self::CACHE_TTL));
 
-                $queryBuilder = $this->tripRepository->createOrderedQueryBuilder($filter);
-                $countQueryBuilder = $this->tripRepository->getCountQueryBuilder($filter);
+                $queryBuilder = $this->tripRepository->createOrderedQueryBuilder($searchInput);
+                $countQueryBuilder = $this->tripRepository->getCountQueryBuilder($searchInput);
 
                 return $this->pagerFactory->createWithCountQueryBuilder(
                     $queryBuilder,

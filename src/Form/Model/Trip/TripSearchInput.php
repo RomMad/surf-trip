@@ -6,9 +6,9 @@ namespace App\Form\Model\Trip;
 
 use App\Enum\User\SurfLevel;
 
-final class TripFilter
+final class TripSearchInput
 {
-    public ?string $search = null;
+    public ?string $query = null;
 
     public ?string $location = null;
 

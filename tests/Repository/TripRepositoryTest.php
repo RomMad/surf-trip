@@ -6,7 +6,7 @@ namespace App\Tests\Repository;
 
 use App\Enum\User\SurfLevel;
 use App\Factory\TripFactory;
-use App\Form\Model\Trip\TripFilter;
+use App\Form\Model\Trip\TripSearchInput;
 use App\ReadModel\Trip\TripShowReadModel;
 use App\Repository\TripRepository;
 use App\Tests\CustomKernelTestCase;
@@ -54,8 +54,8 @@ final class TripRepositoryTest extends CustomKernelTestCase
 
     public function testCreateOrderedQueryBuilderWithoutFilters(): void
     {
-        $filter = new TripFilter();
-        $queryBuilder = $this->repository->createOrderedQueryBuilder($filter);
+        $searchInput = new TripSearchInput();
+        $queryBuilder = $this->repository->createOrderedQueryBuilder($searchInput);
         $results = $queryBuilder->getQuery()->getResult();
 
         $this->assertCount(21, $results);
@@ -64,11 +64,11 @@ final class TripRepositoryTest extends CustomKernelTestCase
 
     public function testCreateOrderedQueryBuilderWithSearchFilter(): void
     {
-        $filter = new TripFilter();
-        $filter->search = TripStory::TRIP_TITLE;
+        $searchInput = new TripSearchInput();
+        $searchInput->query = TripStory::TRIP_TITLE;
 
         $results = $this->repository
-            ->createOrderedQueryBuilder($filter)
+            ->createOrderedQueryBuilder($searchInput)
             ->getQuery()
             ->getResult()
         ;
@@ -79,11 +79,11 @@ final class TripRepositoryTest extends CustomKernelTestCase
 
     public function testCreateOrderedQueryBuilderWithLocationFilter(): void
     {
-        $filter = new TripFilter();
-        $filter->location = TripStory::TRIP_LOCATION;
+        $searchInput = new TripSearchInput();
+        $searchInput->location = TripStory::TRIP_LOCATION;
 
         $results = $this->repository
-            ->createOrderedQueryBuilder($filter)
+            ->createOrderedQueryBuilder($searchInput)
             ->getQuery()
             ->getResult()
         ;
@@ -94,11 +94,11 @@ final class TripRepositoryTest extends CustomKernelTestCase
 
     public function testCreateOrderedQueryBuilderWithSurfLevelsFilter(): void
     {
-        $filter = new TripFilter();
-        $filter->requiredLevels = [SurfLevel::Intermediate];
+        $searchInput = new TripSearchInput();
+        $searchInput->requiredLevels = [SurfLevel::Intermediate];
 
         $results = $this->repository
-            ->createOrderedQueryBuilder($filter)
+            ->createOrderedQueryBuilder($searchInput)
             ->getQuery()
             ->getResult()
         ;
@@ -109,13 +109,13 @@ final class TripRepositoryTest extends CustomKernelTestCase
 
     public function testCreateOrderedQueryBuilderWithCombinedFilters(): void
     {
-        $filter = new TripFilter();
-        $filter->search = 'Bali';
-        $filter->location = 'Indonesia';
-        $filter->requiredLevels = [SurfLevel::Beginner];
+        $searchInput = new TripSearchInput();
+        $searchInput->query = 'Bali';
+        $searchInput->location = 'Indonesia';
+        $searchInput->requiredLevels = [SurfLevel::Beginner];
 
         $results = $this->repository
-            ->createOrderedQueryBuilder($filter)
+            ->createOrderedQueryBuilder($searchInput)
             ->getQuery()
             ->getResult()
         ;
@@ -125,10 +125,10 @@ final class TripRepositoryTest extends CustomKernelTestCase
 
     public function testGetCountQueryBuilderWithoutFilters(): void
     {
-        $filter = new TripFilter();
+        $searchInput = new TripSearchInput();
 
         $count = (int) $this->repository
-            ->getCountQueryBuilder($filter)
+            ->getCountQueryBuilder($searchInput)
             ->getQuery()
             ->getSingleScalarResult()
         ;
@@ -138,11 +138,11 @@ final class TripRepositoryTest extends CustomKernelTestCase
 
     public function testGetCountQueryBuilderWithSearchFilter(): void
     {
-        $filter = new TripFilter();
-        $filter->search = TripStory::TRIP_TITLE;
+        $searchInput = new TripSearchInput();
+        $searchInput->query = TripStory::TRIP_TITLE;
 
         $count = (int) $this->repository
-            ->getCountQueryBuilder($filter)
+            ->getCountQueryBuilder($searchInput)
             ->getQuery()
             ->getSingleScalarResult()
         ;
@@ -152,11 +152,11 @@ final class TripRepositoryTest extends CustomKernelTestCase
 
     public function testGetCountQueryBuilderWithLocationFilter(): void
     {
-        $filter = new TripFilter();
-        $filter->location = 'Bali';
+        $searchInput = new TripSearchInput();
+        $searchInput->location = 'Bali';
 
         $count = (int) $this->repository
-            ->getCountQueryBuilder($filter)
+            ->getCountQueryBuilder($searchInput)
             ->getQuery()
             ->getSingleScalarResult()
         ;
