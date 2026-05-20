@@ -7,6 +7,7 @@
     as="a"
     href="{{ href }}"
     id="{{ id }}"
+    class="{{ attributes.render('class')|tailwind_merge }}"
     {{ ...attributes.without('class') }}
 >
     <twig:ux:icon name="lucide:plus" />
