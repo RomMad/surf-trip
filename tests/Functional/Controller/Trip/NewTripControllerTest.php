@@ -26,7 +26,7 @@ final class NewTripControllerTest extends CustomWebTestCase
     private const string FORM = 'form[name="trip"]';
     // Labels
     private const string TITLE = 'New trip';
-    private const string NEW_TRIP_BUTTON = 'Create new';
+    private const string NEW_TRIP_LINK = 'Create new';
     private const string SUBMIT_BUTTON = 'Save';
     // Messages
     private const string MESSAGE_SUCCESS = 'The trip has been created.';
@@ -42,7 +42,7 @@ final class NewTripControllerTest extends CustomWebTestCase
     public function testNewTripPageIsDisplayed(): void
     {
         $this->client->request(Request::METHOD_GET, self::PATH_INDEX);
-        $this->client->clickLink(self::NEW_TRIP_BUTTON);
+        $this->client->clickLink(self::NEW_TRIP_LINK);
 
         $this->assertResponseIsSuccessful();
         $this->assertSelectorExists(self::FORM);

@@ -12,5 +12,6 @@ final class DefaultStory extends Story
     {
         UserStory::load();
         TripStory::load();
+        SurfSessionStory::load();
     }
 }
