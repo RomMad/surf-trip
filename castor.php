@@ -312,9 +312,9 @@ function test_all(): void
 }
 
 #[AsTask(description: 'Run tests with Paratest', namespace: 'app', aliases: ['test'])]
-function test(string $options = ''): void
+function test(#[AsArgument()] string $options = 'tests'): void
 {
-    run_php('./vendor/bin/paratest tests --runner WrapperRunner '.$options);
+    run_php('./vendor/bin/paratest --runner WrapperRunner '.$options);
 }
 
 #[AsTask(description: 'Run tests coverage with Paratest', namespace: 'app', aliases: ['test-coverage'])]
