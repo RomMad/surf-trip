@@ -77,6 +77,22 @@ function dump_env(
 }
 
 // ========================================================
+//                 COMPOSER DEPENDENCIES
+// ========================================================
+
+#[AsTask(description: 'Install Composer dependencies', namespace: 'composer', aliases: ['composer-install', 'ci'])]
+function composer_install(string $options = '--no-interaction'): void
+{
+    run_php('composer install '.$options);
+}
+
+#[AsTask(description: 'Update Composer dependencies', namespace: 'composer', aliases: ['composer-update', 'cu'])]
+function composer_update(string $options = '--no-interaction'): void
+{
+    run_php('composer update '.$options);
+}
+
+// ========================================================
 //                  DATABASE & MIGRATIONS
 // ========================================================
 
