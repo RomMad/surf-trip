@@ -25,25 +25,30 @@ use Symfony\Component\Validator\Constraints as Assert;
     operations: [
         new Get(
             normalizationContext: ['groups' => ['surf_session:read']],
+            security: 'is_granted("VIEW", object)',
         ),
         new GetCollection(
             normalizationContext: ['groups' => ['surf_session:read']],
+            security: 'is_granted("ROLE_USER")',
         ),
         new Post(
             normalizationContext: ['groups' => ['surf_session:read']],
             denormalizationContext: ['groups' => ['surf_session:write']],
+            security: 'is_granted("EDIT", object)',
         ),
         new Patch(
             normalizationContext: ['groups' => ['surf_session:read']],
             denormalizationContext: ['groups' => ['surf_session:write']],
+            security: 'is_granted("EDIT", object)',
         ),
-        new Delete(),
+        new Delete(
+            security: 'is_granted("DELETE", object)',
+        ),
     ],
     normalizationContext: ['groups' => ['surf_session:read']],
     denormalizationContext: ['groups' => ['surf_session:write']],
     order: ['startAt' => 'DESC'],
     paginationEnabled: true,
-    security: 'is_granted("ROLE_USER")'
 )]
 final class SurfSession
 {

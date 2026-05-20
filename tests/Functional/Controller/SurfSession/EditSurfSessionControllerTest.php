@@ -6,10 +6,13 @@ namespace App\Tests\Functional\Controller\SurfSession;
 
 use App\Controller\SurfSession\EditSurfSessionController;
 use App\Entity\SurfSession;
+use App\Entity\ValueObject\Email;
 use App\Enum\SurfSession\SurfSessionRating;
 use App\Factory\SurfSessionFactory;
+use App\Factory\UserFactory;
 use App\Tests\CustomWebTestCase;
 use App\Tests\Fixtures\DefaultStory;
+use App\Tests\Fixtures\UserStory;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Medium;
 use Symfony\Component\HttpFoundation\Request;
@@ -44,6 +47,19 @@ final class EditSurfSessionControllerTest extends CustomWebTestCase
         $this->setUpTest(DefaultStory::class, self::JOHN_USER);
 
         $this->surfSession = SurfSessionFactory::last();
+    }
+
+    public function testEditSurfSessionForbiddenForOtherUser(): void
+    {
+        $otherUser = UserFactory::find(['email' => Email::from(UserStory::JANE_EMAIL)]);
+        $this->client->loginUser($otherUser);
+
+        $this->client->request(
+            Request::METHOD_GET,
+            sprintf(self::PATH_EDIT, $this->surfSession->id)
+        );
+
+        $this->assertResponseStatusCodeSame(403);
     }
 
     public function testEditSurfSessionPageIsDisplayed(): void
