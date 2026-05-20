@@ -1,3 +1,5 @@
+{%- props form, button_label = 'save.label' -%}
+
 {{ form_start(form, {attr: {
     class: 'mb-4',
 }}) }}
@@ -14,5 +16,5 @@
     {% endif %}
     {{ form_rest(form) }}
 
-    <twig:Button:Save />
+    <twig:Button:Save :label="button_label" />
 {{ form_end(form) }}
