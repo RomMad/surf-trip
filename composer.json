@@ -8,11 +8,11 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-redis": "*",
-        "api-platform/doctrine-orm": "^4.3.4",
-        "api-platform/symfony": "^4.3.4",
+        "api-platform/doctrine-orm": "^4.3.5",
+        "api-platform/symfony": "^4.3.5",
         "doctrine/doctrine-bundle": "^3.2.2",
         "doctrine/doctrine-migrations-bundle": "^4.0",
-        "doctrine/orm": "^3.6.3",
+        "doctrine/orm": "^3.6.5",
         "friendsofphp/proxy-manager-lts": "^1.0.19",
         "lexik/jwt-authentication-bundle": "^3.2",
         "martin-georgiev/postgresql-for-doctrine": "^4.5.1",
@@ -57,12 +57,12 @@
         "symfony/yaml": "8.0.*",
         "symfonycasts/reset-password-bundle": "^1.25",
         "symfonycasts/verify-email-bundle": "^1.18",
-        "tales-from-a-dev/twig-tailwind-extra": "^1.1.0",
+        "tales-from-a-dev/twig-tailwind-extra": "^1.2.0",
         "twig/extra-bundle": "^3.24",
         "twig/html-extra": "^3.24.0",
-        "twig/intl-extra": "^3.24",
+        "twig/intl-extra": "^3.26",
         "twig/string-extra": "^3.24",
-        "twig/twig": "^3.24"
+        "twig/twig": "^3.26"
     },
     "config": {
         "allow-plugins": {
@@ -117,14 +117,14 @@
         }
     },
     "require-dev": {
-        "brianium/paratest": "^7.22.3",
+        "brianium/paratest": "^7.22.4",
         "dama/doctrine-test-bundle": "^8.6",
         "doctrine/doctrine-fixtures-bundle": "^4.3.1",
         "fakerphp/faker": "^1.24.1",
-        "friendsofphp/php-cs-fixer": "^3.95.1",
-        "phpstan/phpstan": "^2.1.54",
-        "phpunit/phpunit": "^13.1.8",
-        "rector/rector": "^2.4.2",
+        "friendsofphp/php-cs-fixer": "^3.95.2",
+        "phpstan/phpstan": "^2.1.55",
+        "phpunit/phpunit": "^13.1.10",
+        "rector/rector": "^2.4.3",
         "rector/swiss-knife": "^2.3.5",
         "squizlabs/php_codesniffer": "^4.0.1",
         "symfony/browser-kit": "8.0.*",
@@ -135,6 +135,6 @@
         "symfony/ux-toolkit": "^2.35",
         "symfony/web-profiler-bundle": "8.0.*",
         "vincentlanglet/twig-cs-fixer": "^3.14",
-        "zenstruck/foundry": "^2.9.2"
+        "zenstruck/foundry": "^2.10.1"
     }
 }
