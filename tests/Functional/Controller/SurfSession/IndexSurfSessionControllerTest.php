@@ -53,8 +53,8 @@ final class IndexSurfSessionControllerTest extends CustomWebTestCase
     {
         $this->client->request(Request::METHOD_GET, self::PATH, [
             'period' => [
-                'from' => (new \DateTimeImmutable('-1 day'))->format('Y-m-d'),
-                'to' => (new \DateTimeImmutable('now'))->format('Y-m-d'),
+                'from' => new \DateTimeImmutable('-1 day')->format('Y-m-d'),
+                'to' => new \DateTimeImmutable('now')->format('Y-m-d'),
             ],
         ], server: [
             'HTTP_TURBO_FRAME' => 'surf_session_results',
