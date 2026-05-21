@@ -1,16 +1,11 @@
 {% props form %}
 
 {{ form_start(form, {attr: {
-    class: 'flex flex-col md:flex-row gap-4',
-    'data-controller': 'auto-submit',
-    'data-auto-submit-delay-value': 300,
-    'data-action': 'input->auto-submit#submit change->auto-submit#submit',
+    class: 'flex flex-col gap-4 md:grid md:grid-cols-2 lg:flex lg:flex-row',
     'data-turbo-frame': 'trip_results',
 }}) }}
     <twig:Form:Query :query="form.query" />
-    <twig:Form:Period :period="form.period" />
-    {{ form_row(form.requiredLevels, {attr: {class: 'min-w-64'}, label_attr: {hidden: null}}) }}
     {{ form_row(form.location, {label_attr: {hidden: null}}) }}
-
-    {{ form_rest(form) }}
+    <twig:Form:Period :period="form.period" />
+    {{ form_row(form.requiredLevels, {attr: {class: 'w-64 min-w-48'}, label_attr: {hidden: null}}) }}
 {{ form_end(form) }}

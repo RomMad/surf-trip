@@ -6,13 +6,13 @@ namespace App\Form\Trip;
 
 use App\Enum\User\SurfLevel;
 use App\Form\Model\Trip\TripSearchInput;
+use App\Form\Type\InlineSearchFormType;
 use App\Form\Type\PeriodType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\SearchType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class TripSearchFormType extends AbstractType
@@ -52,10 +52,13 @@ final class TripSearchFormType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => TripSearchInput::class,
-            'method' => Request::METHOD_GET,
-            'csrf_protection' => false,
-            'allow_extra_fields' => true,
         ]);
+    }
+
+    #[\Override]
+    public function getParent(): string
+    {
+        return InlineSearchFormType::class;
     }
 
     #[\Override]

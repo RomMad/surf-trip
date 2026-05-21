@@ -1,10 +1,6 @@
 {% props form %}
 
 {{ form_start(form, {attr: {
-    class: 'flex flex-col md:flex-row gap-4 mb-4',
-    'data-controller': 'auto-submit',
-    'data-auto-submit-delay-value': 300,
-    'data-action': 'input->auto-submit#submit change->auto-submit#submit',
     'data-turbo-frame': 'surf_session_results',
 }}) }}
     <twig:Form:Query :query="form.query" />
