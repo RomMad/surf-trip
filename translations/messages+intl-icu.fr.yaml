@@ -24,6 +24,14 @@ language:
 search:
     label: Rechercher
     placeholder: Rechercher...
+period:
+    from:
+        label: Du
+        help: Date de début (de)
+    to:
+        label: Au
+        help: Date de fin (à)
+
 
 # Email
 email:

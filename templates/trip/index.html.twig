@@ -8,7 +8,7 @@
         <twig:Button:New href="{{ path('app.trip.new') }}" />
     </div>
 
-    <twig:Trip:Form:Filter :form="form" />
+    <twig:Trip:Form:Search :form="form" />
 
     {% block trip_results %}
         <turbo-frame id="trip_results">

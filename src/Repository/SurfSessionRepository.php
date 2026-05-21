@@ -6,7 +6,9 @@ namespace App\Repository;
 
 use App\Entity\SurfSession;
 use App\Entity\User;
+use App\Form\Model\SurfSession\SurfSessionSearchInput;
 use App\ReadModel\SurfSession\SurfSessionIndexReadModel;
+use App\Repository\Traits\PeriodFilterTrait;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
@@ -16,6 +18,8 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 final class SurfSessionRepository extends ServiceEntityRepository
 {
+    use PeriodFilterTrait;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, SurfSession::class);
@@ -39,9 +43,9 @@ final class SurfSessionRepository extends ServiceEntityRepository
         }
     }
 
-    public function createOrderedQueryBuilder(User $user): QueryBuilder
+    public function createOrderedQueryBuilder(User $user, SurfSessionSearchInput $searchInput): QueryBuilder
     {
-        return $this->createQueryBuilder('s')
+        $queryBuilder = $this->createQueryBuilder('s')
             ->select(sprintf(
                 'NEW %s(
                     s.id,
@@ -59,14 +63,34 @@ final class SurfSessionRepository extends ServiceEntityRepository
             ->where('s.user = :user')
             ->setParameter('user', $user)
         ;
+
+        $this->applyFilters($queryBuilder, $searchInput);
+
+        return $queryBuilder;
     }
 
-    public function getCountQueryBuilder(User $user): QueryBuilder
+    public function getCountQueryBuilder(User $user, SurfSessionSearchInput $searchInput): QueryBuilder
     {
-        return $this->createQueryBuilder('s')
+        $queryBuilder = $this->createQueryBuilder('s')
             ->select('COUNT(s.id)')
             ->where('s.user = :user')
             ->setParameter('user', $user)
         ;
+
+        $this->applyFilters($queryBuilder, $searchInput);
+
+        return $queryBuilder;
+    }
+
+    private function applyFilters(QueryBuilder $queryBuilder, SurfSessionSearchInput $searchInput): void
+    {
+        if ($searchInput->query) {
+            $queryBuilder
+                ->andWhere('ILIKE(s.spot, :query) = TRUE OR ILIKE(s.board, :query) = TRUE')
+                ->setParameter('query', '%'.$searchInput->query.'%')
+            ;
+        }
+
+        $this->applyPeriodFilters($queryBuilder, $searchInput->period, 's.startAt', 's.endAt');
     }
 }

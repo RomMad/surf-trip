@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace App\Repository;
 
 use App\Entity\Trip;
-use App\Form\Model\Trip\TripFilter;
+use App\Form\Model\Trip\TripSearchInput;
 use App\ReadModel\Trip\TripShowReadModel;
+use App\Repository\Traits\PeriodFilterTrait;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
@@ -17,6 +18,7 @@ use Doctrine\Persistence\ManagerRegistry;
 class TripRepository extends ServiceEntityRepository
 {
     use JsonContainsFilterTrait;
+    use PeriodFilterTrait;
 
     public function __construct(ManagerRegistry $registry)
     {
@@ -63,24 +65,24 @@ class TripRepository extends ServiceEntityRepository
         ;
     }
 
-    public function createOrderedQueryBuilder(TripFilter $filter): QueryBuilder
+    public function createOrderedQueryBuilder(TripSearchInput $searchInput): QueryBuilder
     {
         $queryBuilder = $this->createDtoBaseQueryBuilder()
             ->orderBy('t.id', 'DESC')
         ;
 
-        $this->applyFilters($queryBuilder, $filter);
+        $this->applyFilters($queryBuilder, $searchInput);
 
         return $queryBuilder;
     }
 
-    public function getCountQueryBuilder(TripFilter $filter): QueryBuilder
+    public function getCountQueryBuilder(TripSearchInput $searchInput): QueryBuilder
     {
         $queryBuilder = $this->createQueryBuilder('t')
             ->select('COUNT(t.id)')
         ;
 
-        $this->applyFilters($queryBuilder, $filter);
+        $this->applyFilters($queryBuilder, $searchInput);
 
         return $queryBuilder;
     }
@@ -114,24 +116,26 @@ class TripRepository extends ServiceEntityRepository
         ;
     }
 
-    private function applyFilters(QueryBuilder $queryBuilder, TripFilter $filter): void
+    private function applyFilters(QueryBuilder $queryBuilder, TripSearchInput $searchInput): void
     {
-        if (null !== $filter->search) {
+        if (null !== $searchInput->query) {
             $queryBuilder
                 ->andWhere('ILIKE(t.title, :search) = TRUE OR ILIKE(t.description, :search) = TRUE')
-                ->setParameter('search', '%'.$filter->search.'%')
+                ->setParameter('search', '%'.$searchInput->query.'%')
             ;
         }
 
-        if (null !== $filter->location) {
+        $this->applyPeriodFilters($queryBuilder, $searchInput->period, 't.startAt', 't.endAt');
+
+        if (null !== $searchInput->location) {
             $queryBuilder
                 ->andWhere('ILIKE(t.location, :location) = TRUE')
-                ->setParameter('location', '%'.$filter->location.'%')
+                ->setParameter('location', '%'.$searchInput->location.'%')
             ;
         }
 
-        if ([] !== $filter->requiredLevels) {
-            $this->addJsonArrayContains($queryBuilder, 't.requiredLevels', $filter->requiredLevels);
+        if ([] !== $searchInput->requiredLevels) {
+            $this->addJsonArrayContains($queryBuilder, 't.requiredLevels', $searchInput->requiredLevels);
         }
     }
 }

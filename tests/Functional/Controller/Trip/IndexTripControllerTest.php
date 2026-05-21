@@ -7,6 +7,7 @@ namespace App\Tests\Functional\Controller\Trip;
 use App\Controller\Trip\IndexTripController;
 use App\Tests\CustomWebTestCase;
 use App\Tests\Fixtures\DefaultStory;
+use App\Tests\Fixtures\TripStory;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Medium;
 use Symfony\Component\HttpFoundation\Request;
@@ -46,5 +47,29 @@ final class IndexTripControllerTest extends CustomWebTestCase
         $this->assertSelectorNotExists(self::TITLE_H1);
         $this->assertSelectorExists(self::TABLE);
         $this->assertSelectorCount(10, self::TABLE_ROW);
+    }
+
+    public function testIndexTripPageCanBeFilteredByQuery(): void
+    {
+        $this->client->request(Request::METHOD_GET, self::PATH, [
+            'query' => TripStory::TRIP_TITLE,
+        ], server: [
+            'HTTP_TURBO_FRAME' => 'trip_results',
+        ]);
+
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorCount(1, self::TABLE_ROW);
+    }
+
+    public function testIndexTripPageCanBeFilteredByLocation(): void
+    {
+        $this->client->request(Request::METHOD_GET, self::PATH, [
+            'location' => TripStory::TRIP_LOCATION,
+        ], server: [
+            'HTTP_TURBO_FRAME' => 'trip_results',
+        ]);
+
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorCount(1, self::TABLE_ROW);
     }
 }

@@ -8,15 +8,21 @@
         <twig:Button:New href="{{ path('app.surf_session.new') }}" />
     </div>
 
-    {% if pager.nbResults == 0 %}
-        <p class="text-muted-foreground">{{ 'no_records_found.label'|trans }}</p>
-    {% else %}
-        <div class="app-grid-cards">
-            {% for surf_session in pager %}
-                <twig:SurfSession:Card :surf_session="surf_session" />
-            {% endfor %}
-        </div>
+    <twig:SurfSession:Form:Search :form="form" />
 
-        <twig:AppPagination :pager="pager" />
-    {% endif %}
+    {% block surf_session_results %}
+        <turbo-frame id="surf_session_results">
+            {% if pager.nbResults == 0 %}
+                <p class="text-muted-foreground">{{ 'no_records_found.label'|trans }}</p>
+            {% else %}
+                <div class="app-grid-cards">
+                    {% for surf_session in pager %}
+                        <twig:SurfSession:Card :surf_session="surf_session" />
+                    {% endfor %}
+                </div>
+
+                <twig:AppPagination :pager="pager" />
+            {% endif %}
+        </turbo-frame>
+    {% endblock %}
 {% endblock %}

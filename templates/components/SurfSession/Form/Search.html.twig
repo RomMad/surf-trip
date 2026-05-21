@@ -1,0 +1,8 @@
+{% props form %}
+
+{{ form_start(form, {attr: {
+    'data-turbo-frame': 'surf_session_results',
+}}) }}
+    <twig:Form:Query :query="form.query" />
+    <twig:Form:Period :period="form.period" />
+{{ form_end(form) }}

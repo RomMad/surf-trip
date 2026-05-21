@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Controller\Trip;
 
-use App\Form\Model\Trip\TripFilter;
-use App\Form\Trip\TripFilterFormType;
+use App\Form\Model\Trip\TripSearchInput;
+use App\Form\Trip\TripSearchFormType;
 use App\Pagination\TripPager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,11 +28,11 @@ final class IndexTripController extends AbstractController
     #[Route(path: '/', methods: [Request::METHOD_GET])]
     public function __invoke(Request $request): Response
     {
-        $filter = new TripFilter();
-        $form = $this->createForm(TripFilterFormType::class, $filter);
+        $searchInput = new TripSearchInput();
+        $form = $this->createForm(TripSearchFormType::class, $searchInput);
         $form->handleRequest($request);
 
-        $pager = $this->tripPager->create($filter, $request, 10);
+        $pager = $this->tripPager->create($searchInput, $request, 10);
 
         if ('trip_results' === $request->headers->get('Turbo-Frame')) {
             return $this->renderBlock('trip/index.html.twig', 'trip_results', [

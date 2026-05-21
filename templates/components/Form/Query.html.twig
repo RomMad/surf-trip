@@ -1,0 +1,7 @@
+<twig:ButtonGroup>
+    {{ form_widget(query, {attr: {class: 'min-w-32'}}) }}
+    {{ form_label(query, null, {label_attr: {hidden: null}}) }}
+    <twig:Button type="submit" size="icon-lg" variant="outline" aria-label="{{ 'search.label'|trans }}">
+        <twig:ux:icon name="lucide:search" class="size-4" />
+    </twig:Button>
+</twig:ButtonGroup>
