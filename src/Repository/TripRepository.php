@@ -7,6 +7,7 @@ namespace App\Repository;
 use App\Entity\Trip;
 use App\Form\Model\Trip\TripSearchInput;
 use App\ReadModel\Trip\TripShowReadModel;
+use App\Repository\Traits\PeriodFilterTrait;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
@@ -17,6 +18,7 @@ use Doctrine\Persistence\ManagerRegistry;
 class TripRepository extends ServiceEntityRepository
 {
     use JsonContainsFilterTrait;
+    use PeriodFilterTrait;
 
     public function __construct(ManagerRegistry $registry)
     {
@@ -122,6 +124,8 @@ class TripRepository extends ServiceEntityRepository
                 ->setParameter('search', '%'.$searchInput->query.'%')
             ;
         }
+
+        $this->applyPeriodFilters($queryBuilder, $searchInput->period, 't.startAt', 't.endAt');
 
         if (null !== $searchInput->location) {
             $queryBuilder

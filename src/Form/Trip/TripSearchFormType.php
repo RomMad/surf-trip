@@ -6,6 +6,7 @@ namespace App\Form\Trip;
 
 use App\Enum\User\SurfLevel;
 use App\Form\Model\Trip\TripSearchInput;
+use App\Form\Type\PeriodType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\SearchType;
@@ -26,6 +27,7 @@ final class TripSearchFormType extends AbstractType
                     'placeholder' => 'search.placeholder',
                 ],
             ])
+            ->add('period', PeriodType::class)
             ->add('requiredLevels', EnumType::class, [
                 'class' => SurfLevel::class,
                 'label' => 'required_levels.label',
