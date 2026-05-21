@@ -82,7 +82,7 @@ final class SurfSessionRepository extends ServiceEntityRepository
         return $queryBuilder;
     }
 
-    private function applyFilters(QueryBuilder $queryBuilder, SurfSessionSearchInput $searchInput): QueryBuilder
+    private function applyFilters(QueryBuilder $queryBuilder, SurfSessionSearchInput $searchInput): void
     {
         if ($searchInput->query) {
             $queryBuilder
@@ -92,7 +92,5 @@ final class SurfSessionRepository extends ServiceEntityRepository
         }
 
         $this->applyPeriodFilters($queryBuilder, $searchInput->period, 's.startAt', 's.endAt');
-
-        return $queryBuilder;
     }
 }
