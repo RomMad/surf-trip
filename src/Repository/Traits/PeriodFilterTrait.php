@@ -23,8 +23,8 @@ trait PeriodFilterTrait
 
         if (null !== $period->to) {
             $queryBuilder
-                ->andWhere(sprintf('%s <= :periodTo', $endField))
-                ->setParameter('periodTo', $period->to)
+                ->andWhere(sprintf('%s < :periodTo', $endField))
+                ->setParameter('periodTo', $period->to->modify('+1 day'))
             ;
         }
     }
