@@ -8,6 +8,7 @@ use App\Entity\SurfSession;
 use App\Entity\User;
 use App\Form\Model\SurfSession\SurfSessionSearchInput;
 use App\ReadModel\SurfSession\SurfSessionIndexReadModel;
+use App\Repository\Traits\PeriodFilterTrait;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
@@ -17,6 +18,8 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 final class SurfSessionRepository extends ServiceEntityRepository
 {
+    use PeriodFilterTrait;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, SurfSession::class);
@@ -88,19 +91,7 @@ final class SurfSessionRepository extends ServiceEntityRepository
             ;
         }
 
-        if (null !== $searchInput->period->from) {
-            $queryBuilder
-                ->andWhere('s.startAt >= :periodFrom')
-                ->setParameter('periodFrom', $searchInput->period->from)
-            ;
-        }
-
-        if (null !== $searchInput->period->to) {
-            $queryBuilder
-                ->andWhere('s.endAt <= :periodTo')
-                ->setParameter('periodTo', $searchInput->period->to)
-            ;
-        }
+        $this->applyPeriodFilters($queryBuilder, $searchInput->period, 's.startAt', 's.endAt');
 
         return $queryBuilder;
     }
