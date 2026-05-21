@@ -82,22 +82,22 @@ final class SurfSessionRepository extends ServiceEntityRepository
     private function applyFilters(QueryBuilder $queryBuilder, SurfSessionSearchInput $searchInput): QueryBuilder
     {
         if ($searchInput->query) {
-            $queryBuilder->andWhere('LOWER(s.spot) LIKE :query OR LOWER(s.board) LIKE :query')
-                ->setParameter(
-                    'query',
-                    '%'.mb_strtolower(trim($searchInput->query)).'%'
-                )
+            $queryBuilder
+                ->andWhere('ILIKE(s.spot, :query) = TRUE OR ILIKE(s.board, :query) = TRUE')
+                ->setParameter('query', '%'.$searchInput->query.'%')
             ;
         }
 
         if (null !== $searchInput->period->from) {
-            $queryBuilder->andWhere('s.startAt >= :periodFrom')
+            $queryBuilder
+                ->andWhere('s.startAt >= :periodFrom')
                 ->setParameter('periodFrom', $searchInput->period->from)
             ;
         }
 
         if (null !== $searchInput->period->to) {
-            $queryBuilder->andWhere('s.endAt <= :periodTo')
+            $queryBuilder
+                ->andWhere('s.endAt <= :periodTo')
                 ->setParameter('periodTo', $searchInput->period->to)
             ;
         }
