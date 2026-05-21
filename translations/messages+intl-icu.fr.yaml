@@ -24,12 +24,13 @@ language:
 search:
     label: Rechercher
     placeholder: Rechercher...
-start_at_from:
-    label: Du
-    help: Date de début (de)
-end_at_to:
-    label: Au
-    help: Date de fin (à)
+period:
+    from:
+        label: Du
+        help: Date de début (de)
+    to:
+        label: Au
+        help: Date de fin (à)
 
 
 # Email

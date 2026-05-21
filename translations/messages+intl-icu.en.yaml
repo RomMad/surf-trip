@@ -22,12 +22,13 @@ language:
 search:
     label: Search
     placeholder: Search...
-start_at_from:
-    label: From
-    help: Start date (from)
-end_at_to:
-    label: To
-    help: End date (to)
+period:
+    from:
+        label: From
+        help: Start date (from)
+    to:
+        label: To
+        help: End date (to)
 
 # Email
 email:

@@ -8,6 +8,7 @@
     'data-turbo-frame': 'trip_results',
 }}) }}
     <twig:Form:Query :query="form.query" />
+    <twig:Form:Period :period="form.period" />
     {{ form_row(form.requiredLevels, {attr: {class: 'min-w-64'}, label_attr: {hidden: null}}) }}
     {{ form_row(form.location, {label_attr: {hidden: null}}) }}
 

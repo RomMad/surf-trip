@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace App\Form\SurfSession;
 
 use App\Form\Model\SurfSession\SurfSessionSearchInput;
-use App\Form\Type\EndAtToType;
+use App\Form\Type\PeriodType;
 use App\Form\Type\QueryType;
-use App\Form\Type\StartAtFromType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,8 +18,7 @@ final class SurfSessionSearchFormType extends AbstractType
     {
         $builder
             ->add('query', QueryType::class)
-            ->add('startAtFrom', StartAtFromType::class)
-            ->add('endAtTo', EndAtToType::class)
+            ->add('period', PeriodType::class)
         ;
     }
 

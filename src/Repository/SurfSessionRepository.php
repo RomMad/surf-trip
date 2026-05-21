@@ -90,15 +90,15 @@ final class SurfSessionRepository extends ServiceEntityRepository
             ;
         }
 
-        if ($searchInput->startAtFrom instanceof \DateTimeImmutable) {
-            $queryBuilder->andWhere('s.startAt >= :startAtFrom')
-                ->setParameter('startAtFrom', $searchInput->startAtFrom)
+        if (null !== $searchInput->period->from) {
+            $queryBuilder->andWhere('s.startAt >= :periodFrom')
+                ->setParameter('periodFrom', $searchInput->period->from)
             ;
         }
 
-        if ($searchInput->endAtTo instanceof \DateTimeImmutable) {
-            $queryBuilder->andWhere('s.endAt <= :endAtTo')
-                ->setParameter('endAtTo', $searchInput->endAtTo)
+        if (null !== $searchInput->period->to) {
+            $queryBuilder->andWhere('s.endAt <= :periodTo')
+                ->setParameter('periodTo', $searchInput->period->to)
             ;
         }
 
