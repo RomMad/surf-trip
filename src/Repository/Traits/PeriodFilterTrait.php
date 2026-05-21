@@ -15,13 +15,15 @@ trait PeriodFilterTrait
     private function applyPeriodFilters(QueryBuilder $queryBuilder, Period $period, string $startField, string $endField): void
     {
         if (null !== $period->from) {
-            $queryBuilder->andWhere(sprintf('%s >= :periodFrom', $startField))
+            $queryBuilder
+                ->andWhere(sprintf('%s >= :periodFrom', $startField))
                 ->setParameter('periodFrom', $period->from)
             ;
         }
 
         if (null !== $period->to) {
-            $queryBuilder->andWhere(sprintf('%s <= :periodTo', $endField))
+            $queryBuilder
+                ->andWhere(sprintf('%s <= :periodTo', $endField))
                 ->setParameter('periodTo', $period->to)
             ;
         }
