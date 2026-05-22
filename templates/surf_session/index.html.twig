@@ -11,18 +11,14 @@
     <twig:SurfSession:Form:Search :form="form" />
 
     {% block surf_session_results %}
-        <turbo-frame id="surf_session_results">
+        <twig:Turbo:Frame id="{{ constant('App\\Turbo\\Frame\\SurfSessionFrameId::RESULTS') }}">
             {% if pager.nbResults == 0 %}
                 <p class="text-muted-foreground">{{ 'no_records_found.label'|trans }}</p>
             {% else %}
                 <div class="app-grid-cards">
-                    {% for surf_session in pager %}
-                        <twig:SurfSession:Card :surf_session="surf_session" />
-                    {% endfor %}
+                    {{ include('surf_session/_page_content.html.twig', {pager: pager}) }}
                 </div>
-
-                <twig:AppPagination :pager="pager" />
             {% endif %}
-        </turbo-frame>
+        </twig:Turbo:Frame>
     {% endblock %}
 {% endblock %}

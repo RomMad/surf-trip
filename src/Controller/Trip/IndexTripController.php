@@ -7,6 +7,8 @@ namespace App\Controller\Trip;
 use App\Form\Model\Trip\TripSearchInput;
 use App\Form\Trip\TripSearchFormType;
 use App\Pagination\TripPager;
+use App\Turbo\Frame\TripFrameId;
+use App\Turbo\Http\TurboHeader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -34,8 +36,8 @@ final class IndexTripController extends AbstractController
 
         $pager = $this->tripPager->create($searchInput, $request, 10);
 
-        if ('trip_results' === $request->headers->get('Turbo-Frame')) {
-            return $this->renderBlock('trip/index.html.twig', 'trip_results', [
+        if (TripFrameId::RESULTS === $request->headers->get(TurboHeader::FRAME)) {
+            return $this->renderBlock('trip/index.html.twig', TripFrameId::RESULTS, [
                 'pager' => $pager,
             ]);
         }
