@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\SurfSession;
 
+use App\Cache\SurfSession\SurfSessionCacheInvalidator;
 use App\Entity\SurfSession;
 use App\Form\Model\SurfSession\SurfSessionWriteModel;
 use App\Form\SurfSession\SurfSessionFormType;
@@ -22,6 +23,7 @@ final class EditSurfSessionController extends AbstractController
     public function __construct(
         private readonly ObjectMapperInterface $objectMapper,
         private readonly SurfSessionRepository $surfSessionRepository,
+        private readonly SurfSessionCacheInvalidator $surfSessionCacheInvalidator,
     ) {}
 
     #[Route(
@@ -42,6 +44,7 @@ final class EditSurfSessionController extends AbstractController
             $this->objectMapper->map($surfSessionWriteModel, $surfSession);
 
             $this->surfSessionRepository->save($surfSession, true);
+            $this->surfSessionCacheInvalidator->invalidateList($surfSession->user);
 
             $this->addFlash('success', 'surf_session.updated_successfully');
 
