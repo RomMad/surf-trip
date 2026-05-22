@@ -16,7 +16,7 @@
     <span
         role="status"
         aria-label="{{ label|trans }}"
-        class="app-spinner {{ style.apply({size: size}, attributes.render('class'))|tailwind_merge }}"
+        class="{{ style.apply({size: size}, attributes.render('class'))|tailwind_merge }}"
         {{ attributes }}
     ></span>
 </div>
