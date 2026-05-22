@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\SurfSession;
 
+use App\Cache\SurfSession\SurfSessionCacheInvalidator;
 use App\Entity\SurfSession;
 use App\Entity\User;
 use App\Enum\User\UserRole;
@@ -23,6 +24,7 @@ final class NewSurfSessionController extends AbstractController
     public function __construct(
         private readonly ObjectMapperInterface $objectMapper,
         private readonly SurfSessionRepository $surfSessionRepository,
+        private readonly SurfSessionCacheInvalidator $surfSessionCacheInvalidator,
     ) {}
 
     #[Route(
@@ -43,6 +45,7 @@ final class NewSurfSessionController extends AbstractController
             $surfSession->user = $currentUser;
 
             $this->surfSessionRepository->save($surfSession, true);
+            $this->surfSessionCacheInvalidator->invalidateList();
 
             $this->addFlash('success', 'surf_session.created_successfully');
 
