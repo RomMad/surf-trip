@@ -1,0 +1,22 @@
+{# @prop size 'sm'|'md'|'lg' The spinner size, default to `md` #}
+{# @prop label The aria-label for the spinner, default to `loading.label` translation key #}
+{%- props size = 'md', label = 'loading.label' -%}
+{%- set style = html_cva(
+    base: 'app-spinner',
+    variants: {
+        size: {
+            sm: 'h-6 w-6',
+            md: 'h-8 w-8',
+            lg: 'h-10 w-10',
+        },
+    },
+) -%}
+
+<div class="flex items-center justify-center">
+    <span
+        role="status"
+        aria-label="{{ label|trans }}"
+        class="{{ style.apply({size: size}, attributes.render('class'))|tailwind_merge }}"
+        {{ attributes }}
+    ></span>
+</div>

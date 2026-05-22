@@ -1,0 +1,5 @@
+@layer components {
+    .app-spinner {
+        @apply animate-spin rounded-full border-4 border-gray-300 border-t-black;
+    }
+}

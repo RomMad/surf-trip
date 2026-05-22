@@ -19,6 +19,7 @@ navigation:
     toggle.label: Toggle navigation
 language:
     switch.label: Change language
+loading.label: Loading...
 search:
     label: Search
     placeholder: Search...

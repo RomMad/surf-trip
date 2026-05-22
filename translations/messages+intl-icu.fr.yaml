@@ -21,6 +21,7 @@ language:
     switch.label: Changer de langue
     fr.label: Français
     en.label: Anglais
+loading.label: Chargement en cours...
 search:
     label: Rechercher
     placeholder: Rechercher...

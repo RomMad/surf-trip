@@ -9,12 +9,15 @@ use App\Enum\User\UserRole;
 use App\Form\Model\SurfSession\SurfSessionSearchInput;
 use App\Form\SurfSession\SurfSessionSearchFormType;
 use App\Pagination\SurfSessionPager;
+use App\Turbo\Frame\SurfSessionFrameId;
+use App\Turbo\Http\TurboHeader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\UX\Turbo\TurboStreamResponse;
 
 #[IsGranted(UserRole::USER)]
 final class IndexSurfSessionController extends AbstractController
@@ -38,15 +41,17 @@ final class IndexSurfSessionController extends AbstractController
 
         $pager = $this->surfSessionPager->create($request, $currentUser, $searchInput);
 
-        if ('surf_session_results' === $request->headers->get('Turbo-Frame')) {
-            return $this->renderBlock('surf_session/index.html.twig', 'surf_session_results', [
+        return match ($request->headers->get(TurboHeader::FRAME)) {
+            SurfSessionFrameId::PAGE_CONTENT => $this->render('surf_session/_stream.html.twig', [
                 'pager' => $pager,
-            ]);
-        }
-
-        return $this->render('surf_session/index.html.twig', [
-            'pager' => $pager,
-            'form' => $form,
-        ]);
+            ], new TurboStreamResponse()),
+            SurfSessionFrameId::RESULTS => $this->renderBlock('surf_session/index.html.twig', SurfSessionFrameId::RESULTS, [
+                'pager' => $pager,
+            ]),
+            default => $this->render('surf_session/index.html.twig', [
+                'pager' => $pager,
+                'form' => $form,
+            ]),
+        };
     }
 }
