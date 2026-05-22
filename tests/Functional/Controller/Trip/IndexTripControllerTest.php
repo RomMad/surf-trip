@@ -8,6 +8,8 @@ use App\Controller\Trip\IndexTripController;
 use App\Tests\CustomWebTestCase;
 use App\Tests\Fixtures\DefaultStory;
 use App\Tests\Fixtures\TripStory;
+use App\Turbo\Frame\TripFrameId;
+use App\Turbo\Http\TurboHeader;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Medium;
 use Symfony\Component\HttpFoundation\Request;
@@ -40,7 +42,7 @@ final class IndexTripControllerTest extends CustomWebTestCase
     public function testIndexTripPageWithTurboFrameIsDisplayed(): void
     {
         $this->client->request(Request::METHOD_GET, self::PATH, server: [
-            'HTTP_TURBO_FRAME' => 'trip_results',
+            TurboHeader::FRAME_SERVER => TripFrameId::RESULTS,
         ]);
 
         $this->assertResponseIsSuccessful();
@@ -54,7 +56,7 @@ final class IndexTripControllerTest extends CustomWebTestCase
         $this->client->request(Request::METHOD_GET, self::PATH, [
             'query' => TripStory::TRIP_TITLE,
         ], server: [
-            'HTTP_TURBO_FRAME' => 'trip_results',
+            TurboHeader::FRAME_SERVER => TripFrameId::RESULTS,
         ]);
 
         $this->assertResponseIsSuccessful();
@@ -66,7 +68,7 @@ final class IndexTripControllerTest extends CustomWebTestCase
         $this->client->request(Request::METHOD_GET, self::PATH, [
             'location' => TripStory::TRIP_LOCATION,
         ], server: [
-            'HTTP_TURBO_FRAME' => 'trip_results',
+            TurboHeader::FRAME_SERVER => TripFrameId::RESULTS,
         ]);
 
         $this->assertResponseIsSuccessful();

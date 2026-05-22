@@ -2,7 +2,7 @@
 
 {{ form_start(form, {attr: {
     class: 'flex flex-col gap-4 md:grid md:grid-cols-2 lg:flex lg:flex-row',
-    'data-turbo-frame': 'trip_results',
+    'data-turbo-frame': constant('App\\Turbo\\Frame\\TripFrameId::RESULTS'),
 }}) }}
     <twig:Form:Query :query="form.query" />
     {{ form_row(form.location, {label_attr: {hidden: null}}) }}
