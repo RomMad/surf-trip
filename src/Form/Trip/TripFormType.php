@@ -6,9 +6,9 @@ namespace App\Form\Trip;
 
 use App\Enum\User\SurfLevel;
 use App\Form\Model\Trip\TripWriteModel;
+use App\Form\Type\Autocomplete\OwnersAutocompleteType;
 use App\Form\Type\DateTimeImmutableType;
 use App\Form\Type\LocationType;
-use App\Form\Type\OwnersAutocompleteType;
 use App\Form\Type\TitleType;
 use App\ReadModel\Trip\TripOwnerReadModel;
 use App\Repository\UserRepository;
