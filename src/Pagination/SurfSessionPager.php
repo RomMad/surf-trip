@@ -35,7 +35,7 @@ final readonly class SurfSessionPager
         return $this->cache->get(
             $this->generateCacheKey($request, $user),
             function (ItemInterface $item) use ($request, $user, $searchInput, $maxPerPage): Pagerfanta {
-                $item->tag(SurfSessionCacheTags::LIST);
+                $item->tag(SurfSessionCacheTags::listForUser($user));
                 $item->expiresAfter(new \DateInterval(self::CACHE_TTL));
 
                 $queryBuilder = $this->surfSessionRepository->createOrderedQueryBuilder($user, $searchInput);

@@ -35,7 +35,7 @@ final class DeleteSurfSessionController extends AbstractController
     public function __invoke(SurfSession $surfSession): Response
     {
         $this->surfSessionRepository->remove($surfSession, true);
-        $this->surfSessionCacheInvalidator->invalidateList();
+        $this->surfSessionCacheInvalidator->invalidateList($surfSession->user);
 
         $this->addFlash('success', 'surf_session.deleted_successfully');
 

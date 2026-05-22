@@ -44,7 +44,7 @@ final class EditSurfSessionController extends AbstractController
             $this->objectMapper->map($surfSessionWriteModel, $surfSession);
 
             $this->surfSessionRepository->save($surfSession, true);
-            $this->surfSessionCacheInvalidator->invalidateList();
+            $this->surfSessionCacheInvalidator->invalidateList($surfSession->user);
 
             $this->addFlash('success', 'surf_session.updated_successfully');
 

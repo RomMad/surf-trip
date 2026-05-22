@@ -45,7 +45,7 @@ final class NewSurfSessionController extends AbstractController
             $surfSession->user = $currentUser;
 
             $this->surfSessionRepository->save($surfSession, true);
-            $this->surfSessionCacheInvalidator->invalidateList();
+            $this->surfSessionCacheInvalidator->invalidateList($currentUser);
 
             $this->addFlash('success', 'surf_session.created_successfully');
 
