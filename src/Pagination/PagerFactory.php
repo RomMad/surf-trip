@@ -105,8 +105,8 @@ final readonly class PagerFactory
     private function createPager(AdapterInterface $adapter, int $currentPage, int $maxPerPage): Pagerfanta
     {
         return new Pagerfanta($adapter)
-            ->setCurrentPage($currentPage)
             ->setMaxPerPage($maxPerPage)
+            ->setCurrentPage($currentPage)
             ->setNormalizeOutOfRangePages(true)
         ;
     }
