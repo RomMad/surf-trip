@@ -92,6 +92,12 @@ function composer_update(string $options = '--no-interaction'): void
     run_php('composer update '.$options);
 }
 
+#[AsTask(description: 'Add a new Composer dependency', namespace: 'composer', aliases: ['composer-required', 'cr'])]
+function composer_required(string $package, string $options = '--no-interaction'): void
+{
+    run_php(sprintf('composer require %s %s', $package, $options));
+}
+
 // ========================================================
 //                  DATABASE & MIGRATIONS
 // ========================================================
