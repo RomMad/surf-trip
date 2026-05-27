@@ -1,0 +1,14 @@
+{# @prop string title Translation key for section title #}
+{# @prop string description Translation key for section description #}
+{%- props title, description = null -%}
+
+<div class="mb-6">
+    <h3 class="mb-2 text-lg font-semibold text-slate-950 dark:text-white">
+        {{- title|trans -}}
+    </h3>
+    {% if description %}
+        <p class="text-sm text-slate-500">
+            {{- description|trans -}}
+        </p>
+    {% endif %}
+</div>

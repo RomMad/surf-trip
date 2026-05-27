@@ -60,7 +60,6 @@ final class EditTripController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->tripUpdater->updateFromWriteModel($id, $tripWriteModel);
-            $this->tripReadModelProvider->invalidate($id);
 
             $this->addFlash('success', 'trip.updated_successfully');
 

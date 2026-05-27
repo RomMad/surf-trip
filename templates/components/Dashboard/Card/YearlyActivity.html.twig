@@ -1,0 +1,12 @@
+<twig:Card class="app-dashboard-card">
+    <twig:Dashboard:Card:Header
+        title="charts.yearly_activity.title"
+        description="charts.yearly_activity.description"
+    />
+    <twig:Chart
+        :chart="chart"
+        :hasData="yearlyActivity|filter(stat => stat.sessionsCount > 0 or stat.tripsCount > 0) is not empty"
+        controller="dashboard-chart"
+        emptyMessage="charts.yearly_activity.empty"
+    />
+</twig:Card>

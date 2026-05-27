@@ -27,7 +27,6 @@ final class IndexTripController extends AbstractController
         name: self::ROUTE,
         methods: [Request::METHOD_GET],
     )]
-    #[Route(path: '/', methods: [Request::METHOD_GET])]
     public function __invoke(Request $request): Response
     {
         $searchInput = new TripSearchInput();

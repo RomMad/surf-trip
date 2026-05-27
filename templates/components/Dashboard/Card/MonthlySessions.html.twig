@@ -1,0 +1,8 @@
+<twig:Card class="app-dashboard-card">
+    <twig:Dashboard:Card:Header title="charts.monthly_sessions.title" />
+    <twig:Chart
+        :chart="chart"
+        :hasData="monthlySessions|filter(month => month.sessionsCount > 0) is not empty"
+        controller="dashboard-chart"
+    />
+</twig:Card>

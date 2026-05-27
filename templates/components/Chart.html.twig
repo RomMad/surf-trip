@@ -1,0 +1,16 @@
+{# @prop \Symfony\UX\Chartjs\Model\Chart chart Chart instance to render #}
+{# @prop string class CSS classes for the chart canvas container, default to `h-full w-full` #}
+{# @prop string|null controller Optional Stimulus controller attached to the rendered chart #}
+{# @prop string emptyMessage Translation key used for empty state text #}
+{%- props chart, hasData = true, class = 'h-full w-full', controller = null, emptyMessage = 'charts.monthly_sessions.empty' -%}
+
+{% if hasData %}
+    <div class="app-chart-shell">
+        {{ render_chart(chart, {
+            class: class,
+            'data-controller': controller,
+        }) }}
+    </div>
+{% else %}
+    <twig:Dashboard:Card:EmptyState :message="emptyMessage" />
+{% endif %}

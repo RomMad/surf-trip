@@ -1,0 +1,18 @@
+{# @prop string label KPI label translation key #}
+{# @prop string|int|float value KPI value to display #}
+{%- props label, value -%}
+
+<twig:Card class="app-dashboard-card">
+    <twig:Card:Header class="p-0">
+        <twig:Card:Title>
+            <h3 class="app-kpi-title">
+                {{- label|trans -}}
+            </h3>
+        </twig:Card:Title>
+    </twig:Card:Header>
+    <twig:Card:Content class="p-0">
+        <p class="app-kpi-value">
+            {{- value -}}
+        </p>
+    </twig:Card:Content>
+</twig:Card>

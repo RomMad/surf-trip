@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Trip;
 
-use App\Cache\Trip\TripCacheTags;
+use App\Cache\Trip\TripCacheInvalidator;
 use App\Entity\Trip;
 use App\Entity\User;
 use App\Enum\User\UserRole;
@@ -19,14 +19,13 @@ use Symfony\Component\ObjectMapper\ObjectMapperInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
-use Symfony\Contracts\Cache\TagAwareCacheInterface;
 
 final class NewTripController extends AbstractController
 {
     public function __construct(
         private readonly TripRepository $tripRepository,
         private readonly ObjectMapperInterface $objectMapper,
-        private readonly TagAwareCacheInterface $cache,
+        private readonly TripCacheInvalidator $tripCacheInvalidator,
     ) {}
 
     #[Route(
@@ -48,7 +47,7 @@ final class NewTripController extends AbstractController
             $trip = $this->objectMapper->map($tripWriteModel, Trip::class);
 
             $this->tripRepository->save($trip, true);
-            $this->cache->invalidateTags([TripCacheTags::LIST]);
+            $this->tripCacheInvalidator->invalidate($trip);
 
             $this->addFlash('success', 'trip.created_successfully');
 

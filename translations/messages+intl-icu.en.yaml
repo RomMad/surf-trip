@@ -162,3 +162,27 @@ user:
     profile:
         edit.label: Edit profile
         updated_successfully: Your profile has been updated.
+
+# Dashboard
+dashboard:
+    label: Dashboard
+    summary: Your latest surf activity at a glance.
+charts:
+    empty_state.label: No dashboard data yet
+    monthly_sessions:
+        title: Sessions by month
+        empty: No session data yet.
+    top_spots:
+        title: Top spots
+        description: Number of sessions per spot with the average rating shown in the label.
+        empty: No spot data yet.
+    yearly_activity:
+        title: Sessions and trips by year
+        description: Compare your number of surf sessions and trips for each year.
+        empty: No yearly activity data yet.
+kpis:
+    total_trips.label: Total trips
+    trips_this_year.label: Trips this year
+    total_sessions.label: Total sessions
+    sessions_this_year.label: Sessions this year
+    average_session_rating.label: Average session rating
