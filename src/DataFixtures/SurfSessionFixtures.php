@@ -15,8 +15,7 @@ use Faker\Generator;
 
 class SurfSessionFixtures extends Fixture implements DependentFixtureInterface
 {
-    private const int RANDOM_SESSIONS_COUNT = 400;
-    private const int USER_REFERENCE_COUNT = 6;
+    private const int SESSIONS_COUNT = 30000;
 
     private const array SPOTS = [
         'Seignosse Les Bourdaines',
@@ -140,6 +139,7 @@ class SurfSessionFixtures extends Fixture implements DependentFixtureInterface
     {
         return [
             UserFixtures::class,
+            TripFixtures::class,
         ];
     }
 
@@ -148,7 +148,7 @@ class SurfSessionFixtures extends Fixture implements DependentFixtureInterface
      */
     private function generateSurfSessions(): \Generator
     {
-        for ($index = 0; $index < self::RANDOM_SESSIONS_COUNT; ++$index) {
+        for ($index = 0; $index < self::SESSIONS_COUNT; ++$index) {
             /** @var \DateTimeInterface $randomStart */
             $randomStart = $this->faker->dateTimeBetween('-6 months', 'now');
             $startAt = \DateTimeImmutable::createFromInterface($randomStart);
@@ -188,7 +188,7 @@ class SurfSessionFixtures extends Fixture implements DependentFixtureInterface
 
     private function getRandomUser(): User
     {
-        $randomUserIndex = $this->faker->numberBetween(0, self::USER_REFERENCE_COUNT - 1);
+        $randomUserIndex = $this->faker->numberBetween(0, UserFixtures::USERS_COUNT - 1);
 
         return $this->getReference(UserFixtures::USER_REFERENCE.$randomUserIndex, User::class);
     }

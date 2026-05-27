@@ -17,8 +17,7 @@ use Faker\Generator;
 
 class TripFixtures extends Fixture implements DependentFixtureInterface
 {
-    private const int RANDOM_TRIPS_COUNT = 1000;
-    private const int USER_REFERENCE_COUNT = 5;
+    private const int TRIPS_COUNT = 15000;
 
     private const array TRIPS_DATA = [
         [
@@ -142,9 +141,9 @@ DESC,
     private function generateTrips(): \Generator
     {
         // Generate random trips
-        for ($index = 0; $index < self::RANDOM_TRIPS_COUNT; ++$index) {
+        for ($index = 0; $index < self::TRIPS_COUNT; ++$index) {
             /** @var \DateTimeInterface $randomStart */
-            $randomStart = $this->faker->dateTimeBetween('-6 months', '+6 months');
+            $randomStart = $this->faker->dateTimeBetween('-5 years', '+6 months');
             $startAt = \DateTimeImmutable::createFromInterface($randomStart);
             $createdAt = \DateTimeImmutable::createFromInterface($this->faker->dateTimeBetween('-1 year', '-1 month'));
             $title = sprintf('%s Surf Trip', ucfirst((string) $this->faker->words($this->faker->numberBetween(2, 4), true)));
@@ -159,7 +158,7 @@ DESC,
             $trip->description = $this->faker->paragraphs($this->faker->numberBetween(1, 3), true);
 
             /** @var list<int> $owners */
-            $owners = $this->faker->randomElements(range(0, self::USER_REFERENCE_COUNT - 1), $this->faker->numberBetween(1, 2));
+            $owners = $this->faker->randomElements(range(0, UserFixtures::USERS_COUNT - 1), $this->faker->numberBetween(1, 3));
 
             foreach ($owners as $ownerIndex) {
                 /** @var User $owner */
