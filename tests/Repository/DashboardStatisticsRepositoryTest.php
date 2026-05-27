@@ -32,7 +32,7 @@ final class DashboardStatisticsRepositoryTest extends CustomKernelTestCase
     public function testFetchKpisWithExistingDataset(): void
     {
         $user = DashboardStory::getDashboardUser();
-        $yearStart = new \DateTimeImmutable(sprintf('%d-01-01 00:00:00', (int) (new \DateTimeImmutable())->format('Y')));
+        $yearStart = new \DateTimeImmutable(sprintf('%d-01-01 00:00:00', (int) new \DateTimeImmutable()->format('Y')));
         $nextYearStart = $yearStart->modify('+1 year');
 
         $kpis = $this->repository->fetchKpis($user, $yearStart, $nextYearStart);
@@ -48,7 +48,7 @@ final class DashboardStatisticsRepositoryTest extends CustomKernelTestCase
     public function testFetchMonthlySessionStatsWithExistingDataset(): void
     {
         $user = DashboardStory::getDashboardUser();
-        $currentYear = (int) (new \DateTimeImmutable())->format('Y');
+        $currentYear = (int) new \DateTimeImmutable()->format('Y');
         $previousYear = $currentYear - 1;
         $periodStart = new \DateTimeImmutable(sprintf('%d-01-01 00:00:00', $previousYear));
         $periodEnd = new \DateTimeImmutable(sprintf('%d-12-31 23:59:59', $currentYear))->modify('+1 second');
@@ -90,7 +90,7 @@ final class DashboardStatisticsRepositoryTest extends CustomKernelTestCase
     public function testFetchYearlyActivityStatsWithExistingDataset(): void
     {
         $user = DashboardStory::getDashboardUser();
-        $currentYear = (int) (new \DateTimeImmutable())->format('Y');
+        $currentYear = (int) new \DateTimeImmutable()->format('Y');
         $previousYear = $currentYear - 1;
         $periodStart = new \DateTimeImmutable(sprintf('%d-01-01 00:00:00', $previousYear));
         $periodEnd = new \DateTimeImmutable(sprintf('%d-12-31 23:59:59', $currentYear))->modify('+1 second');
