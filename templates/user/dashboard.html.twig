@@ -19,7 +19,7 @@
             <twig:Dashboard:Card:Kpi label="kpis.sessions_this_year.label" :value="kpis.sessionsThisYear" />
             <twig:Dashboard:Card:Kpi
                 label="kpis.average_session_rating.label"
-                value="{{ kpis.averageSessionRating is null ? '-' : kpis.averageSessionRating|number_format(1, '.', ' ') }}"
+                value="{{ kpis.averageSessionRating is null ? '-' : kpis.averageSessionRating|format_number(locale: app.user.locale.value) }}"
             />
         </section>
 

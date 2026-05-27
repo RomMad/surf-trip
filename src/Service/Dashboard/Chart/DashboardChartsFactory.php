@@ -23,7 +23,7 @@ final readonly class DashboardChartsFactory
     {
         return [
             'monthly_sessions' => $this->monthlySessionsChartFactory->create($stats, $locale),
-            'top_spots' => $this->topSpotsChartFactory->create($stats),
+            'top_spots' => $this->topSpotsChartFactory->create($stats, $locale),
             'yearly_activity' => $this->yearlyActivityChartFactory->create($stats, $locale),
         ];
     }

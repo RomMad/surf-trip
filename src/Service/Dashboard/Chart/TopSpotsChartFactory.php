@@ -6,20 +6,26 @@ namespace App\Service\Dashboard\Chart;
 
 use App\Dto\Dashboard\SpotStatDto;
 use App\Dto\Dashboard\UserDashboardStatsDto;
+use App\Enum\User\Locale;
 use Symfony\UX\Chartjs\Model\Chart;
 
 final readonly class TopSpotsChartFactory
 {
-    private const int MAX_SPOT_NAME_LENGTH = 12;
+    private const int MAX_SPOT_NAME_LENGTH = 14;
 
     public function __construct(
         private BarChartFactory $barChartFactory,
     ) {}
 
-    public function create(UserDashboardStatsDto $stats): Chart
+    public function create(UserDashboardStatsDto $stats, Locale $locale): Chart
     {
+        $formatter = new \NumberFormatter(
+            $locale->value,
+            \NumberFormatter::DECIMAL
+        );
+
         $labels = array_map(
-            $this->formatSpotLabel(...),
+            static fn (SpotStatDto $spot): string => self::formatSpotLabel($spot, $formatter),
             $stats->topSpots,
         );
 
@@ -31,18 +37,18 @@ final readonly class TopSpotsChartFactory
         return $this->barChartFactory->create($labels, $data, true);
     }
 
-    private function formatSpotLabel(SpotStatDto $spot): string
+    private static function formatSpotLabel(SpotStatDto $spot, \NumberFormatter $formatter): string
     {
-        $spotName = $this->truncateSpotName($spot->spot);
+        $spotName = self::truncateSpotName($spot->spot);
 
         if (null === $spot->averageRating) {
             return $spotName;
         }
 
-        return sprintf('%s (%.1f)', $spotName, round($spot->averageRating, 1));
+        return sprintf('%s (%s)', $spotName, $formatter->format($spot->averageRating));
     }
 
-    private function truncateSpotName(string $spotName): string
+    private static function truncateSpotName(string $spotName): string
     {
         if (strlen($spotName) <= self::MAX_SPOT_NAME_LENGTH) {
             return $spotName;

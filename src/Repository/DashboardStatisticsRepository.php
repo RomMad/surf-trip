@@ -71,7 +71,7 @@ final readonly class DashboardStatisticsRepository
             tripsThisYear: (int) ($result['trips_this_year'] ?? 0),
             totalSessions: (int) ($result['total_sessions'] ?? 0),
             sessionsThisYear: (int) ($result['sessions_this_year'] ?? 0),
-            averageSessionRating: isset($result['average_session_rating']) ? (float) $result['average_session_rating'] : null,
+            averageSessionRating: isset($result['average_session_rating']) ? round((float) $result['average_session_rating'], 1) : null,
         );
     }
 
@@ -148,7 +148,7 @@ final readonly class DashboardStatisticsRepository
             static fn (array $row): SpotStatDto => new SpotStatDto(
                 (string) $row['spot'],
                 (int) $row['sessions_count'],
-                null === $row['average_rating'] ? null : (float) $row['average_rating'],
+                null === $row['average_rating'] ? null : round((float) $row['average_rating'], 1),
             ),
             $rows,
         );
