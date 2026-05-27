@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
 #[Medium]
 final class DashboardControllerTest extends CustomWebTestCase
 {
-    private const string PATH = 'en/me/dashboard';
+    private const string PATH = '/en/me/dashboard';
     private const string DASHBOARD_TITLE = 'Dashboard';
     private const string MAIN_SELECTOR = 'main';
     private const string CANVAS_SELECTOR = 'canvas';
