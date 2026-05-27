@@ -51,7 +51,7 @@ class UserFixtures extends Fixture
         }
 
         for ($index = count(self::USERS_DATA); $index < self::USERS_COUNT; ++$index) {
-            $user = $this->generateRadomUser();
+            $user = $this->generateRandomUser();
             $user->password = $password;
 
             $manager->persist($user);
@@ -82,7 +82,7 @@ class UserFixtures extends Fixture
         }
     }
 
-    private function generateRadomUser(): User
+    private function generateRandomUser(): User
     {
         $user = new User();
         $user->email = Email::from($this->faker->unique()->safeEmail());
