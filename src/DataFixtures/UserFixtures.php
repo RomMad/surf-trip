@@ -20,7 +20,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 class UserFixtures extends Fixture
 {
     public const string USER_REFERENCE = 'user_';
-    public const int USERS_COUNT = 800;
+    public const int USERS_COUNT = 80;
 
     private const array USERS_DATA = [
         ['John', 'Doe', UserRole::Admin],

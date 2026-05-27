@@ -15,7 +15,7 @@ use Faker\Generator;
 
 class SurfSessionFixtures extends Fixture implements DependentFixtureInterface
 {
-    private const int SESSIONS_COUNT = 30000;
+    private const int SESSIONS_COUNT = 3000;
 
     private const array SPOTS = [
         'Seignosse Les Bourdaines',
@@ -139,7 +139,6 @@ class SurfSessionFixtures extends Fixture implements DependentFixtureInterface
     {
         return [
             UserFixtures::class,
-            TripFixtures::class,
         ];
     }
 
