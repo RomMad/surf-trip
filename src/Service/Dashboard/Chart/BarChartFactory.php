@@ -9,6 +9,12 @@ use Symfony\UX\Chartjs\Model\Chart;
 
 final readonly class BarChartFactory
 {
+    public const string CHART1_COLOR_TOKEN = '--chart-1';
+    public const string CHART2_COLOR_TOKEN = '--chart-2';
+    public const int BAR_BORDER_RADIUS = 12;
+    public const int BAR_THICKNESS = 18;
+    public const int BAR_MAX_THICKNESS = 24;
+
     public function __construct(
         private ChartBuilderInterface $chartBuilder,
     ) {}
@@ -33,11 +39,11 @@ final readonly class BarChartFactory
         $datasets = array_map(
             static fn (array $dataset): array => array_replace_recursive([
                 'data' => $data,
-                'backgroundColor' => '--chart-1',
-                'borderColor' => '--chart-1',
-                'borderRadius' => 12,
-                'barThickness' => 18,
-                'maxBarThickness' => 24,
+                'backgroundColor' => self::CHART1_COLOR_TOKEN,
+                'borderColor' => self::CHART1_COLOR_TOKEN,
+                'borderRadius' => self::BAR_BORDER_RADIUS,
+                'barThickness' => self::BAR_THICKNESS,
+                'maxBarThickness' => self::BAR_MAX_THICKNESS,
             ], $dataset),
             $datasets,
         );

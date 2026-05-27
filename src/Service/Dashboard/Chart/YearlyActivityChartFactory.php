@@ -12,9 +12,6 @@ use Symfony\UX\Chartjs\Model\Chart;
 
 final readonly class YearlyActivityChartFactory
 {
-    private const string CHART1_COLOR_TOKEN = '--chart-1';
-    private const string CHART2_COLOR_TOKEN = '--chart-2';
-    private const int BAR_BORDER_RADIUS = 12;
     private const int BAR_THICKNESS = 16;
     private const int BAR_MAX_THICKNESS = 20;
 
@@ -47,18 +44,18 @@ final readonly class YearlyActivityChartFactory
                 [
                     'label' => $this->translator->trans('surf_sessions.label', locale: $locale->value),
                     'data' => $sessionsData,
-                    'backgroundColor' => self::CHART1_COLOR_TOKEN,
-                    'borderColor' => self::CHART1_COLOR_TOKEN,
-                    'borderRadius' => self::BAR_BORDER_RADIUS,
+                    'backgroundColor' => BarChartFactory::CHART1_COLOR_TOKEN,
+                    'borderColor' => BarChartFactory::CHART1_COLOR_TOKEN,
+                    'borderRadius' => BarChartFactory::BAR_BORDER_RADIUS,
                     'barThickness' => self::BAR_THICKNESS,
                     'maxBarThickness' => self::BAR_MAX_THICKNESS,
                 ],
                 [
                     'label' => $this->translator->trans('trips.label', locale: $locale->value),
                     'data' => $tripsData,
-                    'backgroundColor' => self::CHART2_COLOR_TOKEN,
-                    'borderColor' => self::CHART2_COLOR_TOKEN,
-                    'borderRadius' => self::BAR_BORDER_RADIUS,
+                    'backgroundColor' => BarChartFactory::CHART2_COLOR_TOKEN,
+                    'borderColor' => BarChartFactory::CHART2_COLOR_TOKEN,
+                    'borderRadius' => BarChartFactory::BAR_BORDER_RADIUS,
                     'barThickness' => self::BAR_THICKNESS,
                     'maxBarThickness' => self::BAR_MAX_THICKNESS,
                 ],
