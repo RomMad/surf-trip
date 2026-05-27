@@ -26,7 +26,7 @@ final readonly class DashboardStatisticsRepository
                 SELECT
                     COUNT(DISTINCT t.id) AS total_trips,
                     COUNT(DISTINCT t.id) FILTER (
-                        WHERE t.start_at >= :year_start AND t.start_at < :next_year_start
+                        WHERE t.start_at >= :year AND t.start_at < :next_year
                     ) AS trips_this_year
                 FROM trip t
                 INNER JOIN trip_user tu ON tu.trip_id = t.id
@@ -36,7 +36,7 @@ final readonly class DashboardStatisticsRepository
                 SELECT
                     COUNT(*) AS total_sessions,
                     COUNT(*) FILTER (
-                        WHERE s.start_at >= :year_start AND s.start_at < :next_year_start
+                        WHERE s.start_at >= :year AND s.start_at < :next_year
                     ) AS sessions_this_year,
                     AVG(s.rating::numeric) AS average_session_rating
                 FROM surf_session s
@@ -56,13 +56,13 @@ final readonly class DashboardStatisticsRepository
             $sql,
             [
                 'user_id' => $user->id,
-                'year_start' => $yearStart,
-                'next_year_start' => $nextYearStart,
+                'year' => $yearStart,
+                'next_year' => $nextYearStart,
             ],
             [
                 'user_id' => ParameterType::INTEGER,
-                'year_start' => Types::DATETIME_IMMUTABLE,
-                'next_year_start' => Types::DATETIME_IMMUTABLE,
+                'year' => Types::DATETIME_IMMUTABLE,
+                'next_year' => Types::DATETIME_IMMUTABLE,
             ]
         );
 
@@ -82,14 +82,14 @@ final readonly class DashboardStatisticsRepository
     {
         $sql = <<<'SQL'
             SELECT
-                DATE_TRUNC('month', s.start_at)::date AS month_start,
+                DATE_TRUNC('month', s.start_at)::date AS month,
                 COUNT(*) AS sessions_count
             FROM surf_session s
             WHERE s.user_id = :user_id
                 AND s.start_at >= :period_start
                 AND s.start_at < :period_end
-            GROUP BY DATE_TRUNC('month', s.start_at)
-            ORDER BY month_start ASC
+            GROUP BY month
+            ORDER BY month ASC
             SQL;
 
         $rows = $this->connection->fetchAllAssociative(
@@ -108,7 +108,7 @@ final readonly class DashboardStatisticsRepository
 
         return array_map(
             static fn (array $row): MonthlySessionStatDto => new MonthlySessionStatDto(
-                new \DateTimeImmutable((string) $row['month_start']),
+                new \DateTimeImmutable((string) $row['month']),
                 (int) $row['sessions_count'],
             ),
             $rows,
@@ -165,38 +165,38 @@ final readonly class DashboardStatisticsRepository
         $sql = <<<'SQL'
             WITH session_years AS (
                 SELECT
-                    DATE_TRUNC('year', s.start_at)::date AS year_start,
+                    DATE_TRUNC('year', s.start_at)::date AS year,
                     COUNT(*) AS sessions_count
                 FROM surf_session s
                 WHERE s.user_id = :user_id
                     AND s.start_at >= :period_start
                     AND s.start_at < :period_end
-                GROUP BY DATE_TRUNC('year', s.start_at)
+                GROUP BY year
             ),
             trip_years AS (
                 SELECT
-                    DATE_TRUNC('year', t.start_at)::date AS year_start,
+                    DATE_TRUNC('year', t.start_at)::date AS year,
                     COUNT(DISTINCT t.id) AS trips_count
                 FROM trip t
                 INNER JOIN trip_user tu ON tu.trip_id = t.id
                 WHERE tu.user_id = :user_id
                     AND t.start_at >= :period_start
                     AND t.start_at < :period_end
-                GROUP BY DATE_TRUNC('year', t.start_at)
+                GROUP BY year
             ),
             years AS (
-                SELECT year_start FROM session_years
+                SELECT year FROM session_years
                 UNION
-                SELECT year_start FROM trip_years
+                SELECT year FROM trip_years
             )
             SELECT
-                years.year_start,
+                years.year,
                 COALESCE(session_years.sessions_count, 0) AS sessions_count,
                 COALESCE(trip_years.trips_count, 0) AS trips_count
             FROM years
-            LEFT JOIN session_years ON session_years.year_start = years.year_start
-            LEFT JOIN trip_years ON trip_years.year_start = years.year_start
-            ORDER BY years.year_start ASC
+            LEFT JOIN session_years ON session_years.year = years.year
+            LEFT JOIN trip_years ON trip_years.year = years.year
+            ORDER BY years.year ASC
             SQL;
 
         $rows = $this->connection->fetchAllAssociative(
@@ -215,7 +215,7 @@ final readonly class DashboardStatisticsRepository
 
         return array_map(
             static fn (array $row): YearlyActivityStatDto => new YearlyActivityStatDto(
-                new \DateTimeImmutable((string) $row['year_start']),
+                new \DateTimeImmutable((string) $row['year']),
                 (int) $row['sessions_count'],
                 (int) $row['trips_count'],
             ),
