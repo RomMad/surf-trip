@@ -19,7 +19,8 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserFixtures extends Fixture
 {
-    public const USER_REFERENCE = 'user_';
+    public const string USER_REFERENCE = 'user_';
+    public const int USERS_COUNT = 80;
 
     private const array USERS_DATA = [
         ['John', 'Doe', UserRole::Admin],
@@ -40,7 +41,19 @@ class UserFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
+        $password = $this->passwordHasher->hashPassword(new User(), 'password');
+
         foreach ($this->generateUsers() as $index => $user) {
+            $user->password = $password;
+
+            $manager->persist($user);
+            $this->addReference(self::USER_REFERENCE.$index, $user);
+        }
+
+        for ($index = count(self::USERS_DATA); $index < self::USERS_COUNT; ++$index) {
+            $user = $this->generateRandomUser();
+            $user->password = $password;
+
             $manager->persist($user);
             $this->addReference(self::USER_REFERENCE.$index, $user);
         }
@@ -59,7 +72,6 @@ class UserFixtures extends Fixture
             $user->username = Username::from(strtolower(sprintf('%s.%s', $firstName, $lastName)));
             $user->firstName = FirstName::from($firstName);
             $user->lastName = LastName::from($lastName);
-            $user->password = $this->passwordHasher->hashPassword($user, 'password');
             $user->roles = [$role->value];
             $user->isVerified = true;
             $user->level = $this->faker->randomElement(SurfLevel::cases());
@@ -68,5 +80,21 @@ class UserFixtures extends Fixture
 
             yield $user;
         }
+    }
+
+    private function generateRandomUser(): User
+    {
+        $user = new User();
+        $user->email = Email::from($this->faker->unique()->safeEmail());
+        $user->username = Username::from($this->faker->unique()->userName());
+        $user->firstName = FirstName::from($this->faker->firstName());
+        $user->lastName = LastName::from($this->faker->lastName());
+        $user->roles = [UserRole::User->value];
+        $user->isVerified = true;
+        $user->level = $this->faker->randomElement(SurfLevel::cases());
+        $user->location = $this->faker->city();
+        $user->description = $this->faker->paragraph();
+
+        return $user;
     }
 }

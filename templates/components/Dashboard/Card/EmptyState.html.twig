@@ -1,0 +1,11 @@
+{# @prop string message Translation key for empty-state message #}
+{%- props message -%}
+
+<div class="app-chart-empty-state">
+    <p class="text-lg font-semibold text-slate-600 dark:text-white/80">
+        {{- 'charts.empty_state.label'|trans -}}
+    </p>
+    <p class="mt-2 text-sm text-slate-400">
+        {{- message|trans -}}
+    </p>
+</div>

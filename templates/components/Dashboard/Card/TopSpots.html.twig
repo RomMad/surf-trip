@@ -1,0 +1,12 @@
+<twig:Card class="app-dashboard-card">
+    <twig:Dashboard:Card:Header
+        title="charts.top_spots.title"
+        description="charts.top_spots.description"
+    />
+    <twig:Chart
+        :chart="chart"
+        :hasData="spots|filter(spot => spot.sessionsCount > 0) is not empty"
+        controller="dashboard-chart"
+        emptyMessage="charts.top_spots.empty"
+    />
+</twig:Card>

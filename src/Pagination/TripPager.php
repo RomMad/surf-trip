@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Pagination;
 
+use App\Cache\Trip\TripCacheKeys;
 use App\Cache\Trip\TripCacheTags;
 use App\Form\Model\Trip\TripSearchInput;
 use App\ReadModel\Trip\TripIndexReadModel;
@@ -16,7 +17,6 @@ use Symfony\Contracts\Cache\TagAwareCacheInterface;
 
 final readonly class TripPager
 {
-    private const string CACHE_KEY_PATTERN = 'trip.list.%s';
     private const string CACHE_TTL = 'PT5M';
 
     public function __construct(
@@ -60,6 +60,6 @@ final readonly class TripPager
         $queryString = $request->getQueryString() ?? '';
         $querySlug = $this->slugger->slug($queryString, '_')->toString();
 
-        return sprintf(self::CACHE_KEY_PATTERN, $querySlug);
+        return TripCacheKeys::list($querySlug);
     }
 }

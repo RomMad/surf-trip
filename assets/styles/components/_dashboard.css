@@ -1,0 +1,17 @@
+@layer components {
+    .app-dashboard-card {
+        @apply rounded-3xl p-5 dark:border-slate-800 dark:bg-slate-950/70;
+    }
+
+    .app-kpi-title {
+        @apply mt-0 font-medium text-slate-500;
+    }
+
+    .app-kpi-value {
+        @apply mt-3 text-3xl font-semibold tracking-tight text-slate-950 dark:text-white;
+    }
+
+    .app-chart-shell {
+        @apply h-80 rounded-2xl border border-slate-100 bg-slate-50 p-4 dark:border-slate-800 dark:bg-slate-900/40;
+    }
+}

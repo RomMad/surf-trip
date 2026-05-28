@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Security;
 
 use App\Controller\Security\LoginController;
-use App\Controller\Trip\IndexTripController;
+use App\Controller\User\DashboardController;
 use App\Entity\User;
 use App\Entity\ValueObject\Email;
 use App\Repository\UserRepository;
@@ -75,7 +75,7 @@ final class AppAuthenticator extends AbstractLoginFormAuthenticator
             return new RedirectResponse($targetPath);
         }
 
-        return new RedirectResponse($this->urlGenerator->generate(IndexTripController::ROUTE));
+        return new RedirectResponse($this->urlGenerator->generate(DashboardController::ROUTE));
     }
 
     protected function getLoginUrl(Request $request): string

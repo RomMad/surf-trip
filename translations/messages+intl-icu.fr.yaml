@@ -162,4 +162,28 @@ username.label: Nom d'utilisateur
 user:
     profile:
         edit.label: Édition du profil
+
         updated_successfully: Ton profil a été mis à jour.
+# Dashboard
+dashboard:
+    label: Tableau de bord
+    summary: Tes dernières activités surf en un coup d'œil.
+charts:
+    empty_state.label: Aucune donnée disponible
+    monthly_sessions:
+        title: Sessions par mois
+        empty: Aucune session pour le moment.
+    top_spots:
+        title: Top spots
+        description: Nombre de sessions par spot avec la note moyenne affichée dans le libellé.
+        empty: Aucun spot à afficher pour le moment.
+    yearly_activity:
+        title: Sessions et trips par année
+        description: Compare le nombre de sessions surf et de trips pour chaque année.
+        empty: Aucune activité annuelle à afficher pour le moment.
+kpis:
+    total_trips.label: Total de trips
+    trips_this_year.label: Trips cette année
+    total_sessions.label: Total de sessions
+    sessions_this_year.label: Sessions cette année
+    average_session_rating.label: Note moyenne des sessions

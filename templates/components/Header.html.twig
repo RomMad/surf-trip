@@ -15,12 +15,13 @@
                 <twig:ux:icon name="lucide:menu" height="1.5em" width="1.5em" />
             </button>
 
-            <a class="app-header-brand" href="{{ path('app.trip.index') }}">
+            <a class="app-header-brand" href="{{ path('app.home') }}">
                 {{- 'app_name'|trans -}}
             </a>
 
             <div class="app-header-menu" id="main_navbar">
                 <ul class="flex">
+                    <twig:Header:NavLink label="dashboard.label" route="app.me.dashboard" />
                     <twig:Header:NavLink label="trips.label" route="app.trip.index" />
                     <twig:Header:NavLink label="surf_sessions.label" route="app.surf_session.index" />
                 </ul>

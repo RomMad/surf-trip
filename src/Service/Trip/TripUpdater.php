@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\Trip;
 
+use App\Cache\Trip\TripCacheInvalidator;
 use App\Entity\Trip;
 use App\Exception\TripNotFoundHttpException;
 use App\Form\Model\Trip\TripWriteModel;
@@ -15,6 +16,7 @@ final readonly class TripUpdater
     public function __construct(
         private TripRepository $tripRepository,
         private ObjectMapperInterface $objectMapper,
+        private TripCacheInvalidator $tripCacheInvalidator,
     ) {}
 
     public function updateFromWriteModel(int $tripId, TripWriteModel $tripWriteModel): Trip
@@ -28,6 +30,8 @@ final readonly class TripUpdater
         $this->objectMapper->map($tripWriteModel, $trip);
 
         $this->tripRepository->save($trip, true);
+
+        $this->tripCacheInvalidator->invalidate($trip);
 
         return $trip;
     }
