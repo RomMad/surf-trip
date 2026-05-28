@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Form\Type\Autocomplete;
 
-use App\Controller\User\UserSearchController;
+use App\Controller\User\UserAutocompleteController;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -27,7 +27,7 @@ final class OwnersAutocompleteType extends AbstractType
                 'choice_translation_domain' => false,
                 'multiple' => true,
                 'autocomplete' => true,
-                'autocomplete_url' => $this->router->generate(UserSearchController::class),
+                'autocomplete_url' => $this->router->generate(UserAutocompleteController::class),
                 'max_results' => 10,
                 'min_characters' => 3,
                 'preload' => false,
