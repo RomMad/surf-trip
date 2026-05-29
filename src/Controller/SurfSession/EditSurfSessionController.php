@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\SurfSession;
 
 use App\Cache\SurfSession\SurfSessionCacheInvalidator;
+use App\Exception\SurfSessionNotFoundHttpException;
 use App\Form\Model\SurfSession\SurfSessionWriteModel;
 use App\Form\SurfSession\SurfSessionFormType;
 use App\Repository\SurfSessionRepository;
@@ -33,6 +34,10 @@ final class EditSurfSessionController extends AbstractController
     public function __invoke(Request $request, int $id): Response
     {
         $surfSession = $this->surfSessionRepository->findOneWithTrip($id);
+
+        if (null === $surfSession) {
+            throw new SurfSessionNotFoundHttpException($id);
+        }
 
         $this->denyAccessUnlessGranted(SurfSessionVoter::EDIT, $surfSession);
 
