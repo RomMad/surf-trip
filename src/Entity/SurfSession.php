@@ -10,6 +10,8 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
+use App\Calendar\CalendarLinkableInterface;
+use App\Entity\Traits\SurfSessionCalendarLinkableTrait;
 use App\Entity\Traits\TimestampableTrait;
 use App\Enum\SurfSession\SurfSessionRating;
 use App\Repository\SurfSessionRepository;
@@ -50,9 +52,10 @@ use Symfony\Component\Validator\Constraints as Assert;
     order: ['startAt' => 'DESC'],
     paginationEnabled: true,
 )]
-final class SurfSession
+final class SurfSession implements CalendarLinkableInterface
 {
     use TimestampableTrait;
+    use SurfSessionCalendarLinkableTrait;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]

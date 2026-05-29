@@ -4,14 +4,17 @@ declare(strict_types=1);
 
 namespace App\ReadModel\Trip;
 
+use App\Calendar\CalendarLinkableInterface;
 use App\Entity\User;
 use App\Entity\ValueObject\Location;
 use App\Entity\ValueObject\Slug;
 use App\Entity\ValueObject\Title;
 use App\Enum\User\SurfLevel;
 
-abstract readonly class AbstractTripReadModel implements TripOwnershipAwareInterface
+abstract readonly class AbstractTripReadModel implements TripOwnershipAwareInterface, CalendarLinkableInterface
 {
+    use TripCalendarLinkableTrait;
+
     /** @var list<TripOwnerReadModel> */
     public array $owners;
 

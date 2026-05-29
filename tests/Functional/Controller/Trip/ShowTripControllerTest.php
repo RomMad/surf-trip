@@ -7,8 +7,10 @@ namespace App\Tests\Functional\Controller\Trip;
 use App\Controller\Trip\ShowTripController;
 use App\Entity\Trip;
 use App\Factory\TripFactory;
+use App\Service\Trip\TripReadModelProvider;
 use App\Tests\CustomWebTestCase;
 use App\Tests\Fixtures\DefaultStory;
+use App\Tests\Traits\CalendarLinksTestTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Medium;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,6 +23,8 @@ use Symfony\Component\HttpFoundation\Response;
 #[Medium]
 final class ShowTripControllerTest extends CustomWebTestCase
 {
+    use CalendarLinksTestTrait;
+
     private const string PATH = '/en/trip/%d/%s';
     private const string TITLE = 'Trip';
 
@@ -71,5 +75,16 @@ final class ShowTripControllerTest extends CustomWebTestCase
         );
 
         $this->assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
+    }
+
+    public function testCalendarLinksCanBeClickedFromTheTripPage(): void
+    {
+        $tripReadModelProvider = $this->getContainer()->get(TripReadModelProvider::class);
+        $tripReadModel = $tripReadModelProvider->getById($this->trip->id);
+
+        $this->assertCalendarLinksCanBeClicked(
+            $tripReadModel,
+            sprintf(self::PATH, $this->trip->id, $this->trip->slug->value)
+        );
     }
 }

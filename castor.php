@@ -80,6 +80,12 @@ function dump_env(
 //                 COMPOSER DEPENDENCIES
 // ========================================================
 
+#[AsTask(description: 'Execute a Composer command', namespace: 'composer', aliases: ['composer', 'c'])]
+function composer(string $action): void
+{
+    run_php('composer '.$action);
+}
+
 #[AsTask(description: 'Install Composer dependencies', namespace: 'composer', aliases: ['composer-install', 'ci'])]
 function composer_install(string $options = '--no-interaction'): void
 {
@@ -96,6 +102,12 @@ function composer_update(string $options = '--no-interaction'): void
 function composer_required(string $package, string $options = '--no-interaction'): void
 {
     run_php(sprintf('composer require %s %s', $package, $options));
+}
+
+#[AsTask(description: 'Remove a Composer dependency', namespace: 'composer', aliases: ['composer-remove', 'crm'])]
+function composer_remove(string $package, string $options = '--no-interaction'): void
+{
+    run_php(sprintf('composer remove %s %s', $package, $options));
 }
 
 // ========================================================
