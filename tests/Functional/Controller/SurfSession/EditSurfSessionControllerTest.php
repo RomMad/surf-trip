@@ -7,11 +7,14 @@ namespace App\Tests\Functional\Controller\SurfSession;
 use App\Controller\SurfSession\EditSurfSessionController;
 use App\Entity\SurfSession;
 use App\Entity\ValueObject\Email;
+use App\Entity\ValueObject\Title;
 use App\Enum\SurfSession\SurfSessionRating;
 use App\Factory\SurfSessionFactory;
+use App\Factory\TripFactory;
 use App\Factory\UserFactory;
 use App\Tests\CustomWebTestCase;
 use App\Tests\Fixtures\DefaultStory;
+use App\Tests\Fixtures\TripStory;
 use App\Tests\Fixtures\UserStory;
 use App\Tests\Traits\CalendarLinksTestTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -79,6 +82,8 @@ final class EditSurfSessionControllerTest extends CustomWebTestCase
 
     public function testEditSurfSessionIsSuccessful(): void
     {
+        $trip = TripFactory::find(['title' => Title::from(TripStory::CURRENT_TRIP_TITLE)]);
+
         $this->client->request(
             Request::METHOD_GET,
             sprintf(self::PATH_EDIT, $this->surfSession->id)
@@ -90,8 +95,9 @@ final class EditSurfSessionControllerTest extends CustomWebTestCase
             'surf_session' => [
                 'spot' => self::UPDATED_SESSION_SPOT,
                 'board' => self::UPDATED_SESSION_BOARD,
-                'startAt' => new \DateTimeImmutable('+2 days 10:00')->format(self::FORMAT_DATETIME),
-                'endAt' => new \DateTimeImmutable('+2 days 12:00')->format(self::FORMAT_DATETIME),
+                'startAt' => new \DateTimeImmutable('+1 days 10:00')->format(self::FORMAT_DATETIME),
+                'endAt' => new \DateTimeImmutable('+1 days 12:00')->format(self::FORMAT_DATETIME),
+                'trip' => $trip->id,
                 'rating' => SurfSessionRating::Excellent->value,
                 'objective' => self::UPDATED_SESSION_OBJECTIVE,
                 'comment' => self::UPDATED_SESSION_COMMENT,
@@ -104,6 +110,7 @@ final class EditSurfSessionControllerTest extends CustomWebTestCase
         $this->assertInstanceOf(SurfSession::class, $updatedSession);
         $this->assertSame(self::UPDATED_SESSION_SPOT, $updatedSession->spot);
         $this->assertSame(self::UPDATED_SESSION_BOARD, $updatedSession->board);
+        $this->assertSame($trip->id, $updatedSession->trip?->id);
         $this->assertSame(SurfSessionRating::Excellent, $updatedSession->rating);
 
         $this->assertResponseIsSuccessful();
