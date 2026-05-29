@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
-class AbstractAutocompleteController extends AbstractController
+abstract class AbstractAutocompleteController extends AbstractController
 {
     protected const string EXTRA_OPTIONS = 'extra_options';
 
