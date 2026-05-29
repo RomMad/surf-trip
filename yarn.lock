@@ -1047,13 +1047,13 @@
     schema-utils "^3.0.0 || ^4.0.0"
 
 "@symfony/ux-autocomplete@file:vendor/symfony/ux-autocomplete/assets":
-  version "2.34.0"
+  version "3.0.0"
 
 "@symfony/ux-chartjs@file:vendor/symfony/ux-chartjs/assets":
-  version "2.34.0"
+  version "3.0.0"
 
 "@symfony/ux-turbo@file:vendor/symfony/ux-turbo/assets":
-  version "2.34.0"
+  version "3.0.0"
 
 "@symfony/webpack-encore@^5.3.1":
   version "5.3.1"

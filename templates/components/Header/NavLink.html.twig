@@ -9,7 +9,7 @@
         href="{{ path(route) }}"
         class="hover:text-primary-foreground/80"
         :disabled="active"
-        :aria-current="active ? 'page' : null"
+        :aria-current="active ? 'page' : false"
         {{ ...attributes.without('class') }}
     >
         {{- label|trans -}}
