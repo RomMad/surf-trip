@@ -109,4 +109,9 @@ final class SurfSession implements CalendarLinkableInterface
     #[Assert\NotNull()]
     #[Groups(['surf_session:read'])]
     public ?User $user = null;
+
+    #[ORM\ManyToOne(targetEntity: Trip::class)]
+    #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
+    #[Groups(['surf_session:read', 'surf_session:write'])]
+    public ?Trip $trip = null;
 }

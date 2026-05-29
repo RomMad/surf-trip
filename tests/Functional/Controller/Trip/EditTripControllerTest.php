@@ -56,6 +56,16 @@ final class EditTripControllerTest extends CustomWebTestCase
         $this->assertSelectorExists(self::FORM);
     }
 
+    public function testEditTripPageNotFound(): void
+    {
+        $this->client->request(
+            Request::METHOD_GET,
+            sprintf(self::PATH, 9999, 'some-slug')
+        );
+
+        $this->assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
+    }
+
     public function testEditTripPageRedirectsWhenSlugIsInvalid(): void
     {
         $this->client->followRedirects(false);

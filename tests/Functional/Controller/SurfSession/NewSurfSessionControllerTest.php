@@ -6,9 +6,12 @@ namespace App\Tests\Functional\Controller\SurfSession;
 
 use App\Controller\SurfSession\NewSurfSessionController;
 use App\Entity\SurfSession;
+use App\Entity\ValueObject\Title;
 use App\Enum\SurfSession\SurfSessionRating;
+use App\Factory\TripFactory;
 use App\Tests\CustomWebTestCase;
 use App\Tests\Fixtures\DefaultStory;
+use App\Tests\Fixtures\TripStory;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Medium;
 use Symfony\Component\HttpFoundation\Request;
@@ -54,6 +57,8 @@ final class NewSurfSessionControllerTest extends CustomWebTestCase
 
     public function testCreateSurfSessionIsSuccessful(): void
     {
+        $trip = TripFactory::find(['title' => Title::from(TripStory::CURRENT_TRIP_TITLE)]);
+
         $this->client->request(Request::METHOD_GET, self::PATH_NEW);
 
         $this->assertResponseIsSuccessful();
@@ -65,6 +70,7 @@ final class NewSurfSessionControllerTest extends CustomWebTestCase
                 'board' => self::SESSION_BOARD,
                 'startAt' => new \DateTimeImmutable('-1 day 15:00')->format(self::FORMAT_DATETIME),
                 'endAt' => new \DateTimeImmutable('-1 day 17:00')->format(self::FORMAT_DATETIME),
+                'trip' => $trip->id,
                 'rating' => SurfSessionRating::Good->value,
                 'objective' => self::SESSION_OBJECTIVE,
                 'comment' => self::SESSION_COMMENT,
@@ -76,6 +82,8 @@ final class NewSurfSessionControllerTest extends CustomWebTestCase
         $this->assertInstanceOf(SurfSession::class, $createdSession);
         $this->assertSame(self::SESSION_SPOT, $createdSession->spot);
         $this->assertSame(self::SESSION_BOARD, $createdSession->board);
+        $this->assertNotNull($createdSession->trip);
+        $this->assertSame($trip->id, $createdSession->trip->id);
         $this->assertSame(SurfSessionRating::Good, $createdSession->rating);
 
         $this->assertResponseIsSuccessful();

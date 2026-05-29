@@ -59,11 +59,11 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     }
 
     /**
-     * @return TripOwnerReadModel[]
+     * @return array<int, array{value: int, text: string}>
      */
-    public function findOwnerReadModelsByQuery(string $query, int $limit = 10): array
+    public function findOwnerChoicesByQuery(string $query, int $limit = 10): array
     {
-        return $this->createOwnerReadModelQueryBuilder()
+        $results = $this->createOwnerReadModelQueryBuilder()
             ->andWhere('
                     ILIKE(CONCAT(u.firstName, \' \', u.lastName), :filter) = TRUE
                     OR ILIKE(CONCAT(u.lastName, \' \', u.firstName), :filter) = TRUE
@@ -73,6 +73,14 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->getQuery()
             ->getResult()
         ;
+
+        return array_map(
+            static fn (TripOwnerReadModel $owner): array => [
+                'value' => $owner->id,
+                'text' => $owner->fullName,
+            ],
+            $results
+        );
     }
 
     /**

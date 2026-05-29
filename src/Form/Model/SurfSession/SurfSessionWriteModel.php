@@ -6,7 +6,11 @@ namespace App\Form\Model\SurfSession;
 
 use App\Entity\SurfSession;
 use App\Enum\SurfSession\SurfSessionRating;
+use App\ObjectMapper\TripSelectReadModelToTripTransformer;
+use App\ObjectMapper\TripToTripSelectReadModelTransformer;
+use App\ReadModel\Trip\TripSelectReadModel;
 use Symfony\Component\ObjectMapper\Attribute\Map;
+use Symfony\Component\ObjectMapper\Condition\TargetClass;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[Map(source: SurfSession::class)]
@@ -39,4 +43,8 @@ final class SurfSessionWriteModel
 
     #[Assert\Length(max: 5000, maxMessage: 'surf_session.comment.max_length')]
     public ?string $comment = null;
+
+    #[Map(if: new TargetClass(self::class), transform: TripToTripSelectReadModelTransformer::class)]
+    #[Map(if: new TargetClass(SurfSession::class), transform: TripSelectReadModelToTripTransformer::class)]
+    public ?TripSelectReadModel $trip = null;
 }

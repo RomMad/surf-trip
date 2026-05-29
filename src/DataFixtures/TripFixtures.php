@@ -115,6 +115,29 @@ DESC,
         ],
     ];
 
+    private const array SURF_CITIES = [
+        'Bali, Indonesia',
+        'Nazaré, Portugal',
+        'Honolulu, Hawaii',
+        'Guanacaste, Costa Rica',
+        'Fuerteventura, Spain',
+        "Teahupo'o, Tahiti",
+        'Byron Bay, Australia',
+        'Essaouira, Morocco',
+        'Hossegor, France',
+        'Biarritz, France',
+        'Lacanau, France',
+        'La Torche, France',
+        'Mundaka, Spain',
+        'Jeffreys Bay, South Africa',
+        'Tamarindo, Costa Rica',
+        'Uluwatu, Bali',
+        'Padang Padang, Bali',
+        'Supertubos, Portugal',
+        'Pipeline, Hawaii',
+        'Rincon, California',
+    ];
+
     private Generator $faker;
 
     public function load(ObjectManager $manager): void
@@ -147,11 +170,10 @@ DESC,
             $startAt = \DateTimeImmutable::createFromInterface($randomStart);
             $createdAt = \DateTimeImmutable::createFromInterface($this->faker->dateTimeBetween('-1 year', '-1 month'));
             $title = sprintf('%s Surf Trip', ucfirst((string) $this->faker->words($this->faker->numberBetween(2, 4), true)));
-            $location = sprintf('%s, %s', $this->faker->city(), $this->faker->country());
 
             $trip = new Trip($createdAt);
             $trip->title = Title::from($title);
-            $trip->location = Location::from($location);
+            $trip->location = Location::from($this->faker->randomElement(self::SURF_CITIES));
             $trip->startAt = $startAt;
             $trip->endAt = $startAt->modify(sprintf('+%d days', $this->faker->numberBetween(3, 14)));
             $trip->requiredLevels = $this->randomSurfLevels();

@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Repository;
 
 use App\Entity\Trip;
+use App\Entity\User;
 use App\Form\Model\Trip\TripSearchInput;
+use App\ReadModel\Trip\TripSelectReadModel;
 use App\ReadModel\Trip\TripShowReadModel;
 use App\Repository\Traits\PeriodFilterTrait;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -65,6 +67,65 @@ class TripRepository extends ServiceEntityRepository
         ;
     }
 
+    /**
+     * @return array<int, array{value: int, text: string}>
+     */
+    public function findTripChoicesByQuery(string $query, \DateTimeImmutable $referenceAt, User $user, int $limit = 10): array
+    {
+        $results = $this->createSelectReadModelBaseQueryBuilder($user)
+            ->andWhere('t.startAt <= :referenceAt')
+            ->andWhere('t.endAt >= :referenceAt')
+            ->setParameter('referenceAt', $referenceAt)
+            ->andWhere('ILIKE(t.title, :query) = TRUE OR ILIKE(t.location, :query) = TRUE')
+            ->setParameter('query', '%'.$query.'%')
+
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult()
+        ;
+
+        return array_map(
+            static fn (TripSelectReadModel $trip): array => [
+                'value' => $trip->id,
+                'text' => $trip->getLabel(),
+            ],
+            $results
+        );
+    }
+
+    /**
+     * @return TripSelectReadModel[]
+     */
+    public function findSelectReadModelsByUserAndTripId(User $user, int $tripId): array
+    {
+        return $this->createSelectReadModelBaseQueryBuilder($user)
+            ->andWhere('t.id = :tripId')
+            ->setParameter('tripId', $tripId)
+
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function findSuggestedTripByDate(User $user, \DateTimeImmutable $referenceAt): ?TripSelectReadModel
+    {
+        return $this->createSelectReadModelBaseQueryBuilder($user)
+            ->addSelect(
+                'CASE
+                    WHEN t.startAt <= :referenceAt AND t.endAt >= :referenceAt THEN 0
+                    WHEN t.startAt > :referenceAt THEN 1
+                    ELSE 2
+                END AS HIDDEN relevance'
+            )
+            ->setParameter('referenceAt', $referenceAt)
+            ->orderBy('relevance', 'ASC')
+            ->addOrderBy('t.startAt', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
     public function createOrderedQueryBuilder(TripSearchInput $searchInput): QueryBuilder
     {
         $queryBuilder = $this->createDtoBaseQueryBuilder()
@@ -113,6 +174,27 @@ class TripRepository extends ServiceEntityRepository
             ))
             ->leftJoin('t.owners', 'o')
             ->groupBy('t.id')
+        ;
+    }
+
+    private function createSelectReadModelBaseQueryBuilder(User $user): QueryBuilder
+    {
+        return $this->createQueryBuilder('t')
+            ->select(sprintf(
+                'NEW %s(
+                    t.id,
+                    t.title,
+                    t.location
+                )',
+                TripSelectReadModel::class,
+            ))
+            ->leftJoin('t.owners', 'o')
+
+            ->where('o.id = :userId')
+            ->setParameter('userId', $user->id)
+
+            ->addOrderBy('t.startAt', 'ASC')
+            ->addOrderBy('t.title', 'ASC')
         ;
     }
 
