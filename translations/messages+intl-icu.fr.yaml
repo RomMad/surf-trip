@@ -33,6 +33,21 @@ period:
         label: Au
         help: Date de fin (à)
 
+# Calendar
+calendar:
+    label: Calendrier
+    google:
+        label: Google Agenda
+        help: Ajouter à Google Agenda
+    web_outlook:
+        label: Outlook.com
+        help: Ajouter à Outlook.com
+    web_office:
+        label: Outlook office
+        help: Ajouter à Outlook office
+    ical:
+        label: iCalendar
+        help: Télécharger le fichier iCalendar
 
 # Email
 email:

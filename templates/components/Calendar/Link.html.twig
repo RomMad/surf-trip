@@ -1,0 +1,12 @@
+<twig:Button
+    as="a"
+    variant="outline"
+    size="sm"
+    target="_blank"
+    href="{{ href }}"
+    rel="noopener noreferrer"
+    title="{{ title|trans }}"
+>
+    <twig:ux:icon name="{{ icon }}" />
+    {{- label|trans -}}
+</twig:Button>

@@ -31,6 +31,22 @@ period:
         label: To
         help: End date (to)
 
+# Calendar
+calendar:
+    label: Calendar
+    google:
+        label: Google Calendar
+        help: Add to Google Calendar
+    web_outlook:
+        label:  Outlook.com
+        help: Add to Outlook.com
+    web_office:
+        label: Outlook office
+        help: Add to Outlook office
+    ical:
+        label: iCalendar
+        help: Download iCalendar file
+
 # Email
 email:
     greeting:
