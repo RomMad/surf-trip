@@ -12,6 +12,20 @@
                 {% endif %}
             </div>
         </twig:Card:Title>
+        {% if surf_session.tripId %}
+            <twig:Card:Description>
+                <twig:Button
+                    as="a"
+                    variant="link"
+                    href="{{ path('app.trip.edit', {id: surf_session.tripId, slug: surf_session.tripTitle|slug|lower}) }}"
+                    class="p-0"
+                    title="{{ 'trip.show.label'|trans }}"
+                    data-turbo-frame="_top"
+                >
+                    {{- surf_session.tripTitle -}}
+                </twig:Button>
+            </twig:Card:Description>
+        {% endif %}
     </twig:Card:Header>
     <twig:Card:Content class="space-y-2">
         <twig:SurfSession:Card:Field

@@ -17,5 +17,7 @@ final readonly class SurfSessionIndexReadModel
         public ?SurfSessionRating $rating,
         public ?string $objective,
         public ?string $comment,
+        public ?int $tripId,
+        public ?string $tripTitle,
     ) {}
 }

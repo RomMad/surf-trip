@@ -7,7 +7,9 @@ namespace App\Repository;
 use App\Entity\SurfSession;
 use App\Entity\User;
 use App\Form\Model\SurfSession\SurfSessionSearchInput;
+use App\Form\Model\SurfSession\SurfSessionWriteModel;
 use App\ReadModel\SurfSession\SurfSessionIndexReadModel;
+use App\ReadModel\Trip\TripSelectReadModel;
 use App\Repository\Traits\PeriodFilterTrait;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
@@ -43,6 +45,52 @@ final class SurfSessionRepository extends ServiceEntityRepository
         }
     }
 
+    public function findOneWithTrip(int $id): ?SurfSession
+    {
+        return $this->createQueryBuilder('s')
+            ->leftJoin('s.trip', 't')
+            ->addSelect('t')
+
+            ->where('s.id = :id')
+            ->setParameter('id', $id)
+
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
+    public function findOneWriteModelWithTrip(int $id): ?SurfSessionWriteModel
+    {
+        return $this->createQueryBuilder('s')
+            ->select(sprintf(
+                'NEW %s(
+                    s.id,
+                    s.spot,
+                    s.board,
+                    s.startAt,
+                    s.endAt,
+                    s.rating,
+                    s.objective,
+                    s.comment,
+                    CASE WHEN t.id IS NULL THEN NULL ELSE NEW %s(
+                        t.id,
+                        t.title,
+                        t.location
+                    ) END
+                )',
+                SurfSessionWriteModel::class,
+                TripSelectReadModel::class,
+            ))
+            ->leftJoin('s.trip', 't')
+
+            ->where('s.id = :id')
+            ->setParameter('id', $id)
+
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
     public function createOrderedQueryBuilder(User $user, SurfSessionSearchInput $searchInput): QueryBuilder
     {
         $queryBuilder = $this->createQueryBuilder('s')
@@ -55,10 +103,13 @@ final class SurfSessionRepository extends ServiceEntityRepository
                     s.endAt,
                     s.rating,
                     s.objective,
-                    s.comment
+                    s.comment,
+                    t.id,
+                    COALESCE(t.title, \'\')
                 )',
                 SurfSessionIndexReadModel::class,
             ))
+            ->leftJoin('s.trip', 't')
             ->orderBy('s.startAt', 'DESC')
             ->where('s.user = :user')
             ->setParameter('user', $user)

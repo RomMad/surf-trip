@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Controller\SurfSession;
 
 use App\Cache\SurfSession\SurfSessionCacheInvalidator;
-use App\Entity\SurfSession;
 use App\Form\Model\SurfSession\SurfSessionWriteModel;
 use App\Form\SurfSession\SurfSessionFormType;
 use App\Repository\SurfSessionRepository;
@@ -16,7 +15,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\ObjectMapper\ObjectMapperInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Requirement\Requirement;
-use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 final class EditSurfSessionController extends AbstractController
 {
@@ -27,14 +25,17 @@ final class EditSurfSessionController extends AbstractController
     ) {}
 
     #[Route(
-        path: '/sessions/{id:surfSession}/edit',
+        path: '/sessions/{id}/edit',
         name: 'app.surf_session.edit',
         requirements: ['id' => Requirement::POSITIVE_INT],
         methods: [Request::METHOD_GET, Request::METHOD_POST],
     )]
-    #[IsGranted(SurfSessionVoter::EDIT, subject: 'surfSession')]
-    public function __invoke(Request $request, SurfSession $surfSession): Response
+    public function __invoke(Request $request, int $id): Response
     {
+        $surfSession = $this->surfSessionRepository->findOneWithTrip($id);
+
+        $this->denyAccessUnlessGranted(SurfSessionVoter::EDIT, $surfSession);
+
         $surfSessionWriteModel = $this->objectMapper->map($surfSession, SurfSessionWriteModel::class);
 
         $form = $this->createForm(SurfSessionFormType::class, $surfSessionWriteModel);
