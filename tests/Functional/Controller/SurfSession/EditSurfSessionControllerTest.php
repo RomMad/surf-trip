@@ -13,6 +13,7 @@ use App\Factory\UserFactory;
 use App\Tests\CustomWebTestCase;
 use App\Tests\Fixtures\DefaultStory;
 use App\Tests\Fixtures\UserStory;
+use App\Tests\Traits\CalendarLinksTestTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Medium;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,6 +25,8 @@ use Symfony\Component\HttpFoundation\Request;
 #[Medium]
 final class EditSurfSessionControllerTest extends CustomWebTestCase
 {
+    use CalendarLinksTestTrait;
+
     // Paths
     private const string PATH_EDIT = '/en/sessions/%d/edit';
     // Selectors
@@ -108,5 +111,13 @@ final class EditSurfSessionControllerTest extends CustomWebTestCase
         $this->assertSelectorTextContains(self::ALERT_SUCCESS, self::MESSAGE_SUCCESS);
         $this->assertSelectorTextContains($cardSelector, self::UPDATED_SESSION_SPOT);
         $this->assertSelectorTextContains($cardSelector, self::UPDATED_SESSION_BOARD);
+    }
+
+    public function testCalendarLinksCanBeClickedFromTheEditPage(): void
+    {
+        $this->assertCalendarLinksCanBeClicked(
+            $this->surfSession,
+            sprintf(self::PATH_EDIT, $this->surfSession->id)
+        );
     }
 }
