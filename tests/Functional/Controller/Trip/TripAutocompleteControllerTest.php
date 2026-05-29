@@ -44,7 +44,7 @@ final class TripAutocompleteControllerTest extends CustomWebTestCase
         $this->client->request(Request::METHOD_GET, self::PATH, [
             'query' => TripStory::TRIP_TITLE,
             'extra_options' => $this->encodeExtraOptions([
-                'reference_at' => (new \DateTimeImmutable('+1 month +1 day'))->format(\DateTimeInterface::ATOM),
+                'reference_at' => new \DateTimeImmutable('+1 month +1 day')->format(\DateTimeInterface::ATOM),
             ]),
         ]);
 
