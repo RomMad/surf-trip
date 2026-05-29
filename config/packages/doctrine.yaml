@@ -21,7 +21,7 @@ doctrine:
         naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
         identity_generation_preferences:
             Doctrine\DBAL\Platforms\PostgreSQLPlatform: identity
-        auto_mapping: true
+        auto_mapping: false
         mappings:
             App:
                 type: attribute
@@ -29,8 +29,6 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Entity'
                 prefix: 'App\Entity'
                 alias: App
-        controller_resolver:
-            auto_mapping: false
         dql:
             string_functions:
                 CONTAINS: MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\Contains # @>
