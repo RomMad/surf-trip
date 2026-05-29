@@ -5,7 +5,9 @@
 {% block body %}
     <twig:Heading1 :title="title" />
     <twig:Trip:ShowTable :trip="trip" />
-    <twig:Calendar:LinksGroup :event="trip" />
+    {% if is_granted('EDIT', trip) %}
+        <twig:Calendar:LinksGroup :event="trip" />
+    {% endif %}
 
     <div class="flex flex-wrap items-center gap-2">
         {% if is_granted('EDIT', trip) %}
