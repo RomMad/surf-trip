@@ -29,10 +29,9 @@ final class TripAutocompleteControllerTest extends CustomWebTestCase
             'query' => TripStory::TRIP_TITLE,
         ]);
 
-        $this->assertResponseIsSuccessful();
-
         $content = $this->getJsonContent();
 
+        $this->assertResponseIsSuccessful();
         $this->assertSame([], $content['results']);
     }
 
@@ -45,12 +44,12 @@ final class TripAutocompleteControllerTest extends CustomWebTestCase
             ]),
         ]);
 
-        $this->assertResponseIsSuccessful();
-
         $content = $this->getJsonContent();
+        $results = $content['results'] ?? [];
 
-        $this->assertCount(1, $content['results']);
-        $this->assertStringContainsString(TripStory::TRIP_TITLE, $content['results'][0]['text']);
+        $this->assertResponseIsSuccessful();
+        $this->assertCount(1, $results);
+        $this->assertStringContainsString(TripStory::TRIP_TITLE, $results[0]['text']);
     }
 
     /**
