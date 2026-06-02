@@ -14,9 +14,12 @@ use App\Calendar\CalendarLinkableInterface;
 use App\Entity\Traits\SurfSessionCalendarLinkableTrait;
 use App\Entity\Traits\TimestampableTrait;
 use App\Enum\SurfSession\SurfSessionRating;
+use App\Form\Model\SurfSession\SurfSessionWriteModel;
+use App\ObjectMapper\TripToTripSelectReadModelTransformer;
 use App\Repository\SurfSessionRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\ObjectMapper\Attribute\Map;
 use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -52,6 +55,7 @@ use Symfony\Component\Validator\Constraints as Assert;
     order: ['startAt' => 'DESC'],
     paginationEnabled: true,
 )]
+#[Map(target: SurfSessionWriteModel::class)]
 final class SurfSession implements CalendarLinkableInterface
 {
     use TimestampableTrait;
@@ -113,5 +117,6 @@ final class SurfSession implements CalendarLinkableInterface
     #[ORM\ManyToOne(targetEntity: Trip::class)]
     #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
     #[Groups(['surf_session:read', 'surf_session:write'])]
+    #[Map(transform: TripToTripSelectReadModelTransformer::class)]
     public ?Trip $trip = null;
 }
