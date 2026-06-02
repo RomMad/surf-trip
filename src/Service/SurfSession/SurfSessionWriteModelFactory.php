@@ -36,13 +36,14 @@ final class SurfSessionWriteModelFactory
     private function resolveStartAt(?AbstractTripReadModel $trip): \DateTimeImmutable
     {
         $now = new \DateTimeImmutable();
-        $currentHourStart = $now->setTime((int) $now->format('H'), 0);
 
-        return match (true) {
-            null === $trip => $currentHourStart,
-            $now < $trip->startAt => $trip->startAt->setTime(8, 0),
+        $startAt = match (true) {
+            null === $trip => $now,
+            $now < $trip->startAt => $trip->startAt,
             $now > $trip->endAt => $trip->endAt,
-            default => $currentHourStart,
+            default => $now,
         };
+
+        return $startAt->setTime(10, 0);
     }
 }

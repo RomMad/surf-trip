@@ -94,7 +94,7 @@ final class NewSurfSessionControllerTest extends CustomWebTestCase
     public function testNewSurfSessionWithTrip(): void
     {
         $trip = TripFactory::find(['title' => Title::from(TripStory::CURRENT_TRIP_TITLE)]);
-        $now = new \DateTimeImmutable();
+        $now = new \DateTimeImmutable()->setTime(10, 0);
 
         $this->client->request(Request::METHOD_GET, sprintf(self::PATH_NEW_FROM_TRIP, $trip->id));
 
@@ -111,11 +111,8 @@ final class NewSurfSessionControllerTest extends CustomWebTestCase
     private function parseDateTimeFromInput(string $selector): \DateTimeImmutable
     {
         $value = $this->getInputValue($selector);
-        $parsedDate = \DateTimeImmutable::createFromFormat('Y-m-d\TH:i', $value);
 
-        $this->assertInstanceOf(\DateTimeImmutable::class, $parsedDate);
-
-        return $parsedDate;
+        return \DateTimeImmutable::createFromFormat('Y-m-d\TH:i', $value);
     }
 
     private function getInputValue(string $selector): string
