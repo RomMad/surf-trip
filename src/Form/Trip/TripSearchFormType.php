@@ -47,7 +47,7 @@ final class TripSearchFormType extends AbstractType
                 ],
             ])
             ->add('myTripsOnly', SwitchType::class, [
-                'label' => 'trip.my_trips_only.label',
+                'label' => 'my_trips_only.label',
                 'required' => false,
             ])
         ;

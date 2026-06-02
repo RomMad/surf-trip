@@ -127,7 +127,6 @@ surf_session:
 trip:
     label: Trip
     placeholder: Sélectionne un trip
-    my_trips_only.label: Mes trips uniquement
     created_successfully: Le trip a été créé.
     updated_successfully: Le trip a été mis à jour.
     deleted_successfully: Le trip a été supprimé.
@@ -142,6 +141,7 @@ description.label: Description
 location:
     label: Lieu
     placeholder: Lieu du trip
+my_trips_only.label: Mes trips uniquement
 period.label: Période
 start_at.label: Date de début
 end_at.label: Date de fin
