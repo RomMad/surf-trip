@@ -1,16 +1,26 @@
 {% extends 'base.html.twig' %}
 
 {% set title = 'trip.label'|trans %}
+{% set is_granted_edit = is_granted('EDIT', trip) %}
 
 {% block body %}
-    <twig:Heading1 :title="title" />
+    <div class="app-page-header">
+        <twig:Heading1 :title="title" class="mb-0" />
+        {% if is_granted_edit %}
+            <twig:Button:New
+                href="{{ path('app.trip.surf_session.new', {tripId: trip.id}) }}"
+                label="surf_session.add.label"
+            />
+        {% endif %}
+    </div>
+
     <twig:Trip:ShowTable :trip="trip" />
-    {% if is_granted('EDIT', trip) %}
+    {% if is_granted_edit %}
         <twig:Calendar:LinksGroup :event="trip" />
     {% endif %}
 
     <div class="flex flex-wrap items-center gap-2">
-        {% if is_granted('EDIT', trip) %}
+        {% if is_granted_edit %}
             <twig:Button:Edit href="{{ path('app.trip.edit', {id: trip.id, slug: trip.slug}) }}" class="mb-4" />
             <twig:Trip:Form:Delete :trip="trip" />
         {% endif %}

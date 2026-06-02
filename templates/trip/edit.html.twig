@@ -3,7 +3,16 @@
 {% set title = 'trip.edit.label'|trans %}
 
 {% block body %}
-    <twig:Heading1 :title="title" />
+    <div class="app-page-header">
+        <twig:Heading1 :title="title" class="mb-0" />
+        {% if is_granted('EDIT', trip) %}
+            <twig:Button:New
+                href="{{ path('app.trip.surf_session.new', {tripId: trip.id}) }}"
+                label="surf_session.add.label"
+            />
+        {% endif %}
+    </div>
+
     <twig:Trip:Form :form="form" button_label="update.label" />
     <twig:Trip:Form:Delete :trip="trip" />
     <twig:Trip:BackToIndexButton />

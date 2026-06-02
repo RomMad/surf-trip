@@ -103,6 +103,7 @@ surf_session:
     created_successfully: La session a été créée.
     updated_successfully: La session a été mise à jour.
     deleted_successfully: La session a été supprimée.
+    add.label: Ajouter une session
     new.label: Nouvelle session
     edit.label: Édition de la session
     delete.confirm: Es-tu sûr de vouloir supprimer cette session ?

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Controller\Trip;
 
-use App\Exception\TripNotFoundHttpException;
 use App\Service\Trip\TripReadModelProvider;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,10 +31,6 @@ final class ShowTripController extends AbstractController
     public function __invoke(int $id, string $slug): Response
     {
         $trip = $this->tripReadModelProvider->getById($id);
-
-        if (null === $trip) {
-            throw new TripNotFoundHttpException($id);
-        }
 
         if ($trip->slug->value !== $slug) {
             return $this->redirectToRoute(self::ROUTE, [

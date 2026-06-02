@@ -24,6 +24,7 @@ final class ShowTripControllerTest extends CustomWebTestCase
 
     private const string PATH = '/en/trip/%d/%s';
     private const string TITLE = 'Trip';
+    private const string ADD_SESSION_LABEL = 'Add session';
 
     private ?Trip $trip = null;
 
@@ -45,6 +46,7 @@ final class ShowTripControllerTest extends CustomWebTestCase
         $this->assertSelectorTextSame(self::TITLE_H1, self::TITLE);
         $this->assertSelectorExists(self::TABLE);
         $this->assertSelectorTextContains(self::TABLE, $this->trip->title->value);
+        $this->assertCount(1, $this->client->getCrawler()->selectLink(self::ADD_SESSION_LABEL));
     }
 
     public function testShowTripPageRedirectsWhenSlugIsInvalid(): void
