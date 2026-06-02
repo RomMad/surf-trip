@@ -12,7 +12,7 @@
 
     {% block trip_results %}
         <twig:Turbo:Frame id="{{ constant('App\\Turbo\\Frame\\TripFrameId::RESULTS') }}">
-            <twig:ResultsCount :count="pager.nbResults" translationKey="trips.count.label" />
+            <twig:ResultsCount :count="pager.nbResults" />
 
             {% if pager.nbResults > 0 %}
                 <twig:Trip:IndexTable :trips="pager" />

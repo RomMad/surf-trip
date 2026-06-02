@@ -135,7 +135,6 @@ trip:
     delete.confirm: Are you sure you want to delete this trip?
     show.label: Show trip
 trips.label: Trips
-trips.count.label: "{count, plural, =0 {No results} =1 {# result} other {# results}}"
 title.label: Title
 description.label: Description
 location:
