@@ -20,7 +20,7 @@ final class UserAutocompleteControllerTest extends CustomWebTestCase
 {
     private const string PATH = '/autocomplete/users/search';
 
-    private const string UNKNOWN_USER_NAME = 'Unknown user name';
+    private const string UNKNOWN_USER_NAME = 'unknown user name';
     private const string EXISTING_USER_NAME = 'john doe';
 
     protected function setUp(): void
@@ -31,7 +31,7 @@ final class UserAutocompleteControllerTest extends CustomWebTestCase
     public function testAutocompleteReturnsEmptyResultsWhenNoUserMatchesQuery(): void
     {
         $this->client->request(Request::METHOD_GET, self::PATH, [
-            'query' => 'Unknown user name',
+            'query' => self::UNKNOWN_USER_NAME,
         ]);
 
         $content = $this->getJsonContent();
