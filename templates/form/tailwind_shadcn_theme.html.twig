@@ -89,6 +89,17 @@
     </div>
 {% endblock %}
 
+{% block switch_widget %}
+    <label class="app-switch-label">
+        {{ form_widget(form, {
+            attr: attr|merge({
+                class: 'app-switch-input peer',
+            }),
+        }) }}
+        <div class="app-switch-div {{ attr.class|default('')|tailwind_merge }}"></div>
+    </label>
+{% endblock %}
+
 {% block checkbox_row %}
     {% set row_attr = row_attr|merge({
         class: ('app-row ' ~ (row_attr.class|default('')))|tailwind_merge,

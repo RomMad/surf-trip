@@ -22,6 +22,7 @@ language:
     fr.label: Français
     en.label: Anglais
 loading.label: Chargement en cours...
+results.count.label: "{count, plural, =0 {Aucun résultat} =1 {# résultat} other {# résultats}}"
 search:
     label: Rechercher
     placeholder: Rechercher...
@@ -139,6 +140,7 @@ description.label: Description
 location:
     label: Lieu
     placeholder: Lieu du trip
+my_trips_only.label: Mes trips uniquement
 period.label: Période
 start_at.label: Date de début
 end_at.label: Date de fin

@@ -27,12 +27,6 @@
                     </td>
                 {% endfor %}
             </tr>
-        {% else %}
-            <tr>
-                <td colspan="{{ headers|length }}">
-                    {{- empty_message|trans -}}
-                </td>
-            </tr>
         {% endfor %}
     </tbody>
 </twig:Table>

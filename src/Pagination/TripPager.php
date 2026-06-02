@@ -6,6 +6,7 @@ namespace App\Pagination;
 
 use App\Cache\Trip\TripCacheKeys;
 use App\Cache\Trip\TripCacheTags;
+use App\Entity\User;
 use App\Form\Model\Trip\TripSearchInput;
 use App\ReadModel\Trip\TripIndexReadModel;
 use App\Repository\TripRepository;
@@ -29,16 +30,16 @@ final readonly class TripPager
     /**
      * @return Pagerfanta<TripIndexReadModel>
      */
-    public function create(TripSearchInput $searchInput, Request $request, int $maxPerPage = 10): Pagerfanta
+    public function create(TripSearchInput $searchInput, Request $request, ?User $user = null, int $maxPerPage = 10): Pagerfanta
     {
         return $this->cache->get(
-            $this->generateCacheKey($request),
-            function (ItemInterface $item) use ($searchInput, $request, $maxPerPage): Pagerfanta {
+            $this->generateCacheKey($request, $user),
+            function (ItemInterface $item) use ($searchInput, $request, $user, $maxPerPage): Pagerfanta {
                 $item->tag(TripCacheTags::LIST);
                 $item->expiresAfter(new \DateInterval(self::CACHE_TTL));
 
-                $queryBuilder = $this->tripRepository->createOrderedQueryBuilder($searchInput);
-                $countQueryBuilder = $this->tripRepository->getCountQueryBuilder($searchInput);
+                $queryBuilder = $this->tripRepository->createOrderedQueryBuilder($searchInput, $user);
+                $countQueryBuilder = $this->tripRepository->getCountQueryBuilder($searchInput, $user);
 
                 return $this->pagerFactory->createWithCountQueryBuilder(
                     $queryBuilder,
@@ -55,11 +56,11 @@ final readonly class TripPager
         $this->cache->invalidateTags([TripCacheTags::LIST]);
     }
 
-    private function generateCacheKey(Request $request): string
+    private function generateCacheKey(Request $request, ?User $user): string
     {
         $queryString = $request->getQueryString() ?? '';
         $querySlug = $this->slugger->slug($queryString, '_')->toString();
 
-        return TripCacheKeys::list($querySlug);
+        return TripCacheKeys::list($querySlug, $user);
     }
 }

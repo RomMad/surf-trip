@@ -12,8 +12,12 @@
 
     {% block trip_results %}
         <twig:Turbo:Frame id="{{ constant('App\\Turbo\\Frame\\TripFrameId::RESULTS') }}">
-            <twig:Trip:IndexTable :trips="pager" />
-            <twig:AppPagination :pager="pager" />
+            <twig:ResultsCount :count="pager.nbResults" />
+
+            {% if pager.nbResults > 0 %}
+                <twig:Trip:IndexTable :trips="pager" />
+                <twig:AppPagination :pager="pager" />
+            {% endif %}
         </twig:Turbo:Frame>
     {% endblock %}
 {% endblock %}

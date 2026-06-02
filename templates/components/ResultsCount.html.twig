@@ -1,0 +1,11 @@
+{# @prop count int The number of filtered results #}
+{# @prop translationKey string The translation key used to render the count label #}
+{%- props count = 0, translationKey = 'results.count.label' -%}
+
+<p
+    class="mb-4 ml-2 text-sm text-muted-foreground {{ attributes.render('class')|tailwind_merge }}"
+    aria-live="polite"
+    {{ attributes }}
+>
+    {{ translationKey|trans({count: count}) }}
+</p>

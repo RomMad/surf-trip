@@ -16,6 +16,8 @@ final class TripSearchInput
     /** @var list<SurfLevel> */
     public array $requiredLevels = [];
 
+    public bool $myTripsOnly = false;
+
     public function __construct(
         public Period $period = new Period()
     ) {}
