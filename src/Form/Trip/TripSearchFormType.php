@@ -8,6 +8,7 @@ use App\Enum\User\SurfLevel;
 use App\Form\Model\Trip\TripSearchInput;
 use App\Form\Type\InlineSearchFormType;
 use App\Form\Type\PeriodType;
+use App\Form\Type\SwitchType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\SearchType;
@@ -44,6 +45,10 @@ final class TripSearchFormType extends AbstractType
                 'attr' => [
                     'placeholder' => 'location.placeholder',
                 ],
+            ])
+            ->add('myTripsOnly', SwitchType::class, [
+                'label' => 'trip.my_trips_only.label',
+                'required' => false,
             ])
         ;
     }

@@ -1,11 +1,14 @@
 {% props form %}
 
 {{ form_start(form, {attr: {
-    class: 'flex flex-col gap-4 md:grid md:grid-cols-2 lg:flex lg:flex-row',
+    class: 'flex flex-col gap-4 sm:grid sm:grid-cols-2 md:grid-cols-3 lg:flex lg:flex-row',
     'data-turbo-frame': constant('App\\Turbo\\Frame\\TripFrameId::RESULTS'),
 }}) }}
     <twig:Form:Query :query="form.query" />
     {{ form_row(form.location, {label_attr: {hidden: null}}) }}
     <twig:Form:Period :period="form.period" />
-    {{ form_row(form.requiredLevels, {attr: {class: 'w-64 min-w-48'}, label_attr: {hidden: null}}) }}
+    <div title="{{ 'required_levels.placeholder'|trans }}">
+        {{ form_row(form.requiredLevels, {attr: {class: 'min-w-48'}, label_attr: {hidden: null}}) }}
+    </div>
+    {{ form_row(form.myTripsOnly) }}
 {{ form_end(form) }}

@@ -22,6 +22,7 @@ language:
     fr.label: Français
     en.label: Anglais
 loading.label: Chargement en cours...
+results.count.label: "{count, plural, =0 {Aucun résultat} =1 {# résultat} other {# résultats}}"
 search:
     label: Rechercher
     placeholder: Rechercher...
@@ -126,6 +127,7 @@ surf_session:
 trip:
     label: Trip
     placeholder: Sélectionne un trip
+    my_trips_only.label: Mes trips uniquement
     created_successfully: Le trip a été créé.
     updated_successfully: Le trip a été mis à jour.
     deleted_successfully: Le trip a été supprimé.
@@ -134,6 +136,7 @@ trip:
     delete.confirm: Es-tu sûr de vouloir supprimer ce voyage ?
     show.label: Voir le trip
 trips.label: Trips
+trips.count.label: "{count, plural, =0 {Aucun résultat} =1 {# résultat} other {# résultats}}"
 title.label: Titre
 description.label: Description
 location:

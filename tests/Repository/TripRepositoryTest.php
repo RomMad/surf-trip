@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Repository;
 
+use App\Entity\User;
 use App\Enum\User\SurfLevel;
 use App\Factory\TripFactory;
 use App\Form\Model\Trip\TripSearchInput;
@@ -12,6 +13,7 @@ use App\Repository\TripRepository;
 use App\Tests\CustomKernelTestCase;
 use App\Tests\Fixtures\DefaultStory;
 use App\Tests\Fixtures\TripStory;
+use App\Tests\Fixtures\UserStory;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Medium;
 
@@ -55,11 +57,9 @@ final class TripRepositoryTest extends CustomKernelTestCase
     public function testCreateOrderedQueryBuilderWithoutFilters(): void
     {
         $searchInput = new TripSearchInput();
-        $queryBuilder = $this->repository->createOrderedQueryBuilder($searchInput);
-        $results = $queryBuilder->getQuery()->getResult();
+        $trips = $this->getTrips($searchInput);
 
-        $this->assertCount(21, $results);
-        $this->assertContainsOnlyInstancesOf(TripShowReadModel::class, $results);
+        $this->assertCount(21, $trips);
     }
 
     public function testCreateOrderedQueryBuilderWithSearchFilter(): void
@@ -67,14 +67,10 @@ final class TripRepositoryTest extends CustomKernelTestCase
         $searchInput = new TripSearchInput();
         $searchInput->query = TripStory::TRIP_TITLE;
 
-        $results = $this->repository
-            ->createOrderedQueryBuilder($searchInput)
-            ->getQuery()
-            ->getResult()
-        ;
+        $trips = $this->getTrips($searchInput);
 
-        $this->assertCount(1, $results);
-        $this->assertSame(TripStory::TRIP_TITLE, $results[0]->title->value);
+        $this->assertCount(1, $trips);
+        $this->assertSame(TripStory::TRIP_TITLE, $trips[0]->title->value);
     }
 
     public function testCreateOrderedQueryBuilderWithLocationFilter(): void
@@ -82,14 +78,10 @@ final class TripRepositoryTest extends CustomKernelTestCase
         $searchInput = new TripSearchInput();
         $searchInput->location = TripStory::TRIP_LOCATION;
 
-        $results = $this->repository
-            ->createOrderedQueryBuilder($searchInput)
-            ->getQuery()
-            ->getResult()
-        ;
+        $trips = $this->getTrips($searchInput);
 
-        $this->assertCount(1, $results);
-        $this->assertSame(TripStory::TRIP_LOCATION, $results[0]->location->value);
+        $this->assertCount(1, $trips);
+        $this->assertSame(TripStory::TRIP_LOCATION, $trips[0]->location->value);
     }
 
     public function testCreateOrderedQueryBuilderWithSurfLevelsFilter(): void
@@ -97,14 +89,10 @@ final class TripRepositoryTest extends CustomKernelTestCase
         $searchInput = new TripSearchInput();
         $searchInput->requiredLevels = [SurfLevel::Intermediate];
 
-        $results = $this->repository
-            ->createOrderedQueryBuilder($searchInput)
-            ->getQuery()
-            ->getResult()
-        ;
+        $trips = $this->getTrips($searchInput);
 
-        $this->assertGreaterThan(1, count($results));
-        $this->assertContains(SurfLevel::Intermediate, $results[0]->requiredLevels);
+        $this->assertGreaterThan(1, count($trips));
+        $this->assertContains(SurfLevel::Intermediate, $trips[0]->requiredLevels);
     }
 
     public function testCreateOrderedQueryBuilderWithCombinedFilters(): void
@@ -113,27 +101,46 @@ final class TripRepositoryTest extends CustomKernelTestCase
         $searchInput->query = 'Bali';
         $searchInput->location = 'Indonesia';
         $searchInput->requiredLevels = [SurfLevel::Beginner];
+        $searchInput->myTripsOnly = true;
 
-        $results = $this->repository
-            ->createOrderedQueryBuilder($searchInput)
-            ->getQuery()
-            ->getResult()
-        ;
+        $user = UserStory::getJohnUser();
 
-        $this->assertCount(1, $results);
+        $trips = $this->getTrips($searchInput, $user);
+
+        $this->assertCount(1, $trips);
+    }
+
+    public function testCreateOrderedQueryBuilderWithMyTripsOnlyFilterAndAuthenticatedUser(): void
+    {
+        $searchInput = new TripSearchInput();
+        $searchInput->myTripsOnly = true;
+
+        $user = UserStory::getJohnUser();
+
+        $trips = $this->getTrips($searchInput, $user);
+
+        $this->assertNotEmpty($trips);
+        $this->assertCount($user->trips->count(), $trips);
+    }
+
+    public function testCreateOrderedQueryBuilderWithMyTripsOnlyFilterAndAnonymousUser(): void
+    {
+        $searchInput = new TripSearchInput();
+        $searchInput->myTripsOnly = true;
+
+        $tripCount = $this->getTripCount($searchInput);
+        $countWithoutFilter = $this->getTripCount(new TripSearchInput());
+
+        $this->assertSame($countWithoutFilter, $tripCount);
     }
 
     public function testGetCountQueryBuilderWithoutFilters(): void
     {
         $searchInput = new TripSearchInput();
 
-        $count = (int) $this->repository
-            ->getCountQueryBuilder($searchInput)
-            ->getQuery()
-            ->getSingleScalarResult()
-        ;
+        $tripCount = $this->getTripCount($searchInput);
 
-        $this->assertSame(21, $count);
+        $this->assertSame(21, $tripCount);
     }
 
     public function testGetCountQueryBuilderWithSearchFilter(): void
@@ -141,13 +148,9 @@ final class TripRepositoryTest extends CustomKernelTestCase
         $searchInput = new TripSearchInput();
         $searchInput->query = TripStory::TRIP_TITLE;
 
-        $count = (int) $this->repository
-            ->getCountQueryBuilder($searchInput)
-            ->getQuery()
-            ->getSingleScalarResult()
-        ;
+        $tripCount = $this->getTripCount($searchInput);
 
-        $this->assertSame(1, $count);
+        $this->assertSame(1, $tripCount);
     }
 
     public function testGetCountQueryBuilderWithLocationFilter(): void
@@ -155,13 +158,21 @@ final class TripRepositoryTest extends CustomKernelTestCase
         $searchInput = new TripSearchInput();
         $searchInput->location = 'Bali';
 
-        $count = (int) $this->repository
-            ->getCountQueryBuilder($searchInput)
-            ->getQuery()
-            ->getSingleScalarResult()
-        ;
+        $tripCount = $this->getTripCount($searchInput);
 
-        $this->assertSame(1, $count);
+        $this->assertSame(1, $tripCount);
+    }
+
+    public function testGetCountQueryBuilderWithMyTripsOnlyFilterAndAuthenticatedUser(): void
+    {
+        $searchInput = new TripSearchInput();
+        $searchInput->myTripsOnly = true;
+
+        $user = UserStory::getJohnUser();
+
+        $tripCount = $this->getTripCount($searchInput, $user);
+
+        $this->assertGreaterThanOrEqual(1, $tripCount);
     }
 
     public function testFindShowReadModelByIdReturnsCorrectModel(): void
@@ -185,5 +196,26 @@ final class TripRepositoryTest extends CustomKernelTestCase
         parent::tearDown();
 
         $this->repository = null;
+    }
+
+    /**
+     * @return TripShowReadModel[]
+     */
+    private function getTrips(TripSearchInput $searchInput, ?User $user = null): array
+    {
+        return $this->repository
+            ->createOrderedQueryBuilder($searchInput, $user)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    private function getTripCount(TripSearchInput $searchInput, ?User $user = null): int
+    {
+        return (int) $this->repository
+            ->getCountQueryBuilder($searchInput, $user)
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
     }
 }

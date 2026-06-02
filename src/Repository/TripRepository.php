@@ -126,24 +126,24 @@ class TripRepository extends ServiceEntityRepository
         ;
     }
 
-    public function createOrderedQueryBuilder(TripSearchInput $searchInput): QueryBuilder
+    public function createOrderedQueryBuilder(TripSearchInput $searchInput, ?User $user = null): QueryBuilder
     {
         $queryBuilder = $this->createDtoBaseQueryBuilder()
             ->orderBy('t.id', 'DESC')
         ;
 
-        $this->applyFilters($queryBuilder, $searchInput);
+        $this->applyFilters($queryBuilder, $searchInput, $user);
 
         return $queryBuilder;
     }
 
-    public function getCountQueryBuilder(TripSearchInput $searchInput): QueryBuilder
+    public function getCountQueryBuilder(TripSearchInput $searchInput, ?User $user = null): QueryBuilder
     {
         $queryBuilder = $this->createQueryBuilder('t')
             ->select('COUNT(t.id)')
         ;
 
-        $this->applyFilters($queryBuilder, $searchInput);
+        $this->applyFilters($queryBuilder, $searchInput, $user);
 
         return $queryBuilder;
     }
@@ -198,8 +198,22 @@ class TripRepository extends ServiceEntityRepository
         ;
     }
 
-    private function applyFilters(QueryBuilder $queryBuilder, TripSearchInput $searchInput): void
+    private function applyFilters(QueryBuilder $queryBuilder, TripSearchInput $searchInput, ?User $user): void
     {
+        if ($searchInput->myTripsOnly && null !== $user) {
+            $membershipsQueryBuilder = $this->createQueryBuilder('tm')
+                ->select('1')
+                ->innerJoin('tm.owners', 'tmu')
+                ->where('tm = t')
+                ->andWhere('tmu = :ownerUser')
+            ;
+
+            $queryBuilder
+                ->andWhere($queryBuilder->expr()->exists($membershipsQueryBuilder->getDQL()))
+                ->setParameter('ownerUser', $user)
+            ;
+        }
+
         if (null !== $searchInput->query) {
             $queryBuilder
                 ->andWhere('ILIKE(t.title, :search) = TRUE OR ILIKE(t.description, :search) = TRUE')
