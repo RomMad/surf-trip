@@ -8,13 +8,11 @@ use App\Enum\SurfSession\SurfSessionRating;
 use App\Repository\DashboardStatisticsRepository;
 use App\Tests\CustomKernelTestCase;
 use App\Tests\Fixtures\DashboardStory;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Medium;
 
 /**
  * @internal
  */
-#[CoversClass(DashboardStatisticsRepository::class)]
 #[Medium]
 final class DashboardStatisticsRepositoryTest extends CustomKernelTestCase
 {

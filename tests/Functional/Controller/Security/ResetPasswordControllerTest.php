@@ -4,13 +4,11 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\Controller\Security;
 
-use App\Controller\Security\ResetPasswordController;
 use App\Entity\User;
 use App\Entity\ValueObject\Email;
 use App\Repository\UserRepository;
 use App\Tests\CustomWebTestCase;
 use App\Tests\Fixtures\UserStory;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Medium;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -18,7 +16,6 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 /**
  * @internal
  */
-#[CoversClass(ResetPasswordController::class)]
 #[Medium]
 final class ResetPasswordControllerTest extends CustomWebTestCase
 {

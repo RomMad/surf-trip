@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\Controller\SurfSession;
 
-use App\Controller\SurfSession\EditSurfSessionController;
 use App\Entity\SurfSession;
 use App\Entity\ValueObject\Email;
 use App\Entity\ValueObject\Title;
@@ -17,14 +16,12 @@ use App\Tests\Fixtures\DefaultStory;
 use App\Tests\Fixtures\TripStory;
 use App\Tests\Fixtures\UserStory;
 use App\Tests\Traits\CalendarLinksTestTrait;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Medium;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @internal
  */
-#[CoversClass(EditSurfSessionController::class)]
 #[Medium]
 final class EditSurfSessionControllerTest extends CustomWebTestCase
 {
