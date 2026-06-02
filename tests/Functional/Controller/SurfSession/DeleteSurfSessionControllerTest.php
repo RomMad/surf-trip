@@ -4,19 +4,16 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\Controller\SurfSession;
 
-use App\Controller\SurfSession\DeleteSurfSessionController;
 use App\Entity\SurfSession;
 use App\Factory\SurfSessionFactory;
 use App\Tests\CustomWebTestCase;
 use App\Tests\Fixtures\DefaultStory;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Medium;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @internal
  */
-#[CoversClass(DeleteSurfSessionController::class)]
 #[Medium]
 final class DeleteSurfSessionControllerTest extends CustomWebTestCase
 {

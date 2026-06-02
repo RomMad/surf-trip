@@ -4,20 +4,17 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\Controller\Trip;
 
-use App\Controller\Trip\IndexTripController;
 use App\Tests\CustomWebTestCase;
 use App\Tests\Fixtures\DefaultStory;
 use App\Tests\Fixtures\TripStory;
 use App\Turbo\Frame\TripFrameId;
 use App\Turbo\Http\TurboHeader;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Medium;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @internal
  */
-#[CoversClass(IndexTripController::class)]
 #[Medium]
 final class IndexTripControllerTest extends CustomWebTestCase
 {

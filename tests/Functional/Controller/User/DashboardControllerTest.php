@@ -4,19 +4,16 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\Controller\User;
 
-use App\Controller\User\DashboardController;
 use App\Entity\ValueObject\Email;
 use App\Factory\UserFactory;
 use App\Tests\CustomWebTestCase;
 use App\Tests\Fixtures\DashboardStory;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Medium;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @internal
  */
-#[CoversClass(DashboardController::class)]
 #[Medium]
 final class DashboardControllerTest extends CustomWebTestCase
 {

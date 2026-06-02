@@ -4,21 +4,18 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\Controller\SurfSession;
 
-use App\Controller\SurfSession\IndexSurfSessionController;
 use App\Tests\CustomWebTestCase;
 use App\Tests\Fixtures\DefaultStory;
 use App\Tests\Fixtures\SurfSessionStory;
 use App\Turbo\Frame\SurfSessionFrameId;
 use App\Turbo\Http\TurboContentType;
 use App\Turbo\Http\TurboHeader;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Medium;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @internal
  */
-#[CoversClass(IndexSurfSessionController::class)]
 #[Medium]
 final class IndexSurfSessionControllerTest extends CustomWebTestCase
 {

@@ -4,20 +4,17 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\Controller\User;
 
-use App\Controller\User\EditProfileController;
 use App\Entity\User;
 use App\Entity\ValueObject\Email;
 use App\Repository\UserRepository;
 use App\Tests\CustomWebTestCase;
 use App\Tests\Fixtures\UserStory;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Medium;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @internal
  */
-#[CoversClass(EditProfileController::class)]
 #[Medium]
 final class EditProfileControllerTest extends CustomWebTestCase
 {
