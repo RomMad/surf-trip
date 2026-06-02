@@ -18,6 +18,7 @@ final class UserStory extends Story
     public const string JOHN_EMAIL = 'john.doe@test.com';
     public const string JOHN_PASSWORD = UserFactory::DEFAULT_PASSWORD;
     public const string JOHN_USERNAME = 'john.doe';
+    public const string JOHN_FULL_NAME = 'John DOE';
 
     public const string JANE_EMAIL = 'jane.doe@test.com';
     public const string JANE_USERNAME = 'jane.doe';
