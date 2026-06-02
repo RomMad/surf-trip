@@ -3,7 +3,7 @@
 {%- props count = 0, translationKey = 'results.count.label' -%}
 
 <p  aria-live="polite"
-    class="mb-2 ml-2 text-sm text-muted-foreground {{ attributes.render('class')|tailwind_merge }}"
+    class="mb-4 ml-2 text-sm text-muted-foreground {{ attributes.render('class')|tailwind_merge }}"
     {{ attributes }}
 >
     {{ translationKey|trans({count: count}) }}
