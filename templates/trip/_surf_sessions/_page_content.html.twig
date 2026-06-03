@@ -1,0 +1,13 @@
+{% for surf_session in pager %}
+    <twig:SurfSession:Card :surf_session="surf_session" :compact="true" />
+{% endfor %}
+
+{% if pager.hasNextPage %}
+    <twig:Turbo:Frame
+        id="{{ constant('App\\Turbo\\Frame\\TripFrameId::SURF_SESSIONS_PAGE_CONTENT') }}"
+        loading="lazy"
+        src="{{ path('app.trip.surf_sessions', {id: trip.id, page: pager.nextPage}) }}"
+    >
+        <twig:Spinner />
+    </twig:Turbo:Frame>
+{% endif %}

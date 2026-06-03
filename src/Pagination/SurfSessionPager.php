@@ -17,7 +17,8 @@ use Symfony\Contracts\Cache\TagAwareCacheInterface;
 
 final readonly class SurfSessionPager
 {
-    private const string CACHE_KEY_PATTERN = 'surf_session.list.%d.%s';
+    private const string CACHE_KEY_PATTERN = 'user_%d.surf_session.list.%s';
+    private const string TRIP_CACHE_KEY_PATTERN = 'trip_%d.user_%d.surf_session.list.%s';
     private const string CACHE_TTL = 'PT5M';
 
     public function __construct(
@@ -51,11 +52,43 @@ final readonly class SurfSessionPager
         );
     }
 
+    /**
+     * @return Pagerfanta<SurfSessionIndexReadModel>
+     */
+    public function createForTrip(Request $request, User $user, int $tripId, int $maxPerPage = 10): Pagerfanta
+    {
+        return $this->cache->get(
+            $this->generateTripCacheKey($request, $user, $tripId),
+            function (ItemInterface $item) use ($request, $user, $tripId, $maxPerPage): Pagerfanta {
+                $item->tag(SurfSessionCacheTags::listForUser($user));
+                $item->expiresAfter(new \DateInterval(self::CACHE_TTL));
+
+                $queryBuilder = $this->surfSessionRepository->createOrderedQueryBuilderForTrip($user, $tripId);
+                $countQueryBuilder = $this->surfSessionRepository->getCountQueryBuilderForTrip($user, $tripId);
+
+                return $this->pagerFactory->createWithCountQueryBuilder(
+                    $queryBuilder,
+                    $countQueryBuilder,
+                    $request,
+                    $maxPerPage,
+                );
+            },
+        );
+    }
+
     private function generateCacheKey(Request $request, User $user): string
     {
         $queryString = $request->getQueryString() ?? '';
         $querySlug = $this->slugger->slug($queryString, '_')->toString();
 
         return sprintf(self::CACHE_KEY_PATTERN, $user->id, $querySlug);
+    }
+
+    private function generateTripCacheKey(Request $request, User $user, int $tripId): string
+    {
+        $queryString = $request->getQueryString() ?? '';
+        $querySlug = $this->slugger->slug($queryString, '_')->toString();
+
+        return sprintf(self::TRIP_CACHE_KEY_PATTERN, $user->id, $tripId, $querySlug);
     }
 }

@@ -1,0 +1,23 @@
+<twig:Turbo:Stream:Replace target="#{{ constant('App\\Turbo\\Frame\\TripFrameId::SURF_SESSIONS') }}">
+    <twig:Separator class="my-8" />
+
+    <section>
+        <div class="app-page-header">
+            <h2 class="heading-2 my-0">
+                {{- 'trip.surf_sessions.label'|trans -}}
+            </h2>
+            <twig:Button:New
+                href="{{ path('app.trip.surf_session.new', {tripId: trip.id}) }}"
+                label="surf_session.add.label"
+            />
+        </div>
+
+        <twig:ResultsCount :count="pager.nbResults" />
+
+        {% if pager.nbResults > 0 %}
+            <div class="app-grid-cards">
+                {{ include('trip/_surf_sessions/_page_content.html.twig', {pager: pager}) }}
+            </div>
+        {% endif %}
+    </section>
+</twig:Turbo:Stream:Replace>
