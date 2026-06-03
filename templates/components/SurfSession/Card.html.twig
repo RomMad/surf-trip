@@ -1,3 +1,7 @@
+{# @prop surf_session SurfSessionIndexReadModel The surf session to display #}
+{# @prop compact bool Whether to display the card in compact mode, default to `false` #}
+{%- props surf_session, compact = false -%}
+
 <twig:Card id="surf_session_{{ surf_session.id }}" class="flex h-full flex-col">
     <twig:Card:Header>
         <twig:Card:Title>
@@ -12,7 +16,7 @@
                 {% endif %}
             </div>
         </twig:Card:Title>
-        {% if surf_session.tripId %}
+        {% if surf_session.tripId and not compact %}
             <twig:Card:Description>
                 <twig:Button
                     as="a"

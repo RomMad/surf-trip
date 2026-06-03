@@ -93,27 +93,7 @@ final class SurfSessionRepository extends ServiceEntityRepository
 
     public function createOrderedQueryBuilder(User $user, SurfSessionSearchInput $searchInput): QueryBuilder
     {
-        $queryBuilder = $this->createQueryBuilder('s')
-            ->select(sprintf(
-                'NEW %s(
-                    s.id,
-                    s.spot,
-                    s.board,
-                    s.startAt,
-                    s.endAt,
-                    s.rating,
-                    s.objective,
-                    s.comment,
-                    t.id,
-                    COALESCE(t.title, \'\')
-                )',
-                SurfSessionIndexReadModel::class,
-            ))
-            ->leftJoin('s.trip', 't')
-            ->orderBy('s.startAt', 'DESC')
-            ->where('s.user = :user')
-            ->setParameter('user', $user)
-        ;
+        $queryBuilder = $this->createOrderedIndexReadModelQueryBuilder($user);
 
         $this->applyFilters($queryBuilder, $searchInput);
 
@@ -133,6 +113,27 @@ final class SurfSessionRepository extends ServiceEntityRepository
         return $queryBuilder;
     }
 
+    public function createOrderedQueryBuilderForTrip(User $user, int $tripId): QueryBuilder
+    {
+        return $this->createOrderedIndexReadModelQueryBuilder($user)
+            ->andWhere('t.id = :tripId')
+            ->setParameter('tripId', $tripId)
+        ;
+    }
+
+    public function getCountQueryBuilderForTrip(User $user, int $tripId): QueryBuilder
+    {
+        return $this->createQueryBuilder('s')
+            ->select('COUNT(s.id)')
+            ->innerJoin('s.trip', 't')
+
+            ->where('s.user = :user')
+            ->andWhere('t.id = :tripId')
+            ->setParameter('user', $user)
+            ->setParameter('tripId', $tripId)
+        ;
+    }
+
     private function applyFilters(QueryBuilder $queryBuilder, SurfSessionSearchInput $searchInput): void
     {
         if ($searchInput->query) {
@@ -143,5 +144,31 @@ final class SurfSessionRepository extends ServiceEntityRepository
         }
 
         $this->applyPeriodFilters($queryBuilder, $searchInput->period, 's.startAt', 's.endAt');
+    }
+
+    private function createOrderedIndexReadModelQueryBuilder(User $user): QueryBuilder
+    {
+        return $this->createQueryBuilder('s')
+            ->select(sprintf(
+                'NEW %s(
+                    s.id,
+                    s.spot,
+                    s.board,
+                    s.startAt,
+                    s.endAt,
+                    s.rating,
+                    s.objective,
+                    s.comment,
+                    t.id,
+                    COALESCE(t.title, \'\')
+                )',
+                SurfSessionIndexReadModel::class,
+            ))
+            ->leftJoin('s.trip', 't')
+            ->orderBy('s.startAt', 'DESC')
+
+            ->where('s.user = :user')
+            ->setParameter('user', $user)
+        ;
     }
 }

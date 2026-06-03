@@ -1,29 +1,31 @@
 {% extends 'base.html.twig' %}
 
 {% set title = 'trip.label'|trans %}
-{% set is_granted_edit = is_granted('EDIT', trip) %}
+{% set is_granted_edit_trip = is_granted('EDIT', trip) %}
 
 {% block body %}
-    <div class="app-page-header">
-        <twig:Heading1 :title="title" class="mb-0" />
-        {% if is_granted_edit %}
-            <twig:Button:New
-                href="{{ path('app.trip.surf_session.new', {tripId: trip.id}) }}"
-                label="surf_session.add.label"
-            />
-        {% endif %}
-    </div>
+    <twig:Heading1 :title="title" />
 
     <twig:Trip:ShowTable :trip="trip" />
-    {% if is_granted_edit %}
+    {% if is_granted_edit_trip %}
         <twig:Calendar:LinksGroup :event="trip" />
     {% endif %}
 
     <div class="flex flex-wrap items-center gap-2">
-        {% if is_granted_edit %}
+        {% if is_granted_edit_trip %}
             <twig:Button:Edit href="{{ path('app.trip.edit', {id: trip.id, slug: trip.slug}) }}" class="mb-4" />
             <twig:Trip:Form:Delete :trip="trip" />
         {% endif %}
         <twig:Trip:BackToIndexButton />
     </div>
+
+    {% if is_granted_edit_trip %}
+        <twig:Turbo:Frame
+            id="{{ constant('App\\Turbo\\Frame\\TripFrameId::SURF_SESSIONS') }}"
+            src="{{ path('app.trip.surf_sessions', {id: trip.id}) }}"
+            loading="lazy"
+        >
+            <twig:Spinner />
+        </twig:Turbo:Frame>
+    {% endif %}
 {% endblock %}

@@ -135,6 +135,7 @@ trip:
     edit.label: Edit trip
     delete.confirm: Are you sure you want to delete this trip?
     show.label: Show trip
+    surf_sessions.label: My surf sessions
 trips.label: Trips
 title.label: Title
 description.label: Description

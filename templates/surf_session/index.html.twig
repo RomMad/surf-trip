@@ -16,7 +16,7 @@
 
             {% if pager.nbResults > 0 %}
                 <div class="app-grid-cards">
-                    {{ include('surf_session/_page_content.html.twig', {pager: pager}) }}
+                    {{ include('surf_session/_list.html.twig', {pager: pager}) }}
                 </div>
             {% endif %}
         </twig:Turbo:Frame>
