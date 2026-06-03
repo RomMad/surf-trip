@@ -1,7 +1,7 @@
 {% props form %}
 
 {{ form_start(form, {attr: {
-    class: 'flex flex-col gap-4 sm:grid sm:grid-cols-2 md:grid-cols-3 lg:flex lg:flex-row',
+    class: 'flex flex-col gap-3 sm:grid sm:grid-cols-2 md:grid-cols-3 lg:flex lg:flex-row',
     'data-turbo-frame': constant('App\\Turbo\\Frame\\TripFrameId::RESULTS'),
 }}) }}
     <twig:Form:Query :query="form.query" />
