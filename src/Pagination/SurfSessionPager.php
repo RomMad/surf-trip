@@ -89,6 +89,6 @@ final readonly class SurfSessionPager
         $queryString = $request->getQueryString() ?? '';
         $querySlug = $this->slugger->slug($queryString, '_')->toString();
 
-        return sprintf(self::TRIP_CACHE_KEY_PATTERN, $user->id, $tripId, $querySlug);
+        return sprintf(self::TRIP_CACHE_KEY_PATTERN, $tripId, $user->id, $querySlug);
     }
 }
