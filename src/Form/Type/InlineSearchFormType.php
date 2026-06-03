@@ -17,7 +17,7 @@ final class InlineSearchFormType extends AbstractType
             'csrf_protection' => false,
             'allow_extra_fields' => true,
             'attr' => [
-                'class' => 'flex flex-col md:flex-row gap-4 mb-4',
+                'class' => 'flex flex-col md:flex-row gap-4 mb-2',
                 'data-controller' => 'auto-submit',
                 'data-auto-submit-delay-value' => 300,
                 'data-action' => 'input->auto-submit#submit change->auto-submit#submit',

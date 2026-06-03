@@ -12,9 +12,9 @@
 
     {% block surf_session_results %}
         <twig:Turbo:Frame id="{{ constant('App\\Turbo\\Frame\\SurfSessionFrameId::RESULTS') }}">
-            {% if pager.nbResults == 0 %}
-                <p class="text-muted-foreground">{{ 'no_records_found.label'|trans }}</p>
-            {% else %}
+            <twig:ResultsCount :count="pager.nbResults" />
+
+            {% if pager.nbResults > 0 %}
                 <div class="app-grid-cards">
                     {{ include('surf_session/_page_content.html.twig', {pager: pager}) }}
                 </div>
