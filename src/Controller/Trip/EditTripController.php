@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Controller\Trip;
 
-use App\Exception\TripNotFoundHttpException;
 use App\Form\Model\Trip\TripWriteModel;
 use App\Form\Trip\TripFormType;
 use App\Security\Voter\TripVoter;
@@ -39,10 +38,6 @@ final class EditTripController extends AbstractController
     public function __invoke(Request $request, int $id, string $slug): Response
     {
         $trip = $this->tripReadModelProvider->getById($id);
-
-        if (null === $trip) {
-            throw new TripNotFoundHttpException($id);
-        }
 
         $this->denyAccessUnlessGranted(TripVoter::EDIT, $trip);
 

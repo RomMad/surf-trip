@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service\Trip;
 
 use App\Cache\Trip\TripCacheKeys;
+use App\Exception\TripNotFoundHttpException;
 use App\ReadModel\Trip\TripShowReadModel;
 use App\Repository\TripRepository;
 use Symfony\Contracts\Cache\ItemInterface;
@@ -19,9 +20,9 @@ final readonly class TripReadModelProvider
         private TagAwareCacheInterface $cache,
     ) {}
 
-    public function getById(int $id): ?TripShowReadModel
+    public function getById(int $id): TripShowReadModel
     {
-        return $this->cache->get(
+        $trip = $this->cache->get(
             TripCacheKeys::readModel($id),
             function (ItemInterface $item) use ($id): ?TripShowReadModel {
                 $item->expiresAfter(new \DateInterval(self::CACHE_TTL));
@@ -29,5 +30,13 @@ final readonly class TripReadModelProvider
                 return $this->tripRepository->findShowReadModelById($id);
             },
         );
+
+        if (null === $trip) {
+            $this->cache->delete(TripCacheKeys::readModel($id));
+
+            throw new TripNotFoundHttpException($id);
+        }
+
+        return $trip;
     }
 }

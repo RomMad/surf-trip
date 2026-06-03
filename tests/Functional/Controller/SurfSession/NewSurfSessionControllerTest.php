@@ -23,6 +23,7 @@ final class NewSurfSessionControllerTest extends CustomWebTestCase
     // Paths
     private const string PATH_INDEX = '/en/sessions';
     private const string PATH_NEW = '/en/sessions/new';
+    private const string PATH_NEW_FROM_TRIP = '/en/trip/%d/sessions/new';
     // Selectors
     private const string FORM = 'form[name="surf_session"]';
     private const string FIRST_CARD = '.app-card';
@@ -88,5 +89,34 @@ final class NewSurfSessionControllerTest extends CustomWebTestCase
         $this->assertSelectorTextContains(self::ALERT_SUCCESS, self::MESSAGE_SUCCESS);
         $this->assertSelectorTextContains(self::FIRST_CARD, self::SESSION_SPOT);
         $this->assertSelectorTextContains(self::FIRST_CARD, self::SESSION_BOARD);
+    }
+
+    public function testNewSurfSessionWithTrip(): void
+    {
+        $trip = TripFactory::find(['title' => Title::from(TripStory::CURRENT_TRIP_TITLE)]);
+        $now = new \DateTimeImmutable()->setTime(10, 0);
+
+        $this->client->request(Request::METHOD_GET, sprintf(self::PATH_NEW_FROM_TRIP, $trip->id));
+
+        $startAt = $this->parseDateTimeFromInput('#surf_session_startAt');
+        $endAt = $this->parseDateTimeFromInput('#surf_session_endAt');
+
+        $this->assertResponseIsSuccessful();
+        $this->assertSame($trip->location->value, $this->getInputValue('#surf_session_spot'));
+        $this->assertSame((string) $trip->id, $this->getInputValue('#surf_session_trip option[selected]'));
+        $this->assertSame($now->format('Y-m-d\TH'), $startAt->format('Y-m-d\TH'));
+        $this->assertSame($startAt->modify('+2 hours')->format('Y-m-d\TH'), $endAt->format('Y-m-d\TH'));
+    }
+
+    private function parseDateTimeFromInput(string $selector): \DateTimeImmutable
+    {
+        $value = $this->getInputValue($selector);
+
+        return \DateTimeImmutable::createFromFormat('Y-m-d\TH:i', $value);
+    }
+
+    private function getInputValue(string $selector): string
+    {
+        return (string) $this->client->getCrawler()->filter($selector)->attr('value');
     }
 }
