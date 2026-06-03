@@ -56,7 +56,7 @@ final class ShowTripSurfSessionSectionControllerTest extends CustomWebTestCase
         $this->assertSelectorCount(6, self::CARD);
         $this->assertSelectorExists(sprintf(
             'turbo-frame#%s',
-            TripFrameId::SURF_SESSIONS_PAGE_CONTENT,
+            TripFrameId::SURF_SESSIONS_LIST,
         ));
     }
 
@@ -67,7 +67,7 @@ final class ShowTripSurfSessionSectionControllerTest extends CustomWebTestCase
             sprintf(self::PATH, $this->trip->id),
             ['page' => 2],
             server: [
-                TurboHeader::FRAME_SERVER => TripFrameId::SURF_SESSIONS_PAGE_CONTENT,
+                TurboHeader::FRAME_SERVER => TripFrameId::SURF_SESSIONS_LIST,
             ],
         );
 

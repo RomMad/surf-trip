@@ -69,7 +69,7 @@ final class IndexSurfSessionControllerTest extends CustomWebTestCase
         $this->client->request(Request::METHOD_GET, self::PATH, [
             'page' => 2,
         ], server: [
-            TurboHeader::FRAME_SERVER => SurfSessionFrameId::PAGE_CONTENT,
+            TurboHeader::FRAME_SERVER => SurfSessionFrameId::LIST,
         ]);
 
         $this->assertResponseIsSuccessful();

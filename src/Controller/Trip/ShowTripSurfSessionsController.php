@@ -43,7 +43,7 @@ final class ShowTripSurfSessionsController extends AbstractController
 
         $pager = $this->surfSessionPager->createForTrip($request, $currentUser, $trip->id, 6);
 
-        $view = TripFrameId::SURF_SESSIONS_PAGE_CONTENT === $request->headers->get(TurboHeader::FRAME)
+        $view = TripFrameId::SURF_SESSIONS_LIST === $request->headers->get(TurboHeader::FRAME)
             ? 'trip/_surf_sessions/_stream.html.twig'
             : 'trip/_surf_sessions/_section.html.twig';
 

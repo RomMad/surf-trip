@@ -4,7 +4,7 @@
 
 {% if pager.hasNextPage %}
     <twig:Turbo:Frame
-        id="{{ constant('App\\Turbo\\Frame\\SurfSessionFrameId::PAGE_CONTENT') }}"
+        id="{{ constant('App\\Turbo\\Frame\\SurfSessionFrameId::LIST') }}"
         loading="lazy"
         src="{{ path(app.current_route, app.request.query.all|merge({page: pager.nextPage})) }}"
     >

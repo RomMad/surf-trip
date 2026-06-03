@@ -42,7 +42,7 @@ final class IndexSurfSessionController extends AbstractController
         $pager = $this->surfSessionPager->create($request, $currentUser, $searchInput);
 
         return match ($request->headers->get(TurboHeader::FRAME)) {
-            SurfSessionFrameId::PAGE_CONTENT => $this->render('surf_session/_stream.html.twig', [
+            SurfSessionFrameId::LIST => $this->render('surf_session/_stream.html.twig', [
                 'pager' => $pager,
             ], new TurboStreamResponse()),
             SurfSessionFrameId::RESULTS => $this->renderBlock('surf_session/index.html.twig', SurfSessionFrameId::RESULTS, [
