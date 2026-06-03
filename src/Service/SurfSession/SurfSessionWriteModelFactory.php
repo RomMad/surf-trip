@@ -16,24 +16,25 @@ final class SurfSessionWriteModelFactory
     {
         $surfSessionWriteModel = new SurfSessionWriteModel();
         $startAt = $this->resolveStartAt($trip);
+        $tripSelect = null;
 
         if (null !== $trip) {
-            $trip = new TripSelectReadModel(
+            $tripSelect = new TripSelectReadModel(
                 id: $trip->id,
                 title: $trip->title->value,
                 location: $trip->location->value,
             );
         }
 
-        $surfSessionWriteModel->trip = $trip;
-        $surfSessionWriteModel->spot = $trip?->location;
+        $surfSessionWriteModel->trip = $tripSelect;
+        $surfSessionWriteModel->spot = $tripSelect?->location;
         $surfSessionWriteModel->startAt = $startAt;
         $surfSessionWriteModel->endAt = $startAt->modify(sprintf('+%d hours', self::DEFAULT_SESSION_DURATION_HOURS));
 
         return $surfSessionWriteModel;
     }
 
-    private function resolveStartAt(?AbstractTripReadModel $trip): \DateTimeImmutable
+    private function resolveStartAt(?AbstractTripReadModel $trip = null): \DateTimeImmutable
     {
         $now = new \DateTimeImmutable();
 
