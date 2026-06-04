@@ -104,7 +104,7 @@ abstract class CustomWebTestCase extends WebTestCase
         $this->client->click($link);
     }
 
-    protected function getFieldValue(string $selector): string
+    protected function getFieldValue(string $selector): ?string
     {
         $field = $this->client->getCrawler()->filter($selector);
 
@@ -114,9 +114,12 @@ abstract class CustomWebTestCase extends WebTestCase
 
         return match ($field->nodeName()) {
             'input' => $field->attr('value'),
-            'select' => $field->filter('option[selected]')->attr('value'),
+            'select' => $field->filter('option[selected]')->attr('value')
+                ?? $field->filter('option')->first()->attr('value'),
             'textarea' => $field->text(),
-            default => throw new \InvalidArgumentException(sprintf('The field "%s" must be an input, textarea or select element.', $selector)),
+            default => throw new \InvalidArgumentException(
+                sprintf('The field "%s" must be an input, textarea or select element.', $selector)
+            ),
         };
     }
 }
