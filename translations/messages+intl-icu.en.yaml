@@ -111,6 +111,9 @@ surf_session:
         label: Board
         placeholder: Ex. Fish 5'8
     date.label: Date
+    start_time.label: Start time
+    duration_minutes:
+        label: Duration
     spot:
         label: Spot
         placeholder: Ex. La Nord

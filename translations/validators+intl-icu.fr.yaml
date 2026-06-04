@@ -21,6 +21,13 @@ surf_session:
         max_length: Le spot ne peut pas dépasser {limit} caractères.
     board:
         max_length: La planche ne peut pas dépasser {limit} caractères.
+    date:
+        not_null: La date est obligatoire.
+    start_time:
+        not_blank: L'heure de début est obligatoire.
+        invalid_format: L'heure de début doit être au format HH:MM.
+    duration_minutes:
+        not_null: La durée est obligatoire.
     start_at:
         not_null: La date de début est obligatoire.
     end_at:

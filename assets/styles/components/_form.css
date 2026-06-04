@@ -51,4 +51,8 @@
     .app-error-item {
         @apply text-sm font-medium text-destructive;
     }
+
+    .help-text {
+        @apply text-sm text-muted-foreground;
+    }
 }

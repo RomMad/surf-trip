@@ -6,6 +6,7 @@ namespace App\Tests\Functional\Controller\SurfSession;
 
 use App\Entity\SurfSession;
 use App\Entity\ValueObject\Title;
+use App\Enum\SurfSession\SurfSessionDuration;
 use App\Enum\SurfSession\SurfSessionRating;
 use App\Factory\TripFactory;
 use App\Tests\CustomWebTestCase;
@@ -66,8 +67,9 @@ final class NewSurfSessionControllerTest extends CustomWebTestCase
             'surf_session' => [
                 'spot' => self::SESSION_SPOT,
                 'board' => self::SESSION_BOARD,
-                'startAt' => new \DateTimeImmutable('-1 day 15:00')->format(self::FORMAT_DATETIME),
-                'endAt' => new \DateTimeImmutable('-1 day 17:00')->format(self::FORMAT_DATETIME),
+                'date' => new \DateTimeImmutable('-1 day')->format('Y-m-d'),
+                'startTime' => '15:00',
+                'durationMinutes' => SurfSessionDuration::Minutes120->value,
                 'trip' => $trip->id,
                 'rating' => SurfSessionRating::Good->value,
                 'objective' => self::SESSION_OBJECTIVE,
@@ -98,25 +100,26 @@ final class NewSurfSessionControllerTest extends CustomWebTestCase
 
         $this->client->request(Request::METHOD_GET, sprintf(self::PATH_NEW_FROM_TRIP, $trip->id));
 
-        $startAt = $this->parseDateTimeFromInput('#surf_session_startAt');
-        $endAt = $this->parseDateTimeFromInput('#surf_session_endAt');
+        $date = $this->parseDateFromInput('#surf_session_date');
+        $startTime = $this->getFieldValue('#surf_session_startTime');
+        $durationMinutes = (int) $this->getFieldValue('#surf_session_durationMinutes');
 
         $this->assertResponseIsSuccessful();
-        $this->assertSame($trip->location->value, $this->getInputValue('#surf_session_spot'));
-        $this->assertSame((string) $trip->id, $this->getInputValue('#surf_session_trip option[selected]'));
-        $this->assertSame($now->format('Y-m-d\TH'), $startAt->format('Y-m-d\TH'));
-        $this->assertSame($startAt->modify('+2 hours')->format('Y-m-d\TH'), $endAt->format('Y-m-d\TH'));
+        $this->assertSame($trip->location->value, $this->getFieldValue('#surf_session_spot'));
+        $this->assertSame((string) $trip->id, $this->getFieldValue('#surf_session_trip'));
+        $this->assertSame($now->format('Y-m-d'), $date->format('Y-m-d'));
+        $this->assertSame('10:00', $startTime);
+        $this->assertSame(SurfSessionDuration::Minutes120->value, $durationMinutes);
     }
 
-    private function parseDateTimeFromInput(string $selector): \DateTimeImmutable
+    private function parseDateFromInput(string $selector): \DateTimeImmutable
     {
-        $value = $this->getInputValue($selector);
+        $dateTime = $this->getFieldValue($selector);
 
-        return \DateTimeImmutable::createFromFormat('Y-m-d\TH:i', $value);
-    }
+        if (null === $dateTime) {
+            throw new \InvalidArgumentException(sprintf('The field "%s" must have a value.', $selector));
+        }
 
-    private function getInputValue(string $selector): string
-    {
-        return (string) $this->client->getCrawler()->filter($selector)->attr('value');
+        return \DateTimeImmutable::createFromFormat('Y-m-d', $dateTime);
     }
 }

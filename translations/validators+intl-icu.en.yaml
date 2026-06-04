@@ -21,6 +21,13 @@ surf_session:
         max_length: Spot cannot exceed {limit} characters.
     board:
         max_length: Board cannot exceed {limit} characters.
+    date:
+        not_null: Date is required.
+    start_time:
+        not_blank: Start time is required.
+        invalid_format: Start time must use HH:MM format.
+    duration_minutes:
+        not_null: Duration is required.
     start_at:
         not_null: Start date is required.
     end_at:

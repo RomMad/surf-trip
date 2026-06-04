@@ -4,9 +4,12 @@
 
 {{ form_start(form, {attr: {class: 'space-y-4'}}) }}
     {{ form_row(form.spot) }}
-    <div class="app-form-grid-2">
-        {{ form_row(form.startAt) }}
-        {{ form_row(form.endAt) }}
+    <div class="gap-4 grid grid-cols-1 sm:grid-cols-2">
+        {{ form_row(form.date) }}
+        <div class="gap-4 grid grid-cols-2">
+            {{ form_row(form.startTime) }}
+            {{ form_row(form.durationMinutes) }}
+        </div>
     </div>
     <div class="app-form-grid-2">
         {{ form_row(form.trip) }}
