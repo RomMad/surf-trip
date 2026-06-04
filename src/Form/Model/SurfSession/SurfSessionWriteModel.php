@@ -59,9 +59,12 @@ final class SurfSessionWriteModel
             return null;
         }
 
-        return \DateTimeImmutable::createFromFormat(
+        $startAt = \DateTimeImmutable::createFromFormat(
             'Y-m-d H:i',
             sprintf('%s %s', $this->date->format('Y-m-d'), $this->startTime),
+            $this->date->getTimezone(),
         );
+
+        return $startAt ?: null;
     }
 }
