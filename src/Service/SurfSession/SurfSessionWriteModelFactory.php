@@ -11,8 +11,6 @@ use App\ReadModel\Trip\TripSelectReadModel;
 
 final class SurfSessionWriteModelFactory
 {
-    private const int DEFAULT_SESSION_DURATION_HOURS = 2;
-
     public function create(?AbstractTripReadModel $trip = null): SurfSessionWriteModel
     {
         $surfSessionWriteModel = new SurfSessionWriteModel();
@@ -31,7 +29,7 @@ final class SurfSessionWriteModelFactory
         $surfSessionWriteModel->spot = $tripSelect?->location;
         $surfSessionWriteModel->date = $startAt->setTime(0, 0);
         $surfSessionWriteModel->startTime = $startAt->format('H:i');
-        $surfSessionWriteModel->durationMinutes = SurfSessionDuration::fromMinutes(60 * self::DEFAULT_SESSION_DURATION_HOURS);
+        $surfSessionWriteModel->durationMinutes = SurfSessionDuration::Minutes120;
 
         return $surfSessionWriteModel;
     }
