@@ -114,8 +114,12 @@ final class NewSurfSessionControllerTest extends CustomWebTestCase
 
     private function parseDateFromInput(string $selector): \DateTimeImmutable
     {
-        $value = $this->getFieldValue($selector);
+        $dateTime = $this->getFieldValue($selector);
 
-        return \DateTimeImmutable::createFromFormat('Y-m-d', $value);
+        if (null === $dateTime) {
+            throw new \InvalidArgumentException(sprintf('The field "%s" must have a value.', $selector));
+        }
+
+        return \DateTimeImmutable::createFromFormat('Y-m-d', $dateTime);
     }
 }
