@@ -103,4 +103,19 @@ abstract class CustomWebTestCase extends WebTestCase
 
         $this->client->click($link);
     }
+
+    protected function getFieldValue(string $selector): string
+    {
+        $field = $this->client->getCrawler()->filter($selector);
+
+        if (0 === $field->count()) {
+            throw new \InvalidArgumentException(sprintf('The field "%s" has not been found.', $selector));
+        }
+
+        return match ($field->nodeName()) {
+            'input', 'textarea' => $field->attr('value'),
+            'select' => $field->filter('option[selected]')->attr('value'),
+            default => throw new \InvalidArgumentException(sprintf('The field "%s" must be an input, textarea or select element.', $selector)),
+        };
+    }
 }

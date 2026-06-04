@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\SurfSession;
 
+use App\Enum\SurfSession\SurfSessionDuration;
 use App\Form\Model\SurfSession\SurfSessionWriteModel;
 use App\ReadModel\Trip\AbstractTripReadModel;
 use App\ReadModel\Trip\TripSelectReadModel;
@@ -28,8 +29,9 @@ final class SurfSessionWriteModelFactory
 
         $surfSessionWriteModel->trip = $tripSelect;
         $surfSessionWriteModel->spot = $tripSelect?->location;
-        $surfSessionWriteModel->startAt = $startAt;
-        $surfSessionWriteModel->endAt = $startAt->modify(sprintf('+%d hours', self::DEFAULT_SESSION_DURATION_HOURS));
+        $surfSessionWriteModel->date = $startAt->setTime(0, 0);
+        $surfSessionWriteModel->startTime = $startAt->format('H:i');
+        $surfSessionWriteModel->durationMinutes = SurfSessionDuration::fromMinutes(60 * self::DEFAULT_SESSION_DURATION_HOURS);
 
         return $surfSessionWriteModel;
     }

@@ -5,16 +5,18 @@ declare(strict_types=1);
 namespace App\Form\SurfSession;
 
 use App\Entity\User;
+use App\Enum\SurfSession\SurfSessionDuration;
 use App\Enum\SurfSession\SurfSessionRating;
 use App\Form\Model\SurfSession\SurfSessionWriteModel;
 use App\Form\Type\Autocomplete\TripAutocompleteType;
-use App\Form\Type\DateTimeImmutableType;
+use App\Form\Type\DateImmutableType;
 use App\ReadModel\Trip\TripSelectReadModel;
 use App\Repository\TripRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -50,11 +52,18 @@ final class SurfSessionFormType extends AbstractType
                 ],
                 'required' => false,
             ])
-            ->add('startAt', DateTimeImmutableType::class, [
-                'label' => 'start_at.label',
+            ->add('date', DateImmutableType::class, [
+                'label' => 'surf_session.date.label',
             ])
-            ->add('endAt', DateTimeImmutableType::class, [
-                'label' => 'end_at.label',
+            ->add('startTime', TimeType::class, [
+                'label' => 'surf_session.start_time.label',
+                'widget' => 'single_text',
+                'input' => 'string',
+                'input_format' => 'H:i',
+            ])
+            ->add('durationMinutes', EnumType::class, [
+                'class' => SurfSessionDuration::class,
+                'label' => 'surf_session.duration_minutes.label',
             ])
             ->add('rating', EnumType::class, [
                 'class' => SurfSessionRating::class,
@@ -82,7 +91,7 @@ final class SurfSessionFormType extends AbstractType
                 'required' => false,
             ])
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($surfSession): void {
-                $referenceAt = $surfSession->startAt ?? new \DateTimeImmutable();
+                $referenceAt = $surfSession->getStartAt() ?? new \DateTimeImmutable();
                 $trip = $surfSession->trip;
 
                 if (!$trip) {

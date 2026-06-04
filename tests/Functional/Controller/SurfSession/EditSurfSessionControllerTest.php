@@ -7,6 +7,7 @@ namespace App\Tests\Functional\Controller\SurfSession;
 use App\Entity\SurfSession;
 use App\Entity\ValueObject\Email;
 use App\Entity\ValueObject\Title;
+use App\Enum\SurfSession\SurfSessionDuration;
 use App\Enum\SurfSession\SurfSessionRating;
 use App\Factory\SurfSessionFactory;
 use App\Factory\TripFactory;
@@ -92,8 +93,9 @@ final class EditSurfSessionControllerTest extends CustomWebTestCase
             'surf_session' => [
                 'spot' => self::UPDATED_SESSION_SPOT,
                 'board' => self::UPDATED_SESSION_BOARD,
-                'startAt' => new \DateTimeImmutable('+1 days 10:00')->format(self::FORMAT_DATETIME),
-                'endAt' => new \DateTimeImmutable('+1 days 12:00')->format(self::FORMAT_DATETIME),
+                'date' => new \DateTimeImmutable('+1 days')->format('Y-m-d'),
+                'startTime' => '10:00',
+                'durationMinutes' => SurfSessionDuration::Minutes120->value,
                 'trip' => $trip->id,
                 'rating' => SurfSessionRating::Excellent->value,
                 'objective' => self::UPDATED_SESSION_OBJECTIVE,
