@@ -113,8 +113,9 @@ abstract class CustomWebTestCase extends WebTestCase
         }
 
         return match ($field->nodeName()) {
-            'input', 'textarea' => $field->attr('value'),
+            'input' => $field->attr('value'),
             'select' => $field->filter('option[selected]')->attr('value'),
+            'textarea' => $field->text(),
             default => throw new \InvalidArgumentException(sprintf('The field "%s" must be an input, textarea or select element.', $selector)),
         };
     }
