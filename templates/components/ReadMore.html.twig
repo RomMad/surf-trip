@@ -1,0 +1,12 @@
+<div
+    data-controller="read-more"
+    data-read-more-more-text-value="{{ 'read.more.label'|trans }}"
+    data-read-more-less-text-value="{{ 'read.less.label'|trans }}"
+>
+    <p class="read-more-content" data-read-more-target="content">
+        {%- block content %}{% endblock -%}
+    </p>
+    <button role="button" class="cursor-pointer text-sm text-muted-foreground" data-action="read-more#toggle">
+        {{- 'read.more.label'|trans -}}
+    </button>
+</div>

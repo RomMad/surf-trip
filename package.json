@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "@stimulus-components/auto-submit": "^6.0.0",
+    "@stimulus-components/read-more": "^5.0.0",
     "@tailwindcss/postcss": "^4.2.1",
     "chartjs-plugin-datalabels": "^2.2.0",
     "core-js": "^3.38.1",
