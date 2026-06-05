@@ -1,0 +1,69 @@
+{% set is_granted_edit_trip = is_granted('EDIT', trip) %}
+{% set trip_status = trip.status %}
+
+<twig:Card class="overflow-hidden rounded-3xl">
+    <twig:Card:Header class="relative overflow-hidden bg-primary text-primary-foreground px-6 py-8">
+        <div class="relative z-10 space-y-4">
+            <h1 class="text-3xl font-bold tracking-tight text-white">
+                {{- trip.title -}}
+            </h1>
+            <div class="flex flex-wrap items-center gap-2">
+                <twig:Badge variant="{{ trip_status.badgeVariant }}">
+                    {{- trip_status.label|trans -}}
+                </twig:Badge>
+                <twig:Badge variant="secondary">
+                    {{- 'trip.label'|trans -}}
+                </twig:Badge>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-x-6 gap-y-2 text-slate-200">
+                <p class="flex items-center gap-1" title="{{ 'location.label'|trans }}">
+                    <twig:ux:icon name="lucide:map-pin" class="text-white"/>
+                    {{ trip.location -}}
+                </p>
+                <p class="flex items-center gap-1" title="{{ 'period.label'|trans }}">
+                    <twig:ux:icon name="lucide:calendar" class="text-white"/>
+                    {{ trip.startAt|format_datetime(pattern: 'd MMM yyyy') }} - {{ trip.endAt|format_datetime(pattern: 'd MMM yyyy') -}}
+                </p>
+            </div>
+        </div>
+    </twig:Card:Header>
+
+    <twig:Card:Content class="grid gap-4 p-4 md:grid-cols-[2fr_1fr]">
+        <twig:Trip:Card:Info class="order-1" title="description.label">
+            <twig:ReadMore>
+                {{- trip.description -}}
+            </twig:ReadMore>
+        </twig:Trip:Card:Info>
+        <twig:Trip:Card:Info class="order-2 md:order-3" title="required_levels.label" icon="noto:man-surfing">
+            <div class="flex flex-wrap gap-1">
+                {% for required_level in trip.requiredLevels %}
+                    <twig:Badge variant="outline">
+                        {{- required_level.label|trans -}}
+                    </twig:Badge>
+                {% endfor %}
+            </div>
+        </twig:Trip:Card:Info>
+        <twig:Trip:Card:Info class="order-3 md:order-2" title="owners.label" icon="lucide:users">
+            <p class="text-sm">
+                {{- trip.ownerNames -}}
+            </p>
+        </twig:Trip:Card:Info>
+        <twig:Trip:Card:Info class="order-4" title="created_at.label">
+            <p class="text-sm text-muted-foreground">
+                {{- trip.createdAt|format_datetime(pattern: 'dd MMM yyyy HH:mm') -}}
+            </p>
+        </twig:Trip:Card:Info>
+    </twig:Card:Content>
+
+    {% if is_granted_edit_trip %}
+        <div class="px-6 py-2">
+            <twig:Calendar:LinksGroup :event="trip" />
+
+            <div class="flex flex-wrap items-center gap-2">
+                <twig:Button:Edit href="{{ path('app.trip.edit', {id: trip.id, slug: trip.slug}) }}" class="mb-4" />
+                <twig:Trip:Form:Delete :trip="trip" />
+            </div>
+        </div>
+    {% endif %}
+</twig:Card>

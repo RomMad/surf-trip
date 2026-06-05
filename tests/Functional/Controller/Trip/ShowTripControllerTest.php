@@ -43,9 +43,8 @@ final class ShowTripControllerTest extends CustomWebTestCase
         );
 
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextSame(self::TITLE_H1, self::TITLE);
-        $this->assertSelectorExists(self::TABLE);
-        $this->assertSelectorTextContains(self::TABLE, $this->trip->title->value);
+        $this->assertSelectorExists(self::CARD);
+        $this->assertSelectorTextContains(self::CARD, $this->trip->title->value);
         $this->assertSelectorExists(sprintf('turbo-frame#%s', TripFrameId::SURF_SESSIONS));
     }
 

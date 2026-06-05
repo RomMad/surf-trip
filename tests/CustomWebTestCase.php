@@ -26,6 +26,7 @@ abstract class CustomWebTestCase extends WebTestCase
     protected const string JOHN_USER = 'john.doe@test.com';
     // Selectors
     protected const string TITLE_H1 = 'h1';
+    protected const string CARD = '.app-card';
     protected const string TABLE = 'table';
     protected const string TABLE_ROW = 'table>tbody>tr';
     protected const string FIRST_ROW = 'table>tbody>tr:first-child';

@@ -27,7 +27,6 @@ final class ShowTripSurfSessionSectionControllerTest extends CustomWebTestCase
     private const string PATH = '/en/trip/%d/surf-sessions/section';
     private const string SECTION_TITLE = 'My surf sessions';
     private const string ADD_SESSION_LABEL = 'Add session';
-    private const string CARD = '.app-card';
 
     private ?Trip $trip = null;
 

@@ -20,6 +20,9 @@ navigation:
 language:
     switch.label: Change language
 loading.label: Loading...
+read:
+    less.label: Read less ↑
+    more.label: Read more ↓
 results.count.label: "{count, plural, =0 {No results} =1 {# result} other {# results}}"
 search:
     label: Search
@@ -130,6 +133,10 @@ surf_session:
 # Trip
 trip:
     label: Trip
+    status:
+        upcoming.label: Upcoming
+        in_progress.label: In progress
+        finished.label: Finished
     placeholder: Select a trip
     created_successfully: The trip has been created.
     updated_successfully: The trip has been updated.
