@@ -24,7 +24,6 @@ final class ShowTripControllerTest extends CustomWebTestCase
     use CalendarLinksTestTrait;
 
     private const string PATH = '/en/trip/%d/%s';
-    private const string TITLE = 'Trip';
 
     private ?Trip $trip = null;
 
