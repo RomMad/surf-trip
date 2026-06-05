@@ -9,6 +9,7 @@ use App\Entity\User;
 use App\Entity\ValueObject\Location;
 use App\Entity\ValueObject\Slug;
 use App\Entity\ValueObject\Title;
+use App\Enum\Trip\TripStatus;
 use App\Enum\User\SurfLevel;
 
 abstract readonly class AbstractTripReadModel implements TripOwnershipAwareInterface, CalendarLinkableInterface
@@ -49,5 +50,10 @@ abstract readonly class AbstractTripReadModel implements TripOwnershipAwareInter
         $ownerNames = array_map(static fn (TripOwnerReadModel $owner): string => $owner->fullName, $this->owners);
 
         return implode(', ', $ownerNames);
+    }
+
+    public function getStatus(): TripStatus
+    {
+        return TripStatus::fromPeriod($this->startAt, $this->endAt);
     }
 }

@@ -21,7 +21,6 @@ final class IndexSurfSessionControllerTest extends CustomWebTestCase
 {
     private const string PATH = '/en/sessions';
     private const string TITLE = 'Sessions';
-    private const string CARD = '.app-card';
 
     protected function setUp(): void
     {

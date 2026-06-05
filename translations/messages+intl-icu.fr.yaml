@@ -22,6 +22,9 @@ language:
     fr.label: Français
     en.label: Anglais
 loading.label: Chargement en cours...
+read:
+    less.label: Voir moins ↑
+    more.label: Voir plus ↓
 results.count.label: "{count, plural, =0 {Aucun résultat} =1 {# résultat} other {# résultats}}"
 search:
     label: Rechercher
@@ -130,6 +133,10 @@ surf_session:
 # Trip
 trip:
     label: Trip
+    status:
+        upcoming.label: À venir
+        in_progress.label: En cours
+        finished.label: Terminé
     placeholder: Sélectionne un trip
     created_successfully: Le trip a été créé.
     updated_successfully: Le trip a été mis à jour.

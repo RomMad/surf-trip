@@ -1036,6 +1036,11 @@
   resolved "https://registry.yarnpkg.com/@stimulus-components/auto-submit/-/auto-submit-6.0.0.tgz#5649e2cca24834ff0d62b4ef1944393a8b0f5dfe"
   integrity sha512-GBwjjnNuDZey9kdJinTGyrkIMCNVnPrTQvqihC0pBiwieIMfZIp+TT7Giee0Z0DS+pX6WdJweIeo8xEYD/VZJg==
 
+"@stimulus-components/read-more@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@stimulus-components/read-more/-/read-more-5.0.0.tgz#125b6e23a86afd97309a6148b911f35075a44f40"
+  integrity sha512-SwpdWrLOz9u/fuo6aTu5DjoyTnbixCB7RO3b63TTZ8GVjEiNcynu4ZEveBg+MNoc8ivZNqYBWI411Qn/fPtWtw==
+
 "@symfony/stimulus-bridge@^3.2.0 || ^4.0.0":
   version "4.0.1"
   resolved "https://registry.npmjs.org/@symfony/stimulus-bridge/-/stimulus-bridge-4.0.1.tgz"

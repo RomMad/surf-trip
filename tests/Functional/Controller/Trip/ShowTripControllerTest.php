@@ -24,7 +24,6 @@ final class ShowTripControllerTest extends CustomWebTestCase
     use CalendarLinksTestTrait;
 
     private const string PATH = '/en/trip/%d/%s';
-    private const string TITLE = 'Trip';
 
     private ?Trip $trip = null;
 
@@ -43,9 +42,8 @@ final class ShowTripControllerTest extends CustomWebTestCase
         );
 
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextSame(self::TITLE_H1, self::TITLE);
-        $this->assertSelectorExists(self::TABLE);
-        $this->assertSelectorTextContains(self::TABLE, $this->trip->title->value);
+        $this->assertSelectorExists(self::CARD);
+        $this->assertSelectorTextContains(self::CARD, $this->trip->title->value);
         $this->assertSelectorExists(sprintf('turbo-frame#%s', TripFrameId::SURF_SESSIONS));
     }
 
