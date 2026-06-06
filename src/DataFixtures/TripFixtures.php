@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\DataFixtures;
 
+use App\DataFixtures\Data\SurfTripData;
 use App\Entity\Trip;
 use App\Entity\User;
 use App\Entity\ValueObject\Location;
@@ -18,6 +19,30 @@ use Faker\Generator;
 class TripFixtures extends Fixture implements DependentFixtureInterface
 {
     private const int TRIPS_COUNT = 1500;
+
+    private const array TRIP_TITLE_PREFIXES = [
+        'Dawn Patrol',
+        'Wave Hunter',
+        'Barrel Quest',
+        'Coastal Escape',
+        'Lineup Legends',
+        'Swell Chasers',
+        'Saltwater Journey',
+        'Blue Horizon',
+        'Reef & Point Adventure',
+        'Tide Riders',
+    ];
+
+    private const array TRIP_TITLE_SUFFIXES = [
+        'Surf Camp',
+        'Surf Expedition',
+        'Surf Retreat',
+        'Surf Adventure',
+        'Surf Sessions',
+        'Surf Experience',
+        'Wave Mission',
+        'Wave Odyssey',
+    ];
 
     private const array TRIPS_DATA = [
         [
@@ -115,29 +140,6 @@ DESC,
         ],
     ];
 
-    private const array SURF_CITIES = [
-        'Bali, Indonesia',
-        'Nazaré, Portugal',
-        'Honolulu, Hawaii',
-        'Guanacaste, Costa Rica',
-        'Fuerteventura, Spain',
-        "Teahupo'o, Tahiti",
-        'Byron Bay, Australia',
-        'Essaouira, Morocco',
-        'Hossegor, France',
-        'Biarritz, France',
-        'Lacanau, France',
-        'La Torche, France',
-        'Mundaka, Spain',
-        'Jeffreys Bay, South Africa',
-        'Tamarindo, Costa Rica',
-        'Uluwatu, Bali',
-        'Padang Padang, Bali',
-        'Supertubos, Portugal',
-        'Pipeline, Hawaii',
-        'Rincon, California',
-    ];
-
     private Generator $faker;
 
     public function load(ObjectManager $manager): void
@@ -169,11 +171,12 @@ DESC,
             $randomStart = $this->faker->dateTimeBetween('-5 years', '+6 months');
             $startAt = \DateTimeImmutable::createFromInterface($randomStart);
             $createdAt = \DateTimeImmutable::createFromInterface($this->faker->dateTimeBetween('-1 year', '-1 month'));
-            $title = sprintf('%s Surf Trip', ucfirst((string) $this->faker->words($this->faker->numberBetween(2, 4), true)));
+            $tripData = $this->faker->randomElement(SurfTripData::ALL);
+            $title = $this->randomTripTitle($tripData['location']);
 
             $trip = new Trip($createdAt);
             $trip->title = Title::from($title);
-            $trip->location = Location::from($this->faker->randomElement(self::SURF_CITIES));
+            $trip->location = Location::from(sprintf('%s, %s', $tripData['location'], $tripData['country']));
             $trip->startAt = $startAt;
             $trip->endAt = $startAt->modify(sprintf('+%d days', $this->faker->numberBetween(3, 14)));
             $trip->requiredLevels = $this->randomSurfLevels();
@@ -194,10 +197,11 @@ DESC,
         // Generate predefined trips
         foreach (self::TRIPS_DATA as $tripData) {
             $createdAt = \DateTimeImmutable::createFromInterface($this->faker->dateTimeBetween('-1 month', 'today'));
+            $location = $tripData['location'];
 
             $trip = new Trip($createdAt);
             $trip->title = Title::from($tripData['title']);
-            $trip->location = Location::from($tripData['location']);
+            $trip->location = Location::from($location);
             $trip->startAt = new \DateTimeImmutable($tripData['startAt']);
             $trip->endAt = new \DateTimeImmutable($tripData['endAt']);
             $trip->requiredLevels = $tripData['requiredLevels'];
@@ -221,6 +225,16 @@ DESC,
         return $this->faker->randomElements(
             SurfLevel::cases(),
             $this->faker->numberBetween(1, count(SurfLevel::cases()))
+        );
+    }
+
+    private function randomTripTitle(string $location): string
+    {
+        return sprintf(
+            '%s %s %s',
+            $this->faker->randomElement(self::TRIP_TITLE_PREFIXES),
+            $this->faker->randomElement(self::TRIP_TITLE_SUFFIXES),
+            $location,
         );
     }
 }

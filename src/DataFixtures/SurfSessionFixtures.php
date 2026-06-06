@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\DataFixtures;
 
+use App\DataFixtures\Data\SurfTripData;
 use App\Entity\SurfSession;
-use App\Entity\User;
+use App\Entity\Trip;
+use App\Enum\SurfSession\SurfSessionDuration;
 use App\Enum\SurfSession\SurfSessionRating;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -15,24 +17,6 @@ use Faker\Generator;
 
 class SurfSessionFixtures extends Fixture implements DependentFixtureInterface
 {
-    private const int SESSIONS_COUNT = 3000;
-
-    private const array SPOTS = [
-        'Seignosse Les Bourdaines',
-        'Hossegor La Gravière',
-        'Lacanau Sud',
-        'La Torche, Bretagne',
-        'Quiberon Port Blanc',
-        'Peniche, Portugal',
-        'Ericeira, Portugal',
-        'Taghazout, Morocco',
-        'Darkhla, Morocco',
-        'Gerupuk, Lombok',
-        'Canggu, Bali',
-        'Mundaka, Spain',
-        'Fuerteventura, Spain',
-    ];
-
     private const array BOARDS = [
         "Shortboard 5'10",
         "Shortboard 6'0",
@@ -50,6 +34,26 @@ class SurfSessionFixtures extends Fixture implements DependentFixtureInterface
         'Focus on carving and rail transitions',
         'Build endurance for longer sessions',
         'Train duck dive efficiency',
+        'Practice backside turns in steeper sections',
+        'Work on generating speed in weaker sections',
+        'Trim and nose-riding on cleaner right-handers',
+        'Stay consistent on late drops',
+        'Keep paddling rhythm and improve wave selection',
+        'Improve timing on take-offs',
+        'Work on bottom turns and rail engagement',
+        'Practice cutbacks with better flow',
+        'Focus on positioning and wave reading',
+        'Improve pop-up speed and stability',
+        'Build confidence in steeper waves',
+        'Practice duck dives in stronger surf',
+        'Improve frontside carving technique',
+        'Work on linking maneuvers more smoothly',
+        'Stay relaxed during bigger sets',
+        'Improve endurance and paddling efficiency',
+        'Focus on cleaner turns and body rotation',
+        'Practice surfing closer to the pocket',
+        'Improve consistency on smaller waves',
+        'Work on speed generation without pumping too much',
     ];
 
     private const array COMMENTS = [
@@ -59,64 +63,26 @@ class SurfSessionFixtures extends Fixture implements DependentFixtureInterface
         'Strong paddling session, felt more stable on late take-offs.',
         'Small but fun conditions, perfect for technique-focused practice.',
         'Powerful sets and strong current, physically demanding but rewarding.',
-    ];
-
-    private const array SESSIONS_DATA = [
-        [
-            'spot' => 'Hossegor, France',
-            'board' => "Shortboard 6'0",
-            'startAt' => '-10 days 07:00',
-            'durationMinutes' => 110,
-            'rating' => SurfSessionRating::Good,
-            'objective' => 'Practice backside turns in steeper sections',
-            'comment' => 'Solid chest-high waves with clean faces at first light.',
-        ],
-        [
-            'spot' => 'Peniche, Portugal',
-            'board' => "Fish 5'8",
-            'startAt' => '-8 days 17:30',
-            'durationMinutes' => 95,
-            'rating' => SurfSessionRating::Average,
-            'objective' => 'Work on generating speed in weaker sections',
-            'comment' => 'Soft evening swell, fun walls but inconsistent sets.',
-        ],
-        [
-            'spot' => 'Taghazout, Morocco',
-            'board' => "Longboard 9'0",
-            'startAt' => '-6 days 08:15',
-            'durationMinutes' => 140,
-            'rating' => SurfSessionRating::Excellent,
-            'objective' => 'Trim and nose-riding on cleaner right-handers',
-            'comment' => 'Long peeling rights and almost no crowd at sunrise.',
-        ],
-        [
-            'spot' => 'Canggu, Bali',
-            'board' => "Shortboard 5'10",
-            'startAt' => '-4 days 06:45',
-            'durationMinutes' => 80,
-            'rating' => SurfSessionRating::Bad,
-            'objective' => 'Stay consistent on late drops',
-            'comment' => 'Wind picked up early and made sections bumpy and difficult.',
-        ],
-        [
-            'user' => 4,
-            'spot' => 'Biarritz, France',
-            'board' => "Mid-length 7'0",
-            'startAt' => '-2 days 18:00',
-            'durationMinutes' => 70,
-            'rating' => SurfSessionRating::VeryBad,
-            'objective' => 'Keep paddling rhythm and improve wave selection',
-            'comment' => 'Very small and mushy surf, little power to work with.',
-        ],
-        [
-            'spot' => 'Fuerteventura, Spain',
-            'board' => null,
-            'startAt' => '-1 day 07:20',
-            'durationMinutes' => 120,
-            'rating' => SurfSessionRating::Good,
-            'objective' => null,
-            'comment' => 'Good mix of push and shape, nice progression through the session.',
-        ],
+        'Solid chest-high waves with clean faces at first light.',
+        'Soft evening swell, fun walls but inconsistent sets.',
+        'Long peeling rights and almost no crowd at sunrise.',
+        'Wind picked up early and made sections bumpy and difficult.',
+        'Very small and mushy surf, little power to work with.',
+        'Good mix of push and shape, nice progression through the session.',
+        'Fun shoulder-high sets with glassy conditions all morning.',
+        'Crowded lineup but managed to catch a few clean waves.',
+        'Messy conditions with shifting peaks, hard to find rhythm.',
+        'Super clean offshore conditions with long workable walls.',
+        'Small but playful surf, perfect for practicing technique.',
+        'Heavy closeouts today, difficult to find good sections.',
+        'Consistent swell with plenty of opportunities to improve.',
+        'Late afternoon session with beautiful light and mellow crowd.',
+        'Powerful waves but tricky timing on the take-off.',
+        'Better conditions than expected, smooth faces and fun sections.',
+        'Choppy surface due to wind but still some enjoyable rides.',
+        'Long lulls between sets, patience required.',
+        'Excellent energy in the water and steady improvement throughout.',
+        'Tiring paddle-out but rewarding once outside.',
     ];
 
     private readonly Generator $faker;
@@ -128,8 +94,17 @@ class SurfSessionFixtures extends Fixture implements DependentFixtureInterface
 
     public function load(ObjectManager $manager): void
     {
-        foreach ($this->generateSurfSessions() as $surfSession) {
-            $manager->persist($surfSession);
+        /** @var list<Trip> $trips */
+        $trips = $manager->getRepository(Trip::class)->findAll();
+
+        if ([] === $trips) {
+            throw new \LogicException('No trip found. Load TripFixtures before SurfSessionFixtures.');
+        }
+
+        foreach ($trips as $trip) {
+            foreach ($this->generateSurfSessions($trip) as $surfSession) {
+                $manager->persist($surfSession);
+            }
         }
 
         $manager->flush();
@@ -139,56 +114,72 @@ class SurfSessionFixtures extends Fixture implements DependentFixtureInterface
     {
         return [
             UserFixtures::class,
+            TripFixtures::class,
         ];
     }
 
     /**
      * @return \Generator<SurfSession>
      */
-    private function generateSurfSessions(): \Generator
+    private function generateSurfSessions(Trip $trip): \Generator
     {
-        for ($index = 0; $index < self::SESSIONS_COUNT; ++$index) {
-            /** @var \DateTimeInterface $randomStart */
-            $randomStart = $this->faker->dateTimeBetween('-6 months', 'now');
-            $startAt = \DateTimeImmutable::createFromInterface($randomStart);
-            $durationMinutes = $this->faker->numberBetween(45, 180);
+        $currentDate = $trip->startAt->setTime(0, 0);
+        $endDate = $trip->endAt->setTime(0, 0);
+        $spots = $this->getSpotsForTrip($trip);
 
-            $surfSession = new SurfSession();
-            $surfSession->board = $this->faker->optional(0.8)->randomElement(self::BOARDS);
-            $surfSession->spot = $this->faker->randomElement(self::SPOTS);
-            $surfSession->startAt = $startAt;
-            $surfSession->endAt = $startAt->modify(sprintf('+%d minutes', $durationMinutes));
-            $surfSession->rating = $this->faker->optional(0.9)->randomElement(SurfSessionRating::cases());
-            $surfSession->objective = $this->faker->optional(0.7)->randomElement(self::OBJECTIVES);
-            $surfSession->comment = $this->faker->optional(0.8)->randomElement(self::COMMENTS);
-            $surfSession->user = $this->getRandomUser();
+        while ($currentDate <= $endDate) {
+            foreach ($trip->owners as $owner) {
+                for ($i = 0; $i < $this->faker->numberBetween(0, 2); ++$i) {
+                    [$startAt, $endAt] = $this->buildSessionDatesForDay($currentDate, $i);
 
-            yield $surfSession;
-        }
+                    $surfSession = new SurfSession();
+                    $surfSession->spot = $this->faker->randomElement($spots);
+                    $surfSession->startAt = $startAt;
+                    $surfSession->endAt = $endAt;
+                    $surfSession->trip = $trip;
+                    $surfSession->user = $owner;
+                    $surfSession->board = $this->faker->optional(0.8)->randomElement(self::BOARDS);
+                    $surfSession->rating = $this->faker->optional(0.9)->randomElement(SurfSessionRating::cases());
+                    $surfSession->objective = $this->faker->optional(0.7)->randomElement(self::OBJECTIVES);
+                    $surfSession->comment = $this->faker->optional(0.8)->randomElement(self::COMMENTS);
 
-        foreach (self::SESSIONS_DATA as $index => $sessionData) {
-            $startAt = new \DateTimeImmutable($sessionData['startAt']);
+                    yield $surfSession;
+                }
+            }
 
-            $surfSession = new SurfSession();
-            $surfSession->board = $sessionData['board'];
-            $surfSession->spot = $sessionData['spot'];
-            $surfSession->startAt = $startAt;
-            $surfSession->endAt = $startAt->modify(sprintf('+%d minutes', $sessionData['durationMinutes']));
-            $surfSession->rating = $sessionData['rating'];
-            $surfSession->objective = $sessionData['objective'];
-            $surfSession->comment = $sessionData['comment'];
-            /** @var User $user */
-            $user = $this->getReference(UserFixtures::USER_REFERENCE.$index, User::class);
-            $surfSession->user = $user;
-
-            yield $surfSession;
+            $currentDate = $currentDate->modify('+1 day');
         }
     }
 
-    private function getRandomUser(): User
+    /**
+     * @return array<int, string>
+     */
+    private function getSpotsForTrip(Trip $trip): array
     {
-        $randomUserIndex = $this->faker->numberBetween(0, UserFixtures::USERS_COUNT - 1);
+        $location = explode(',', $trip->location->value)[0];
 
-        return $this->getReference(UserFixtures::USER_REFERENCE.$randomUserIndex, User::class);
+        return SurfTripData::ALL[$location]['spots'];
+    }
+
+    /**
+     * @return array{0: \DateTimeImmutable, 1: \DateTimeImmutable}
+     */
+    private function buildSessionDatesForDay(\DateTimeImmutable $date, int $sessionIndex): array
+    {
+        $startHour = 0 === $sessionIndex ? $this->faker->numberBetween(6, 10) : $this->faker->numberBetween(14, 18);
+        $startMinute = $this->faker->randomElement([0, 30]);
+        $startAt = $date->setTime($startHour, $startMinute);
+
+        $durationMinutes = $this->faker->randomElement([
+            SurfSessionDuration::Minutes60,
+            SurfSessionDuration::Minutes90,
+            SurfSessionDuration::Minutes120,
+            SurfSessionDuration::Minutes150,
+            SurfSessionDuration::Minutes180,
+        ])->value;
+
+        $endAt = $startAt->modify(sprintf('+%d minutes', $durationMinutes));
+
+        return [$startAt, $endAt];
     }
 }
