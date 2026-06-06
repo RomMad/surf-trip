@@ -4,13 +4,8 @@ declare(strict_types=1);
 
 namespace App\Enum\SurfSession;
 
-use App\Enum\EnumTrait;
-use Symfony\Contracts\Translation\TranslatableInterface;
-
-enum SurfSessionDuration: int implements TranslatableInterface
+enum SurfSessionDuration: int
 {
-    use EnumTrait;
-
     case Minutes30 = 30;
     case Minutes60 = 60;
     case Minutes90 = 90;
