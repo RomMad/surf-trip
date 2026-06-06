@@ -30,28 +30,25 @@
     </twig:Card:Header>
 
     <twig:Card:Content class="grid gap-4 p-4 md:grid-cols-[2fr_1fr]">
-        <twig:Trip:Card:Info class="order-1" title="description.label">
-            <twig:ReadMore>
-                {{- trip.description -}}
-            </twig:ReadMore>
-        </twig:Trip:Card:Info>
-        <twig:Trip:Card:Info class="order-2 md:order-3" title="required_levels.label" icon="noto:man-surfing">
-            <div class="flex flex-wrap gap-1">
-                {% for required_level in trip.requiredLevels %}
-                    <twig:Badge variant="outline">
-                        {{- required_level.label|trans -}}
-                    </twig:Badge>
-                {% endfor %}
-            </div>
-        </twig:Trip:Card:Info>
-        <twig:Trip:Card:Info class="order-3 md:order-2" title="owners.label" icon="lucide:users">
+         <div class="grid gap-4">
+            <twig:Trip:Card:Info title="description.label">
+                <twig:ReadMore>
+                    {{- trip.description -}}
+                </twig:ReadMore>
+            </twig:Trip:Card:Info>
+            <twig:Trip:Card:Info title="required_levels.label" icon="noto:man-surfing">
+                <div class="flex flex-wrap gap-1">
+                    {% for required_level in trip.requiredLevels %}
+                        <twig:Badge variant="outline">
+                            {{- required_level.label|trans -}}
+                        </twig:Badge>
+                    {% endfor %}
+                </div>
+            </twig:Trip:Card:Info>
+        </div>
+        <twig:Trip:Card:Info title="owners.label" icon="lucide:users">
             <p class="text-sm">
                 {{- trip.ownerNames -}}
-            </p>
-        </twig:Trip:Card:Info>
-        <twig:Trip:Card:Info class="order-4" title="created_at.label">
-            <p class="text-sm text-muted-foreground">
-                {{- trip.createdAt|format_datetime(pattern: 'dd MMM yyyy HH:mm') -}}
             </p>
         </twig:Trip:Card:Info>
     </twig:Card:Content>
