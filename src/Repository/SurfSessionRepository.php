@@ -104,6 +104,7 @@ final class SurfSessionRepository extends ServiceEntityRepository
     {
         $queryBuilder = $this->createQueryBuilder('s')
             ->select('COUNT(s.id)')
+            ->leftJoin('s.trip', 't')
             ->where('s.user = :user')
             ->setParameter('user', $user)
         ;
@@ -138,7 +139,7 @@ final class SurfSessionRepository extends ServiceEntityRepository
     {
         if ($searchInput->query) {
             $queryBuilder
-                ->andWhere('ILIKE(s.spot, :query) = TRUE OR ILIKE(s.board, :query) = TRUE')
+                ->andWhere('ILIKE(s.spot, :query) = TRUE OR ILIKE(t.title, :query) = TRUE OR ILIKE(s.board, :query) = TRUE')
                 ->setParameter('query', '%'.$searchInput->query.'%')
             ;
         }
