@@ -64,6 +64,8 @@ final class SurfSessionFormType extends AbstractType
             ->add('durationMinutes', EnumType::class, [
                 'class' => SurfSessionDuration::class,
                 'label' => 'surf_session.duration_minutes.label',
+                'choice_translation_domain' => false,
+                'choice_label' => fn (SurfSessionDuration $duration) => $duration->label(),
             ])
             ->add('rating', EnumType::class, [
                 'class' => SurfSessionRating::class,
