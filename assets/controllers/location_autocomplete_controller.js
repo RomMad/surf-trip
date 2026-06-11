@@ -22,9 +22,9 @@ export default class extends Controller {
                 no_results: (data, escape) =>
                     `<div class='no-results'>${this.noResultsTextValue} '${escape(data.input)}'</div>`,
             },
+            shouldLoad: (query) => query.length >= 3,
             load: (query, callback) => this._load(query, callback),
             onItemAdd: (value) => this._onItemAdd(value),
-            shouldLoad: (query) => query.length >= 3,
         });
     }
 
