@@ -4,24 +4,50 @@ declare(strict_types=1);
 
 namespace App\Form\Type;
 
-use App\Entity\ValueObject\Location;
+use App\Form\Model\Shared\LocationInput;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class LocationType extends AbstractType
 {
-    public function configureOptions(OptionsResolver $resolver): void
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $resolver->setDefaults([
-            'class' => Location::class,
-            'label' => 'location.label',
-            'empty_data' => '',
-        ]);
+        $builder
+            ->add('label', TextType::class, [
+                'label' => 'location.label',
+                'attr' => [
+                    'placeholder' => 'location.placeholder',
+                    'data-location-autocomplete-target' => 'label',
+                ],
+            ])
+            ->add('latitude', HiddenType::class, [
+                'attr' => [
+                    'data-location-autocomplete-target' => 'latitude',
+                ],
+            ])
+            ->add('longitude', HiddenType::class, [
+                'attr' => [
+                    'data-location-autocomplete-target' => 'longitude',
+                ],
+            ])
+            ->add('placeId', HiddenType::class, [
+                'attr' => [
+                    'data-location-autocomplete-target' => 'placeId',
+                ],
+            ])
+        ;
     }
 
-    #[\Override]
-    public function getParent(): string
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        return ValueObjectType::class;
+        $resolver
+            ->setDefaults([
+                'label' => false,
+                'data_class' => LocationInput::class,
+            ])
+        ;
     }
 }

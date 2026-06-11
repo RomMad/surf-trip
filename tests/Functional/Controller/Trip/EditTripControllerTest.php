@@ -86,7 +86,7 @@ final class EditTripControllerTest extends CustomWebTestCase
 
         $this->client->submitForm(self::SUBMIT_BUTTON, [
             'trip[title]' => self::UPDATED_TRIP_TITLE,
-            'trip[location]' => self::UPDATED_TRIP_LOCATION,
+            'trip[location][label]' => self::UPDATED_TRIP_LOCATION,
             'trip[startAt]' => new \DateTimeImmutable('+2 month')->format(self::FORMAT_DATETIME),
             'trip[endAt]' => new \DateTimeImmutable('+2 month +1 week')->format(self::FORMAT_DATETIME),
             'trip[requiredLevels]' => [SurfLevel::Intermediate->value],
@@ -102,6 +102,6 @@ final class EditTripControllerTest extends CustomWebTestCase
 
         $this->assertInstanceOf(Trip::class, $updatedTrip);
         $this->assertSame(self::UPDATED_TRIP_TITLE, $updatedTrip->title->value);
-        $this->assertSame(self::UPDATED_TRIP_LOCATION, $updatedTrip->location->value);
+        $this->assertSame(self::UPDATED_TRIP_LOCATION, $updatedTrip->location->label);
     }
 }

@@ -5,23 +5,24 @@ declare(strict_types=1);
 namespace App\Form\Model\Trip;
 
 use App\Entity\Trip;
-use App\Entity\ValueObject\Location;
 use App\Entity\ValueObject\Title;
 use App\Enum\User\SurfLevel;
-use App\ObjectMapper\OwnerReadModelToUserTransformer;
+use App\Form\Model\Shared\LocationInput;
+use App\ObjectMapper\Location\LocationInputToLocationTransformer;
+use App\ObjectMapper\Trip\OwnerReadModelToUserTransformer;
 use App\ReadModel\Trip\TripOwnerReadModel;
-use App\ReadModel\Trip\TripShowReadModel;
 use Symfony\Component\ObjectMapper\Attribute\Map;
-use Symfony\Component\ObjectMapper\Condition\TargetClass;
 use Symfony\Component\Validator\Constraints as Assert;
 
-#[Map(source: TripShowReadModel::class)]
 #[Map(target: Trip::class)]
 final class TripWriteModel
 {
     public ?Title $title = null;
 
-    public ?Location $location = null;
+    #[Assert\NotNull]
+    #[Assert\Valid]
+    #[Map(transform: LocationInputToLocationTransformer::class)]
+    public LocationInput $location;
 
     #[Assert\NotNull(message: 'trip.start_at.not_null')]
     public ?\DateTimeImmutable $startAt = null;
@@ -47,7 +48,11 @@ final class TripWriteModel
 
     /** @var list<TripOwnerReadModel> */
     #[Assert\Count(min: 1, minMessage: 'trip.owner.min_count')]
-    #[Map(if: new TargetClass(self::class))]
-    #[Map(if: new TargetClass(Trip::class), transform: OwnerReadModelToUserTransformer::class)]
+    #[Map(transform: OwnerReadModelToUserTransformer::class)]
     public array $owners = [];
+
+    public function __construct()
+    {
+        $this->location = new LocationInput();
+    }
 }

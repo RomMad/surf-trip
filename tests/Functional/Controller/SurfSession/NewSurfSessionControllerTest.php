@@ -105,7 +105,7 @@ final class NewSurfSessionControllerTest extends CustomWebTestCase
         $durationMinutes = (int) $this->getFieldValue('#surf_session_durationMinutes');
 
         $this->assertResponseIsSuccessful();
-        $this->assertSame($trip->location->value, $this->getFieldValue('#surf_session_spot'));
+        $this->assertSame($trip->location->label, $this->getFieldValue('#surf_session_spot'));
         $this->assertSame((string) $trip->id, $this->getFieldValue('#surf_session_trip'));
         $this->assertSame($now->format('Y-m-d'), $date->format('Y-m-d'));
         $this->assertSame('10:00', $startTime);

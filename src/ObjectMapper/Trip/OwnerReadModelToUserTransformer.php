@@ -2,13 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\ObjectMapper;
+namespace App\ObjectMapper\Trip;
 
 use App\Entity\Trip;
 use App\Entity\User;
 use App\Form\Model\Trip\TripWriteModel;
 use App\ReadModel\Trip\TripOwnerReadModel;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\ObjectMapper\TransformCallableInterface;
 
@@ -25,6 +26,8 @@ final readonly class OwnerReadModelToUserTransformer implements TransformCallabl
      * @param TripOwnerReadModel[] $owners
      * @param TripWriteModel       $source
      * @param Trip                 $target
+     *
+     * @return Collection<int, User>
      */
     public function __invoke(mixed $owners, object $source, ?object $target): mixed
     {

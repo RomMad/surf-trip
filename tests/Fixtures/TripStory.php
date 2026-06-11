@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Tests\Fixtures;
 
+use App\Entity\Embeddable\Location;
 use App\Entity\ValueObject\Email;
-use App\Entity\ValueObject\Location;
 use App\Entity\ValueObject\Title;
 use App\Enum\User\SurfLevel;
 use App\Factory\TripFactory;
@@ -48,7 +48,7 @@ final class TripStory extends Story
 
         TripFactory::createOne([
             'title' => Title::from(self::TRIP_TITLE),
-            'location' => Location::from(self::TRIP_LOCATION),
+            'location' => new Location(label: self::TRIP_LOCATION),
             'startAt' => new \DateTimeImmutable('+1 month'),
             'endAt' => new \DateTimeImmutable('+1 month +10 days'),
             'description' => self::TRIP_DESCRIPTION,

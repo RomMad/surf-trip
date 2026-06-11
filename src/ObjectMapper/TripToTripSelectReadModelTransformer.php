@@ -22,7 +22,7 @@ final readonly class TripToTripSelectReadModelTransformer implements TransformCa
         return new TripSelectReadModel(
             id: $trip->id,
             title: $trip->title->value,
-            location: $trip->location->value,
+            location: $trip->location->label,
         );
     }
 }

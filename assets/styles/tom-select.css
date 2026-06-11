@@ -5,7 +5,7 @@
 @import "tom-select/dist/css/tom-select";
 
 .ts-control {
-    @apply w-full border-none py-1 px-3 h-9 sm:text-sm sm:leading-6 bg-background text-foreground focus:border-ring focus:outline-none focus:ring-ring;
+    @apply w-full border-none p-0 sm:text-sm sm:leading-6 bg-background text-foreground;
 }
 
 .ts-control input {

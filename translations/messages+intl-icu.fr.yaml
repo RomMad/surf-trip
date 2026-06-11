@@ -152,6 +152,7 @@ description.label: Description
 location:
     label: Lieu
     placeholder: Lieu du trip
+    no_results: Aucun résultat pour
 my_trips_only.label: Mes trips uniquement
 period.label: Période
 start_at.label: Date de début
