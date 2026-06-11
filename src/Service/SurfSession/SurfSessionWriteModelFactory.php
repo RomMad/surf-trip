@@ -21,7 +21,7 @@ final class SurfSessionWriteModelFactory
             $tripSelect = new TripSelectReadModel(
                 id: $trip->id,
                 title: $trip->title->value,
-                location: $trip->location->value,
+                location: $trip->locationLabel,
             );
         }
 

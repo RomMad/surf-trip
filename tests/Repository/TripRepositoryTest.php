@@ -81,7 +81,7 @@ final class TripRepositoryTest extends CustomKernelTestCase
         $trips = $this->getTrips($searchInput);
 
         $this->assertCount(1, $trips);
-        $this->assertSame(TripStory::TRIP_LOCATION, $trips[0]->location->value);
+        $this->assertSame(TripStory::TRIP_LOCATION, $trips[0]->locationLabel);
     }
 
     public function testCreateOrderedQueryBuilderWithSurfLevelsFilter(): void

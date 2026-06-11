@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\ReadModel\Trip;
 
-use App\Entity\ValueObject\Location;
 use App\Entity\ValueObject\Title;
 
 /**
@@ -12,7 +11,7 @@ use App\Entity\ValueObject\Title;
  * @property \DateTimeImmutable $startAt
  * @property \DateTimeImmutable $endAt
  * @property ?string            $description
- * @property Location           $location
+ * @property string             $locationLabel
  */
 trait TripCalendarLinkableTrait
 {
@@ -38,6 +37,6 @@ trait TripCalendarLinkableTrait
 
     public function getCalendarAddress(): ?string
     {
-        return $this->location->value;
+        return $this->locationLabel;
     }
 }

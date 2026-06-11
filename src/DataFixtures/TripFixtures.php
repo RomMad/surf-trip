@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\DataFixtures;
 
 use App\DataFixtures\Data\SurfTripData;
+use App\Entity\Embeddable\Location;
 use App\Entity\Trip;
 use App\Entity\User;
-use App\Entity\ValueObject\Location;
 use App\Entity\ValueObject\Title;
 use App\Enum\User\SurfLevel;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -172,11 +172,17 @@ DESC,
             $startAt = \DateTimeImmutable::createFromInterface($randomStart);
             $createdAt = \DateTimeImmutable::createFromInterface($this->faker->dateTimeBetween('-1 year', '-1 month'));
             $tripData = $this->faker->randomElement(SurfTripData::ALL);
-            $title = $this->randomTripTitle($tripData['location']);
+            $location = $tripData['location'];
+            $title = $this->randomTripTitle($location['label']);
 
             $trip = new Trip($createdAt);
             $trip->title = Title::from($title);
-            $trip->location = Location::from(sprintf('%s, %s', $tripData['location'], $tripData['country']));
+            $trip->location = new Location(
+                sprintf('%s, %s', $location['label'], $tripData['country']),
+                $location['latitude'],
+                $location['longitude'],
+                $location['placeId'],
+            );
             $trip->startAt = $startAt;
             $trip->endAt = $startAt->modify(sprintf('+%d days', $this->faker->numberBetween(3, 14)));
             $trip->requiredLevels = $this->randomSurfLevels();
@@ -197,11 +203,16 @@ DESC,
         // Generate predefined trips
         foreach (self::TRIPS_DATA as $tripData) {
             $createdAt = \DateTimeImmutable::createFromInterface($this->faker->dateTimeBetween('-1 month', 'today'));
-            $location = $tripData['location'];
 
             $trip = new Trip($createdAt);
             $trip->title = Title::from($tripData['title']);
-            $trip->location = Location::from($location);
+            $location = $this->getLocationData($tripData['location']);
+            $trip->location = new Location(
+                $tripData['location'],
+                $location['latitude'],
+                $location['longitude'],
+                $location['placeId'],
+            );
             $trip->startAt = new \DateTimeImmutable($tripData['startAt']);
             $trip->endAt = new \DateTimeImmutable($tripData['endAt']);
             $trip->requiredLevels = $tripData['requiredLevels'];
@@ -236,5 +247,15 @@ DESC,
             $this->faker->randomElement(self::TRIP_TITLE_SUFFIXES),
             $location,
         );
+    }
+
+    /**
+     * @return array<string, string|float>
+     */
+    private function getLocationData(string $locationLabel): array
+    {
+        $location = explode(',', $locationLabel)[0];
+
+        return SurfTripData::ALL[$location]['location'];
     }
 }

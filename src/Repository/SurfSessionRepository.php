@@ -75,7 +75,7 @@ final class SurfSessionRepository extends ServiceEntityRepository
                     CASE WHEN t.id IS NULL THEN NULL ELSE NEW %s(
                         t.id,
                         t.title,
-                        t.location
+                        t.location.label
                     ) END
                 )',
                 SurfSessionWriteModel::class,

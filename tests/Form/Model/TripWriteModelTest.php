@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Tests\Entity;
 
-use App\Entity\ValueObject\Location;
 use App\Entity\ValueObject\Title;
 use App\Enum\User\SurfLevel;
 use App\Factory\TripFactory;
@@ -37,7 +36,7 @@ final class TripWriteModelTest extends CustomKernelTestCase
 
         $violations = $this->validator->validate($trip);
 
-        $this->assertCount(4, $violations);
+        $this->assertCount(5, $violations);
     }
 
     public function testValidTrip(): void
@@ -86,7 +85,7 @@ final class TripWriteModelTest extends CustomKernelTestCase
 
         $trip = new TripWriteModel();
         $trip->title = new Title('Test Trip');
-        $trip->location = new Location('Test Location');
+        $trip->location->label = 'Test Location';
         $trip->startAt = new \DateTimeImmutable('+1 week');
         $trip->endAt = new \DateTimeImmutable('+2 weeks');
         $trip->requiredLevels = [SurfLevel::Beginner];

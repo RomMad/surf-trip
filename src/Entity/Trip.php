@@ -14,26 +14,28 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\QueryParameter;
-use App\Doctrine\Type\LocationType;
 use App\Doctrine\Type\SlugType;
 use App\Doctrine\Type\TitleType;
-use App\Entity\ValueObject\Location;
+use App\Entity\Embeddable\Location;
 use App\Entity\ValueObject\Slug;
 use App\Entity\ValueObject\Title;
 use App\Enum\User\SurfLevel;
 use App\Filter\JsonContainsFilter;
+use App\ObjectMapper\Location\LocationToLocationInputTransformer;
+use App\ObjectMapper\Trip\UserToOwnerReadModelToUserTransformer;
 use App\Repository\TripRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\ObjectMapper\Attribute\Map;
 use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TripRepository::class)]
-#[ORM\Index(name: 'idx_trip_location', fields: ['location'])]
+#[ORM\Index(name: 'idx_trip_location_label', columns: ['location_label'])]
 #[ORM\Index(name: 'idx_trip_required_levels', fields: ['requiredLevels'], flags: ['gin'])]
-#[ORM\Index(name: 'idx_trip_search', fields: ['title', 'location'])]
+#[ORM\Index(name: 'idx_trip_search', columns: ['title', 'location_label'])]
 #[ORM\Index(name: 'idx_trip_start_at', fields: ['startAt'])]
 #[ApiResource(
     operations: [
@@ -45,7 +47,7 @@ use Symfony\Component\Validator\Constraints as Assert;
             parameters: [
                 'q' => new QueryParameter(
                     filter: new FreeTextQueryFilter(new OrFilter(new PartialSearchFilter())),
-                    properties: ['title', 'location']
+                    properties: ['title', 'location.label']
                 ),
                 'levels' => new QueryParameter(
                     filter: new JsonContainsFilter(),
@@ -78,8 +80,10 @@ final class Trip
     #[Groups(['trip:read', 'trip:write'])]
     public Title $title;
 
-    #[ORM\Column(type: LocationType::NAME)]
+    #[ORM\Embedded(class: Location::class)]
+    #[Assert\Valid]
     #[Groups(['trip:read', 'trip:write'])]
+    #[Map(transform: LocationToLocationInputTransformer::class)]
     public Location $location;
 
     #[ORM\Column]
@@ -120,6 +124,7 @@ final class Trip
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'trips')]
     #[Assert\Count(min: 1, minMessage: 'trip.owner.min_count')]
     #[Groups(['trip:read', 'trip:write'])]
+    #[Map(transform: UserToOwnerReadModelToUserTransformer::class)]
     public private(set) Collection $owners;
 
     public function __construct(

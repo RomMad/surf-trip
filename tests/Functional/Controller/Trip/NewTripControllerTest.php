@@ -54,7 +54,7 @@ final class NewTripControllerTest extends CustomWebTestCase
 
         $this->client->submitForm(self::SUBMIT_BUTTON, [
             'trip[title]' => self::TRIP_TITLE,
-            'trip[location]' => self::TRIP_LOCATION,
+            'trip[location][label]' => self::TRIP_LOCATION,
             'trip[startAt]' => new \DateTimeImmutable('+1 month')->format(self::FORMAT_DATETIME),
             'trip[endAt]' => new \DateTimeImmutable('+1 month +1 week')->format(self::FORMAT_DATETIME),
             'trip[requiredLevels]' => [SurfLevel::Beginner->value],

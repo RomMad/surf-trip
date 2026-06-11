@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Factory;
 
+use App\Entity\Embeddable\Location;
 use App\Entity\Trip;
-use App\Entity\ValueObject\Location;
 use App\Entity\ValueObject\Title;
 use App\Enum\User\SurfLevel;
 use Zenstruck\Foundry\Persistence\PersistentObjectFactory;
@@ -40,7 +40,7 @@ final class TripFactory extends PersistentObjectFactory
 
         return [
             'title' => Title::from($title),
-            'location' => Location::from($location),
+            'location' => new Location($location),
             'startAt' => $startAt,
             'endAt' => $startAt->modify(sprintf('+%d days', self::faker()->numberBetween(3, 14))),
             'requiredLevels' => $requiredLevels,

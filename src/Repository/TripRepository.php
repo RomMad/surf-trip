@@ -76,7 +76,7 @@ class TripRepository extends ServiceEntityRepository
             ->andWhere('t.startAt <= :referenceAt')
             ->andWhere('t.endAt >= :referenceAt')
             ->setParameter('referenceAt', $referenceAt)
-            ->andWhere('ILIKE(t.title, :query) = TRUE OR ILIKE(t.location, :query) = TRUE')
+            ->andWhere('ILIKE(t.title, :query) = TRUE OR ILIKE(t.location.label, :query) = TRUE')
             ->setParameter('query', '%'.$query.'%')
 
             ->setMaxResults($limit)
@@ -156,7 +156,7 @@ class TripRepository extends ServiceEntityRepository
                     t.id,
                     t.slug,
                     t.title,
-                    t.location,
+                    t.location.label,
                     t.startAt,
                     t.endAt,
                     t.requiredLevels,
@@ -184,7 +184,7 @@ class TripRepository extends ServiceEntityRepository
                 'NEW %s(
                     t.id,
                     t.title,
-                    t.location
+                    t.location.label
                 )',
                 TripSelectReadModel::class,
             ))
@@ -225,7 +225,7 @@ class TripRepository extends ServiceEntityRepository
 
         if (null !== $searchInput->location) {
             $queryBuilder
-                ->andWhere('ILIKE(t.location, :location) = TRUE')
+                ->andWhere('ILIKE(t.location.label, :location) = TRUE')
                 ->setParameter('location', '%'.$searchInput->location.'%')
             ;
         }

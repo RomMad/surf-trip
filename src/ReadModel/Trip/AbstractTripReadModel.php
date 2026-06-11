@@ -6,7 +6,6 @@ namespace App\ReadModel\Trip;
 
 use App\Calendar\CalendarLinkableInterface;
 use App\Entity\User;
-use App\Entity\ValueObject\Location;
 use App\Entity\ValueObject\Slug;
 use App\Entity\ValueObject\Title;
 use App\Enum\Trip\TripStatus;
@@ -26,7 +25,7 @@ abstract readonly class AbstractTripReadModel implements TripOwnershipAwareInter
         public int $id,
         public Slug $slug,
         public Title $title,
-        public Location $location,
+        public string $locationLabel,
         public \DateTimeImmutable $startAt,
         public \DateTimeImmutable $endAt,
         public array $requiredLevels,

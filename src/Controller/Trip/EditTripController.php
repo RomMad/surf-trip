@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace App\Controller\Trip;
 
+use App\Exception\TripNotFoundHttpException;
 use App\Form\Model\Trip\TripWriteModel;
 use App\Form\Trip\TripFormType;
+use App\Repository\TripRepository;
 use App\Security\Voter\TripVoter;
-use App\Service\Trip\TripReadModelProvider;
 use App\Service\Trip\TripUpdater;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,7 +22,7 @@ final class EditTripController extends AbstractController
     public const string ROUTE = 'app.trip.edit';
 
     public function __construct(
-        private readonly TripReadModelProvider $tripReadModelProvider,
+        private readonly TripRepository $tripRepository,
         private readonly ObjectMapperInterface $objectMapper,
         private readonly TripUpdater $tripUpdater,
     ) {}
@@ -37,7 +38,11 @@ final class EditTripController extends AbstractController
     )]
     public function __invoke(Request $request, int $id, string $slug): Response
     {
-        $trip = $this->tripReadModelProvider->getById($id);
+        $trip = $this->tripRepository->findOneByIdWithOwners($id);
+
+        if (null === $trip) {
+            throw new TripNotFoundHttpException($id);
+        }
 
         $this->denyAccessUnlessGranted(TripVoter::EDIT, $trip);
 
@@ -58,7 +63,10 @@ final class EditTripController extends AbstractController
 
             $this->addFlash('success', 'trip.updated_successfully');
 
-            return $this->redirectToRoute(IndexTripController::ROUTE, [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute(ShowTripController::ROUTE, [
+                'id' => $trip->id,
+                'slug' => $trip->slug->value,
+            ], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('trip/edit.html.twig', [
