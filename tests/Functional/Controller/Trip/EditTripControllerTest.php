@@ -95,8 +95,8 @@ final class EditTripControllerTest extends CustomWebTestCase
         $this->assertResponseIsSuccessful();
         $this->assertAlertSuccessExists();
         $this->assertSelectorTextContains(self::ALERT_SUCCESS, self::MESSAGE_SUCCESS);
-        $this->assertSelectorTextContains(self::TABLE, self::UPDATED_TRIP_TITLE);
-        $this->assertSelectorTextContains(self::TABLE, self::UPDATED_TRIP_LOCATION);
+        $this->assertSelectorTextContains(self::TITLE_H1, self::UPDATED_TRIP_TITLE);
+        $this->assertSelectorTextContains(self::CARD, self::UPDATED_TRIP_LOCATION);
 
         $updatedTrip = $this->getRepository(Trip::class)->find($this->trip->id);
 

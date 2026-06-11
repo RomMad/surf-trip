@@ -184,7 +184,7 @@ class TripRepository extends ServiceEntityRepository
                 'NEW %s(
                     t.id,
                     t.title,
-                    t.location
+                    t.location.label
                 )',
                 TripSelectReadModel::class,
             ))
