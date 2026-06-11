@@ -58,7 +58,10 @@ final class EditTripController extends AbstractController
 
             $this->addFlash('success', 'trip.updated_successfully');
 
-            return $this->redirectToRoute(IndexTripController::ROUTE, [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute(ShowTripController::ROUTE, [
+                'id' => $trip->id,
+                'slug' => $trip->slug->value,
+            ], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('trip/edit.html.twig', [
