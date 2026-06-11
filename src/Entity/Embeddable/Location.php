@@ -26,7 +26,7 @@ final class Location
         Assert::minLength($label, self::MIN_LENGTH, 'location.min_length');
         Assert::maxLength($label, self::MAX_LENGTH, 'location.max_length');
 
-        if (null === $latitude || null === $longitude || null === $placeId) {
+        if (in_array(null, [$latitude, $longitude, $placeId], true)) {
             return;
         }
 
