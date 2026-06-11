@@ -24,13 +24,13 @@ final class Version20260509183112 extends AbstractMigration
         $this->addSql('ALTER TABLE trip ADD location_longitude DOUBLE PRECISION DEFAULT NULL');
         $this->addSql('ALTER TABLE trip ADD location_place_id VARCHAR(255) DEFAULT NULL');
 
-        $this->addSql('CREATE INDEX idx_trip_location ON trip (location_label)');
+        $this->addSql('CREATE INDEX idx_trip_location_label ON trip (location_label)');
         $this->addSql('CREATE INDEX idx_trip_search ON trip (title, location_label)');
     }
 
     public function down(Schema $schema): void
     {
-        $this->addSql('DROP INDEX idx_trip_location');
+        $this->addSql('DROP INDEX idx_trip_location_label');
         $this->addSql('DROP INDEX idx_trip_search');
 
         $this->addSql('ALTER TABLE trip RENAME COLUMN location_label TO location');
