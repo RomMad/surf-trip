@@ -19,7 +19,6 @@ final class TripWriteModel
 {
     public ?Title $title = null;
 
-    #[Assert\NotNull]
     #[Assert\Valid]
     #[Map(transform: LocationInputToLocationTransformer::class)]
     public LocationInput $location;
