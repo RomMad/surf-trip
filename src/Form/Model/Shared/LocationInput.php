@@ -10,7 +10,7 @@ final class LocationInput
 {
     #[Assert\NotBlank(message: 'location.not_blank')]
     #[Assert\Length(min: 3, max: 255)]
-    public ?string $label = null;
+    public string $label = '';
 
     #[Assert\Range(min: -90, max: 90)]
     public ?float $latitude = null;

@@ -36,7 +36,7 @@ final class TripWriteModelTest extends CustomKernelTestCase
 
         $violations = $this->validator->validate($trip);
 
-        $this->assertCount(5, $violations);
+        $this->assertCount(6, $violations);
     }
 
     public function testValidTrip(): void
