@@ -156,7 +156,7 @@ class SurfSessionFixtures extends Fixture implements DependentFixtureInterface
      */
     private function getSpotsForTrip(Trip $trip): array
     {
-        $location = explode(',', (string) $trip->location->label)[0];
+        $location = explode(',', $trip->location->label)[0];
 
         return SurfTripData::ALL[$location]['spots'];
     }

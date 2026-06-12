@@ -18,6 +18,7 @@ final class LocationType extends AbstractType
         $builder
             ->add('label', TextType::class, [
                 'label' => 'location.label',
+                'empty_data' => '',
                 'attr' => [
                     'placeholder' => 'location.placeholder',
                     'data-location-autocomplete-target' => 'label',

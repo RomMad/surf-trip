@@ -5,22 +5,5 @@
 {% block body %}
     <twig:Heading1 :title="title" />
 
-    {{ form_errors(form) }}
-
-    {{ form_start(form, {attr: {class: 'space-y-4'}}) }}
-        {{ form_row(form.email) }}
-        {{ form_row(form.username) }}
-        <div class="app-form-grid-2">
-            {{ form_row(form.firstName) }}
-            {{ form_row(form.lastName) }}
-        </div>
-        {{ form_row(form.location) }}
-        {{ form_row(form.level) }}
-        {{ form_row(form.instagram) }}
-        {{ form_row(form.description) }}
-
-        <twig:Button type="submit">
-            {{- 'update.label'|trans -}}
-        </twig:Button>
-    {{ form_end(form) }}
+    <twig:User:ProfileForm :form="form" />
 {% endblock %}
