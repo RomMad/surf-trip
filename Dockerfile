@@ -19,19 +19,22 @@ VOLUME /app/var/
 
 # persistent deps
 # hadolint ignore=DL3008
-RUN apt-get update && apt-get install -y --no-install-recommends \
-	file \
-	git \
-	make \
-	&& install-php-extensions \
-	@composer \
-	amqp \
-	apcu \
-	intl \
-	opcache \
-	redis \
-	zip \
-	&& rm -rf /var/lib/apt/lists/*
+RUN <<-EOF
+	apt-get update
+	apt-get install -y --no-install-recommends \
+		file \
+		git \
+		make
+	install-php-extensions \
+		@composer \
+		amqp \
+		apcu \
+		intl \
+		opcache \
+        redis \
+		zip
+	rm -rf /var/lib/apt/lists/*
+EOF
 
 # Install Symfony CLI
 RUN curl -sS https://get.symfony.com/cli/installer | bash && \
