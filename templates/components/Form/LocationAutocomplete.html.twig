@@ -1,9 +1,11 @@
 {%- props locationField -%}
 
-<div class="app-row"
+<div
     data-controller="location-autocomplete"
     data-location-autocomplete-api-key-value="{{ mapbox_public_api_key }}"
     data-location-autocomplete-no-results-text-value="{{ 'location.no_results'|trans }}"
 >
-    {{ form_row(locationField) }}
+    <div class="app-form-grid-2">
+        {{ form_rest(locationField) }}
+    </div>
 </div>

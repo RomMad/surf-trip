@@ -184,9 +184,10 @@ class SurfTripData
                 'Carcans Plage',
             ],
         ],
-        'La Torche' => [
+        'Plomeur' => [
             'location' => [
-                'label' => 'La Torche',
+                'label' => 'Plomeur',
+                'comment' => 'La Torche',
                 'latitude' => 47.8730,
                 'longitude' => -4.2950,
                 'placeId' => 'place.191760461',

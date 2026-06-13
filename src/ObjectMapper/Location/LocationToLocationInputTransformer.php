@@ -27,6 +27,7 @@ final readonly class LocationToLocationInputTransformer implements TransformCall
         $locationInput->latitude = $location->latitude;
         $locationInput->longitude = $location->longitude;
         $locationInput->placeId = $location->placeId;
+        $locationInput->comment = $location->comment;
 
         return $locationInput;
     }

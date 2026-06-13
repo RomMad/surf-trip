@@ -24,6 +24,13 @@ final class LocationType extends AbstractType
                     'data-location-autocomplete-target' => 'label',
                 ],
             ])
+            ->add('comment', TextType::class, [
+                'label' => 'location.comment.label',
+                'attr' => [
+                    'placeholder' => 'location.comment.placeholder',
+                ],
+                'required' => false,
+            ])
             ->add('latitude', HiddenType::class, [
                 'attr' => [
                     'data-location-autocomplete-target' => 'latitude',

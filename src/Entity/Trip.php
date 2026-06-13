@@ -33,7 +33,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TripRepository::class)]
-#[ORM\Index(name: 'idx_trip_location_label', columns: ['location_label'])]
+#[ORM\Index(name: 'idx_trip_location', columns: ['location_label', 'location_comment'])]
 #[ORM\Index(name: 'idx_trip_required_levels', fields: ['requiredLevels'], flags: ['gin'])]
 #[ORM\Index(name: 'idx_trip_search', columns: ['title', 'location_label'])]
 #[ORM\Index(name: 'idx_trip_start_at', fields: ['startAt'])]
