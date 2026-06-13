@@ -152,6 +152,9 @@ description.label: Description
 location:
     label: Location
     placeholder: Trip location
+    comment:
+        label: Location details
+        placeholder: Information about the location, accommodation...
     no_results: No results found for
 my_trips_only.label: My trips only
 period.label: Period

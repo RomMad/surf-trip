@@ -152,6 +152,9 @@ description.label: Description
 location:
     label: Lieu
     placeholder: Lieu du trip
+    comment:
+        label: Détails du lieu
+        placeholder: Précisions sur le lieu, l'hébergement...
     no_results: Aucun résultat pour
 my_trips_only.label: Mes trips uniquement
 period.label: Période

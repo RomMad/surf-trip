@@ -225,7 +225,14 @@ class TripRepository extends ServiceEntityRepository
 
         if (null !== $searchInput->location) {
             $queryBuilder
-                ->andWhere('ILIKE(t.location.label, :location) = TRUE')
+                ->andWhere(
+                    'ILIKE(
+                    CONCAT(
+                        t.location.label, \' \',
+                        COALESCE(t.location.comment, \'\')
+                    ),
+                    :location) = TRUE'
+                )
                 ->setParameter('location', '%'.$searchInput->location.'%')
             ;
         }

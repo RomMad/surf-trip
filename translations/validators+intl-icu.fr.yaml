@@ -1,7 +1,10 @@
 location:
-    not_blank: Le lieu est obligatoire.
-    min_length: Le lieu doit comporter au moins 3 caractères.
-    max_length: Le lieu ne peut pas dépasser 255 caractères.
+    label:
+        not_blank: Le lieu est obligatoire.
+        min_length: Le lieu doit comporter au moins 3 caractères.
+        max_length: Le lieu ne peut pas dépasser 255 caractères.
+    comment:
+        max_length: Le commentaire ne peut pas dépasser {limit} caractères.
 
 security:
     registration:

@@ -182,6 +182,7 @@ DESC,
                 $location['latitude'],
                 $location['longitude'],
                 $location['placeId'],
+                $location['comment'] ?? null
             );
             $trip->startAt = $startAt;
             $trip->endAt = $startAt->modify(sprintf('+%d days', $this->faker->numberBetween(3, 14)));
@@ -212,6 +213,7 @@ DESC,
                 $location['latitude'],
                 $location['longitude'],
                 $location['placeId'],
+                $location['comment'] ?? null
             );
             $trip->startAt = new \DateTimeImmutable($tripData['startAt']);
             $trip->endAt = new \DateTimeImmutable($tripData['endAt']);

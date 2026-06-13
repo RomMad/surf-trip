@@ -21,10 +21,12 @@ final class Location
         #[ORM\Column(nullable: true)]
         public ?float $longitude = null,
         #[ORM\Column(nullable: true)]
-        public ?string $placeId = null
+        public ?string $placeId = null,
+        #[ORM\Column(nullable: true)]
+        public ?string $comment = null,
     ) {
-        Assert::minLength($label, self::MIN_LENGTH, 'location.min_length');
-        Assert::maxLength($label, self::MAX_LENGTH, 'location.max_length');
+        Assert::minLength($label, self::MIN_LENGTH, 'location.label.min_length');
+        Assert::maxLength($label, self::MAX_LENGTH, 'location.label.max_length');
 
         if (in_array(null, [$latitude, $longitude, $placeId], true)) {
             return;
@@ -33,6 +35,10 @@ final class Location
         Assert::range($latitude, -90, 90);
         Assert::range($longitude, -180, 180);
 
-        Assert::maxLength($placeId, self::MAX_LENGTH, 'location.place_id_max_length');
+        Assert::maxLength($placeId, self::MAX_LENGTH);
+
+        if (null !== $comment) {
+            Assert::maxLength($comment, self::MAX_LENGTH, 'location.comment.max_length');
+        }
     }
 }

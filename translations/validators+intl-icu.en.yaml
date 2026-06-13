@@ -1,7 +1,10 @@
 location:
-    not_blank: Location is required.
-    min_length: Location must be at least 3 characters long.
-    max_length: Location cannot exceed 255 characters.
+    label:
+        not_blank: Location is required.
+        min_length: Location must be at least 3 characters long.
+        max_length: Location cannot exceed 255 characters.
+    comment:
+        max_length: Comment cannot exceed {limit} characters.
 
 security:
     registration:

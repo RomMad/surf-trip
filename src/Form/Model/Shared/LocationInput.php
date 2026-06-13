@@ -8,8 +8,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 final class LocationInput
 {
-    #[Assert\NotBlank(message: 'location.not_blank')]
-    #[Assert\Length(min: 3, max: 255)]
+    #[Assert\NotBlank(message: 'location.label.not_blank')]
+    #[Assert\Length(min: 3, max: 255, minMessage: 'location.label.min_length', maxMessage: 'location.label.max_length')]
     public string $label = '';
 
     #[Assert\Range(min: -90, max: 90)]
@@ -20,4 +20,7 @@ final class LocationInput
 
     #[Assert\Length(max: 255)]
     public ?string $placeId = null;
+
+    #[Assert\Length(max: 255, maxMessage: 'location.comment.max_length')]
+    public ?string $comment = null;
 }
