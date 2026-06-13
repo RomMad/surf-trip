@@ -6,7 +6,7 @@ namespace App\Service\Map;
 
 class GoogleMaps
 {
-    private const SEARCH_URL = 'https://www.google.com/maps/search/?api=1&query=';
+    private const string SEARCH_URL = 'https://www.google.com/maps/search/?api=1&query=';
 
     public static function generateSearchUrl(?string $query = null): ?string
     {
