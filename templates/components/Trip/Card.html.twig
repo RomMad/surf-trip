@@ -17,10 +17,15 @@
             </div>
 
             <div class="flex flex-wrap items-center gap-x-6 gap-y-2">
-                <p class="flex items-center gap-1" title="{{ 'location.label'|trans }}">
+                <a href="{{ google_maps_url(trip.locationLabel) }}"
+                    class="flex items-center gap-1 hover:text-white/80"
+                    title="{{ 'location.label'|trans }}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
                     <twig:ux:icon name="lucide:map-pin" class="text-white"/>
                     {{ trip.locationLabel -}}
-                </p>
+                </a>
                 <p class="flex items-center gap-1" title="{{ 'period.label'|trans }}">
                     <twig:ux:icon name="lucide:calendar" class="text-white"/>
                     {{ trip.startAt|format_datetime(pattern: 'd MMM yyyy') }} - {{ trip.endAt|format_datetime(pattern: 'd MMM yyyy') -}}
