@@ -14,7 +14,7 @@ use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 #[AsTwigComponent]
 final class TripMap
 {
-    private const DEFAULT_ZOOM = 6;
+    private const int DEFAULT_ZOOM = 6;
 
     public TripShowReadModel $trip;
 
