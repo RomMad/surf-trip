@@ -37,6 +37,6 @@ trait TripCalendarLinkableTrait
 
     public function getCalendarAddress(): ?string
     {
-        return $this->locationLabel;
+        return $this->location->label;
     }
 }

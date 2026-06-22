@@ -1057,6 +1057,9 @@
 "@symfony/ux-chartjs@file:vendor/symfony/ux-chartjs/assets":
   version "3.0.0"
 
+"@symfony/ux-leaflet-map@file:vendor/symfony/ux-leaflet-map/assets":
+  version "3.0.0"
+
 "@symfony/ux-turbo@file:vendor/symfony/ux-turbo/assets":
   version "3.0.0"
 
@@ -2289,6 +2292,11 @@ kind-of@^6.0.2:
   version "6.0.3"
   resolved "https://registry.yarnpkg.com/kind-of/-/kind-of-6.0.3.tgz#07c05034a6c349fa06e24fa35aa76db4580ce4dd"
   integrity sha512-dcS1ul+9tmeD95T+x28/ehLgd9mENa3LsvDTtzm3vyBEO7RPptvAD+t44WVXaUjTBRcrpFeFlC8WCruUR456hw==
+
+leaflet@^1.9.4:
+  version "1.9.4"
+  resolved "https://registry.yarnpkg.com/leaflet/-/leaflet-1.9.4.tgz#23fae724e282fa25745aff82ca4d394748db7d8d"
+  integrity sha512-nxS1ynzJOmOlHp+iL3FyWqK89GtNL8U8rvlMOsQdTTssxZwCXh8N2NB3GDQOL+YR3XnWyZAxwQixURb+FA74PA==
 
 lightningcss-android-arm64@1.31.1:
   version "1.31.1"
