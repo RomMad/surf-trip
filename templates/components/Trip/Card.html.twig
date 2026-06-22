@@ -17,14 +17,14 @@
             </div>
 
             <div class="flex flex-wrap items-center gap-x-6 gap-y-2">
-                <a href="{{ google_maps_url(trip.locationLabel) }}"
+                <a href="{{ google_maps_url(trip.location.label) }}"
                     class="flex items-center gap-1 hover:text-white/80"
                     title="{{ 'location.label'|trans }}"
                     target="_blank"
                     rel="noopener noreferrer"
                 >
                     <twig:ux:icon name="lucide:map-pin" class="text-white"/>
-                    {{ trip.locationLabel -}}
+                    {{ trip.location.label -}}
                 </a>
                 <p class="flex items-center gap-1" title="{{ 'period.label'|trans }}">
                     <twig:ux:icon name="lucide:calendar" class="text-white"/>
@@ -35,13 +35,15 @@
     </twig:Card:Header>
 
     <twig:Card:Content class="grid gap-4 p-4 md:grid-cols-[2fr_1fr]">
-         <div class="grid gap-4">
-            <twig:Trip:Card:Info title="description.label">
+            <twig:Trip:Card:Info title="description.label" class="order-1">
                 <twig:ReadMore>
                     {{- trip.description -}}
                 </twig:ReadMore>
             </twig:Trip:Card:Info>
-            <twig:Trip:Card:Info title="required_levels.label" icon="noto:man-surfing">
+            <twig:Card class="overflow-hidden order-4 md:order-2">
+                <twig:TripMap :trip="trip" class="h-full" />
+            </twig:Card>
+            <twig:Trip:Card:Info title="required_levels.label" icon="noto:man-surfing" class="order-2">
                 <div class="flex flex-wrap gap-1">
                     {% for required_level in trip.requiredLevels %}
                         <twig:Badge variant="outline">
@@ -50,12 +52,11 @@
                     {% endfor %}
                 </div>
             </twig:Trip:Card:Info>
-        </div>
-        <twig:Trip:Card:Info title="owners.label" icon="lucide:users">
-            <p class="text-sm">
-                {{- trip.ownerNames -}}
-            </p>
-        </twig:Trip:Card:Info>
+            <twig:Trip:Card:Info title="owners.label" icon="lucide:users"  class="order-3">
+                <p class="text-sm">
+                    {{- trip.ownerNames -}}
+                </p>
+            </twig:Trip:Card:Info>
     </twig:Card:Content>
 
     {% if is_granted_edit_trip %}

@@ -48,7 +48,7 @@ final class TripStory extends Story
 
         TripFactory::createOne([
             'title' => Title::from(self::TRIP_TITLE),
-            'location' => new Location(self::TRIP_LOCATION),
+            'location' => new Location(self::TRIP_LOCATION, -8.4095, 115.1889),
             'startAt' => new \DateTimeImmutable('+1 month'),
             'endAt' => new \DateTimeImmutable('+1 month +10 days'),
             'description' => self::TRIP_DESCRIPTION,

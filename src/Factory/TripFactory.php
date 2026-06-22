@@ -40,7 +40,11 @@ final class TripFactory extends PersistentObjectFactory
 
         return [
             'title' => Title::from($title),
-            'location' => new Location($location),
+            'location' => new Location(
+                $location,
+                self::faker()->latitude(),
+                self::faker()->longitude()
+            ),
             'startAt' => $startAt,
             'endAt' => $startAt->modify(sprintf('+%d days', self::faker()->numberBetween(3, 14))),
             'requiredLevels' => $requiredLevels,

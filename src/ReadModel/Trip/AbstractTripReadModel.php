@@ -10,6 +10,7 @@ use App\Entity\ValueObject\Slug;
 use App\Entity\ValueObject\Title;
 use App\Enum\Trip\TripStatus;
 use App\Enum\User\SurfLevel;
+use App\ReadModel\LocationReadModel;
 
 abstract readonly class AbstractTripReadModel implements TripOwnershipAwareInterface, CalendarLinkableInterface
 {
@@ -25,7 +26,7 @@ abstract readonly class AbstractTripReadModel implements TripOwnershipAwareInter
         public int $id,
         public Slug $slug,
         public Title $title,
-        public string $locationLabel,
+        public LocationReadModel $location,
         public \DateTimeImmutable $startAt,
         public \DateTimeImmutable $endAt,
         public array $requiredLevels,

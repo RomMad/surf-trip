@@ -7,6 +7,7 @@ namespace App\Repository;
 use App\Entity\Trip;
 use App\Entity\User;
 use App\Form\Model\Trip\TripSearchInput;
+use App\ReadModel\LocationReadModel;
 use App\ReadModel\Trip\TripSelectReadModel;
 use App\ReadModel\Trip\TripShowReadModel;
 use App\Repository\Traits\PeriodFilterTrait;
@@ -156,7 +157,11 @@ class TripRepository extends ServiceEntityRepository
                     t.id,
                     t.slug,
                     t.title,
-                    t.location.label,
+                    NEW %s(
+                        t.location.label,
+                        t.location.latitude,
+                        t.location.longitude
+                    ),
                     t.startAt,
                     t.endAt,
                     t.requiredLevels,
@@ -171,6 +176,7 @@ class TripRepository extends ServiceEntityRepository
                     )
                 )',
                 TripShowReadModel::class,
+                LocationReadModel::class,
             ))
             ->leftJoin('t.owners', 'o')
             ->groupBy('t.id')

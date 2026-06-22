@@ -54,7 +54,7 @@ final class DashboardStory extends Story
 
         TripFactory::createOne([
             'title' => Title::from('Current year trip'),
-            'location' => new Location('Hossegor, France'),
+            'location' => new Location('Hossegor, France', 43.6636, -1.4419),
             'startAt' => new \DateTimeImmutable(sprintf('%d-03-10 08:00:00', $currentYear)),
             'endAt' => new \DateTimeImmutable(sprintf('%d-03-17 18:00:00', $currentYear)),
             'owners' => [$user],
@@ -62,7 +62,7 @@ final class DashboardStory extends Story
 
         TripFactory::createOne([
             'title' => Title::from('Previous year trip'),
-            'location' => new Location('Biarritz, France'),
+            'location' => new Location('Biarritz, France', 43.4832, -1.5586),
             'startAt' => new \DateTimeImmutable(sprintf('%d-05-10 08:00:00', $previousYear)),
             'endAt' => new \DateTimeImmutable(sprintf('%d-05-17 18:00:00', $previousYear)),
             'owners' => [$user],
@@ -70,7 +70,7 @@ final class DashboardStory extends Story
 
         TripFactory::createOne([
             'title' => Title::from('Other user trip'),
-            'location' => new Location('Taghazout, Morocco'),
+            'location' => new Location('Taghazout, Morocco', 30.4278, -9.6542),
             'startAt' => new \DateTimeImmutable(sprintf('%d-06-10 08:00:00', $currentYear)),
             'endAt' => new \DateTimeImmutable(sprintf('%d-06-17 18:00:00', $currentYear)),
             'owners' => [$otherUser],
