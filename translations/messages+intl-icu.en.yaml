@@ -19,7 +19,9 @@ navigation:
     toggle.label: Toggle navigation
 language:
     switch.label: Change language
+list.label: List
 loading.label: Loading...
+map.label: Map
 read:
     less.label: Read less ↑
     more.label: Read more ↓

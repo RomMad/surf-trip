@@ -1,0 +1,34 @@
+<div class="space-y-3 min-w-56">
+    <a href="{{ path('app.trip.show', {id: trip.id, slug: trip.slug}) }}" data-turbo-frame="_top">
+        <h3 class="text-primary hover:text-primary/80 text-base font-semibold mb-3">
+            {{- trip.title -}}
+        </h3>
+    </a>
+
+    <div class="space-y-2 text-sm">
+        <div class="flex items-center gap-1">
+            <twig:ux:icon name="lucide:map-pin" class="text-primary" />
+            {{- trip.location.label -}}
+        </div>
+        <div class="flex items-center gap-1">
+            <twig:ux:icon name="lucide:calendar" class="text-primary" />
+            {{- trip.startAt|format_datetime(pattern: 'd MMM yyyy') }}
+            -
+            {{ trip.endAt|format_datetime(pattern: 'd MMM yyyy') -}}
+        </div>
+    </div>
+
+    {% if trip.description %}
+        <p class="line-clamp-3 text-sm text-muted-foreground">
+            {{- trip.description -}}
+        </p>
+    {% endif %}
+
+    <div class="flex flex-wrap gap-1">
+        {% for required_level in trip.requiredLevels %}
+            <twig:Badge variant="outline">
+                {{- required_level.label|trans -}}
+            </twig:Badge>
+        {% endfor %}
+    </div>
+</div>

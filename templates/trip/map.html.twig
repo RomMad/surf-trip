@@ -6,9 +6,9 @@
     <div class="app-page-header">
         <twig:Heading1 :title="title" />
         <div>
-            <twig:Button as="a" href="{{ path('app.trip.map', app.request.query.all) }}">
-                <twig:ux:icon name="lucide:map" />
-                {{- 'map.label'|trans -}}
+            <twig:Button as="a" href="{{ path('app.trip.index', app.request.query.all) }}">
+                <twig:ux:icon name="lucide:table" />
+                {{- 'list.label'|trans -}}
             </twig:Button>
             <twig:Button:New href="{{ path('app.trip.new') }}" />
         </div>
@@ -18,12 +18,8 @@
 
     {% block trip_results %}
         <twig:Turbo:Frame id="{{ constant('App\\Turbo\\Frame\\TripFrameId::RESULTS') }}">
-            <twig:ResultsCount :count="pager.nbResults" />
-
-            {% if pager.nbResults > 0 %}
-                <twig:Trip:IndexTable :trips="pager" />
-                <twig:AppPagination :pager="pager" />
-            {% endif %}
+            <twig:ResultsCount count="{{ trips|length }}" />
+            <twig:TripsMap :trips="trips" />
         </twig:Turbo:Frame>
     {% endblock %}
 {% endblock %}

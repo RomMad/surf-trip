@@ -34,8 +34,8 @@ final class TripMap
                 infoWindow: new InfoWindow(
                     content: sprintf(
                         '<strong>%s</strong><br>%s',
-                        $this->trip->title->value,
-                        $this->trip->location->label,
+                        htmlspecialchars($this->trip->title->value),
+                        htmlspecialchars($this->trip->location->label),
                     ),
                 ),
             ))
