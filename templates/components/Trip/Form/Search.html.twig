@@ -11,5 +11,7 @@
     <div title="{{ 'required_levels.placeholder'|trans }}">
         {{ form_row(form.requiredLevels, {attr: {class: 'min-w-48'}, label_attr: {hidden: null}}) }}
     </div>
-    {{ form_row(form.myTripsOnly) }}
+    {% if form.myTripsOnly is defined %}
+        {{ form_row(form.myTripsOnly) }}
+    {% endif %}
 {{ form_end(form) }}

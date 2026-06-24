@@ -46,18 +46,25 @@ final class TripSearchFormType extends AbstractType
                     'placeholder' => 'location.placeholder',
                 ],
             ])
-            ->add('myTripsOnly', SwitchType::class, [
+        ;
+
+        if (true === $options['is_authenticated']) {
+            $builder->add('myTripsOnly', SwitchType::class, [
                 'label' => 'my_trips_only.label',
                 'required' => false,
-            ])
-        ;
+            ]);
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults([
-            'data_class' => TripSearchInput::class,
-        ]);
+        $resolver
+            ->setDefaults([
+                'data_class' => TripSearchInput::class,
+                'is_authenticated' => false,
+            ])
+            ->setAllowedTypes('is_authenticated', 'bool')
+        ;
     }
 
     #[\Override]

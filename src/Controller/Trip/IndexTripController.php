@@ -32,7 +32,9 @@ final class IndexTripController extends AbstractController
     public function __invoke(Request $request, #[CurrentUser()] ?User $user = null): Response
     {
         $searchInput = new TripSearchInput();
-        $form = $this->createForm(TripSearchFormType::class, $searchInput);
+        $form = $this->createForm(TripSearchFormType::class, $searchInput, [
+            'is_authenticated' => null !== $user,
+        ]);
         $form->handleRequest($request);
 
         $pager = $this->tripPager->create($searchInput, $request, $user, 10);

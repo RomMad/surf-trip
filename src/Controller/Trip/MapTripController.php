@@ -30,7 +30,9 @@ final class MapTripController extends AbstractController
     public function __invoke(Request $request, #[CurrentUser()] ?User $user = null): Response
     {
         $searchInput = new TripSearchInput();
-        $form = $this->createForm(TripSearchFormType::class, $searchInput);
+        $form = $this->createForm(TripSearchFormType::class, $searchInput, [
+            'is_authenticated' => null !== $user,
+        ]);
         $form->handleRequest($request);
 
         $trips = $this->tripRepository->findMapTrips($searchInput, $user);
