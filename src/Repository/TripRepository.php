@@ -98,7 +98,7 @@ class TripRepository extends ServiceEntityRepository
     /**
      * @return MapTripReadModel[]
      */
-    public function findMapTrips(TripSearchInput $searchInput, User $user, int $limit = 100): array
+    public function findMapTrips(TripSearchInput $searchInput, ?User $user = null, int $limit = 100): array
     {
         $queryBuilder = $this->createQueryBuilder('t')
             ->select(sprintf(
