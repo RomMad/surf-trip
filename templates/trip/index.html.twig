@@ -3,9 +3,11 @@
 {% set title = 'trips.label'|trans %}
 
 {% block body %}
-    <div class="app-page-header">
+    <div class="flex justify-between">
         <twig:Heading1 :title="title" />
-        <twig:Button:New href="{{ path('app.trip.new') }}" />
+        <div class="sticky top-0 self-start">
+            <twig:Button:New href="{{ path('app.trip.new') }}" />
+        </div>
     </div>
 
     <twig:Trip:Form:Search :form="form" />
