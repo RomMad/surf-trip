@@ -3,7 +3,9 @@
 {% block trip_results %}
     <twig:Turbo:Frame id="{{ constant('App\\Turbo\\Frame\\TripFrameId::RESULTS') }}">
         <twig:ResultsCount count="{{ trips|length }}" />
-            <twig:TripsMap :trips="trips" />
+            <twig:Card class="overflow-hidden">
+                <twig:TripsMap :trips="trips" />
+            </twig:Card>
             <twig:Sticky>
                 <twig:Button
                     as="a"
