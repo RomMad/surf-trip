@@ -5,13 +5,7 @@
 {% block body %}
     <div class="app-page-header">
         <twig:Heading1 :title="title" />
-        <div>
-            <twig:Button as="a" href="{{ path('app.trip.index', app.request.query.all) }}">
-                <twig:ux:icon name="lucide:table" />
-                {{- 'list.label'|trans -}}
-            </twig:Button>
-            <twig:Button:New href="{{ path('app.trip.new') }}" />
-        </div>
+        <twig:Button:New href="{{ path('app.trip.new') }}" />
     </div>
 
     <twig:Trip:Form:Search :form="form" />
@@ -19,7 +13,17 @@
     {% block trip_results %}
         <twig:Turbo:Frame id="{{ constant('App\\Turbo\\Frame\\TripFrameId::RESULTS') }}">
             <twig:ResultsCount count="{{ trips|length }}" />
-            <twig:TripsMap :trips="trips" />
+                <twig:TripsMap :trips="trips" />
+                <twig:Sticky>
+                    <twig:Button
+                        as="a"
+                        href="{{ path('app.trip.index', app.request.query.all) }}"
+                        title="{{ 'list.help'|trans }}"
+                    >
+                        <twig:ux:icon name="lucide:table" />
+                        {{- 'list.label'|trans -}}
+                    </twig:Button>
+                </twig:Sticky>
         </twig:Turbo:Frame>
     {% endblock %}
 {% endblock %}

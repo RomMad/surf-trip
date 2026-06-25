@@ -19,9 +19,13 @@ navigation:
     toggle.label: Toggle navigation
 language:
     switch.label: Change language
-list.label: List
+list:
+    label: List
+    help: Show as a list
 loading.label: Loading...
-map.label: Map
+map:
+    label: Map
+    help: Show as a map
 read:
     less.label: Read less ↑
     more.label: Read more ↓
