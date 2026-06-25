@@ -213,7 +213,7 @@ function quality_check(): void
     lint_yaml();
     lint_twig();
     twigcs_fix();
-    // lint_js_fix();
+    lint_js_fix();
 }
 
 #[AsTask(description: 'Run PHP Coding Standards Fixer', namespace: 'app', aliases: ['php-cs-fixer'])]
@@ -341,7 +341,7 @@ function test_all(): void
     lint_yaml();
     lint_twig();
     twigcs();
-    // lint_js();
+    lint_js();
     test();
 }
 

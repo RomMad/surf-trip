@@ -110,5 +110,8 @@ jobs:
       - name: Twig CS
         run: docker compose exec -T php vendor/bin/twig-cs-fixer lint
 
+      - name: Lint JS
+        run: yarn lint
+
       - name: Run Paratest
         run: docker compose exec -T php vendor/bin/paratest tests --runner WrapperRunner
