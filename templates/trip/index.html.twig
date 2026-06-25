@@ -23,6 +23,7 @@
                     as="a"
                     href="{{ path('app.trip.map', app.request.query.all) }}"
                     title="{{ 'map.help'|trans }}"
+                    data-turbo-action="advance"
                 >
                     <twig:ux:icon name="lucide:map" />
                     {{- 'map.label'|trans -}}
