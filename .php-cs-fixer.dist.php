@@ -8,6 +8,7 @@ $finder = (new Finder())
     ->in(__DIR__)
     ->exclude([
         'config',
+        'node_modules',
         'var',
     ])
 ;
