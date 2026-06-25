@@ -3,12 +3,15 @@
 {% block trip_results %}
     <twig:Turbo:Frame id="{{ constant('App\\Turbo\\Frame\\TripFrameId::RESULTS') }}">
         <twig:ResultsCount count="{{ trips|length }}" />
-            <twig:TripsMap :trips="trips" />
+            <twig:Card class="overflow-hidden">
+                <twig:TripsMap :trips="trips" />
+            </twig:Card>
             <twig:Sticky>
                 <twig:Button
                     as="a"
                     href="{{ path('app.trip.index', app.request.query.all) }}"
                     title="{{ 'list.help'|trans }}"
+                    data-turbo-action="advance"
                 >
                     <twig:ux:icon name="lucide:table" />
                     {{- 'list.label'|trans -}}
