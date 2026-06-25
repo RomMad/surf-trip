@@ -1,8 +1,8 @@
-import { Controller } from '@hotwired/stimulus';
+import {Controller} from '@hotwired/stimulus';
 
 const STORAGE_KEY = 'theme';
 
-export default class extends Controller {
+export default class extends Controller<HTMLElement> {
     connect() {
         const storedTheme = localStorage.getItem(STORAGE_KEY);
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -10,7 +10,6 @@ export default class extends Controller {
 
         this.applyTheme(isDark);
         this.initButton(isDark);
-
     }
 
     toggle() {
@@ -20,12 +19,12 @@ export default class extends Controller {
         localStorage.setItem(STORAGE_KEY, isDark ? 'dark' : 'light');
     }
 
-    applyTheme(isDark) {
+    applyTheme(isDark: boolean) {
         document.documentElement.classList.toggle('dark', isDark);
         document.documentElement.style.colorScheme = isDark ? 'dark' : 'light';
     }
 
-    initButton(isDark) {
+    initButton(isDark: boolean) {
         const inputElt = this.element.querySelector('input');
 
         if (inputElt instanceof HTMLInputElement) {
