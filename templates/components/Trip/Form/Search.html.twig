@@ -3,6 +3,7 @@
 {{ form_start(form, {attr: {
     class: 'flex flex-col gap-3 sm:grid sm:grid-cols-2 md:grid-cols-3 lg:flex lg:flex-row',
     'data-turbo-frame': constant('App\\Turbo\\Frame\\TripFrameId::RESULTS'),
+    'data-turbo-action': 'advance',
 }}) }}
     <twig:Form:Query :query="form.query" />
     {{ form_row(form.location, {label_attr: {hidden: null}}) }}
@@ -10,5 +11,7 @@
     <div title="{{ 'required_levels.placeholder'|trans }}">
         {{ form_row(form.requiredLevels, {attr: {class: 'min-w-48'}, label_attr: {hidden: null}}) }}
     </div>
-    {{ form_row(form.myTripsOnly) }}
+    {% if form.myTripsOnly is defined %}
+        {{ form_row(form.myTripsOnly) }}
+    {% endif %}
 {{ form_end(form) }}

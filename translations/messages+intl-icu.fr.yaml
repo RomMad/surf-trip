@@ -21,7 +21,13 @@ language:
     switch.label: Changer de langue
     fr.label: Français
     en.label: Anglais
+list:
+    label: Liste
+    help: Afficher sous forme de liste
 loading.label: Chargement en cours...
+map:
+    label: Carte
+    help: Afficher sous forme de carte
 read:
     less.label: Voir moins ↑
     more.label: Voir plus ↓

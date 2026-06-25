@@ -18,6 +18,16 @@
                 <twig:Trip:IndexTable :trips="pager" />
                 <twig:AppPagination :pager="pager" />
             {% endif %}
+            <twig:Sticky>
+                <twig:Button
+                    as="a"
+                    href="{{ path('app.trip.map', app.request.query.all) }}"
+                    title="{{ 'map.help'|trans }}"
+                >
+                    <twig:ux:icon name="lucide:map" />
+                    {{- 'map.label'|trans -}}
+                </twig:Button>
+            </twig:Sticky>
         </twig:Turbo:Frame>
     {% endblock %}
 {% endblock %}

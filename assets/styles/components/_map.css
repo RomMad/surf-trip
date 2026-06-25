@@ -1,0 +1,9 @@
+@layer components {
+    .leaflet-popup-content-wrapper {
+        background-color: var(--background) !important;
+    }
+
+    .leaflet-popup-content {
+        @apply bg-background text-foreground;
+    }
+}

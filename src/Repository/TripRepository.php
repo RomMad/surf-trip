@@ -8,6 +8,7 @@ use App\Entity\Trip;
 use App\Entity\User;
 use App\Form\Model\Trip\TripSearchInput;
 use App\ReadModel\LocationReadModel;
+use App\ReadModel\Trip\MapTripReadModel;
 use App\ReadModel\Trip\TripSelectReadModel;
 use App\ReadModel\Trip\TripShowReadModel;
 use App\Repository\Traits\PeriodFilterTrait;
@@ -92,6 +93,43 @@ class TripRepository extends ServiceEntityRepository
             ],
             $results
         );
+    }
+
+    /**
+     * @return MapTripReadModel[]
+     */
+    public function findMapTrips(TripSearchInput $searchInput, ?User $user = null, int $limit = 100): array
+    {
+        $queryBuilder = $this->createQueryBuilder('t')
+            ->select(sprintf(
+                'NEW %s(
+                    t.id,
+                    t.slug,
+                    t.title,
+                    new %s(
+                        t.location.label,
+                        t.location.latitude,
+                        t.location.longitude
+                    ),
+                    t.startAt,
+                    t.endAt,
+                    t.requiredLevels,
+                    t.description
+                )',
+                MapTripReadModel::class,
+                LocationReadModel::class,
+            ))
+        ;
+
+        $this->applyFilters($queryBuilder, $searchInput, $user);
+
+        return $queryBuilder
+            ->orderBy('t.startAt', 'DESC')
+            ->setMaxResults($limit)
+
+            ->getQuery()
+            ->getResult()
+        ;
     }
 
     /**
@@ -204,7 +242,7 @@ class TripRepository extends ServiceEntityRepository
         ;
     }
 
-    private function applyFilters(QueryBuilder $queryBuilder, TripSearchInput $searchInput, ?User $user): void
+    private function applyFilters(QueryBuilder $queryBuilder, TripSearchInput $searchInput, ?User $user = null): void
     {
         if ($searchInput->myTripsOnly && null !== $user) {
             $membershipsQueryBuilder = $this->createQueryBuilder('tm')

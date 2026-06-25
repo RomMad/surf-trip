@@ -4,8 +4,9 @@
 
 <p
     class="mb-4 ml-2 text-sm text-muted-foreground {{ attributes.render('class')|tailwind_merge }}"
+    id="results_count"
     aria-live="polite"
     {{ attributes }}
 >
-    {{ translationKey|trans({count: count}) }}
+    {{- translationKey|trans({count: count}) -}}
 </p>

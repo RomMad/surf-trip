@@ -7,25 +7,23 @@ namespace App\Controller\Trip;
 use App\Entity\User;
 use App\Form\Model\Trip\TripSearchInput;
 use App\Form\Trip\TripSearchFormType;
-use App\Pagination\TripPager;
-use App\Turbo\Frame\TripFrameId;
-use App\Turbo\Http\TurboHeader;
+use App\Repository\TripRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 
-final class IndexTripController extends AbstractController
+final class MapTripController extends AbstractController
 {
-    public const string ROUTE = 'app.trip.index';
+    public const string ROUTE = 'app.trip.map';
 
     public function __construct(
-        private readonly TripPager $tripPager,
+        private readonly TripRepository $tripRepository,
     ) {}
 
     #[Route(
-        path: '/trips',
+        path: '/trips/map',
         name: self::ROUTE,
         methods: [Request::METHOD_GET],
     )]
@@ -37,17 +35,11 @@ final class IndexTripController extends AbstractController
         ]);
         $form->handleRequest($request);
 
-        $pager = $this->tripPager->create($searchInput, $request, $user, 10);
+        $trips = $this->tripRepository->findMapTrips($searchInput, $user);
 
-        if (TripFrameId::RESULTS === $request->headers->get(TurboHeader::FRAME)) {
-            return $this->renderBlock('trip/index.html.twig', TripFrameId::RESULTS, [
-                'pager' => $pager,
-            ]);
-        }
-
-        return $this->render('trip/index.html.twig', [
-            'pager' => $pager,
+        return $this->render('trip/map.html.twig', [
             'form' => $form,
+            'trips' => $trips,
         ]);
     }
 }
