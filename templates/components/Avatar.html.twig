@@ -9,7 +9,7 @@
     {{ attributes }}
 >
     {% if user.avatarPath %}
-        <twig:Avatar:Image src="{{ avatar_url(app.user.avatarPath) }}" />
+        <twig:Avatar:Image src="{{ avatar_url(user.avatarPath) }}" />
     {% endif %}
     <twig:Avatar:Fallback>
         <twig:ux:icon name="lucide:user" />
