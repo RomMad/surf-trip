@@ -9,6 +9,7 @@ use App\Enum\User\UserRole;
 use App\Form\Model\User\ProfileWriteModel;
 use App\Form\User\ProfileFormType;
 use App\Repository\UserRepository;
+use App\Service\Image\AvatarManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,6 +25,7 @@ final class EditProfileController extends AbstractController
     public function __construct(
         private readonly UserRepository $userRepository,
         private readonly ObjectMapperInterface $objectMapper,
+        private readonly AvatarManager $avatarManager,
     ) {}
 
     #[Route(
@@ -41,6 +43,7 @@ final class EditProfileController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->objectMapper->map($profileWriteModel, $currentUser);
+            $this->avatarManager->upload($currentUser, $form->get('avatar')->getData());
 
             $this->userRepository->save($currentUser, true);
 

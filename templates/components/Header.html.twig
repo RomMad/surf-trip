@@ -57,16 +57,9 @@
                     <twig:Button as="a" href="{{ path('app.logout') }}" class="hover:text-primary-foreground/80" data-turbo="false">
                         {{- 'logout.label'|trans -}}
                     </twig:Button>
-                    <twig:Button
-                        as="a"
-                        href="{{ path('app.user.profile.edit') }}"
-                        class="border border-primary-foreground/30"
-                    >
-                        <twig:ux:icon name="lucide:user"  height="1.2em" width="1.2em" />
-                        <span class="max-w-40 truncate">
-                            {{- app.user.firstName -}}
-                        </span>
-                    </twig:Button>
+                    <a href="{{ path('app.user.profile.edit') }}" title="{{ 'user.profile.edit.label'|trans }}">
+                        <twig:Avatar />
+                    </a>
                 {% else %}
                     <div>
                         <twig:Button as="a" href="{{ path('app.login') }}" class="hover:text-primary-foreground/80">

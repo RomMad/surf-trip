@@ -67,7 +67,7 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface, \
 
     #[ORM\Column(nullable: true)]
     #[Groups(['user:read'])]
-    public ?string $avatar = null;
+    public ?string $avatarPath = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     #[Groups(['user:read'])]
