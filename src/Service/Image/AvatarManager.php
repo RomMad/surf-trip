@@ -26,11 +26,7 @@ final readonly class AvatarManager
             return;
         }
 
-        $this->removeImage($user->avatarPath);
-
         $avatarPath = $this->getAvatarPath($user);
-        $user->avatarPath = $avatarPath;
-
         $avatar = $this->imageProcessor->createAvatar($file);
 
         if (is_resource($avatar)) {
@@ -45,6 +41,9 @@ final readonly class AvatarManager
         if (is_resource($avatar)) {
             fclose($avatar);
         }
+
+        $this->removeImage($user->avatarPath);
+        $user->avatarPath = $avatarPath;
     }
 
     private function removeImage(?string $imagePath = null): void
