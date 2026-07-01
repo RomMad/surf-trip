@@ -57,7 +57,10 @@
                     <twig:Button as="a" href="{{ path('app.logout') }}" class="hover:text-primary-foreground/80" data-turbo="false">
                         {{- 'logout.label'|trans -}}
                     </twig:Button>
-                    <a href="{{ path('app.user.profile.edit') }}" title="{{ 'user.profile.edit.label'|trans }}">
+                     <a href="{{ path('app.user.profile.edit') }}"
+                        aria-label="{{ 'user.profile.edit.label'|trans }}"
+                        title="{{ 'user.profile.edit.label'|trans }}"
+                    >
                         <twig:Avatar />
                     </a>
                 {% else %}
