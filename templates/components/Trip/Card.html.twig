@@ -1,5 +1,7 @@
-{% set is_granted_edit_trip = is_granted('EDIT', trip) %}
-{% set trip_status = trip.status %}
+{%- set is_granted_edit_trip = is_granted('EDIT', trip) -%}
+{%- set trip_status = trip.status -%}
+{%- set owners_count = trip.owners|length -%}
+{%- set max_display_owners = 10 -%}
 
 <twig:Card class="overflow-hidden rounded-3xl">
     <twig:Card:Header class="relative overflow-hidden text-white px-6 py-8 bg-gradient-to-bl from-white/10 via-primary to-primary">
@@ -54,12 +56,17 @@
             </twig:Trip:Card:Info>
             <twig:Trip:Card:Info title="owners.label" icon="lucide:users"  class="order-3">
                 <div class="flex flex-wrap gap-2">
-                    {% for owner in trip.owners %}
+                    {% for owner in trip.owners|slice(0, max_display_owners) %}
                         <div class="flex items-center gap-1 text-sm">
                             <twig:Avatar :user="owner" size="sm" />
                             <span>{{- owner.fullName -}}</span>
                         </div>
                     {% endfor %}
+                    {% if owners_count > max_display_owners %}
+                        <twig:Badge variant="secondary">
+                            +{{- owners_count - max_display_owners -}}
+                        </twig:Badge>
+                     {% endif %}
                 </div>
             </twig:Trip:Card:Info>
     </twig:Card:Content>
