@@ -16,7 +16,7 @@
         ~ trip.endAt|format_datetime(pattern: 'EEE d MMM yy'),
     trip.requiredLevels|map(rl => rl.label|trans),
     trip.description|u.truncate(120, '…', false),
-    {component: 'Trip:OwnersCell', context: {users: trip.owners}},
+    {component: 'Trip:OwnersAvatarGroup', context: {trip: trip}},
     trip.createdAt|format_datetime(pattern: 'd MMM yy'),
     {component: 'Trip:IndexActionsCell', context: {trip: trip}},
 ]) %}
