@@ -7,3 +7,10 @@ flysystem:
         avatars.storage:
             local:
                 directory: '%kernel.project_dir%/public/%app.avatar.path%'
+
+when@test:
+    flysystem:
+        storages:
+            avatars.storage:
+                local:
+                    directory: '%kernel.project_dir%/var/test/uploads/avatars'
