@@ -208,7 +208,7 @@ class TripRepository extends ServiceEntityRepository
                     JSON_AGG(
                         JSON_BUILD_ARRAY(
                             o.id,
-                            CONCAT(o.firstName, \' \', o.lastName),
+                            CONCAT(o.firstName, \' \', SUBSTRING(o.lastName, 1, 1), \'.\'),
                             o.avatarPath
                         )
                         ORDER BY o.firstName, o.lastName
