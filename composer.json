@@ -17,7 +17,7 @@
         "intervention/image": "^4.1",
         "league/flysystem-bundle": "^3.7",
         "lexik/jwt-authentication-bundle": "^3.2",
-        "martin-georgiev/postgresql-for-doctrine": "^4.6.0",
+        "martin-georgiev/postgresql-for-doctrine": "^4.7.0",
         "nelmio/cors-bundle": "^2.6.1",
         "pagerfanta/pagerfanta": "^4.8",
         "phpdocumentor/reflection-docblock": "^5.6.7",
@@ -128,8 +128,8 @@
         "doctrine/doctrine-fixtures-bundle": "^4.3.1",
         "fakerphp/faker": "^1.24.1",
         "friendsofphp/php-cs-fixer": "^3.95.11",
-        "phpstan/phpstan": "^2.2.2",
-        "phpunit/phpunit": "^13.2.1",
+        "phpstan/phpstan": "^2.2.3",
+        "phpunit/phpunit": "^13.2.2",
         "rector/rector": "^2.5.2",
         "rector/swiss-knife": "^2.4.8",
         "squizlabs/php_codesniffer": "^4.0.1",
@@ -140,7 +140,7 @@
         "symfony/stopwatch": "8.1.*",
         "symfony/ux-toolkit": "^3.2",
         "symfony/web-profiler-bundle": "8.1.*",
-        "vincentlanglet/twig-cs-fixer": "^3.14",
+        "vincentlanglet/twig-cs-fixer": "^4.0.2",
         "zenstruck/foundry": "^2.10.1"
     }
 }
