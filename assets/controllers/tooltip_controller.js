@@ -1,4 +1,4 @@
-import { Controller } from '@hotwired/stimulus';
+import {Controller} from '@hotwired/stimulus';
 
 export default class extends Controller {
     static values = {
@@ -82,6 +82,7 @@ export default class extends Controller {
             clearTimeout(this.showTimeout);
             this.showTimeout = null;
         }
+
         if (this.hideTimeout) {
             clearTimeout(this.hideTimeout);
             this.hideTimeout = null;
@@ -97,6 +98,7 @@ export default class extends Controller {
         let wrapperTop = 0;
         let arrowLeft = null;
         let arrowTop = null;
+
         switch (this.side) {
             case 'left':
                 wrapperLeft = triggerRect.left - contentRect.width - arrowRect.width / 2 - this.sideOffset;
@@ -121,9 +123,11 @@ export default class extends Controller {
         }
 
         this.wrapperElement.style.transform = `translate3d(${wrapperLeft}px, ${wrapperTop}px, 0)`;
+
         if (arrowLeft !== null) {
             this.arrowElement.style.left = `${arrowLeft}px`;
         }
+
         if (arrowTop !== null) {
             this.arrowElement.style.top = `${arrowTop}px`;
         }
