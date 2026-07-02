@@ -36,7 +36,7 @@ abstract readonly class AbstractTripReadModel implements TripOwnershipAwareInter
     ) {
         $this->owners = array_map(
             fn (array $owner): TripOwnerReadModel => new TripOwnerReadModel(...$owner),
-            json_decode($ownersJson),
+            json_decode($ownersJson, true),
         );
     }
 

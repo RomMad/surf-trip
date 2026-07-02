@@ -53,9 +53,14 @@
                 </div>
             </twig:Trip:Card:Info>
             <twig:Trip:Card:Info title="owners.label" icon="lucide:users"  class="order-3">
-                <p class="text-sm">
-                    {{- trip.ownerNames -}}
-                </p>
+                <div class="flex flex-wrap gap-2">
+                    {% for owner in trip.owners %}
+                        <div class="flex items-center gap-1 text-sm">
+                            <twig:Avatar :user="owner" size="sm" />
+                            <span>{{- owner.fullName -}}</span>
+                        </div>
+                    {% endfor %}
+                </div>
             </twig:Trip:Card:Info>
     </twig:Card:Content>
 

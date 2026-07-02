@@ -9,5 +9,6 @@ final readonly class TripOwnerReadModel
     public function __construct(
         public int $id,
         public string $fullName,
+        public ?string $avatarPath = null,
     ) {}
 }
