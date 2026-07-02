@@ -12,6 +12,6 @@
         <twig:Avatar:Image src="{{ avatar_url(user.avatarPath) }}" />
     {% endif %}
     <twig:Avatar:Fallback>
-        <twig:ux:icon name="lucide:user" />
+        {{ user.fullName|initials }}
     </twig:Avatar:Fallback>
 </span>
