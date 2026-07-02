@@ -1,0 +1,19 @@
+{% props users, max = 5 %}
+
+<twig:Avatar:Group>
+    {% for owner in users|slice(0, max) %}
+        <twig:Tooltip id="trip_owner_{{ owner.id }}">
+            <twig:Tooltip:Trigger>
+                <twig:Avatar :user="owner" size="sm" {{ ...tooltip_trigger_attrs }} aria-label="{{ owner.fullName }}" />
+            </twig:Tooltip:Trigger>
+            <twig:Tooltip:Content side="bottom">
+                <p>{{ owner.fullName }}</p>
+            </twig:Tooltip:Content>
+        </twig:Tooltip>
+    {% endfor %}
+    {% if users|length > max %}
+        <twig:Avatar:GroupCount>
+            +{{- users|length - max }}
+        </twig:Avatar:GroupCount>
+    {% endif %}
+</twig:Avatar:Group>
