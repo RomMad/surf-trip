@@ -1,0 +1,17 @@
+{# @prop size 'default'|'sm'|'lg' The avatar size. Defaults to `default` #}
+{# @block content The avatar content, typically an image or `Avatar:Fallback` #}
+{%- props user = app.user, size = 'default' -%}
+
+<span
+    data-slot="avatar"
+    data-size="{{ size }}"
+    class="{{ ('app-avatar group/avatar ' ~ attributes.render('class'))|tailwind_merge }}"
+    {{ attributes }}
+>
+    {% if user.avatarPath %}
+        <twig:Avatar:Image src="{{ avatar_url(user.avatarPath) }}" />
+    {% endif %}
+    <twig:Avatar:Fallback>
+        <twig:ux:icon name="lucide:user" />
+    </twig:Avatar:Fallback>
+</span>

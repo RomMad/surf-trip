@@ -1,0 +1,8 @@
+{# @block content The badge content, typically an icon indicating status #}
+<span
+    data-slot="avatar-badge"
+    class="{{ ('app-avatar-badge ' ~ attributes.render('class'))|tailwind_merge }}"
+    {{ attributes }}
+>
+    {%- block content %}{% endblock -%}
+</span>

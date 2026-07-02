@@ -10,6 +10,7 @@ use App\Repository\UserRepository;
 use App\Tests\CustomWebTestCase;
 use App\Tests\Fixtures\UserStory;
 use PHPUnit\Framework\Attributes\Medium;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -30,6 +31,7 @@ final class EditProfileControllerTest extends CustomWebTestCase
     private const string UPDATED_LOCATION = 'Biarritz';
     private const string UPDATED_INSTAGRAM = '@johnny';
     private const string UPDATED_DESCRIPTION = 'Regular and goofy rider.';
+    private const string AVATAR_FILENAME = 'adventurer-1.png';
 
     private UserRepository $userRepository;
 
@@ -64,6 +66,7 @@ final class EditProfileControllerTest extends CustomWebTestCase
                 'location' => self::UPDATED_LOCATION,
                 'instagram' => self::UPDATED_INSTAGRAM,
                 'description' => self::UPDATED_DESCRIPTION,
+                'avatar' => $this->createAvatarUpload(),
             ],
         ]);
 
@@ -80,5 +83,18 @@ final class EditProfileControllerTest extends CustomWebTestCase
         $this->assertSame(self::UPDATED_LOCATION, $user->location);
         $this->assertSame(self::UPDATED_INSTAGRAM, $user->instagram);
         $this->assertSame(self::UPDATED_DESCRIPTION, $user->description);
+        $this->assertNotNull($user->avatarPath);
+        $this->assertStringEndsWith('.webp', $user->avatarPath);
+    }
+
+    private function createAvatarUpload(): UploadedFile
+    {
+        $projectDir = $this->getParameter('kernel.project_dir');
+
+        return new UploadedFile(
+            path: sprintf('%s/fixtures/avatars/%s', $projectDir, self::AVATAR_FILENAME),
+            originalName: self::AVATAR_FILENAME,
+            test: true,
+        );
     }
 }

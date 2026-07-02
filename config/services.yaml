@@ -9,6 +9,7 @@
 parameters:
     app_locale: 'fr'
     app_email: '%env(APP_EMAIL)%'
+    app.avatar.path: 'uploads/avatars'
 
 services:
     # default configuration for services in *this* file

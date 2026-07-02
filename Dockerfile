@@ -29,6 +29,7 @@ RUN <<-EOF
 		@composer \
 		amqp \
 		apcu \
+		imagick \
 		intl \
 		opcache \
         redis \
