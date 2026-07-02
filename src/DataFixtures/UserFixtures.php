@@ -87,7 +87,7 @@ class UserFixtures extends Fixture
             $user->level = $this->faker->randomElement(SurfLevel::cases());
             $user->location = $this->faker->city();
             $user->description = $this->faker->paragraph();
-            $user->avatarPath = $this->faker->randomElement($avatarFileNames);
+            $user->avatarPath = $this->faker->optional(0.7)->randomElement($avatarFileNames);
 
             yield $user;
         }
@@ -108,7 +108,7 @@ class UserFixtures extends Fixture
         $user->level = $this->faker->randomElement(SurfLevel::cases());
         $user->location = $this->faker->city();
         $user->description = $this->faker->paragraph();
-        $user->avatarPath = $this->faker->randomElement($avatarFileNames);
+        $user->avatarPath = $this->faker->optional(0.6)->randomElement($avatarFileNames);
 
         return $user;
     }
