@@ -25,8 +25,6 @@ final class ProfileWriteModel
 
     public ?LastName $lastName = null;
 
-    public ?string $avatar = null;
-
     public ?SurfLevel $level = null;
 
     #[Assert\Length(max: 255, maxMessage: 'user.location.max_length')]

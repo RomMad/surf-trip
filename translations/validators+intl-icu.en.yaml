@@ -70,6 +70,7 @@ user:
     avatar:
         max_length: Avatar path cannot exceed {limit} characters.
         invalid_path: Avatar must be a file path or filename, not a URL.
+        required: Please select an image.
     description:
         max_length: Description cannot exceed {limit} characters.
     email:
@@ -94,3 +95,4 @@ user:
         max_length: Username cannot exceed {limit} characters.
         invalid_format: Username can only contain letters, numbers, dots and underscores.
         unique: This username is already used.
+

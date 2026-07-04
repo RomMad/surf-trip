@@ -170,6 +170,11 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface, \
         return in_array($role->value, $this->roles, true);
     }
 
+    public function hasAvatar(): bool
+    {
+        return null !== $this->avatarPath;
+    }
+
     public function addTrip(Trip $trip): static
     {
         if (!$this->trips->contains($trip)) {

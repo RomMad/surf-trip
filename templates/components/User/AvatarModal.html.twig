@@ -1,0 +1,49 @@
+{%- set title = app.user.hasAvatar ? 'user.avatar.edit.label'|trans : 'user.avatar.set.label'|trans -%}
+
+<twig:AlertDialog
+    id="user-avatar"
+    class="mb-4"
+    data-controller="avatar-modal"
+    data-avatar-modal-form-url-value="{{ path(constant('App\\Controller\\User\\AvatarController::ROUTE')) }}"
+    data-action="click->avatar-modal#loadForm turbo:submit-end->alert-dialog#closeOnSubmitEnd"
+>
+    <twig:AlertDialog:Trigger>
+        <twig:Tooltip id="user_avatar" {{ ...alert_dialog_trigger_attrs }}>
+            <twig:Tooltip:Trigger>
+                <div class="flex items-center gap-4">
+                    <button type="button" class="cursor-pointer">
+                        <twig:Avatar
+                            class="size-25" {{ ...tooltip_trigger_attrs }}
+                            fallback="{{ app.user.hasAvatar ? null : 'user.avatar.set.label'|trans }}"
+                        />
+                    </button>
+                    <div class="text-lg font-medium">
+                        {{- app.user.fullName -}}
+                    </div>
+                </div>
+            </twig:Tooltip:Trigger>
+            <twig:Tooltip:Content side="right">
+                <p>{{ title }}</p>
+            </twig:Tooltip:Content>
+        </twig:Tooltip>
+    </twig:AlertDialog:Trigger>
+    <twig:AlertDialog:Content>
+        <twig:AlertDialog:Header>
+            <twig:AlertDialog:Title class="text-xl font-medium">
+                {{- title -}}
+            </twig:AlertDialog:Title>
+        </twig:AlertDialog:Header>
+
+        <twig:Turbo:Frame
+            id="{{ constant('App\\Turbo\\Frame\\UserFrameId::AVATAR_MODAL') }}"
+            data-avatar-modal-target="frame"
+        >
+            <twig:Spinner />
+        </twig:Turbo:Frame>
+
+        <twig:AlertDialog:Footer>
+            <twig:AlertDialog:Cancel label="{{ 'cancel.label'|trans }}" />
+            <twig:AlertDialog:Action type="submit" form="avatar_form" label="{{ 'save.label'|trans }}" />
+        </twig:AlertDialog:Footer>
+    </twig:AlertDialog:Content>
+</twig:AlertDialog>

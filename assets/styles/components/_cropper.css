@@ -1,0 +1,13 @@
+.cropper-face {
+    border-radius: 50%;
+    opacity: 0.2;
+}
+
+.cropper-view-box {
+    outline: 1px solid var(--primary) !important;
+}
+
+.cropper-line,
+.cropper-point {
+    background-color: var(--primary) !important;
+}

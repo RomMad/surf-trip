@@ -1,6 +1,8 @@
+{# @prop user The user object. Defaults to the current user. #}
 {# @prop size 'default'|'sm'|'lg' The avatar size. Defaults to `default` #}
+{# @prop fallback The fallback content to display when the user has no avatar. Defaults to the user's initials. #}
 {# @block content The avatar content, typically an image or `Avatar:Fallback` #}
-{%- props user = app.user, size = 'default' -%}
+{%- props user = app.user, size = 'default', fallback = null -%}
 
 <span
     data-slot="avatar"
@@ -10,8 +12,9 @@
 >
     {% if user.avatarPath %}
         <twig:Avatar:Image src="{{ avatar_url(user.avatarPath) }}" />
+    {% else %}
+        <twig:Avatar:Fallback>
+            {{ fallback ?? user.fullName|initials }}
+        </twig:Avatar:Fallback>
     {% endif %}
-    <twig:Avatar:Fallback>
-        {{ user.fullName|initials }}
-    </twig:Avatar:Fallback>
 </span>

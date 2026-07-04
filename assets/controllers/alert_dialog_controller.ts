@@ -30,6 +30,26 @@ export default class extends Controller<HTMLDialogElement> {
         this.updateTrigger(false);
     }
 
+    closeOnSubmitEnd(event: CustomEvent<{success: boolean; fetchResponse?: {response?: Response}}>): void {
+        const formElement = event.target;
+
+        if (!(formElement instanceof HTMLFormElement) || !this.element.contains(formElement)) {
+            return;
+        }
+
+        if (!event.detail.success) {
+            return;
+        }
+
+        const contentType = event.detail.fetchResponse?.response?.headers.get('content-type') ?? '';
+
+        if (!contentType.includes('turbo-stream')) {
+            return;
+        }
+
+        this.close();
+    }
+
     private updateTrigger(expanded: boolean): void {
         if (!this.hasTriggerTarget) {
             return;

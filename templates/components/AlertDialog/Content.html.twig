@@ -1,7 +1,9 @@
 {# @prop size 'default'|'sm' The size of the dialog. Defaults to `default` #}
 {# @block content The dialog content, typically includes `AlertDialog:Header` and `AlertDialog:Footer` #}
+
 {%- props size = 'default' -%}
 {%- set alert_dialog_id = inject('alertDialog.id') -%}
+
 <dialog
     id="{{ alert_dialog_id }}"
     data-size="{{ size }}"

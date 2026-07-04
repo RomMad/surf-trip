@@ -1,0 +1,31 @@
+{%- props form -%}
+{%- set avatar_size = constant('App\\Service\\Image\\ImageProcessor::AVATAR_SIZE') -%}
+
+{{ form_errors(form) }}
+
+{{ form_start(form, {
+    action: path(constant('App\\Controller\\User\\AvatarController::ROUTE')),
+    attr: {
+        id: 'avatar_form',
+        'data-controller': 'avatar-cropper',
+        'data-avatar-cropper-file-input-selector-value': '#' ~ form.avatar.vars.id,
+        'data-avatar-cropper-size-value': avatar_size,
+        'data-action': 'submit->avatar-cropper#onSubmit',
+        'data-turbo-frame': '_top',
+    },
+}) }}
+    {{ form_row(form.avatar) }}
+
+    <div data-avatar-cropper-target="preview" class="rounded-md overflow-hidden">
+        <img
+            class="max-h-72 w-full object-cover"
+            {% if app.user.avatarPath %}
+                src="{{ avatar_url(app.user.avatarPath) }}"
+            {% endif %}
+            alt="{{ 'user.avatar.preview.label'|trans }}"
+            height="{{ avatar_size }}"
+            width="{{ avatar_size }}"
+            data-avatar-cropper-target="image"
+        />
+    </div>
+{{ form_end(form) }}
