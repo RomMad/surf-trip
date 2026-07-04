@@ -204,6 +204,11 @@ user:
     profile:
         edit.label: Edit profile
         updated_successfully: Your profile has been updated.
+    avatar:
+        edit.label: Edit avatar
+        preview.label: Avatar preview
+        set.label: Set avatar
+        updated_successfully: Your avatar has been updated.
 
 # Dashboard
 dashboard:

@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\UX\Turbo\TurboStreamResponse;
 
 #[IsGranted(UserRole::USER)]
 final class AvatarController extends AbstractController
@@ -41,9 +42,7 @@ final class AvatarController extends AbstractController
 
             $this->userRepository->save($currentUser, true);
 
-            $this->addFlash('success', 'user.avatar.updated_successfully');
-
-            return $this->redirectToRoute(EditProfileController::ROUTE, [], Response::HTTP_SEE_OTHER);
+            return $this->render('user/avatar/_success_stream.html.twig', response: new TurboStreamResponse());
         }
 
         return $this->render('user/avatar/_form_frame.html.twig', [

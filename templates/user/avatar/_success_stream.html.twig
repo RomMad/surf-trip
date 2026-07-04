@@ -1,0 +1,11 @@
+<twig:Turbo:Stream:Update target="#header_avatar">
+    <twig:Avatar id="header_avatar"/>
+</twig:Turbo:Stream:Update>
+
+<twig:Turbo:Stream:Update target="#avatar_modal_trigger">
+    <twig:Avatar
+        id="avatar_modal_trigger"
+        class="size-25"
+        :fallback="app.user.hasAvatar ? null : 'user.avatar.set.label'|trans"
+    />
+</twig:Turbo:Stream:Update>

@@ -13,8 +13,10 @@
                 <div class="flex items-center gap-4">
                     <button type="button" class="cursor-pointer">
                         <twig:Avatar
-                            class="size-25" {{ ...tooltip_trigger_attrs }}
-                            fallback="{{ app.user.hasAvatar ? null : 'user.avatar.set.label'|trans }}"
+                            {{ ...tooltip_trigger_attrs }}
+                            id="avatar_modal_trigger"
+                            class="size-25"
+                            :fallback="app.user.hasAvatar ? null : 'user.avatar.set.label'|trans"
                         />
                     </button>
                     <div class="text-lg font-medium">
