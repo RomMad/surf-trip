@@ -43,6 +43,9 @@
         </twig:Turbo:Frame>
 
         <twig:AlertDialog:Footer>
+            {% if app.user.hasAvatar %}
+                <twig:User:AvatarFormDelete />
+            {% endif %}
             <twig:AlertDialog:Cancel label="{{ 'cancel.label'|trans }}" />
             <twig:AlertDialog:Action type="submit" form="avatar_form" label="{{ 'save.label'|trans }}" />
         </twig:AlertDialog:Footer>
