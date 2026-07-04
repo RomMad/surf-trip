@@ -15,7 +15,10 @@
 }) }}
     {{ form_row(form.avatar) }}
 
-    <div data-avatar-cropper-target="preview" class="rounded-md overflow-hidden">
+    <div
+        data-avatar-cropper-target="preview"
+        class="rounded-md overflow-hidden{% if not app.user.avatarPath %} hidden{% endif %}"
+    >
         <img
             class="max-h-72 w-full object-cover"
             {% if app.user.avatarPath %}
