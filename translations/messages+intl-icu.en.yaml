@@ -208,7 +208,6 @@ user:
         edit.label: Edit avatar
         preview.label: Avatar preview
         set.label: Set avatar
-        updated_successfully: Your avatar has been updated.
 
 # Dashboard
 dashboard:

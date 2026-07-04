@@ -23,7 +23,6 @@ final class AvatarControllerTest extends CustomWebTestCase
     private const string PATH = '/en/profile/avatar';
     private const string FORM_SELECTOR = 'form[name="avatar"]';
     private const string AVATAR_FILENAME = 'adventurer-1.png';
-    private const string MESSAGE_SUCCESS = 'Your avatar has been updated.';
     private const string MESSAGE_ERROR = 'The mime type of the file is invalid';
 
     private UserRepository $userRepository;
@@ -63,7 +62,6 @@ final class AvatarControllerTest extends CustomWebTestCase
         $user = $this->userRepository->findOneByEmail(Email::from(UserStory::JOHN_EMAIL));
 
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains(self::ALERT_SUCCESS, self::MESSAGE_SUCCESS);
 
         $this->assertInstanceOf(User::class, $user);
         $this->assertNotNull($user->avatarPath);

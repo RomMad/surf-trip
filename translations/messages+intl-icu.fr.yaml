@@ -208,7 +208,6 @@ user:
         edit.label: Modifier l'avatar
         preview.label: Aperçu de l'avatar
         set.label: Définir l'avatar
-        updated_successfully: Ton avatar a été mis à jour.
 
 # Dashboard
 dashboard:
