@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Functional\Controller\User;
+namespace App\Tests\Functional\Controller\User\Avatar;
 
 use App\Entity\User;
 use App\Entity\ValueObject\Email;
@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @internal
  */
 #[Medium]
-final class AvatarControllerTest extends CustomWebTestCase
+final class SetAvatarControllerTest extends CustomWebTestCase
 {
     private const string PATH = '/en/profile/avatar';
     private const string FORM_SELECTOR = 'form[name="avatar"]';
