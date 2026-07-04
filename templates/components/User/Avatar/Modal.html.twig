@@ -36,7 +36,7 @@
 
         <twig:Turbo:Frame
             id="{{ constant('App\\Turbo\\Frame\\UserFrameId::AVATAR_MODAL') }}"
-            src="{{ path(constant('App\\Controller\\User\\AvatarController::ROUTE')) }}"
+            src="{{ path(constant('App\\Controller\\User\\Avatar\\SetAvatarController::ROUTE')) }}"
             loading="lazy"
         >
             <twig:Spinner />
@@ -44,7 +44,7 @@
 
         <twig:AlertDialog:Footer>
             {% if app.user.hasAvatar %}
-                <twig:User:AvatarFormDelete />
+                <twig:User:Avatar:FormDelete />
             {% endif %}
             <twig:AlertDialog:Cancel label="{{ 'cancel.label'|trans }}" />
             <twig:AlertDialog:Action type="submit" form="avatar_form" label="{{ 'save.label'|trans }}" />

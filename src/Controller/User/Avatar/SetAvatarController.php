@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\User;
+namespace App\Controller\User\Avatar;
 
 use App\Entity\User;
 use App\Enum\User\UserRole;
@@ -18,7 +18,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\UX\Turbo\TurboStreamResponse;
 
 #[IsGranted(UserRole::USER)]
-final class AvatarController extends AbstractController
+final class SetAvatarController extends AbstractController
 {
     public const string ROUTE = 'app.user.avatar';
 
