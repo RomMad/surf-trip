@@ -70,6 +70,7 @@ user:
     avatar:
         max_length: Le chemin de l'avatar ne peut pas dépasser {limit} caractères.
         invalid_path: L'avatar doit être un chemin ou nom de fichier, pas une URL.
+        required: Merci de sélectionner une image.
     description:
         max_length: La description ne peut pas dépasser {limit} caractères.
     email:

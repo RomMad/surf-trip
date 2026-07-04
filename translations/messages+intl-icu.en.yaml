@@ -1,4 +1,5 @@
 # Actions
+cancel.label: Cancel
 create_new.label: Create new
 delete.label: Delete
 edit.label: Edit
@@ -203,6 +204,10 @@ user:
     profile:
         edit.label: Edit profile
         updated_successfully: Your profile has been updated.
+    avatar:
+        edit.label: Edit avatar
+        preview.label: Avatar preview
+        set.label: Set avatar
 
 # Dashboard
 dashboard:

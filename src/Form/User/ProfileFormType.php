@@ -12,11 +12,9 @@ use App\Form\Type\LastNameType;
 use App\Form\Type\UsernameType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Image;
 
 final class ProfileFormType extends AbstractType
 {
@@ -27,21 +25,6 @@ final class ProfileFormType extends AbstractType
             ->add('username', UsernameType::class)
             ->add('firstName', FirstNameType::class)
             ->add('lastName', LastNameType::class)
-            ->add('avatar', FileType::class, [
-                'label' => 'avatar.label',
-                'constraints' => [
-                    new Image(
-                        maxSize: '5M',
-                        mimeTypes: [
-                            'image/jpeg',
-                            'image/png',
-                            'image/webp',
-                        ],
-                    ),
-                ],
-                'mapped' => false,
-                'required' => false,
-            ])
             ->add('level', EnumType::class, [
                 'class' => SurfLevel::class,
                 'label' => 'surf_level.label',

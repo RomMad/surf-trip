@@ -12,8 +12,8 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 final readonly class ImageProcessor
 {
-    private const int AVATAR_SIZE = 512;
-    private const int  AVATAR_QUALITY = 65;
+    public const int AVATAR_SIZE = 512;
+    private const int AVATAR_QUALITY = 65;
 
     private ImageManagerInterface $manager;
 

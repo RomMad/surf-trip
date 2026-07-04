@@ -1,4 +1,5 @@
 # Actions
+cancel.label: Annuler
 create_new.label: Créer
 delete.label: Supprimer
 edit.label: Modifier
@@ -202,8 +203,12 @@ username.label: Nom d'utilisateur
 user:
     profile:
         edit.label: Édition du profil
-
         updated_successfully: Ton profil a été mis à jour.
+    avatar:
+        edit.label: Modifier l'avatar
+        preview.label: Aperçu de l'avatar
+        set.label: Définir l'avatar
+
 # Dashboard
 dashboard:
     label: Tableau de bord
