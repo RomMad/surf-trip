@@ -205,6 +205,7 @@ user:
         edit.label: Édition du profil
         updated_successfully: Ton profil a été mis à jour.
     avatar:
+        delete.confirm: Es-tu sûr de vouloir supprimer ton avatar ?
         edit.label: Modifier l'avatar
         preview.label: Aperçu de l'avatar
         set.label: Définir l'avatar

@@ -1,0 +1,10 @@
+<form method="post"
+    action="{{ path('app.user.avatar.delete') }}"
+    onsubmit="return confirm('{{ 'user.avatar.delete.confirm'|trans }}');"
+    class="mt-4 sm:mt-0 sm:mr-auto"
+>
+    <input type="hidden" name="_token" value="{{ csrf_token('avatar-delete' ~ app.user.id) }}">
+    <twig:Button variant="destructive" class="w-full md:w-auto">
+        {{- 'delete.label'|trans -}}
+    </twig:Button>
+</form>

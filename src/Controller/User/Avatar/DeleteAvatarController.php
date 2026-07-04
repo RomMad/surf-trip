@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Controller\User\Avatar;
 
-use App\Controller\User\EditProfileController;
 use App\Entity\User;
 use App\Enum\User\UserRole;
 use App\Repository\UserRepository;
@@ -17,6 +16,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\Component\Security\Http\Attribute\IsCsrfTokenValid;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\UX\Turbo\TurboStreamResponse;
 
 #[IsGranted(UserRole::USER)]
 final class DeleteAvatarController extends AbstractController
@@ -40,8 +40,6 @@ final class DeleteAvatarController extends AbstractController
 
         $this->userRepository->save($currentUser, true);
 
-        $this->addFlash('success', 'user.avatar.deleted_successfully');
-
-        return $this->redirectToRoute(EditProfileController::ROUTE, [], Response::HTTP_SEE_OTHER);
+        return $this->render('user/avatar/_success_stream.html.twig', response: new TurboStreamResponse());
     }
 }
