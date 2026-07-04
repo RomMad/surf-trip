@@ -3,9 +3,7 @@
 <twig:AlertDialog
     id="user-avatar"
     class="mb-4"
-    data-controller="avatar-modal"
-    data-avatar-modal-form-url-value="{{ path(constant('App\\Controller\\User\\AvatarController::ROUTE')) }}"
-    data-action="click->avatar-modal#loadForm turbo:submit-end->alert-dialog#closeOnSubmitEnd"
+    data-action="turbo:submit-end->alert-dialog#closeOnSubmitEnd"
 >
     <twig:AlertDialog:Trigger>
         <twig:Tooltip id="user_avatar" {{ ...alert_dialog_trigger_attrs }}>
@@ -38,7 +36,8 @@
 
         <twig:Turbo:Frame
             id="{{ constant('App\\Turbo\\Frame\\UserFrameId::AVATAR_MODAL') }}"
-            data-avatar-modal-target="frame"
+            src="{{ path(constant('App\\Controller\\User\\AvatarController::ROUTE')) }}"
+            loading="lazy"
         >
             <twig:Spinner />
         </twig:Turbo:Frame>
