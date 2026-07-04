@@ -80,6 +80,7 @@ export default class extends Controller<HTMLElement> {
             this.cropper?.destroy();
             this.cropper = undefined;
             this.imageTarget.removeAttribute('src');
+            this.revokeObjectUrl();
             this.displayPreview();
 
             return;
