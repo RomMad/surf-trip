@@ -14,7 +14,7 @@
         <twig:Avatar:Image src="{{ avatar_url(user.avatarPath) }}" />
     {% else %}
         <twig:Avatar:Fallback>
-            {{ fallback ?? user.fullName|initials }}
+            {{- fallback ?? user.fullName|initials -}}
         </twig:Avatar:Fallback>
     {% endif %}
 </span>
