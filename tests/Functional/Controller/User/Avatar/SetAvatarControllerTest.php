@@ -2,11 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Functional\Controller\User;
+namespace App\Tests\Functional\Controller\User\Avatar;
 
 use App\Entity\User;
-use App\Entity\ValueObject\Email;
-use App\Repository\UserRepository;
 use App\Tests\CustomWebTestCase;
 use App\Tests\Fixtures\UserStory;
 use PHPUnit\Framework\Attributes\Medium;
@@ -18,20 +16,16 @@ use Symfony\Component\HttpFoundation\Response;
  * @internal
  */
 #[Medium]
-final class AvatarControllerTest extends CustomWebTestCase
+final class SetAvatarControllerTest extends CustomWebTestCase
 {
-    private const string PATH = '/en/profile/avatar';
-    private const string FORM_SELECTOR = 'form[name="avatar"]';
-    private const string AVATAR_FILENAME = 'adventurer-1.png';
-    private const string MESSAGE_ERROR = 'The mime type of the file is invalid';
+    use AvatarTestTrait;
 
-    private UserRepository $userRepository;
+    private const string PATH = '/en/profile/avatar';
+    private const string MESSAGE_ERROR = 'The mime type of the file is invalid';
 
     protected function setUp(): void
     {
         $this->setUpTest(UserStory::class, UserStory::JOHN_EMAIL);
-
-        $this->userRepository = $this->getContainer()->get(UserRepository::class);
     }
 
     public function testAvatarFormIsDisplayedOnGet(): void
@@ -45,24 +39,15 @@ final class AvatarControllerTest extends CustomWebTestCase
 
     public function testAvatarUploadIsSuccessful(): void
     {
-        $currentUser = $this->userRepository->findOneByEmail(Email::from(UserStory::JOHN_EMAIL));
+        $currentUser = $this->getCurrentUser();
 
         $this->assertNull($currentUser->avatarPath);
 
-        $this->client->request(Request::METHOD_GET, self::PATH);
+        $this->uploadAvatar();
+
+        $user = $this->getCurrentUser();
 
         $this->assertResponseIsSuccessful();
-
-        $form = $this->client->getCrawler()->filter(self::FORM_SELECTOR)->form();
-
-        $this->client->submit($form, [
-            'avatar[avatar]' => $this->createAvatarUpload(),
-        ]);
-
-        $user = $this->userRepository->findOneByEmail(Email::from(UserStory::JOHN_EMAIL));
-
-        $this->assertResponseIsSuccessful();
-
         $this->assertInstanceOf(User::class, $user);
         $this->assertNotNull($user->avatarPath);
         $this->assertStringEndsWith('.webp', $user->avatarPath);
@@ -70,29 +55,12 @@ final class AvatarControllerTest extends CustomWebTestCase
 
     public function testAvatarUploadWithInvalidFileDisplaysForm(): void
     {
-        $this->client->request(Request::METHOD_GET, self::PATH);
-        $this->assertResponseIsSuccessful();
-
-        $form = $this->client->getCrawler()->filter(self::FORM_SELECTOR)->form();
-
-        $this->client->submit($form, [
-            'avatar[avatar]' => $this->createInvalidFileUpload(),
-        ]);
+        $invalidFile = $this->createInvalidFileUpload();
+        $this->uploadAvatar($invalidFile);
 
         $this->assertResponseStatusCodeSame(Response::HTTP_UNPROCESSABLE_ENTITY);
         $this->assertSelectorExists(self::FORM_SELECTOR);
         $this->assertSelectorTextContains('.app-errors', self::MESSAGE_ERROR);
-    }
-
-    private function createAvatarUpload(): UploadedFile
-    {
-        $projectDir = $this->getParameter('kernel.project_dir');
-
-        return new UploadedFile(
-            path: sprintf('%s/fixtures/avatars/%s', $projectDir, self::AVATAR_FILENAME),
-            originalName: self::AVATAR_FILENAME,
-            test: true,
-        );
     }
 
     private function createInvalidFileUpload(): UploadedFile

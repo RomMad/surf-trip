@@ -2,11 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\User;
+namespace App\Controller\User\Avatar;
 
 use App\Entity\User;
 use App\Enum\User\UserRole;
-use App\Form\User\AvatarFormType;
 use App\Repository\UserRepository;
 use App\Service\Image\AvatarManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,9 +17,9 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\UX\Turbo\TurboStreamResponse;
 
 #[IsGranted(UserRole::USER)]
-final class AvatarController extends AbstractController
+final class DeleteAvatarController extends AbstractController
 {
-    public const string ROUTE = 'app.user.avatar';
+    public const string ROUTE = 'app.user.avatar.delete';
 
     public function __construct(
         private readonly AvatarManager $avatarManager,
@@ -28,25 +27,20 @@ final class AvatarController extends AbstractController
     ) {}
 
     #[Route(
-        path: '/profile/avatar',
+        path: '/profile/avatar/delete',
         name: self::ROUTE,
-        methods: [Request::METHOD_GET, Request::METHOD_POST],
+        methods: [Request::METHOD_POST],
     )]
     public function __invoke(Request $request, #[CurrentUser] User $currentUser): Response
     {
-        $form = $this->createForm(AvatarFormType::class);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->avatarManager->upload($currentUser, $form->get('avatar')->getData());
-
-            $this->userRepository->save($currentUser, true);
-
-            return $this->render('user/avatar/_success_stream.html.twig', response: new TurboStreamResponse());
+        if (!$this->isCsrfTokenValid('avatar-delete'.$currentUser->id, $request->request->getString('_token'))) {
+            throw $this->createAccessDeniedException();
         }
 
-        return $this->render('user/avatar/_form_frame.html.twig', [
-            'form' => $form,
-        ]);
+        $this->avatarManager->delete($currentUser);
+
+        $this->userRepository->save($currentUser, true);
+
+        return $this->render('user/avatar/_success_stream.html.twig', response: new TurboStreamResponse());
     }
 }

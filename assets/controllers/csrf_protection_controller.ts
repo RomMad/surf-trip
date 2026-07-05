@@ -23,9 +23,7 @@ document.addEventListener('turbo:submit-start', (event: Event) => {
 
     const requestHeaders = customEvent.detail.formSubmission.fetchRequest.headers;
 
-    Object.entries(headers).forEach(([key, value]) => {
-        requestHeaders.set(key, value);
-    });
+    Object.assign(requestHeaders, headers);
 });
 
 // When @hotwired/turbo handles form submissions, remove the CSRF cookie once a form has been submitted

@@ -48,6 +48,12 @@ final readonly class AvatarManager
         $user->avatarPath = $avatarPath;
     }
 
+    public function delete(User $user): void
+    {
+        $this->removeImage($user->avatarPath);
+        $user->avatarPath = null;
+    }
+
     private function removeImage(?string $imagePath = null): void
     {
         if (null === $imagePath) {
