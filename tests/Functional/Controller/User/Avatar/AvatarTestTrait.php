@@ -21,7 +21,11 @@ trait AvatarTestTrait
     {
         $userRepository = $this->getContainer()->get(UserRepository::class);
 
-        return $userRepository->findOneByEmail(Email::from(UserStory::JOHN_EMAIL));
+        $user = $userRepository->findOneByEmail(Email::from(UserStory::JOHN_EMAIL));
+
+        $this->assertInstanceOf(User::class, $user);
+
+        return $user;
     }
 
     private function uploadAvatar(?UploadedFile $file = null): void
