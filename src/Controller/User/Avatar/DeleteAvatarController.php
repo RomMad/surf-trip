@@ -9,12 +9,10 @@ use App\Enum\User\UserRole;
 use App\Repository\UserRepository;
 use App\Service\Image\AvatarManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
-use Symfony\Component\Security\Http\Attribute\IsCsrfTokenValid;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\UX\Turbo\TurboStreamResponse;
 
@@ -33,9 +31,12 @@ final class DeleteAvatarController extends AbstractController
         name: self::ROUTE,
         methods: [Request::METHOD_POST],
     )]
-    #[IsCsrfTokenValid(new Expression('"avatar-delete" ~ args["currentUser"].id'))]
-    public function __invoke(#[CurrentUser] User $currentUser): Response
+    public function __invoke(Request $request, #[CurrentUser] User $currentUser): Response
     {
+        if (!$this->isCsrfTokenValid('avatar-delete'.$currentUser->id, $request->request->getString('_token'))) {
+            throw $this->createAccessDeniedException();
+        }
+
         $this->avatarManager->delete($currentUser);
 
         $this->userRepository->save($currentUser, true);
