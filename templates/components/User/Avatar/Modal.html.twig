@@ -1,18 +1,17 @@
 {%- set title = app.user.hasAvatar ? 'user.avatar.edit.label'|trans : 'user.avatar.set.label'|trans -%}
 
 <twig:AlertDialog
-    id="user-avatar"
+    id="user_avatar"
     class="mb-4"
     data-action="turbo:submit-end->alert-dialog#closeOnSubmitEnd"
 >
     <twig:AlertDialog:Trigger>
-        <twig:Tooltip id="user_avatar" {{ ...alert_dialog_trigger_attrs }}>
+        <twig:Tooltip id="avatar_tooltip" {{ ...alert_dialog_trigger_attrs }}>
             <twig:Tooltip:Trigger>
                 <div class="flex items-center gap-4">
                     <button type="button" class="cursor-pointer">
                         <twig:Avatar
                             {{ ...tooltip_trigger_attrs }}
-                            id="avatar_modal_trigger"
                             class="size-25"
                             :fallback="app.user.hasAvatar ? null : 'user.avatar.set.label'|trans"
                         />
