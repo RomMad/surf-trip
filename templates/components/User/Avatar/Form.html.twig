@@ -12,13 +12,14 @@
         'data-avatar-cropper-size-value': avatar_size,
         'data-dropzone-input-selector-value': '#' ~ form.avatar.vars.id,
         'data-action': 'submit->avatar-cropper#onSubmit',
+        'class': 'dropzone',
     },
 }) }}
     {{ form_row(form.avatar) }}
 
     <div
         data-avatar-cropper-target="preview"
-        class="rounded-md overflow-hidden{% if not app.user.avatarPath %} hidden{% endif %}"
+        class="dropzone--content {% if not app.user.avatarPath %} hidden{% endif %}"
     >
         <img
             class="max-h-72 w-full object-cover"

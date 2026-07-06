@@ -39,6 +39,8 @@ export default class extends Controller<HTMLElement> {
     }
 
     private readonly onDragEnter = (event: DragEvent): void => {
+        if (!this.isFileDragEvent(event)) return;
+
         event.preventDefault();
 
         this.dragCounter++;
@@ -49,10 +51,16 @@ export default class extends Controller<HTMLElement> {
     };
 
     private readonly onDragOver = (event: DragEvent): void => {
+        if (!this.isFileDragEvent(event)) return;
+
         event.preventDefault();
+
+        event.dataTransfer!.dropEffect = 'copy';
     };
 
     private readonly onDragLeave = (event: DragEvent): void => {
+        if (!this.isFileDragEvent(event)) return;
+
         event.preventDefault();
 
         this.dragCounter--;
@@ -71,15 +79,11 @@ export default class extends Controller<HTMLElement> {
 
         const files = event.dataTransfer?.files;
 
-        if (!files?.length) {
-            return;
-        }
+        if (!files?.length) return;
 
         const file = files[0];
 
-        if (!file.type.startsWith('image/')) {
-            return;
-        }
+        if (!file.type.startsWith('image/')) return;
 
         const dataTransfer = new DataTransfer();
 
@@ -88,6 +92,10 @@ export default class extends Controller<HTMLElement> {
         this.input.files = dataTransfer.files;
         this.input.dispatchEvent(new Event('change', {bubbles: true}));
     };
+
+    private isFileDragEvent(event: DragEvent): boolean {
+        return event.dataTransfer?.types.includes('Files') ?? false;
+    }
 
     private displayDropzone(): void {
         this.element.classList.add('dropzone--drag-over');
