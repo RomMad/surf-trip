@@ -7,12 +7,12 @@
     action: path(constant('App\\Controller\\User\\Avatar\\SetAvatarController::ROUTE')),
     attr: {
         id: 'avatar_form',
+        class: 'dropzone',
         'data-controller': 'avatar-cropper dropzone',
         'data-avatar-cropper-file-input-selector-value': '#' ~ form.avatar.vars.id,
         'data-avatar-cropper-size-value': avatar_size,
         'data-dropzone-input-selector-value': '#' ~ form.avatar.vars.id,
         'data-action': 'submit->avatar-cropper#onSubmit',
-        'class': 'dropzone',
     },
 }) }}
     {{ form_row(form.avatar) }}
