@@ -1,0 +1,13 @@
+.dropzone {
+    @apply relative overflow-hidden rounded-xl border-2 border-transparent
+           transition-[border-color,background-color,box-shadow,transform]
+           duration-200 ease-out;
+}
+
+.dropzone--drag-over {
+    @apply border-dashed border-gray-300 bg-gray-50 shadow;
+}
+
+.dropzone-content {
+    @apply overflow-hidden rounded-md;
+}

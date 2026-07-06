@@ -7,9 +7,11 @@
     action: path(constant('App\\Controller\\User\\Avatar\\SetAvatarController::ROUTE')),
     attr: {
         id: 'avatar_form',
-        'data-controller': 'avatar-cropper',
+        class: 'dropzone',
+        'data-controller': 'avatar-cropper dropzone',
         'data-avatar-cropper-file-input-selector-value': '#' ~ form.avatar.vars.id,
         'data-avatar-cropper-size-value': avatar_size,
+        'data-dropzone-input-selector-value': '#' ~ form.avatar.vars.id,
         'data-action': 'submit->avatar-cropper#onSubmit',
     },
 }) }}
@@ -17,7 +19,7 @@
 
     <div
         data-avatar-cropper-target="preview"
-        class="rounded-md overflow-hidden{% if not app.user.avatarPath %} hidden{% endif %}"
+        class="dropzone-content {% if not app.user.avatarPath %} hidden{% endif %}"
     >
         <img
             class="max-h-72 w-full object-cover"
@@ -29,5 +31,14 @@
             width="{{ avatar_size }}"
             data-avatar-cropper-target="image"
         />
+    </div>
+    <div
+        class="absolute inset-0 items-center justify-center bg-gray-300/50 backdrop-blur-sm pointer-events-none hidden"
+        data-dropzone-target="overlay"
+    >
+        <div class="text-center font-semibold text-lg">
+            <twig:ux:icon name="lucide:upload" class="size-10 mx-auto mb-3" />
+            {{- 'dropzone.label'|trans -}}
+        </div>
     </div>
 {{ form_end(form) }}

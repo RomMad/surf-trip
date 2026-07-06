@@ -14,6 +14,7 @@ back_to_list.label: Back to list
 # Common
 app_name: Surf Trip
 dark_mode.label: Dark mode
+dropzone.label: Drop your image
 no_records_found.label: No records found
 navigation:
     main.label: Main navigation
