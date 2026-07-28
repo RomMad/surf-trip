@@ -1,10 +1,10 @@
 parameters:
-    level: 6
+    level: 7
     paths:
         - public/
         - src/
         - tests/
     bootstrapFiles:
         - vendor/autoload.php
-    editorUrl: 'vscode://file/%%file%%:%%line%%'
+    editorUrl: 'vscode://vscode-remote/wsl+Debian/path/to/your/project//%%relFile%%:%%line%%'
     tmpDir: ./var/.phpstan.tmp

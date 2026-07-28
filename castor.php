@@ -243,7 +243,7 @@ function phpcbf(): void
 #[AsTask(description: 'Run PHPStan static analysis', namespace: 'app', aliases: ['phpstan', 'ps'])]
 function phpstan(): void
 {
-    run_php('./vendor/bin/phpstan analyse -c phpstan.dist.neon');
+    run_php('./vendor/bin/phpstan analyse');
 }
 
 #[AsTask(description: 'Run Rector to automatically refactor code', namespace: 'app', aliases: ['rector'])]
