@@ -152,6 +152,7 @@ yarn dev
 * MinIO Console: http://localhost:9001
 * RedisInsight: http://localhost:5540
 * RabbitMQ Management: http://localhost:15672
+* SonarQube: http://localhost:9002
 
 ### Redis & RedisInsight
 

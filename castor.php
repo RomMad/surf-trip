@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Castor\Attribute\AsArgument;
 use Castor\Attribute\AsOption;
 use Castor\Attribute\AsTask;
+use Symfony\Component\Dotenv\Dotenv;
 use Symfony\Component\Process\Process;
 
 use function Castor\run;
@@ -361,6 +362,29 @@ function test(#[AsArgument()] string $options = 'tests'): void
 function test_coverage(string $options = ''): void
 {
     run_docker_compose('exec -e XDEBUG_MODE=coverage php ./vendor/bin/paratest tests --runner WrapperRunner --coverage-html ./var/coverage '.$options);
+}
+
+#[AsTask(description: 'Run SonarQube scan', namespace: 'app', aliases: ['sonarqube-scan', 'sonarqube', 'sonar'])]
+function sonarqube_scan(): void
+{
+    $dotEnv = new Dotenv();
+    $dotEnv->load(__DIR__.'/.env');
+    $dotEnv->bootEnv(__DIR__.'/.env');
+
+    run(
+        implode(' ', [
+            'docker run',
+            '--rm',
+            '--platform linux/amd64',
+            '-v '.getcwd().':/usr/src',
+            '-w /usr/src',
+            'sonarsource/sonar-scanner-cli',
+            '-Dsonar.projectKey=surf-trip',
+            '-Dsonar.sources=src',
+            '-Dsonar.host.url=http://host.docker.internal:9002',
+            '-Dsonar.login='.$_SERVER['SONARQUBE_TOKEN'],
+        ]),
+    );
 }
 
 // ========================================================
