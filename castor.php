@@ -348,7 +348,13 @@ function test_all(): void
 #[AsTask(description: 'Run tests with Paratest', namespace: 'app', aliases: ['test'])]
 function test(#[AsArgument()] string $options = 'tests'): void
 {
-    run_php('./vendor/bin/paratest --runner WrapperRunner '.$options);
+    run_php(
+        sprintf(
+            './vendor/bin/paratest --runner WrapperRunner %s | sed \'s#/app#%s#g\'',
+            $options,
+            getcwd(),
+        )
+    );
 }
 
 #[AsTask(description: 'Run tests coverage with Paratest', namespace: 'app', aliases: ['test-coverage'])]
