@@ -33,7 +33,7 @@ abstract class CustomWebTestCase extends WebTestCase
     // Others
     protected const string FORMAT_DATETIME = 'Y-m-d\TH:00';
 
-    protected ?KernelBrowser $client = null;
+    protected KernelBrowser $client;
 
     /**
      * @param array<class-string<Story>>|class-string<Story> $stories
@@ -95,7 +95,13 @@ abstract class CustomWebTestCase extends WebTestCase
 
     protected function getJsonContent(): mixed
     {
-        return json_decode($this->client->getResponse()->getContent(), true);
+        $content = $this->client->getResponse()->getContent();
+
+        if (false === $content) {
+            return null;
+        }
+
+        return json_decode($content, true);
     }
 
     protected function clickLink(string $selector): void

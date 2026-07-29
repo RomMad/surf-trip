@@ -37,7 +37,13 @@ final class EditProfileControllerTest extends CustomWebTestCase
     {
         $this->setUpTest(UserStory::class, UserStory::JOHN_EMAIL);
 
-        $this->userRepository = $this->getContainer()->get(UserRepository::class);
+        $userRepository = $this->getContainer()->get(UserRepository::class);
+
+        if (!$userRepository instanceof UserRepository) {
+            throw new \RuntimeException('UserRepository not found.');
+        }
+
+        $this->userRepository = $userRepository;
     }
 
     public function testEditProfilePageIsDisplayed(): void

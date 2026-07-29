@@ -21,6 +21,11 @@ trait CalendarLinksTestTrait
     private function assertCalendarLinksCanBeClicked(CalendarLinkableInterface $event, string $path): void
     {
         $calendarLinkFactory = $this->getContainer()->get(CalendarLinkFactory::class);
+
+        if (!$calendarLinkFactory instanceof CalendarLinkFactory) {
+            throw new \RuntimeException('CalendarLinkFactory not found.');
+        }
+
         $calendarLink = $calendarLinkFactory->fromEvent($event);
 
         foreach ([

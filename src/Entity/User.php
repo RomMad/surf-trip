@@ -85,7 +85,7 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface, \
     #[Groups(['user:read'])]
     public ?string $instagram = null;
 
-    /** @var list<string> The user roles */
+    /** @var array<string> The user roles */
     #[ORM\Column]
     #[Groups(['user:read'])]
     public array $roles = [] {
@@ -96,6 +96,7 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface, \
             return array_unique($roles);
         }
     }
+
     /** @var string The hashed password */
     #[ORM\Column]
     public string $password = '';
@@ -162,7 +163,13 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface, \
      */
     public function getUserIdentifier(): string
     {
-        return (string) $this->email;
+        $identifier = $this->email->value;
+
+        if ('' === $identifier) {
+            throw new \LogicException('User identifier must not be empty.');
+        }
+
+        return $identifier;
     }
 
     public function hasRole(UserRole $role): bool

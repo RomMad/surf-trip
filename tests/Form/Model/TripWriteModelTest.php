@@ -27,7 +27,13 @@ final class TripWriteModelTest extends CustomKernelTestCase
     {
         parent::setUp();
 
-        $this->validator = self::getContainer()->get(ValidatorInterface::class);
+        $validator = self::getContainer()->get(ValidatorInterface::class);
+
+        if (!$validator instanceof ValidatorInterface) {
+            throw new \RuntimeException('Validator not found.');
+        }
+
+        $this->validator = $validator;
     }
 
     public function testInvalidTrip(): void

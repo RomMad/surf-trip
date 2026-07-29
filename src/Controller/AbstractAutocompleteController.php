@@ -33,6 +33,12 @@ abstract class AbstractAutocompleteController extends AbstractController
      */
     private function getDecodedExtraOptions(string $extraOptions): array
     {
-        return json_decode(base64_decode($extraOptions, true), true, flags: \JSON_THROW_ON_ERROR);
+        $decoded = base64_decode($extraOptions, true);
+
+        if (false === $decoded) {
+            throw new BadRequestHttpException('The extra options cannot be decoded.');
+        }
+
+        return json_decode($decoded, true, flags: \JSON_THROW_ON_ERROR);
     }
 }

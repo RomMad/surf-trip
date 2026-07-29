@@ -30,8 +30,13 @@ final readonly class ValueObjectToStringTransformer implements DataTransformerIn
     {
         try {
             $className = $this->className;
+            $result = new $className($value);
 
-            return new $className($value);
+            if (!$result instanceof ValueObjectInterface) {
+                throw new TransformationFailedException('Result must implement ValueObjectInterface.');
+            }
+
+            return $result;
         } catch (\InvalidArgumentException $invalidArgumentException) {
             throw new TransformationFailedException(
                 message: sprintf('Invalid value: %s', $value),

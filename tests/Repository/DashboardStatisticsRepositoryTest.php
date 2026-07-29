@@ -16,7 +16,7 @@ use PHPUnit\Framework\Attributes\Medium;
 #[Medium]
 final class DashboardStatisticsRepositoryTest extends CustomKernelTestCase
 {
-    private ?DashboardStatisticsRepository $repository = null;
+    private DashboardStatisticsRepository $repository;
 
     protected function setUp(): void
     {
@@ -24,7 +24,13 @@ final class DashboardStatisticsRepositoryTest extends CustomKernelTestCase
 
         DashboardStory::load();
 
-        $this->repository = $this->getContainer()->get(DashboardStatisticsRepository::class);
+        $repository = $this->getContainer()->get(DashboardStatisticsRepository::class);
+
+        if (!$repository instanceof DashboardStatisticsRepository) {
+            throw new \RuntimeException('DashboardStatisticsRepository not found.');
+        }
+
+        $this->repository = $repository;
     }
 
     public function testFetchKpisWithExistingDataset(): void
@@ -108,7 +114,5 @@ final class DashboardStatisticsRepositoryTest extends CustomKernelTestCase
     protected function tearDown(): void
     {
         parent::tearDown();
-
-        $this->repository = null;
     }
 }

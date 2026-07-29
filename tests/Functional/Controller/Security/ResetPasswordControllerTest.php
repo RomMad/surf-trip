@@ -39,7 +39,13 @@ final class ResetPasswordControllerTest extends CustomWebTestCase
     {
         $this->setUpTest(UserStory::class, followRedirects: false);
 
-        $this->userRepository = self::getContainer()->get(UserRepository::class);
+        $userRepository = self::getContainer()->get(UserRepository::class);
+
+        if (!$userRepository instanceof UserRepository) {
+            throw new \RuntimeException('UserRepository not found.');
+        }
+
+        $this->userRepository = $userRepository;
     }
 
     public function testResetPasswordWithValidToken(): void
@@ -121,6 +127,10 @@ final class ResetPasswordControllerTest extends CustomWebTestCase
         preg_match('/https?:\/\/[^\s"<>()]+/i', $decodedMessage, $matches);
 
         $this->assertNotEmpty($matches, 'Reset link not found in email');
+
+        if (!isset($matches[0])) {
+            throw new \RuntimeException('Reset link not found in email matches.');
+        }
 
         $resetLink = $matches[0];
         $resetPath = parse_url($resetLink, PHP_URL_PATH);

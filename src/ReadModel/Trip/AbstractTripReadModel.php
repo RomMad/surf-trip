@@ -16,7 +16,7 @@ abstract readonly class AbstractTripReadModel implements TripOwnershipAwareInter
 {
     use TripCalendarLinkableTrait;
 
-    /** @var list<TripOwnerReadModel> */
+    /** @var array<TripOwnerReadModel> */
     public array $owners;
 
     /**
@@ -34,9 +34,11 @@ abstract readonly class AbstractTripReadModel implements TripOwnershipAwareInter
         public \DateTimeImmutable $createdAt,
         string $ownersJson,
     ) {
+        $decoded = json_decode($ownersJson, true);
+
         $this->owners = array_map(
             fn (array $owner): TripOwnerReadModel => new TripOwnerReadModel(...$owner),
-            json_decode($ownersJson, true),
+            is_array($decoded) ? $decoded : [],
         );
     }
 
