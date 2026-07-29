@@ -24,7 +24,7 @@ use PHPUnit\Framework\Attributes\Medium;
 #[Medium]
 final class TripRepositoryTest extends CustomKernelTestCase
 {
-    private ?TripRepository $repository = null;
+    private TripRepository $repository;
 
     protected function setUp(): void
     {
@@ -32,7 +32,13 @@ final class TripRepositoryTest extends CustomKernelTestCase
 
         DefaultStory::load();
 
-        $this->repository = $this->getContainer()->get(TripRepository::class);
+        $repository = $this->getContainer()->get(TripRepository::class);
+
+        if (!$repository instanceof TripRepository) {
+            throw new \RuntimeException('TripRepository not found.');
+        }
+
+        $this->repository = $repository;
     }
 
     public function testSaveTrip(): void
@@ -194,8 +200,6 @@ final class TripRepositoryTest extends CustomKernelTestCase
     protected function tearDown(): void
     {
         parent::tearDown();
-
-        $this->repository = null;
     }
 
     /**

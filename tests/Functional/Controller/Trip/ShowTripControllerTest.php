@@ -77,6 +77,10 @@ final class ShowTripControllerTest extends CustomWebTestCase
     public function testCalendarLinksCanBeClickedFromTheTripPage(): void
     {
         $tripReadModelProvider = $this->getContainer()->get(TripReadModelProvider::class);
+
+        if (!method_exists($tripReadModelProvider, 'getById')) {
+            throw new \RuntimeException('TripReadModelProvider::getById not found.');
+        }
         $tripReadModel = $tripReadModelProvider->getById($this->trip->id);
 
         $this->assertCalendarLinksCanBeClicked(

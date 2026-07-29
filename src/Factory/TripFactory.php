@@ -31,7 +31,8 @@ final class TripFactory extends PersistentObjectFactory
         $randomStart = self::faker()->dateTimeBetween('-6 months', '+6 months');
         $startAt = \DateTimeImmutable::createFromInterface($randomStart);
         $createdAt = \DateTimeImmutable::createFromInterface(self::faker()->dateTimeBetween('-1 year', '-1 month'));
-        $title = sprintf('%s Surf Trip', ucfirst((string) self::faker()->words(random_int(2, 4), true)));
+        $words = self::faker()->words(random_int(2, 4), true);
+        $title = sprintf('%s Surf Trip', ucfirst(is_string($words) ? $words : ''));
         $location = sprintf('%s, %s', self::faker()->city(), self::faker()->country());
         $requiredLevels = self::faker()->randomElements(
             SurfLevel::cases(),

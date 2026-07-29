@@ -243,7 +243,7 @@ function phpcbf(): void
 #[AsTask(description: 'Run PHPStan static analysis', namespace: 'app', aliases: ['phpstan', 'ps'])]
 function phpstan(): void
 {
-    run_php('./vendor/bin/phpstan analyse -c phpstan.dist.neon');
+    run_php('./vendor/bin/phpstan analyse');
 }
 
 #[AsTask(description: 'Run Rector to automatically refactor code', namespace: 'app', aliases: ['rector'])]
@@ -348,7 +348,13 @@ function test_all(): void
 #[AsTask(description: 'Run tests with Paratest', namespace: 'app', aliases: ['test'])]
 function test(#[AsArgument()] string $options = 'tests'): void
 {
-    run_php('./vendor/bin/paratest --runner WrapperRunner '.$options);
+    run_php(
+        sprintf(
+            './vendor/bin/paratest --runner WrapperRunner %s | sed \'s#/app#%s#g\'',
+            $options,
+            getcwd(),
+        )
+    );
 }
 
 #[AsTask(description: 'Run tests coverage with Paratest', namespace: 'app', aliases: ['test-coverage'])]

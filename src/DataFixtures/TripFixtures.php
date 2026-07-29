@@ -174,6 +174,8 @@ DESC,
             $tripData = $this->faker->randomElement(SurfTripData::ALL);
             $location = $tripData['location'];
             $title = $this->randomTripTitle($location['label']);
+            $description = $this->faker->paragraphs($this->faker->numberBetween(1, 3), true);
+            $description = is_array($description) ? implode("\n\n", $description) : $description;
 
             $trip = new Trip($createdAt);
             $trip->title = Title::from($title);
@@ -187,7 +189,7 @@ DESC,
             $trip->startAt = $startAt;
             $trip->endAt = $startAt->modify(sprintf('+%d days', $this->faker->numberBetween(3, 14)));
             $trip->requiredLevels = $this->randomSurfLevels();
-            $trip->description = $this->faker->paragraphs($this->faker->numberBetween(1, 3), true);
+            $trip->description = $description;
 
             /** @var list<int> $owners */
             $owners = $this->faker->randomElements(range(0, UserFixtures::USERS_COUNT - 1), $this->faker->numberBetween(1, 3));
@@ -210,10 +212,10 @@ DESC,
             $location = $this->getLocationData($tripData['location']);
             $trip->location = new Location(
                 $tripData['location'],
-                $location['latitude'],
-                $location['longitude'],
-                $location['placeId'],
-                $location['comment'] ?? null
+                (float) $location['latitude'],
+                (float) $location['longitude'],
+                (string) $location['placeId'],
+                (string) $location['comment']
             );
             $trip->startAt = new \DateTimeImmutable($tripData['startAt']);
             $trip->endAt = new \DateTimeImmutable($tripData['endAt']);
@@ -235,10 +237,12 @@ DESC,
      */
     private function randomSurfLevels(): array
     {
-        return $this->faker->randomElements(
+        $result = $this->faker->randomElements(
             SurfLevel::cases(),
             $this->faker->numberBetween(1, count(SurfLevel::cases()))
         );
+
+        return array_values($result);
     }
 
     private function randomTripTitle(string $location): string

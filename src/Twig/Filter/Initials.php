@@ -13,6 +13,10 @@ final readonly class Initials
     {
         $parts = preg_split('/\s+/', trim($value));
 
+        if (false === $parts) {
+            return '';
+        }
+
         if (1 === count($parts)) {
             return mb_substr($parts[0], 0, 1)
                 |> mb_strtoupper(...);
@@ -20,7 +24,7 @@ final readonly class Initials
 
         return
             (mb_substr($parts[0], 0, 1)
-            .mb_substr(array_last($parts), 0, 1))
+            .mb_substr((string) array_last($parts), 0, 1))
                 |> mb_strtoupper(...);
     }
 }

@@ -19,7 +19,8 @@ trait AvatarTestTrait
 
     private function getCurrentUser(): User
     {
-        $userRepository = $this->getContainer()->get(UserRepository::class);
+        /** @var UserRepository $userRepository */
+        $userRepository = $this->getRepository(User::class);
 
         $user = $userRepository->findOneByEmail(Email::from(UserStory::JOHN_EMAIL));
 

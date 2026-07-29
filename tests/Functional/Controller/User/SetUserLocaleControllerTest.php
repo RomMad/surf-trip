@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\Controller\User;
 
+use App\Entity\User;
 use App\Entity\ValueObject\Email;
 use App\Enum\User\Locale;
 use App\Repository\UserRepository;
@@ -27,7 +28,13 @@ final class SetUserLocaleControllerTest extends CustomWebTestCase
     {
         $this->setUpTest(UserStory::class, UserStory::JOHN_EMAIL, followRedirects: false);
 
-        $this->userRepository = $this->getContainer()->get(UserRepository::class);
+        $userRepository = $this->getRepository(User::class);
+
+        if (!$userRepository instanceof UserRepository) {
+            throw new \RuntimeException('UserRepository not found.');
+        }
+
+        $this->userRepository = $userRepository;
     }
 
     public function testLocaleIsSavedForAuthenticatedUserAndRedirectsToTarget(): void

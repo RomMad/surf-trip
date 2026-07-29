@@ -46,7 +46,7 @@ final class TripAutocompleteController extends AbstractAutocompleteController
         $extraOptions = $this->getExtraOptions($request);
         $referenceAt = $extraOptions['reference_at'] ?? null;
 
-        if (null === $referenceAt) {
+        if (!is_string($referenceAt)) {
             return new \DateTimeImmutable();
         }
 

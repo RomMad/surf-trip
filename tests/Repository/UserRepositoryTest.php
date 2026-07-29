@@ -17,13 +17,19 @@ use PHPUnit\Framework\Attributes\Medium;
 #[Medium]
 final class UserRepositoryTest extends CustomKernelTestCase
 {
-    private ?UserRepository $repository = null;
+    private UserRepository $repository;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->repository = $this->getContainer()->get(UserRepository::class);
+        $repository = $this->getContainer()->get(UserRepository::class);
+
+        if (!$repository instanceof UserRepository) {
+            throw new \RuntimeException('UserRepository not found.');
+        }
+
+        $this->repository = $repository;
     }
 
     public function testUpgradePassword(): void
@@ -38,7 +44,5 @@ final class UserRepositoryTest extends CustomKernelTestCase
     protected function tearDown(): void
     {
         parent::tearDown();
-
-        $this->repository = null;
     }
 }

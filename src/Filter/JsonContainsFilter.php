@@ -36,19 +36,19 @@ class JsonContainsFilter implements FilterInterface
     }
 
     /**
-     * @return array<int|string>
+     * @return list<mixed>
      */
     private function formatValue(mixed $value): array
     {
         if (is_string($value)) {
             try {
                 $decoded = json_decode($value, true, 512, JSON_THROW_ON_ERROR);
-                $value = is_array($decoded) ? $decoded : [$value];
+                $value = is_array($decoded) ? array_values($decoded) : [$value];
             } catch (\JsonException) {
                 return [$value];
             }
         }
 
-        return (array) $value;
+        return is_array($value) ? array_values($value) : [$value];
     }
 }

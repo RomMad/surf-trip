@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Tests\Traits;
 
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Cache\Adapter\AdapterInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
@@ -24,19 +24,33 @@ trait ContainerTrait
 
     protected function getEntityManager(): EntityManagerInterface
     {
-        return self::getContainer()->get('doctrine')->getManager();
+        $entityManager = self::getContainer()->get(EntityManagerInterface::class);
+
+        if (!$entityManager instanceof EntityManagerInterface) {
+            throw new \RuntimeException('Doctrine EntityManagerInterface not available.');
+        }
+
+        return $entityManager;
     }
 
     /**
      * @param class-string<T> $className
      *
-     * @return EntityRepository<T>
+     * @return ServiceEntityRepository<T>
      *
      * @template T of object
      */
-    protected function getRepository(string $className): EntityRepository
+    protected function getRepository(string $className): ServiceEntityRepository
     {
-        return self::getEntityManager()->getRepository($className);
+        $repository = $this->getEntityManager()->getRepository($className);
+
+        if (!$repository instanceof ServiceEntityRepository) {
+            throw new \RuntimeException(
+                sprintf('Repository for class "%s" is not an instance of ServiceEntityRepository.', $className)
+            );
+        }
+
+        return $repository;
     }
 
     protected function getParameter(string $name): mixed

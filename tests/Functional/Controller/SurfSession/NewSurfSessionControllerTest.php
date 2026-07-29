@@ -120,6 +120,12 @@ final class NewSurfSessionControllerTest extends CustomWebTestCase
             throw new \InvalidArgumentException(sprintf('The field "%s" must have a value.', $selector));
         }
 
-        return \DateTimeImmutable::createFromFormat('Y-m-d', $dateTime);
+        $parsed = \DateTimeImmutable::createFromFormat('Y-m-d', $dateTime);
+
+        if (false === $parsed) {
+            throw new \InvalidArgumentException(sprintf('Invalid date format: %s', $dateTime));
+        }
+
+        return $parsed;
     }
 }
