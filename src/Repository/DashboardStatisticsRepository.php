@@ -71,7 +71,9 @@ final readonly class DashboardStatisticsRepository
             tripsThisYear: (int) ($result['trips_this_year'] ?? 0),
             totalSessions: (int) ($result['total_sessions'] ?? 0),
             sessionsThisYear: (int) ($result['sessions_this_year'] ?? 0),
-            averageSessionRating: isset($result['average_session_rating']) ? round((float) $result['average_session_rating'], 1) : null,
+            averageSessionRating: isset($result['average_session_rating'])
+                ? round((float) $result['average_session_rating'], 1)
+                : null,
         );
     }
 

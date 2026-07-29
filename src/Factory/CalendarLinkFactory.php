@@ -12,9 +12,9 @@ final readonly class CalendarLinkFactory
     public function fromEvent(CalendarLinkableInterface $event): Link
     {
         return Link::create(
-            title: $event->getCalendarTitle(),
-            from: $event->getCalendarStartAt(),
-            to: $event->getCalendarEndAt(),
+            $event->getCalendarTitle(),
+            $event->getCalendarStartAt(),
+            $event->getCalendarEndAt(),
         )
             ->description($event->getCalendarDescription() ?? '')
             ->address($event->getCalendarAddress() ?? '')
