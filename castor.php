@@ -242,9 +242,9 @@ function phpcbf(): void
 }
 
 #[AsTask(description: 'Run PHPStan static analysis', namespace: 'app', aliases: ['phpstan', 'ps'])]
-function phpstan(): void
+function phpstan(string $options = ''): void
 {
-    run_php('./vendor/bin/phpstan analyse');
+    run_php('./vendor/bin/phpstan analyse '.$options);
 }
 
 #[AsTask(description: 'Run Rector to automatically refactor code', namespace: 'app', aliases: ['rector'])]
@@ -351,7 +351,7 @@ function test(#[AsArgument()] string $options = 'tests'): void
 {
     run_php(
         sprintf(
-            './vendor/bin/paratest --runner WrapperRunner %s | sed \'s#/app#%s#g\'',
+            './vendor/bin/paratest --runner WrapperRunner --no-coverage %s | sed \'s#/app#%s#g\'',
             $options,
             getcwd(),
         )
@@ -359,9 +359,9 @@ function test(#[AsArgument()] string $options = 'tests'): void
 }
 
 #[AsTask(description: 'Run tests coverage with Paratest', namespace: 'app', aliases: ['test-coverage'])]
-function test_coverage(string $options = ''): void
+function test_coverage(string $options = '--coverage-html ./var/coverage'): void
 {
-    run_docker_compose('exec php env XDEBUG_MODE=coverage ./vendor/bin/paratest tests --runner WrapperRunner --coverage-html ./var/coverage '.$options);
+    run_docker_compose('exec php env XDEBUG_MODE=coverage ./vendor/bin/paratest tests --runner WrapperRunner '.$options);
 }
 
 #[AsTask(description: 'Run SonarQube scan', namespace: 'app', aliases: ['sonarqube-scan', 'sonarqube', 'sonar'])]
@@ -371,6 +371,8 @@ function sonarqube_scan(): void
     $dotEnv->load(__DIR__.'/.env');
     $dotEnv->bootEnv(__DIR__.'/.env');
 
+    sonar_generate_reports();
+
     run(
         implode(' ', [
             'docker run',
@@ -379,12 +381,20 @@ function sonarqube_scan(): void
             '-v '.getcwd().':/usr/src',
             '-w /usr/src',
             'sonarsource/sonar-scanner-cli',
-            '-Dsonar.projectKey=surf-trip',
-            '-Dsonar.sources=src',
-            '-Dsonar.host.url=http://host.docker.internal:9002',
             '-Dsonar.login='.$_SERVER['SONARQUBE_TOKEN'],
         ]),
     );
+}
+
+#[AsTask(description: 'Generate reports for SonarQube scan', namespace: 'app', aliases: ['sonar-generate-reports', 'sonar-reports'])]
+function sonar_generate_reports(): void
+{
+    if (!is_dir('var/test-reports')) {
+        mkdir('var/test-reports', 0755, true);
+    }
+
+    test_coverage('--log-junit=var/test-reports/phpunit-report.xml --coverage-clover=var/test-reports/phpunit-coverage-result.xml');
+    phpstan(' --error-format=json > var/test-reports/phpstan-report.json || true');
 }
 
 // ========================================================
