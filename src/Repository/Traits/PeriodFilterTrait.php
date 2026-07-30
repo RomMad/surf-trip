@@ -12,8 +12,12 @@ trait PeriodFilterTrait
     /**
      * Add filters to the query builder based on the provided period.
      */
-    private function applyPeriodFilters(QueryBuilder $queryBuilder, Period $period, string $startField, string $endField): void
-    {
+    private function applyPeriodFilters(
+        QueryBuilder $queryBuilder,
+        Period $period,
+        string $startField,
+        string $endField
+    ): void {
         if (null !== $period->from) {
             $queryBuilder
                 ->andWhere(sprintf('%s >= :periodFrom', $startField))

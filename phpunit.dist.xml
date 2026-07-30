@@ -39,6 +39,16 @@
         </deprecationTrigger>
     </source>
 
+    <coverage>
+        <report>
+            <clover outputFile="var/test-reports/phpunit-coverage-result.xml"/>
+        </report>
+    </coverage>
+
+    <logging>
+        <junit outputFile="var/test-reports/phpunit-report.xml"/>
+    </logging>
+
     <extensions>
         <bootstrap class="DAMA\DoctrineTestBundle\PHPUnit\PHPUnitExtension" />
         <bootstrap class="Zenstruck\Foundry\PHPUnit\FoundryExtension" />

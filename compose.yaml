@@ -129,7 +129,7 @@ volumes:
   database_data:
   ###< doctrine/doctrine-bundle ###
 
-  ###< snc/redis-bundle ###
+  ###> snc/redis-bundle ###
   redis_data:
   redisinsight_data:
   ###< snc/redis-bundle ###

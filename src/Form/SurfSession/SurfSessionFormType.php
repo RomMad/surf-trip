@@ -116,7 +116,10 @@ final class SurfSessionFormType extends AbstractType
                 }
 
                 $currentUser = $this->getCurrentUser();
-                $choices = $this->tripRepository->findSelectReadModelsByUserAndTripId($currentUser, (int) $submittedTripId);
+                $choices = $this->tripRepository->findSelectReadModelsByUserAndTripId(
+                    $currentUser,
+                    (int) $submittedTripId
+                );
 
                 $this->addTripField($event->getForm(), $choices);
             })

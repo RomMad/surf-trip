@@ -102,11 +102,9 @@ final class SurfSessionRepository extends ServiceEntityRepository
 
     public function getCountQueryBuilder(User $user, SurfSessionSearchInput $searchInput): QueryBuilder
     {
-        $queryBuilder = $this->createQueryBuilder('s')
+        $queryBuilder = $this->createUserQueryBuilder($user)
             ->select('COUNT(s.id)')
             ->leftJoin('s.trip', 't')
-            ->where('s.user = :user')
-            ->setParameter('user', $user)
         ;
 
         $this->applyFilters($queryBuilder, $searchInput);
@@ -124,13 +122,11 @@ final class SurfSessionRepository extends ServiceEntityRepository
 
     public function getCountQueryBuilderForTrip(User $user, int $tripId): QueryBuilder
     {
-        return $this->createQueryBuilder('s')
+        return $this->createUserQueryBuilder($user)
             ->select('COUNT(s.id)')
             ->innerJoin('s.trip', 't')
 
-            ->where('s.user = :user')
             ->andWhere('t.id = :tripId')
-            ->setParameter('user', $user)
             ->setParameter('tripId', $tripId)
         ;
     }
@@ -139,7 +135,11 @@ final class SurfSessionRepository extends ServiceEntityRepository
     {
         if ($searchInput->query) {
             $queryBuilder
-                ->andWhere('ILIKE(s.spot, :query) = TRUE OR ILIKE(t.title, :query) = TRUE OR ILIKE(s.board, :query) = TRUE')
+                ->andWhere('
+                    ILIKE(s.spot, :query) = TRUE
+                    OR ILIKE(t.title, :query) = TRUE
+                    OR ILIKE(s.board, :query) = TRUE
+                ')
                 ->setParameter('query', '%'.$searchInput->query.'%')
             ;
         }
@@ -149,7 +149,7 @@ final class SurfSessionRepository extends ServiceEntityRepository
 
     private function createOrderedIndexReadModelQueryBuilder(User $user): QueryBuilder
     {
-        return $this->createQueryBuilder('s')
+        return $this->createUserQueryBuilder($user)
             ->select(sprintf(
                 'NEW %s(
                     s.id,
@@ -167,7 +167,12 @@ final class SurfSessionRepository extends ServiceEntityRepository
             ))
             ->leftJoin('s.trip', 't')
             ->orderBy('s.startAt', 'DESC')
+        ;
+    }
 
+    private function createUserQueryBuilder(User $user): QueryBuilder
+    {
+        return $this->createQueryBuilder('s')
             ->where('s.user = :user')
             ->setParameter('user', $user)
         ;

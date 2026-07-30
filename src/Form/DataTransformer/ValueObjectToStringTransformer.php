@@ -17,7 +17,9 @@ final readonly class ValueObjectToStringTransformer implements DataTransformerIn
         private string $className
     ) {
         if (!is_a($className, ValueObjectInterface::class, true)) {
-            throw new \InvalidArgumentException(sprintf('The class "%s" must implement ValueObjectInterface.', $this->className));
+            throw new \InvalidArgumentException(
+                sprintf('The class "%s" must implement ValueObjectInterface.', $this->className)
+            );
         }
     }
 
@@ -39,10 +41,10 @@ final readonly class ValueObjectToStringTransformer implements DataTransformerIn
             return $result;
         } catch (\InvalidArgumentException $invalidArgumentException) {
             throw new TransformationFailedException(
-                message: sprintf('Invalid value: %s', $value),
-                code: 0,
-                previous: $invalidArgumentException,
-                invalidMessage: $invalidArgumentException->getMessage(),
+                sprintf('Invalid value: %s', $value),
+                0,
+                $invalidArgumentException,
+                $invalidArgumentException->getMessage(),
             );
         }
     }
