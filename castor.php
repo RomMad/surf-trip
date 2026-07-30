@@ -361,7 +361,7 @@ function test(#[AsArgument()] string $options = 'tests'): void
 #[AsTask(description: 'Run tests coverage with Paratest', namespace: 'app', aliases: ['test-coverage'])]
 function test_coverage(string $options = ''): void
 {
-    run_docker_compose('exec -e XDEBUG_MODE=coverage php ./vendor/bin/paratest tests --runner WrapperRunner --coverage-html ./var/coverage '.$options);
+    run_docker_compose('exec php env XDEBUG_MODE=coverage ./vendor/bin/paratest tests --runner WrapperRunner --coverage-html ./var/coverage '.$options);
 }
 
 #[AsTask(description: 'Run SonarQube scan', namespace: 'app', aliases: ['sonarqube-scan', 'sonarqube', 'sonar'])]
