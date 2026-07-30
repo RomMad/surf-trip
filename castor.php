@@ -33,16 +33,16 @@ function logs(): void
 }
 
 #[AsTask(description: 'Start dockerized app', namespace: 'app', aliases: ['up', 'start'])]
-function up(): void
+function up(string $options = ''): void
 {
-    run_docker_compose('up --wait');
+    run_docker_compose('-f compose.yaml -f compose.override.yaml -f compose.sonarqube.yaml up --wait '.$options);
 }
 
 #[AsTask(description: 'Restart the dockerized app', namespace: 'app', aliases: ['restart'])]
 function restart(): void
 {
     down();
-    run_docker_compose('up --build --wait');
+    up('--build');
 }
 
 // ========================================================
