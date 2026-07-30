@@ -114,4 +114,4 @@ jobs:
         run: yarn lint
 
       - name: Run Paratest
-        run: docker compose exec -T php vendor/bin/paratest tests --runner WrapperRunner
+        run: docker compose exec -T php vendor/bin/paratest tests --runner WrapperRunner --no-coverage
