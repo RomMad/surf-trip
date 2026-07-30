@@ -117,31 +117,6 @@ services:
       MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-!ChangeMe!}
     command: server /data --console-address ":9001"
 
-  sonarqube:
-    image: sonarqube:lts-community
-    container_name: sonarqube
-    depends_on:
-      - sonardb
-    ports:
-      - "9002:9000"
-    environment:
-      SONAR_JDBC_URL: jdbc:postgresql://sonardb:5432/sonar
-      SONAR_JDBC_USERNAME: sonar
-      SONAR_JDBC_PASSWORD: sonar
-    volumes:
-      - sonarqube_data:/opt/sonarqube/data
-      - sonarqube_extensions:/opt/sonarqube/extensions
-      - sonarqube_logs:/opt/sonarqube/logs
-
-  sonardb:
-    image: postgres:16-alpine
-    environment:
-      POSTGRES_USER: sonar
-      POSTGRES_PASSWORD: sonar
-      POSTGRES_DB: sonar
-    volumes:
-      - sonardb:/var/lib/postgresql/data
-
 volumes:
   caddy_data:
   caddy_config:
@@ -160,10 +135,3 @@ volumes:
   ###< snc/redis-bundle ###
 
   minio_data:
-
-  ###> sonarqube/sonarqube ###
-  sonarqube_data:
-  sonarqube_extensions:
-  sonarqube_logs:
-  sonardb:
-  ###< sonarqube/sonarqube ###
