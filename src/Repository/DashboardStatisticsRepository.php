@@ -19,8 +19,11 @@ final readonly class DashboardStatisticsRepository
         private Connection $connection,
     ) {}
 
-    public function fetchKpis(User $user, \DateTimeImmutable $yearStart, \DateTimeImmutable $nextYearStart): DashboardKpisDto
-    {
+    public function fetchKpis(
+        User $user,
+        \DateTimeImmutable $yearStart,
+        \DateTimeImmutable $nextYearStart
+    ): DashboardKpisDto {
         $sql = <<<'SQL'
             WITH trip_stats AS (
                 SELECT
@@ -67,11 +70,11 @@ final readonly class DashboardStatisticsRepository
         );
 
         return new DashboardKpisDto(
-            totalTrips: (int) ($result['total_trips'] ?? 0),
-            tripsThisYear: (int) ($result['trips_this_year'] ?? 0),
-            totalSessions: (int) ($result['total_sessions'] ?? 0),
-            sessionsThisYear: (int) ($result['sessions_this_year'] ?? 0),
-            averageSessionRating: isset($result['average_session_rating'])
+            (int) ($result['total_trips'] ?? 0),
+            (int) ($result['trips_this_year'] ?? 0),
+            (int) ($result['total_sessions'] ?? 0),
+            (int) ($result['sessions_this_year'] ?? 0),
+            isset($result['average_session_rating'])
                 ? round((float) $result['average_session_rating'], 1)
                 : null,
         );
@@ -80,8 +83,11 @@ final readonly class DashboardStatisticsRepository
     /**
      * @return list<MonthlySessionStatDto>
      */
-    public function fetchMonthlySessionStats(User $user, \DateTimeImmutable $periodStart, \DateTimeImmutable $periodEnd): array
-    {
+    public function fetchMonthlySessionStats(
+        User $user,
+        \DateTimeImmutable $periodStart,
+        \DateTimeImmutable $periodEnd
+    ): array {
         $sql = <<<'SQL'
             SELECT
                 DATE_TRUNC('month', s.start_at)::date AS month,

@@ -60,7 +60,10 @@ final class DashboardControllerTest extends CustomWebTestCase
         $this->assertStringContainsString('3.7', $kpiValues->eq(4)->text());
 
         $this->assertSelectorTextContains(self::MAIN_SELECTOR, 'Top spots');
-        $this->assertSelectorTextContains(self::MAIN_SELECTOR, 'Number of sessions per spot with the average rating shown in the label.');
+        $this->assertSelectorTextContains(
+            self::MAIN_SELECTOR,
+            'Number of sessions per spot with the average rating shown in the label.'
+        );
         $this->assertSelectorTextContains(self::MAIN_SELECTOR, 'Sessions and trips by year');
         $this->assertSelectorExists(self::CANVAS_SELECTOR);
     }

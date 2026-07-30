@@ -72,8 +72,12 @@ class TripRepository extends ServiceEntityRepository
     /**
      * @return array<int, array{value: int, text: string}>
      */
-    public function findTripChoicesByQuery(string $query, \DateTimeImmutable $referenceAt, User $user, int $limit = 10): array
-    {
+    public function findTripChoicesByQuery(
+        string $query,
+        \DateTimeImmutable $referenceAt,
+        User $user,
+        int $limit = 10
+    ): array {
         $results = $this->createSelectReadModelBaseQueryBuilder($user)
             ->andWhere('t.startAt <= :referenceAt')
             ->andWhere('t.endAt >= :referenceAt')
