@@ -27,18 +27,20 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->phpVersion(PhpVersion::PHP_85);
     $rectorConfig->phpstanConfig(__DIR__.'/phpstan.dist.neon');
     $rectorConfig->parallel();
+    $rectorConfig->configure()->withComposerBased(
+        twig: true,
+        doctrine: true,
+        phpunit: true,
+        symfony: true,
+    );
 
     $rectorConfig->sets([
         LevelSetList::UP_TO_PHP_85,
         SetList::CODE_QUALITY,
         SetList::CODING_STYLE,
-        SymfonySetList::SYMFONY_74,
         SymfonySetList::SYMFONY_CODE_QUALITY,
         DoctrineSetList::TYPED_COLLECTIONS,
         DoctrineSetList::DOCTRINE_CODE_QUALITY,
-        DoctrineSetList::DOCTRINE_COLLECTION_22,
-        DoctrineSetList::DOCTRINE_ORM_214,
-        DoctrineSetList::DOCTRINE_BUNDLE_210,
         DoctrineSetList::GEDMO_ANNOTATIONS_TO_ATTRIBUTES,
     ]);
 
