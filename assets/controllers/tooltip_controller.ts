@@ -1,28 +1,51 @@
 import {Controller} from '@hotwired/stimulus';
 
-export default class extends Controller {
+type Side = 'top' | 'right' | 'bottom' | 'left';
+
+export default class extends Controller<HTMLElement> {
     static values = {
         delayDuration: Number,
-        // Using targets does not work if the elements are moved in the DOM (document.body.appendChild)
-        // and using outlets does not work either if elements are children of the controller element.
         wrapperSelector: String,
         contentSelector: String,
         arrowSelector: String,
     };
+
     static targets = ['trigger', 'wrapper'];
 
-    connect() {
+    declare readonly triggerTarget: HTMLElement;
+    declare readonly wrapperTarget: HTMLElement;
+
+    declare readonly hasDelayDurationValue: boolean;
+    declare readonly delayDurationValue: number;
+
+    declare readonly wrapperSelectorValue: string;
+    declare readonly contentSelectorValue: string;
+    declare readonly arrowSelectorValue: string;
+
+    private initialized = false;
+    private wrapperElement: HTMLElement | null = null;
+    private contentElement: HTMLElement | null = null;
+    private arrowElement: HTMLElement | null = null;
+
+    private side: Side = 'top';
+    private sideOffset = 0;
+
+    private showTimeout: ReturnType<typeof setTimeout> | null = null;
+    private hideTimeout: ReturnType<typeof setTimeout> | null = null;
+
+    connect(): void {
         this.initialized = false;
-        this.wrapperElement = document.querySelector(this.wrapperSelectorValue);
-        this.contentElement = document.querySelector(this.contentSelectorValue);
-        this.arrowElement = document.querySelector(this.arrowSelectorValue);
+
+        this.wrapperElement = document.querySelector<HTMLElement>( this.wrapperSelectorValue);
+        this.contentElement = document.querySelector<HTMLElement>(this.contentSelectorValue);
+        this.arrowElement = document.querySelector<HTMLElement>(this.arrowSelectorValue);
 
         if (!this.wrapperElement || !this.contentElement || !this.arrowElement) {
             return;
         }
 
-        this.side = this.wrapperElement.getAttribute('data-side') || 'top';
-        this.sideOffset = parseInt(this.wrapperElement.getAttribute('data-side-offset'), 10) || 0;
+        this.side = this.wrapperElement.getAttribute('data-side') as Side || 'top';
+        this.sideOffset = parseInt( this.wrapperElement.getAttribute('data-side-offset') ?? '0', 10) || 0;
 
         this.showTimeout = null;
         this.hideTimeout = null;
@@ -31,73 +54,85 @@ export default class extends Controller {
         this.initialized = true;
     }
 
-    disconnect() {
-        this.#clearTimeouts();
+    disconnect(): void {
+        this.clearTimeouts();
 
         if (this.wrapperElement && this.wrapperElement.parentNode === document.body) {
             this.element.appendChild(this.wrapperElement);
         }
     }
 
-    wrapperTargetConnected() {
-        // This case appear when live component rerender.
-        // Because original wrapper is moved on body, the Smart rerender algorithm recreate a new wrapper.
+    wrapperTargetConnected(): void {
+        // This case appears when the live component rerenders.
+        // Because the original wrapper is moved to body, the Smart rerender
+        // algorithm creates a new wrapper.
         if (this.wrapperElement) {
             this.wrapperElement.remove();
             this.connect();
         }
     }
 
-    show() {
+    show(): void {
         if (!this.initialized) {
             return;
         }
 
-        this.#clearTimeouts();
+        this.clearTimeouts();
 
         const delay = this.hasDelayDurationValue ? this.delayDurationValue : 0;
 
         this.showTimeout = setTimeout(() => {
+            if ( !this.wrapperElement ||!this.contentElement || !this.arrowElement) {
+                return;
+            }
+
             this.wrapperElement.setAttribute('open', '');
             this.contentElement.setAttribute('open', '');
             this.arrowElement.setAttribute('open', '');
-            this.#positionElements();
+
+            this.positionElements();
+
             this.showTimeout = null;
         }, delay);
     }
 
-    hide() {
+    hide(): void {
         if (!this.initialized) {
             return;
         }
 
-        this.#clearTimeouts();
-        this.wrapperElement.removeAttribute('open');
-        this.contentElement.removeAttribute('open');
-        this.arrowElement.removeAttribute('open');
+        this.clearTimeouts();
+
+        this.wrapperElement?.removeAttribute('open');
+        this.contentElement?.removeAttribute('open');
+        this.arrowElement?.removeAttribute('open');
     }
 
-    #clearTimeouts() {
-        if (this.showTimeout) {
+    private clearTimeouts(): void {
+        if (this.showTimeout !== null) {
             clearTimeout(this.showTimeout);
             this.showTimeout = null;
         }
 
-        if (this.hideTimeout) {
+        if (this.hideTimeout !== null) {
             clearTimeout(this.hideTimeout);
             this.hideTimeout = null;
         }
     }
 
-    #positionElements() {
+    private positionElements(): void {
+        if (!this.wrapperElement || !this.contentElement || !this.arrowElement) {
+            return;
+        }
+
         const triggerRect = this.triggerTarget.getBoundingClientRect();
         const contentRect = this.contentElement.getBoundingClientRect();
         const arrowRect = this.arrowElement.getBoundingClientRect();
 
         let wrapperLeft = 0;
         let wrapperTop = 0;
-        let arrowLeft = null;
-        let arrowTop = null;
+        let arrowLeft: number | null = null;
+        let arrowTop: number | null = null;
 
         switch (this.side) {
             case 'left':
