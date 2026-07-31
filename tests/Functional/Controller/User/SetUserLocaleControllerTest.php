@@ -46,6 +46,7 @@ final class SetUserLocaleControllerTest extends CustomWebTestCase
         $user = $this->userRepository->findOneByEmail(Email::from(UserStory::JOHN_EMAIL));
 
         $this->assertResponseRedirects(self::TARGET);
+        $this->assertInstanceOf(User::class, $user);
         $this->assertSame(Locale::French->value, $user->locale->value);
     }
 }

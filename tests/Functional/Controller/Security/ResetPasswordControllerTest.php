@@ -10,6 +10,7 @@ use App\Repository\UserRepository;
 use App\Tests\CustomWebTestCase;
 use App\Tests\Fixtures\UserStory;
 use PHPUnit\Framework\Attributes\Medium;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
@@ -122,8 +123,10 @@ final class ResetPasswordControllerTest extends CustomWebTestCase
         $this->assertEmailCount(1);
 
         $message = $this->getMailerMessage();
-        $decodedMessage = quoted_printable_decode($message->toString());
 
+        $this->assertInstanceOf(TemplatedEmail::class, $message);
+
+        $decodedMessage = quoted_printable_decode($message->toString());
         preg_match('/https?:\/\/[^\s"<>()]+/i', $decodedMessage, $matches);
 
         $this->assertNotEmpty($matches, 'Reset link not found in email');

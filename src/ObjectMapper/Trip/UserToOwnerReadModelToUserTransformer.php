@@ -30,7 +30,7 @@ final readonly class UserToOwnerReadModelToUserTransformer implements TransformC
 
         return $users->map(
             fn (User $user): TripOwnerReadModel => new TripOwnerReadModel(
-                id: $user->id,
+                id: (int) $user->id,
                 fullName: $user->getFullName(),
             )
         )->toArray();

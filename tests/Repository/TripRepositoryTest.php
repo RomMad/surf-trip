@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Repository;
 
+use App\Entity\Trip;
 use App\Entity\User;
 use App\Enum\User\SurfLevel;
 use App\Factory\TripFactory;
@@ -47,7 +48,10 @@ final class TripRepositoryTest extends CustomKernelTestCase
 
         $this->repository->save($trip, true);
 
-        $this->assertSame($trip->title, $this->repository->findOneBy([], ['id' => 'DESC'])->title);
+        $tripFromDb = $this->repository->find($trip->id);
+
+        $this->assertInstanceOf(Trip::class, $tripFromDb);
+        $this->assertSame($trip->title, $tripFromDb->title);
     }
 
     public function testRemoveTrip(): void
@@ -184,7 +188,8 @@ final class TripRepositoryTest extends CustomKernelTestCase
     public function testFindShowReadModelByIdReturnsCorrectModel(): void
     {
         $trip = TripFactory::last();
-        $result = $this->repository->findShowReadModelById($trip->id);
+
+        $result = $this->repository->findShowReadModelById((int) $trip->id);
 
         $this->assertInstanceOf(TripShowReadModel::class, $result);
         $this->assertSame($trip->id, $result->id);

@@ -25,7 +25,7 @@ final class ShowTripControllerTest extends CustomWebTestCase
 
     private const string PATH = '/en/trip/%d/%s';
 
-    private ?Trip $trip = null;
+    private Trip $trip;
 
     protected function setUp(): void
     {

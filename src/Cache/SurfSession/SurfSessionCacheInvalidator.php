@@ -15,8 +15,12 @@ final readonly class SurfSessionCacheInvalidator
         private DashboardCacheInvalidator $dashboardCacheInvalidator,
     ) {}
 
-    public function invalidateList(User $user): void
+    public function invalidateList(?User $user = null): void
     {
+        if (null === $user) {
+            return;
+        }
+
         $this->cache->invalidateTags([SurfSessionCacheTags::listForUser($user)]);
         $this->dashboardCacheInvalidator->invalidateForUser($user);
     }

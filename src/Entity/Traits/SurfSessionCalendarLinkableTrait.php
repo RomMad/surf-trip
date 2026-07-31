@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\Entity\Traits;
 
 /**
- * @property ?string             $spot
- * @property ?\DateTimeImmutable $startAt
- * @property ?\DateTimeImmutable $endAt
- * @property ?string             $objective
- * @property ?string             $comment
+ * @property string             $spot
+ * @property \DateTimeImmutable $startAt
+ * @property \DateTimeImmutable $endAt
+ * @property ?string            $objective
+ * @property ?string            $comment
  */
 trait SurfSessionCalendarLinkableTrait
 {

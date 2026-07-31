@@ -123,6 +123,10 @@ class SurfSessionFixtures extends Fixture implements DependentFixtureInterface
      */
     private function generateSurfSessions(Trip $trip): \Generator
     {
+        if (null === $trip->startAt || null === $trip->endAt) {
+            return;
+        }
+
         $currentDate = $trip->startAt->setTime(0, 0);
         $endDate = $trip->endAt->setTime(0, 0);
         $spots = $this->getSpotsForTrip($trip);

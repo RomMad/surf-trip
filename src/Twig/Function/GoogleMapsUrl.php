@@ -12,6 +12,6 @@ final class GoogleMapsUrl
     #[AsTwigFunction('google_maps_url')]
     public static function generateSearchUrl(?string $query = null): string
     {
-        return GoogleMaps::generateSearchUrl($query);
+        return GoogleMaps::generateSearchUrl($query) ?? '';
     }
 }
