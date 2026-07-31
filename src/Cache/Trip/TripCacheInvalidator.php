@@ -17,6 +17,10 @@ final readonly class TripCacheInvalidator
 
     public function invalidate(Trip $trip): void
     {
+        if (null === $trip->id) {
+            return;
+        }
+
         $this->cache->delete(TripCacheKeys::readModel($trip->id));
         $this->cache->invalidateTags([TripCacheTags::LIST]);
 

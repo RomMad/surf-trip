@@ -44,7 +44,7 @@ final class EditSurfSessionControllerTest extends CustomWebTestCase
     private const string UPDATED_SESSION_OBJECTIVE = 'Update objective';
     private const string UPDATED_SESSION_COMMENT = 'Update comment';
 
-    private ?SurfSession $surfSession = null;
+    private SurfSession $surfSession;
 
     protected function setUp(): void
     {

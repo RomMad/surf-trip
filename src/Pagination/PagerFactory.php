@@ -67,7 +67,7 @@ final readonly class PagerFactory
         $sort = $request->query->get('sort');
         $direction = $request->query->get('direction', 'asc');
 
-        if (in_array($direction, ['asc', 'desc'], true)) {
+        if (null !== $sort && in_array($direction, ['asc', 'desc'], true)) {
             $queryBuilder->orderBy($sort, $direction);
         }
     }

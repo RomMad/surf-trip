@@ -49,7 +49,11 @@ class RegisterController extends AbstractController
 
             $this->registrationConfirmationEmailSender->send($user);
 
-            return $this->security->login($user, AppAuthenticator::class, 'main');
+            $response = $this->security->login($user, AppAuthenticator::class, 'main');
+
+            if ($response instanceof Response) {
+                return $response;
+            }
         }
 
         return $this->render('security/registration/register.html.twig', [

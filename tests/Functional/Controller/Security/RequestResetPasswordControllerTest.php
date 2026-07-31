@@ -7,6 +7,7 @@ namespace App\Tests\Functional\Controller\Security;
 use App\Tests\CustomWebTestCase;
 use App\Tests\Fixtures\UserStory;
 use PHPUnit\Framework\Attributes\Medium;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -54,6 +55,7 @@ final class RequestResetPasswordControllerTest extends CustomWebTestCase
         $email = $this->getMailerMessage();
 
         $this->assertEmailCount(1);
+        $this->assertInstanceOf(TemplatedEmail::class, $email);
         $this->assertEmailAddressContains($email, 'to', UserStory::JOHN_EMAIL);
         $this->assertEmailSubjectContains($email, self::EMAIL_SUBJECT);
         $this->assertResponseRedirects(self::PATH_CHECK_EMAIL);

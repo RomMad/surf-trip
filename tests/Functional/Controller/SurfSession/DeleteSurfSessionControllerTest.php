@@ -21,7 +21,7 @@ final class DeleteSurfSessionControllerTest extends CustomWebTestCase
     private const string DELETE_BUTTON = 'Delete';
     private const string MESSAGE_SUCCESS = 'The session has been deleted.';
 
-    private ?SurfSession $surfSession = null;
+    private SurfSession $surfSession;
 
     protected function setUp(): void
     {

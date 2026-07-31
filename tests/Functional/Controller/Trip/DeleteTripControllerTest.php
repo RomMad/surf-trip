@@ -21,7 +21,7 @@ final class DeleteTripControllerTest extends CustomWebTestCase
     private const string SUBMIT_BUTTON = 'Delete';
     private const string MESSAGE_SUCCESS = 'The trip has been deleted.';
 
-    private ?Trip $trip = null;
+    private Trip $trip;
 
     protected function setUp(): void
     {

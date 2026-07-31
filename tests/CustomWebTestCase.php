@@ -86,7 +86,11 @@ abstract class CustomWebTestCase extends WebTestCase
             $results = $crawler->filter($selector);
 
             if ($results->count() >= 1) {
-                return $results->attr('value');
+                $value = $results->attr('value');
+
+                if (null !== $value) {
+                    return $value;
+                }
             }
         }
 

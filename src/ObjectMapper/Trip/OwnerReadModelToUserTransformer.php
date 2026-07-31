@@ -31,11 +31,12 @@ final readonly class OwnerReadModelToUserTransformer implements TransformCallabl
      */
     public function __invoke(mixed $owners, object $source, ?object $target): mixed
     {
-        return new ArrayCollection(
-            array_map(
-                fn (TripOwnerReadModel $owner): ?User => $this->entityManager->getReference(User::class, $owner->id),
-                $owners,
-            )
-        );
+        $users = array_map(
+            fn (TripOwnerReadModel $owner): ?User => $this->entityManager->getReference(User::class, $owner->id),
+            $owners,
+        )
+            |> array_filter(...);
+
+        return new ArrayCollection($users);
     }
 }

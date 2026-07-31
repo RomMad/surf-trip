@@ -32,7 +32,7 @@ final class EditTripControllerTest extends CustomWebTestCase
     private const string UPDATED_TRIP_TITLE = 'Updated Surf Trip';
     private const string UPDATED_TRIP_LOCATION = 'Hossegor';
 
-    private ?Trip $trip = null;
+    private Trip $trip;
 
     protected function setUp(): void
     {

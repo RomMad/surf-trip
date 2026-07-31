@@ -28,7 +28,7 @@ final class ShowTripSurfSessionSectionControllerTest extends CustomWebTestCase
     private const string SECTION_TITLE = 'My surf sessions';
     private const string ADD_SESSION_LABEL = 'Add session';
 
-    private ?Trip $trip = null;
+    private Trip $trip;
 
     protected function setUp(): void
     {

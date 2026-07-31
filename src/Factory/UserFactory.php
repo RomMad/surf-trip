@@ -42,9 +42,11 @@ final class UserFactory extends PersistentObjectFactory
     #[\Override]
     protected function defaults(): array|callable
     {
+        $username = preg_replace('/[^a-zA-Z0-9.]/', '.', self::faker()->unique()->userName());
+
         return [
             'email' => Email::from(self::faker()->unique()->safeEmail()),
-            'username' => Username::from(preg_replace('/[^a-zA-Z0-9.]/', '.', self::faker()->unique()->userName())),
+            'username' => Username::from((string) $username),
             'firstName' => FirstName::from(self::faker()->firstName()),
             'lastName' => LastName::from(self::faker()->lastName()),
             'isVerified' => true,
