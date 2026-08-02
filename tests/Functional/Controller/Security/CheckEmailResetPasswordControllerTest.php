@@ -32,6 +32,6 @@ final class CheckEmailResetPasswordControllerTest extends CustomWebTestCase
 
         $this->assertResponseIsSuccessful();
         $this->assertPageTitleContains(self::TITLE);
-        $this->assertSelectorTextContains('p', self::EXPIRATION_MESSAGE);
+        $this->assertSelectorTextContains('main p', self::EXPIRATION_MESSAGE);
     }
 }
