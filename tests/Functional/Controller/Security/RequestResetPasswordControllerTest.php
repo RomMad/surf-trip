@@ -64,7 +64,7 @@ final class RequestResetPasswordControllerTest extends CustomWebTestCase
 
         $this->assertResponseIsSuccessful();
         $this->assertPageTitleContains(self::TITLE_EMAIL_SENT);
-        $this->assertSelectorTextContains('p', self::EXPIRATION_MESSAGE);
+        $this->assertSelectorTextContains('main p', self::EXPIRATION_MESSAGE);
     }
 
     public function testSubmittingNonexistentEmailDoesNotRevealUser(): void

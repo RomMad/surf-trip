@@ -7,7 +7,7 @@
     <twig:Button
         as="a"
         href="{{ path(route) }}"
-        class="hover:text-primary-foreground/80"
+        class="hover:text-primary-foreground/80 px-3"
         :disabled="active"
         :aria-current="active ? 'page' : false"
         {{ ...attributes.without('class') }}

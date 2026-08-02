@@ -1,60 +1,55 @@
-{% set current_route_parameters = app.current_route_parameters|default({}) %}
+{% set header_menu %}
+    <twig:Header:Menu />
+{% endset %}
+{% set header_auth_buttons %}
+    <twig:Header:AuthButtons />
+{% endset %}
 
 <header>
-     <nav class="app-header-nav" aria-label="{{ 'navigation.main.label'|trans }}">
+     <nav
+        class="app-header-nav"
+        data-controller="navbar-toggle"
+        aria-label="{{ 'navigation.main.label'|trans }}"
+    >
         <div class="app-header-container">
             <button
                 class="app-header-toggle"
                 type="button"
-                data-twe-collapse-init
-                data-twe-target="#main_navbar"
-                aria-controls="main_navbar"
+                data-action="click->navbar-toggle#toggle"
+                data-navbar-toggle-target="toggleButton"
+                aria-controls="main_mobile_navbar"
                 aria-expanded="false"
                 aria-label="{{ 'navigation.toggle.label'|trans }}"
             >
-                <twig:ux:icon name="lucide:menu" height="1.5em" width="1.5em" />
+                <twig:ux:icon name="lucide:menu"
+                    height="1.5em" width="1.5em"
+                    class="hover:text-primary-foreground/80"
+                    data-navbar-toggle-target="menuIcon"
+                />
+                <twig:ux:icon name="lucide:x"
+                    height="1.5em" width="1.5em"
+                    class="hover:text-primary-foreground/80 hidden"
+                    data-navbar-toggle-target="closeIcon"
+                />
             </button>
 
-            <a class="app-header-brand" href="{{ path('app.home') }}">
+            <a class="app-header-brand"
+                href="{{ path('app.home') }}">
                 {{- 'app_name'|trans -}}
             </a>
 
-            <div class="app-header-menu" id="main_navbar">
-                <ul class="flex">
-                    <twig:Header:NavLink label="dashboard.label" route="app.me.dashboard" />
-                    <twig:Header:NavLink label="trips.label" route="app.trip.index" />
-                    <twig:Header:NavLink label="surf_sessions.label" route="app.surf_session.index" />
-                </ul>
-                <ul class="flex items-center" aria-label="{{ 'language.switch.label'|trans }}">
-                    {% for locale in enum('App\\Enum\\User\\Locale').cases %}
-                        {% set target_path = path(app.current_route, current_route_parameters|merge({_locale: locale.value})) %}
-                        {% set is_same_locale = app.request.locale is same as(locale.value) %}
-
-                        <li>
-                            <twig:Button as="a"
-                                variant="link"
-                                class="p-1"
-                                href="{{ app.user and not is_same_locale
-                                    ? path('app.user.locale.set', {_locale: locale.value, target: target_path})
-                                    : target_path
-                                 }}"
-                                title="{{ locale.value|locale_name(app.locale)|u.title }}"
-                                :disabled="is_same_locale"
-                            >
-                                <twig:ux:icon name="circle-flags:lang-{{ locale.value }}" />
-                            </twig:Button>
-                        </li>
-                        {% if not loop.last %}
-                            <li>|</li>
-                        {% endif %}
-                    {% endfor %}
-                </ul>
-                <twig:Header:DarkModeSwitch />
+            {# Desktop menu #}
+            <div class="hidden grow md:flex">
+                {{ header_menu }}
             </div>
 
             <div class="flex items-center">
                 {% if app.user %}
-                    <twig:Button as="a" href="{{ path('app.logout') }}" class="hover:text-primary-foreground/80" data-turbo="false">
+                    <twig:Button as="a"
+                        href="{{ path('app.logout') }}"
+                        class="hidden md:inline-block hover:text-primary-foreground/80"
+                        data-turbo="false"
+                    >
                         {{- 'logout.label'|trans -}}
                     </twig:Button>
                      <a href="{{ path('app.user.profile.edit') }}"
@@ -64,15 +59,25 @@
                         <twig:Avatar id="header_avatar"/>
                     </a>
                 {% else %}
-                    <div>
-                        <twig:Button as="a" href="{{ path('app.login') }}" class="hover:text-primary-foreground/80">
-                            {{ 'login.label'|trans }}
-                            </twig:Button>
-                        <twig:Button as="a" href="{{ path('app.register') }}" class="hover:text-primary-foreground/80">
-                            {{ 'register.label'|trans }}
-                        </twig:Button>
+                    <div class="hidden md:inline-block">
+                        {{ header_auth_buttons }}
                     </div>
                 {% endif %}
+            </div>
+
+            {# Mobile menu #}
+            <div
+                id="main_mobile_navbar"
+                class="app-header-menu"
+                data-navbar-toggle-target="menu"
+                aria-label="{{ 'navigation.main.label'|trans }}"
+                aria-hidden="true"
+                inert
+            >
+                {{ header_menu }}
+                <div class="flex flex-col items-start mt-4">
+                    {{ header_auth_buttons }}
+                </div>
             </div>
         </div>
     </nav>
