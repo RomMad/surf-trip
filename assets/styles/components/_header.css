@@ -16,7 +16,7 @@
     }
 
     .app-header-menu {
-        @apply grow basis-full flex-col md:hidden;
+        @apply grow basis-full flex flex-col md:hidden;
 
         max-height: 0;
         padding: 0;
@@ -29,5 +29,6 @@
     .app-header-menu--open {
         max-height: 100vh;
         padding: 1rem 0;
+        overflow: auto;
     }
 }
