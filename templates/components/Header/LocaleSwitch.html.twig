@@ -1,6 +1,6 @@
 {% set current_route_parameters = app.current_route_parameters|default({}) %}
 
-<ul class="flex items-center px-3" aria-label="{{ 'language.switch.label'|trans }}">
+<ul class="flex items-center" aria-label="{{ 'language.switch.label'|trans }}">
     {% for locale in enum('App\\Enum\\User\\Locale').cases %}
         {% set target_path = path(app.current_route, current_route_parameters|merge({_locale: locale.value})) %}
         {% set is_same_locale = app.request.locale is same as(locale.value) %}
