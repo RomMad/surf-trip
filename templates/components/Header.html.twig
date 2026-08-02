@@ -1,3 +1,10 @@
+{% set header_menu %}
+    <twig:Header:Menu />
+{% endset %}
+{% set header_auth_buttons %}
+    <twig:Header:AuthButtons />
+{% endset %}
+
 <header>
      <nav
         class="app-header-nav"
@@ -31,8 +38,9 @@
                 {{- 'app_name'|trans -}}
             </a>
 
+            {# Desktop menu #}
             <div class="hidden grow md:flex">
-                <twig:Header:Menu />
+                {{ header_menu }}
             </div>
 
             <div class="flex items-center">
@@ -52,11 +60,12 @@
                     </a>
                 {% else %}
                     <div class="hidden md:inline-block">
-                        <twig:Header:AuthButtons />
+                        {{ header_auth_buttons }}
                     </div>
                 {% endif %}
             </div>
 
+            {# Mobile menu #}
             <div
                 id="main_mobile_navbar"
                 class="app-header-menu"
@@ -65,9 +74,9 @@
                 aria-hidden="true"
                 inert
             >
-                <twig:Header:Menu />
+                {{ header_menu }}
                 <div class="flex flex-col items-start mt-4">
-                    <twig:Header:AuthButtons />
+                    {{ header_auth_buttons }}
                 </div>
             </div>
         </div>
