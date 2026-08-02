@@ -7,19 +7,26 @@
         {% set label = locale.value|locale_name(app.locale)|u.title %}
 
         <li>
-            <twig:Button as="a"
-                variant="link"
-                class="p-1"
-                href="{{ app.user and not is_same_locale
-                    ? path('app.user.locale.set', {_locale: locale.value, target: target_path})
-                    : target_path
-                    }}"
-                title="{{ label }}"
-                aria-label="{{ label }}"
-                :disabled="is_same_locale"
-            >
-                <twig:ux:icon name="circle-flags:lang-{{ locale.value }}" />
-            </twig:Button>
+            <twig:Tooltip id="locale_{{ locale.value }}">
+                <twig:Tooltip:Trigger>
+                <twig:Button as="a"
+                    variant="link"
+                    class="p-1"
+                    href="{{ app.user and not is_same_locale
+                        ? path('app.user.locale.set', {_locale: locale.value, target: target_path})
+                        : target_path
+                        }}"
+                    aria-label="{{ label }}"
+                    :disabled="is_same_locale"
+                    {{ ...tooltip_trigger_attrs }}
+                >
+                    <twig:ux:icon name="circle-flags:lang-{{ locale.value }}" />
+                </twig:Button>
+                </twig:Tooltip:Trigger>
+                <twig:Tooltip:Content side="bottom">
+                    <p>{{ label }}</p>
+                </twig:Tooltip:Content>
+            </twig:Tooltip>
         </li>
         {% if not loop.last %}
             <li aria-hidden="true">|</li>
