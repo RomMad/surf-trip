@@ -46,10 +46,6 @@ class ResetPasswordRequestCrudController extends AbstractCrudController
         yield AssociationField::new('user')
             ->setLabel('user.label')
         ;
-        yield TextField::new('hashedToken')
-            ->setLabel('hashed_token.label')
-            ->setFormTypeOption('disabled', true)
-        ;
         yield DateTimeField::new('requestedAt')
             ->setLabel('requested_at.label')
             ->setFormTypeOption('disabled', true)
