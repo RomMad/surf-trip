@@ -68,7 +68,7 @@ use Symfony\Component\Validator\Constraints as Assert;
         ),
     ]
 )]
-final class Trip
+final class Trip implements \Stringable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -133,6 +133,11 @@ final class Trip
         public private(set) \DateTimeImmutable $createdAt = new \DateTimeImmutable()
     ) {
         $this->owners = new ArrayCollection();
+    }
+
+    public function __toString(): string
+    {
+        return $this->title->value;
     }
 
     public function addOwner(User $owner): static

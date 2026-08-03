@@ -272,8 +272,10 @@ function rector_swiss_knife(): void
 #[AsTask(description: 'Debug translation files to find missing translations', namespace: 'app', aliases: ['debug-trans'])]
 function debug_translation(): void
 {
-    run_symfony_console('debug:translation en --only-missing');
-    run_symfony_console('debug:translation fr --only-missing');
+    run_symfony_console('debug:translation en --domain=messages --only-missing');
+    run_symfony_console('debug:translation en --domain=validators --only-missing');
+    run_symfony_console('debug:translation fr --domain=messages --only-missing');
+    run_symfony_console('debug:translation fr --domain=validators --only-missing');
 }
 
 #[AsTask(description: 'Lint translation messages', namespace: 'app', aliases: ['lint-trans'])]

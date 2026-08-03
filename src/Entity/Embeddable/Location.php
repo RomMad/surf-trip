@@ -41,4 +41,13 @@ final class Location
             Assert::maxLength($comment, self::MAX_LENGTH, 'location.comment.max_length');
         }
     }
+
+    public function getFullLabel(): string
+    {
+        if (null === $this->comment) {
+            return $this->label;
+        }
+
+        return sprintf('%s (%s)', $this->label, $this->comment);
+    }
 }
