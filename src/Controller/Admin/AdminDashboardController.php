@@ -28,7 +28,6 @@ class AdminDashboardController extends AbstractDashboardController
     {
         return Dashboard::new()
             ->setTitle('Surf Trip')
-            ->renderContentMaximized(true)
         ;
     }
 
