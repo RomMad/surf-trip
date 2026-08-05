@@ -207,6 +207,9 @@ last_name.label: Nom
 locale.label: Langue
 password.label: Mot de passe
 password_repeat.label: Répéter le mot de passe
+role:
+    user.label: Utilisateur
+    admin.label: Administrateur
 roles.label: Rôles
 surf_level.label: Niveau de surf
 username.label: Nom d'utilisateur

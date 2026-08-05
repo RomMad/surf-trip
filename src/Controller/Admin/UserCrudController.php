@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Admin;
 
 use App\Entity\User;
+use App\Enum\User\UserRole;
 use App\Form\Type\EmailType;
 use App\Form\Type\FirstNameType;
 use App\Form\Type\LastNameType;
@@ -16,7 +17,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\SearchDto;
-use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AvatarField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
@@ -94,9 +94,13 @@ class UserCrudController extends AbstractCrudController
         yield TextEditorField::new('description')
             ->setLabel('description.label')
         ;
-        yield ArrayField::new('roles')
-            ->formatValue(fn ($value, User $user) => implode(', ', $user->getRoles()))
+        yield ChoiceField::new('roles')
             ->setLabel('roles.label')
+            ->allowMultipleChoices()
+            ->setChoices(array_combine(
+                array_map(fn ($role) => $role->label(), UserRole::cases()),
+                array_map(fn ($role) => $role->value, UserRole::cases())
+            ))
         ;
         yield BooleanField::new('isVerified')
             ->setLabel('is_verified.label')
