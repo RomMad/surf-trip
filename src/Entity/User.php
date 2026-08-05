@@ -86,7 +86,7 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface, \
     public ?string $instagram = null;
 
     /** @var array<string> The user roles */
-    #[ORM\Column]
+    #[ORM\Column(type: Types::JSONB)]
     #[Groups(['user:read'])]
     public array $roles = [] {
         get {
