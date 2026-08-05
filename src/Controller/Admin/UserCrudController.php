@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Controller\Admin;
 
+use App\Controller\Admin\Filter\UserRolesFilter;
 use App\Entity\User;
+use App\Enum\User\SurfLevel;
 use App\Enum\User\UserRole;
 use App\Form\Type\EmailType;
 use App\Form\Type\FirstNameType;
@@ -14,6 +16,7 @@ use Doctrine\ORM\QueryBuilder;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FieldCollection;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FilterCollection;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\SearchDto;
@@ -25,6 +28,10 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\BooleanFilter;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\ChoiceFilter;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\DateTimeFilter;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\TextFilter;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 /**
@@ -51,6 +58,27 @@ class UserCrudController extends AbstractCrudController
             ->setSearchFields(['email', 'username', 'firstName', 'lastName'])
             ->setEntityLabelInSingular('user.label')
             ->setEntityLabelInPlural('users.label')
+        ;
+    }
+
+    #[\Override]
+    public function configureFilters(Filters $filters): Filters
+    {
+        return $filters
+            ->add(TextFilter::new('email', 'email.label'))
+            ->add(TextFilter::new('username', 'username.label'))
+            ->add(TextFilter::new('firstName', 'first_name.label'))
+            ->add(TextFilter::new('lastName', 'last_name.label'))
+            ->add(TextFilter::new('location', 'location.label'))
+            ->add(
+                ChoiceFilter::new('level', 'surf_level.label')
+                    ->canSelectMultiple()
+                    ->setTranslatableChoices(SurfLevel::cases())
+            )
+            ->add(UserRolesFilter::new('roles', 'roles.label'))
+            ->add(BooleanFilter::new('isVerified', 'is_verified.label'))
+            ->add(DateTimeFilter::new('createdAt', 'created_at.label'))
+            ->add(DateTimeFilter::new('updatedAt', 'updated_at.label'))
         ;
     }
 

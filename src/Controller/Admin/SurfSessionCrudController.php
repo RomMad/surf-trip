@@ -9,6 +9,7 @@ use Doctrine\ORM\QueryBuilder;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FieldCollection;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FilterCollection;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\SearchDto;
@@ -18,6 +19,9 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\DateTimeFilter;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\TextFilter;
 
 /**
  * @extends AbstractCrudController<SurfSession>
@@ -71,6 +75,7 @@ class SurfSessionCrudController extends AbstractCrudController
         ;
         yield AssociationField::new('trip')
             ->setLabel('trip.label')
+            ->formatValue(fn ($value, SurfSession $surfSession) => $surfSession->trip?->title?->value)
             ->autocomplete()
         ;
         yield AssociationField::new('user')
@@ -84,6 +89,25 @@ class SurfSessionCrudController extends AbstractCrudController
         yield DateTimeField::new('updatedAt')
             ->setLabel('updated_at.label')
             ->setFormTypeOption('disabled', true)
+        ;
+    }
+
+    #[\Override]
+    public function configureFilters(Filters $filters): Filters
+    {
+        return $filters
+            ->add(TextFilter::new('spot', 'surf_session.spot.label'))
+            ->add(
+                EntityFilter::new('trip', 'trip.label')
+                    ->autocomplete()
+            )
+            ->add(DateTimeFilter::new('startAt', 'surf_session.start_time.label'))
+            ->add(DateTimeFilter::new('endAt', 'surf_session.end_time.label'))
+            ->add(TextFilter::new('board', 'surf_session.board.label'))
+            ->add(
+                EntityFilter::new('user', 'user.label')
+                    ->autocomplete()
+            )
         ;
     }
 

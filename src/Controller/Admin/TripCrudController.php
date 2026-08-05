@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace App\Controller\Admin;
 
+use App\Controller\Admin\Filter\RequiredLevelsFilter;
 use App\Entity\Trip;
 use App\Form\Type\TitleType;
 use Doctrine\ORM\QueryBuilder;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FieldCollection;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FilterCollection;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\SearchDto;
@@ -19,6 +21,9 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\DateTimeFilter;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\TextFilter;
 
 /**
  * @extends AbstractCrudController<Trip>
@@ -96,6 +101,23 @@ class TripCrudController extends AbstractCrudController
         // yield DateTimeField::new('updatedAt')
         //     ->setLabel('updated_at.label')
         // ;
+    }
+
+    #[\Override]
+    public function configureFilters(Filters $filters): Filters
+    {
+        return $filters
+            ->add(TextFilter::new('title', 'title.label'))
+            ->add(TextFilter::new('location.label', 'location.label'))
+            ->add(DateTimeFilter::new('startAt', 'start_at.label'))
+            ->add(DateTimeFilter::new('endAt', 'end_at.label'))
+            ->add(RequiredLevelsFilter::new('requiredLevels', 'required_levels.label'))
+            ->add(
+                EntityFilter::new('owners', 'owners.label')
+                    ->autocomplete()
+                    ->canSelectMultiple()
+            )
+        ;
     }
 
     #[\Override]
