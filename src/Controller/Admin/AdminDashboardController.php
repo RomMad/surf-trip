@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Admin;
 
+use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminDashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
@@ -11,12 +12,22 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
+use EasyCorp\Bundle\EasyAdminBundle\Config\UserMenu;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[AdminDashboard(routePath: '/admin', routeName: 'admin')]
 class AdminDashboardController extends AbstractDashboardController
 {
+    use AvatarUrlTrait;
+
+    public function __construct(
+        #[Autowire('%app.avatar.path%')]
+        private string $avatarPath,
+    ) {}
+
     #[\Override]
     public function index(): Response
     {
@@ -40,6 +51,21 @@ class AdminDashboardController extends AbstractDashboardController
         yield MenuItem::linkTo(UserCrudController::class, 'users.label', 'users');
         yield MenuItem::linkTo(ResetPasswordRequestCrudController::class, 'reset_password_request.label', 'key-round');
         yield MenuItem::linkToUrl('back_to_site.label', 'square-arrow-right-exit', '/');
+    }
+
+    public function configureUserMenu(UserInterface $user): UserMenu
+    {
+        if (!$user instanceof User) {
+            throw new \LogicException(
+                sprintf('Expected an instance of "%s", but got "%s".', User::class, get_debug_type($user))
+            );
+        }
+
+        return parent::configureUserMenu($user)
+            ->displayUserName(true)
+            ->displayUserAvatar(true)
+            ->setAvatarUrl($this->generateAvatarUrl($user->avatarPath))
+        ;
     }
 
     #[\Override]

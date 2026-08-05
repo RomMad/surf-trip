@@ -17,6 +17,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\SearchDto;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AvatarField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
@@ -24,12 +25,20 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 /**
  * @extends AbstractCrudController<User>
  */
 class UserCrudController extends AbstractCrudController
 {
+    use AvatarUrlTrait;
+
+    public function __construct(
+        #[Autowire('%app.avatar.path%')]
+        private string $avatarPath,
+    ) {}
+
     public static function getEntityFqcn(): string
     {
         return User::class;
@@ -51,6 +60,11 @@ class UserCrudController extends AbstractCrudController
         yield IdField::new('id')
             ->setLabel('id.label')
             ->hideOnForm()
+        ;
+
+        yield AvatarField::new('avatarPath')
+            ->setLabel('avatar.label')
+            ->formatValue(fn ($value, User $user) => $this->generateAvatarUrl($user->avatarPath))
         ;
         yield EmailField::new('email')
             ->setLabel('email.label')
