@@ -54,9 +54,11 @@ class SurfSessionCrudController extends AbstractCrudController
         ;
         yield DateTimeField::new('startAt')
             ->setLabel('surf_session.start_time.label')
+            ->setFormat('d MMM yy HH:mm')
         ;
         yield DateTimeField::new('endAt')
-            ->setLabel('end_at.label')
+            ->setLabel('surf_session.end_time.label')
+            ->setFormat('HH:mm')
         ;
         yield ChoiceField::new('rating')
             ->setLabel('surf_session.rating.label')

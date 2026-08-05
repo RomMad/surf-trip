@@ -128,6 +128,7 @@ surf_session:
         label: Planche
         placeholder: Ex. Fish 5'8
     date.label: Date
+    end_time.label: Heure de fin
     start_time.label: Heure de début
     duration_minutes:
         label: Durée
