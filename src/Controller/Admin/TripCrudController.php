@@ -105,17 +105,21 @@ class TripCrudController extends AbstractCrudController
         FieldCollection $fields,
         FilterCollection $filters
     ): QueryBuilder {
-        $qb = parent::createIndexQueryBuilder($searchDto, $entityDto, $fields, $filters)
-            ->leftJoin('entity.owners', 'o')->addSelect('o')
+        $queryBuilder = parent::createIndexQueryBuilder($searchDto, $entityDto, $fields, $filters)
+            ->leftJoin('entity.owners', 'o')
+            ->addSelect('o')
         ;
 
         if ($searchDto->getQuery()) {
-            $qb
-                ->andWhere('ILIKE(entity.title, :search) = TRUE OR ILIKE(entity.description, :search) = TRUE')
+            $queryBuilder
+                ->andWhere(
+                    'ILIKE(entity.title, :search) = TRUE
+                    OR ILIKE(entity.description, :search) = TRUE'
+                )
                 ->setParameter('search', '%'.$searchDto->getQuery().'%')
             ;
         }
 
-        return $qb;
+        return $queryBuilder;
     }
 }

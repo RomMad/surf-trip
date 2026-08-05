@@ -130,10 +130,10 @@ class UserCrudController extends AbstractCrudController
         FieldCollection $fields,
         FilterCollection $filters
     ): QueryBuilder {
-        $qb = parent::createIndexQueryBuilder($searchDto, $entityDto, $fields, $filters);
+        $queryBuilder = parent::createIndexQueryBuilder($searchDto, $entityDto, $fields, $filters);
 
         if ($searchDto->getQuery()) {
-            $qb
+            $queryBuilder
                 ->orWhere('
                     entity.email LIKE :search
                     OR entity.username LIKE :search
@@ -144,6 +144,6 @@ class UserCrudController extends AbstractCrudController
             ;
         }
 
-        return $qb;
+        return $queryBuilder;
     }
 }

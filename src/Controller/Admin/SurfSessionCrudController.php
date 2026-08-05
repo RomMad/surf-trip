@@ -33,7 +33,7 @@ class SurfSessionCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setSearchFields(['spot', 'board'])
+            ->setSearchFields(['spot', 'trip.title', 'board'])
             ->setEntityLabelInSingular('surf_session.label')
             ->setEntityLabelInPlural('surf_sessions.label')
         ;
@@ -95,8 +95,9 @@ class SurfSessionCrudController extends AbstractCrudController
         FilterCollection $filters
     ): QueryBuilder {
         return parent::createIndexQueryBuilder($searchDto, $entityDto, $fields, $filters)
-            ->leftJoin('entity.trip', 't')->addSelect('t')
-            ->leftJoin('entity.user', 'u')->addSelect('u')
+            ->leftJoin('entity.trip', 't')
+            ->leftJoin('entity.user', 'u')
+            ->addSelect('u', 't')
         ;
     }
 }
