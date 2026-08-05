@@ -38,7 +38,7 @@ class AdminDashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('Surf Trip')
+            ->setTitle('Admin Dashboard')
         ;
     }
 
@@ -53,6 +53,7 @@ class AdminDashboardController extends AbstractDashboardController
         yield MenuItem::linkToUrl('back_to_site.label', 'square-arrow-right-exit', '/');
     }
 
+    #[\Override]
     public function configureUserMenu(UserInterface $user): UserMenu
     {
         if (!$user instanceof User) {
