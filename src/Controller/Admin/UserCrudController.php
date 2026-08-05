@@ -101,6 +101,7 @@ class UserCrudController extends AbstractCrudController
                 array_map(fn ($role) => $role->label(), UserRole::cases()),
                 array_map(fn ($role) => $role->value, UserRole::cases())
             ))
+            ->setTemplatePath('admin/user/roles.html.twig')
         ;
         yield BooleanField::new('isVerified')
             ->setLabel('is_verified.label')

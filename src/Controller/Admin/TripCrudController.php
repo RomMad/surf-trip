@@ -75,14 +75,17 @@ class TripCrudController extends AbstractCrudController
             ->setFormat('d MMM yyyy')
         ;
         yield ChoiceField::new('requiredLevels')
-            ->setFormTypeOption('multiple', true)
             ->setLabel('required_levels.label')
+            ->setFormTypeOption('multiple', true)
+            ->setTemplatePath('admin/trip/level.html.twig')
         ;
         yield TextEditorField::new('description')
             ->setLabel('description.label')
         ;
         yield AssociationField::new('owners')
             ->setLabel('owners.label')
+            ->setTemplatePath('admin/trip/owners.html.twig')
+            ->autocomplete()
         ;
         yield DateTimeField::new('createdAt')
             ->setLabel('created_at.label')

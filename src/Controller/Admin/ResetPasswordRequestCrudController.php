@@ -44,6 +44,7 @@ class ResetPasswordRequestCrudController extends AbstractCrudController
         ;
         yield AssociationField::new('user')
             ->setLabel('user.label')
+            ->autocomplete()
         ;
         yield DateTimeField::new('requestedAt')
             ->setLabel('requested_at.label')

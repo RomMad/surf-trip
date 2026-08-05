@@ -69,6 +69,7 @@ class SurfSessionCrudController extends AbstractCrudController
         ;
         yield AssociationField::new('trip')
             ->setLabel('trip.label')
+            ->autocomplete()
         ;
         yield AssociationField::new('user')
             ->setLabel('user.label')
