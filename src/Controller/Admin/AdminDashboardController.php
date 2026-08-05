@@ -56,8 +56,8 @@ class AdminDashboardController extends AbstractDashboardController
     public function configureAssets(): Assets
     {
         return Assets::new()
-            // ->addCssFile('css/admin.css')
             ->useCustomIconSet('lucide')
+            ->addWebpackEncoreEntry('admin-app')
         ;
     }
 }
