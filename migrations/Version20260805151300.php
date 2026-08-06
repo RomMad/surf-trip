@@ -16,11 +16,11 @@ final class Version20260805151300 extends AbstractMigration
 
     public function up(Schema $schema): void
     {
-        $this->addSql('ALTER TABLE "user" ALTER roles TYPE JSONB');
+        $this->addSql('ALTER TABLE "user" ALTER COLUMN roles TYPE JSONB');
     }
 
     public function down(Schema $schema): void
     {
-        $this->addSql('ALTER TABLE "user" ALTER roles TYPE JSON');
+        $this->addSql('ALTER TABLE "user" ALTER COLUMN roles TYPE JSON');
     }
 }
