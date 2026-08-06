@@ -215,7 +215,7 @@ DESC,
                 (float) $location['latitude'],
                 (float) $location['longitude'],
                 (string) $location['placeId'],
-                (string) $location['comment']
+                isset($location['comment']) ? (string) $location['comment'] : null,
             );
             $trip->startAt = new \DateTimeImmutable($tripData['startAt']);
             $trip->endAt = new \DateTimeImmutable($tripData['endAt']);
