@@ -89,7 +89,6 @@ class UserCrudController extends AbstractCrudController
             ->setLabel('id.label')
             ->hideOnForm()
         ;
-
         yield AvatarField::new('avatarPath')
             ->setLabel('avatar.label')
             ->formatValue(fn ($value, User $user) => $this->generateAvatarUrl($user->avatarPath))

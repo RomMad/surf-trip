@@ -46,6 +46,23 @@ class TripCrudController extends AbstractCrudController
     }
 
     #[\Override]
+    public function configureFilters(Filters $filters): Filters
+    {
+        return $filters
+            ->add(TextFilter::new('title', 'title.label'))
+            ->add(TextFilter::new('location.label', 'location.label'))
+            ->add(DateTimeFilter::new('startAt', 'start_at.label'))
+            ->add(DateTimeFilter::new('endAt', 'end_at.label'))
+            ->add(RequiredLevelsFilter::new('requiredLevels', 'required_levels.label'))
+            ->add(
+                EntityFilter::new('owners', 'owners.label')
+                    ->autocomplete()
+                    ->canSelectMultiple()
+            )
+        ;
+    }
+
+    #[\Override]
     public function configureFields(string $pageName): iterable
     {
         yield IdField::new('id')
@@ -101,23 +118,6 @@ class TripCrudController extends AbstractCrudController
         // yield DateTimeField::new('updatedAt')
         //     ->setLabel('updated_at.label')
         // ;
-    }
-
-    #[\Override]
-    public function configureFilters(Filters $filters): Filters
-    {
-        return $filters
-            ->add(TextFilter::new('title', 'title.label'))
-            ->add(TextFilter::new('location.label', 'location.label'))
-            ->add(DateTimeFilter::new('startAt', 'start_at.label'))
-            ->add(DateTimeFilter::new('endAt', 'end_at.label'))
-            ->add(RequiredLevelsFilter::new('requiredLevels', 'required_levels.label'))
-            ->add(
-                EntityFilter::new('owners', 'owners.label')
-                    ->autocomplete()
-                    ->canSelectMultiple()
-            )
-        ;
     }
 
     #[\Override]

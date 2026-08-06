@@ -44,6 +44,25 @@ class SurfSessionCrudController extends AbstractCrudController
     }
 
     #[\Override]
+    public function configureFilters(Filters $filters): Filters
+    {
+        return $filters
+            ->add(TextFilter::new('spot', 'surf_session.spot.label'))
+            ->add(
+                EntityFilter::new('trip', 'trip.label')
+                    ->autocomplete()
+            )
+            ->add(DateTimeFilter::new('startAt', 'surf_session.start_time.label'))
+            ->add(DateTimeFilter::new('endAt', 'surf_session.end_time.label'))
+            ->add(TextFilter::new('board', 'surf_session.board.label'))
+            ->add(
+                EntityFilter::new('user', 'user.label')
+                    ->autocomplete()
+            )
+        ;
+    }
+
+    #[\Override]
     public function configureFields(string $pageName): iterable
     {
         yield IdField::new('id')
@@ -89,25 +108,6 @@ class SurfSessionCrudController extends AbstractCrudController
         yield DateTimeField::new('updatedAt')
             ->setLabel('updated_at.label')
             ->setFormTypeOption('disabled', true)
-        ;
-    }
-
-    #[\Override]
-    public function configureFilters(Filters $filters): Filters
-    {
-        return $filters
-            ->add(TextFilter::new('spot', 'surf_session.spot.label'))
-            ->add(
-                EntityFilter::new('trip', 'trip.label')
-                    ->autocomplete()
-            )
-            ->add(DateTimeFilter::new('startAt', 'surf_session.start_time.label'))
-            ->add(DateTimeFilter::new('endAt', 'surf_session.end_time.label'))
-            ->add(TextFilter::new('board', 'surf_session.board.label'))
-            ->add(
-                EntityFilter::new('user', 'user.label')
-                    ->autocomplete()
-            )
         ;
     }
 
