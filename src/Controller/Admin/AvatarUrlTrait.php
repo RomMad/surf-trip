@@ -6,8 +6,6 @@ namespace App\Controller\Admin;
 
 trait AvatarUrlTrait
 {
-    private string $avatarPath;
-
     private function generateAvatarUrl(?string $filename = null): ?string
     {
         if (!$filename) {
