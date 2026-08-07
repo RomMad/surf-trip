@@ -8,6 +8,7 @@ use App\Entity\ResetPasswordRequest;
 use Doctrine\ORM\QueryBuilder;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FieldCollection;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FilterCollection;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
@@ -33,6 +34,14 @@ class ResetPasswordRequestCrudController extends AbstractCrudController
             ->setSearchFields(['user.email', 'selector'])
             ->setEntityLabelInSingular('reset_password_request.label')
             ->setEntityLabelInPlural('reset_password_requests.label')
+        ;
+    }
+
+    #[\Override]
+    public function configureActions(Actions $actions): Actions
+    {
+        return $actions
+            ->disable(Crud::PAGE_NEW)
         ;
     }
 
