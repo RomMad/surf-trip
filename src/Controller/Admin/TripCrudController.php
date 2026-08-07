@@ -122,7 +122,7 @@ class TripCrudController extends AbstractCrudController
         ;
         yield DateTimeField::new('createdAt')
             ->setLabel('created_at.label')
-            ->setFormTypeOption('disabled', true)
+            ->hideOnForm()
         ;
 
         // @todo create property updatedAt
