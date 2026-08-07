@@ -166,6 +166,9 @@ title.label: Title
 description.label: Description
 location:
     label: Location
+    latitude.label: Latitude
+    longitude.label: Longitude
+    placeId.label: Place ID
     placeholder: Trip location
     comment:
         label: Location details

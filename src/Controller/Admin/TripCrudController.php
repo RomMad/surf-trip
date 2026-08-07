@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Controller\Admin;
 
 use App\Controller\Admin\Filter\RequiredLevelsFilter;
+use App\Entity\Embeddable\Location;
 use App\Entity\Trip;
+use App\Form\Type\AdminLocationType;
 use App\Form\Type\TitleType;
 use Doctrine\ORM\QueryBuilder;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FieldCollection;
@@ -18,6 +20,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Dto\SearchDto;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
@@ -76,16 +79,24 @@ class TripCrudController extends AbstractCrudController
 
         yield TextField::new('slug')
             ->setLabel('slug.label')
-            ->hideOnIndex()
             ->setFormTypeOption('disabled', true)
+            ->hideOnIndex()
+            ->hideWhenCreating()
         ;
         yield TextField::new('location.label')
-            ->formatValue(fn ($value, Trip $trip) => $trip->location->getFullLabel())
             ->setLabel('location.label')
+            ->formatValue(fn ($value, Trip $trip) => $trip->location->getFullLabel())
+            ->hideOnForm()
         ;
-        yield TextField::new('location.comment')
-            ->setLabel('location.comment.label')
-            ->hideOnIndex()
+        yield Field::new('location')
+            ->setLabel('location.label')
+            ->setFormType(AdminLocationType::class)
+            ->setFormTypeOptions([
+                'empty_data' => new Location('---'), // fix for the form to work properly when creating a new trip because the Location embeddable is not initialized yet.
+                'label' => false,
+                'required' => true,
+            ])
+            ->onlyOnForms()
         ;
         yield DateTimeField::new('startAt')
             ->setLabel('start_at.label')
