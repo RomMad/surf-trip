@@ -143,7 +143,7 @@ class TripCrudController extends AbstractCrudController
 
         if ($searchDto->getQuery()) {
             $queryBuilder
-                ->andWhere(
+                ->orWhere(
                     'ILIKE(entity.title, :search) = TRUE
                     OR ILIKE(entity.description, :search) = TRUE'
                 )
