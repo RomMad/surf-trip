@@ -79,9 +79,7 @@ class TripCrudController extends AbstractCrudController
 
         yield TextField::new('slug')
             ->setLabel('slug.label')
-            ->setFormTypeOption('disabled', true)
-            ->hideOnIndex()
-            ->hideWhenCreating()
+            ->onlyOnDetail()
         ;
         yield TextField::new('location.label')
             ->setLabel('location.label')

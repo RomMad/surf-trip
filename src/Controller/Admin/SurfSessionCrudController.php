@@ -105,11 +105,11 @@ class SurfSessionCrudController extends AbstractCrudController
         ;
         yield DateTimeField::new('createdAt')
             ->setLabel('created_at.label')
-            ->setFormTypeOption('disabled', true)
+            ->hideOnForm()
         ;
         yield DateTimeField::new('updatedAt')
             ->setLabel('updated_at.label')
-            ->setFormTypeOption('disabled', true)
+            ->hideOnForm()
         ;
     }
 

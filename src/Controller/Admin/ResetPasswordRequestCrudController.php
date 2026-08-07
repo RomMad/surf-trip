@@ -48,11 +48,11 @@ class ResetPasswordRequestCrudController extends AbstractCrudController
         ;
         yield DateTimeField::new('requestedAt')
             ->setLabel('requested_at.label')
-            ->setFormTypeOption('disabled', true)
+            ->hideOnForm()
         ;
         yield DateTimeField::new('expiresAt')
             ->setLabel('expires_at.label')
-            ->setFormTypeOption('disabled', true)
+            ->hideOnForm()
         ;
     }
 

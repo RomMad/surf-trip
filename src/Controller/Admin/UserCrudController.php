@@ -132,21 +132,22 @@ class UserCrudController extends AbstractCrudController
         ;
         yield BooleanField::new('isVerified')
             ->setLabel('is_verified.label')
+            ->hideOnForm()
         ;
         yield ChoiceField::new('locale')
             ->setLabel('locale.label')
         ;
         yield DateTimeField::new('createdAt')
             ->setLabel('created_at.label')
-            ->setFormTypeOption('disabled', true)
+            ->hideOnForm()
         ;
         yield DateTimeField::new('updatedAt')
             ->setLabel('updated_at.label')
-            ->setFormTypeOption('disabled', true)
+            ->hideOnForm()
         ;
         yield DateTimeField::new('lastActiveAt')
             ->setLabel('last_active_at.label')
-            ->setFormTypeOption('disabled', true)
+            ->hideOnForm()
         ;
     }
 
