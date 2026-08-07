@@ -34,10 +34,6 @@ final class TripFactory extends PersistentObjectFactory
         $words = self::faker()->words(random_int(2, 4), true);
         $title = sprintf('%s Surf Trip', ucfirst(is_string($words) ? $words : ''));
         $location = sprintf('%s, %s', self::faker()->city(), self::faker()->country());
-        $requiredLevels = self::faker()->randomElements(
-            SurfLevel::cases(),
-            self::faker()->numberBetween(1, count(SurfLevel::cases()))
-        );
 
         return [
             'title' => Title::from($title),
@@ -48,10 +44,24 @@ final class TripFactory extends PersistentObjectFactory
             ),
             'startAt' => $startAt,
             'endAt' => $startAt->modify(sprintf('+%d days', self::faker()->numberBetween(3, 14))),
-            'requiredLevels' => $requiredLevels,
+            'requiredLevels' => self::randomSurfLevels(),
             'description' => self::faker()->paragraphs(self::faker()->numberBetween(1, 3), true),
             'owners' => [UserFactory::randomOrCreate()],
             'createdAt' => $createdAt,
         ];
+    }
+
+    /**
+     * @return list<SurfLevel>
+     */
+    public static function randomSurfLevels(): array
+    {
+        $levels = SurfLevel::cases();
+        $count = self::faker()->numberBetween(1, 3);
+        $requiredLevels = self::faker()->randomElements($levels, $count, true);
+
+        usort($requiredLevels, fn (SurfLevel $a, SurfLevel $b) => $a->value <=> $b->value);
+
+        return $requiredLevels;
     }
 }

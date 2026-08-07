@@ -10,6 +10,7 @@ use App\Entity\Trip;
 use App\Entity\User;
 use App\Entity\ValueObject\Title;
 use App\Enum\User\SurfLevel;
+use App\Factory\TripFactory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -188,7 +189,7 @@ DESC,
             );
             $trip->startAt = $startAt;
             $trip->endAt = $startAt->modify(sprintf('+%d days', $this->faker->numberBetween(3, 14)));
-            $trip->requiredLevels = $this->randomSurfLevels();
+            $trip->requiredLevels = TripFactory::randomSurfLevels();
             $trip->description = $description;
 
             /** @var list<int> $owners */
@@ -230,19 +231,6 @@ DESC,
 
             yield $trip;
         }
-    }
-
-    /**
-     * @return list<SurfLevel>
-     */
-    private function randomSurfLevels(): array
-    {
-        $result = $this->faker->randomElements(
-            SurfLevel::cases(),
-            $this->faker->numberBetween(1, count(SurfLevel::cases()))
-        );
-
-        return array_values($result);
     }
 
     private function randomTripTitle(string $location): string
