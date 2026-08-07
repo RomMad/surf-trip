@@ -133,7 +133,7 @@
         "phpunit/phpunit": "^13.2.6",
         "rector/rector": "^2.5.8",
         "rector/swiss-knife": "^2.4.8",
-        "squizlabs/php_codesniffer": "^4.0.1",
+        "squizlabs/php_codesniffer": "^4.0.4",
         "symfony/browser-kit": "8.1.*",
         "symfony/css-selector": "8.1.*",
         "symfony/debug-bundle": "8.1.*",
