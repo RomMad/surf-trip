@@ -272,8 +272,10 @@ function rector_swiss_knife(): void
 #[AsTask(description: 'Debug translation files to find missing translations', namespace: 'app', aliases: ['debug-trans'])]
 function debug_translation(): void
 {
-    run_symfony_console('debug:translation en --only-missing');
-    run_symfony_console('debug:translation fr --only-missing');
+    run_symfony_console('debug:translation en --domain=messages --only-missing');
+    run_symfony_console('debug:translation en --domain=validators --only-missing');
+    run_symfony_console('debug:translation fr --domain=messages --only-missing');
+    run_symfony_console('debug:translation fr --domain=validators --only-missing');
 }
 
 #[AsTask(description: 'Lint translation messages', namespace: 'app', aliases: ['lint-trans'])]
@@ -352,6 +354,18 @@ function test(#[AsArgument()] string $options = 'tests'): void
     run_php(
         sprintf(
             './vendor/bin/paratest --runner WrapperRunner --no-coverage %s | sed \'s#/app#%s#g\'',
+            $options,
+            getcwd(),
+        )
+    );
+}
+
+#[AsTask(description: 'Run tests for debug with dump', namespace: 'app', aliases: ['test-debug'])]
+function test_debug(#[AsArgument()] string $options = 'tests'): void
+{
+    run_php(
+        sprintf(
+            './vendor/bin/phpunit --no-coverage %s | sed \'s#/app#%s#g\'',
             $options,
             getcwd(),
         )

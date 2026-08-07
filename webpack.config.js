@@ -20,6 +20,7 @@ Encore
     * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
     */
    .addEntry('app', './assets/app.ts')
+   .addEntry('admin-app', './assets/admin-app.js')
    .addAliases({
        'leaflet/dist/leaflet.min.css': 'leaflet/dist/leaflet.css',
    })

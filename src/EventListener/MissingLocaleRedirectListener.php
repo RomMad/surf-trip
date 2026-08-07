@@ -16,6 +16,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
 final readonly class MissingLocaleRedirectListener
 {
     private const array EXCLUDED_PREFIXES = [
+        '/admin',
         '/api',
         '/docs',
         '/build',

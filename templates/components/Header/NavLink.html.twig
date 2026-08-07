@@ -1,17 +1,20 @@
 {# @prop route string Target URL #}
 {# @prop label string Translation key for link label #}
 {# @prop active boolean Whether the link is active or not, default to `false` #}
-{%- props route, label, active = route == app.current_route -%}
+{# @prop isGranted boolean Whether the link should be displayed or not, default to `true` #}
+{%- props route, label, active = route == app.current_route, isGranted = true -%}
 
-<li>
-    <twig:Button
-        as="a"
-        href="{{ path(route) }}"
-        class="hover:text-primary-foreground/80 px-3"
-        :disabled="active"
-        :aria-current="active ? 'page' : false"
-        {{ ...attributes.without('class') }}
-    >
-        {{- label|trans -}}
-    </twig:Button>
-</li>
+{% if isGranted %}
+    <li>
+        <twig:Button
+            as="a"
+            href="{{ path(route) }}"
+            class="hover:text-primary-foreground/80 px-3"
+            :disabled="active"
+            :aria-current="active ? 'page' : false"
+            {{ ...attributes.without('class') }}
+        >
+            {{- label|trans -}}
+        </twig:Button>
+    </li>
+{% endif %}

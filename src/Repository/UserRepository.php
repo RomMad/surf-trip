@@ -64,10 +64,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     public function findOwnerChoicesByQuery(string $query, int $limit = 10): array
     {
         $results = $this->createOwnerReadModelQueryBuilder()
-            ->andWhere('
-                    ILIKE(CONCAT(u.firstName, \' \', u.lastName), :filter) = TRUE
-                    OR ILIKE(CONCAT(u.lastName, \' \', u.firstName), :filter) = TRUE
-                ')
+            ->andWhere("ILIKE(CONCAT(u.firstName, ' ', u.lastName, ' ', u.firstName), :filter) = TRUE")
             ->setParameter('filter', '%'.$query.'%')
             ->setMaxResults($limit)
             ->getQuery()

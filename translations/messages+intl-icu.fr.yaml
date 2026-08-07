@@ -13,8 +13,11 @@ back_to_list.label: Retour à la liste
 
 # Common
 app_name: Surf Trip
+created_at.label: Créé le
+dashboard.label: Tableau de bord
 dark_mode.label: Mode sombre
 dropzone.label: Déposez votre image
+id.label: ID
 no_records_found.label: Aucun enregistrement trouvé
 navigation:
     main.label: Navigation principale
@@ -30,13 +33,6 @@ loading.label: Chargement en cours...
 map:
     label: Carte
     help: Afficher sous forme de carte
-read:
-    less.label: Voir moins ↑
-    more.label: Voir plus ↓
-results.count.label: "{count, plural, =0 {Aucun résultat} =1 {# résultat} other {# résultats}}"
-search:
-    label: Rechercher
-    placeholder: Rechercher...
 period:
     from:
         label: Du
@@ -44,6 +40,15 @@ period:
     to:
         label: Au
         help: Date de fin (à)
+read:
+    less.label: Voir moins ↑
+    more.label: Voir plus ↓
+results.count.label: "{count, plural, =0 {Aucun résultat} =1 {# résultat} other {# résultats}}"
+search:
+    label: Rechercher
+    placeholder: Rechercher...
+slug.label: Slug
+updated_at.label: Mis à jour le
 
 # Calendar
 calendar:
@@ -111,6 +116,7 @@ more_pages.label: Plus de pages
 # Surf Session
 surf_sessions.label: Sessions
 surf_session:
+    label: Session
     created_successfully: La session a été créée.
     updated_successfully: La session a été mise à jour.
     deleted_successfully: La session a été supprimée.
@@ -122,6 +128,7 @@ surf_session:
         label: Planche
         placeholder: Ex. Fish 5'8
     date.label: Date
+    end_time.label: Heure de fin
     start_time.label: Heure de début
     duration_minutes:
         label: Durée
@@ -159,6 +166,9 @@ title.label: Titre
 description.label: Description
 location:
     label: Lieu
+    latitude.label: Latitude
+    longitude.label: Longitude
+    placeId.label: Place ID
     placeholder: Lieu du trip
     comment:
         label: Détails du lieu
@@ -174,7 +184,6 @@ required_levels:
 owners:
     label: Administrateurs
     placeholder: Sélectionne les administrateurs
-created_at.label: Créé le
 actions.label: Actions
 
 # Surf level
@@ -196,9 +205,16 @@ avatar.label: Avatar
 email.label: E-mail
 first_name.label: Prénom
 instagram.label: Instagram
+is_verified.label: E-mail vérifié
+last_active_at.label: Dernier accès
 last_name.label: Nom
+locale.label: Langue
 password.label: Mot de passe
 password_repeat.label: Répéter le mot de passe
+role:
+    user.label: Utilisateur
+    admin.label: Administrateur
+roles.label: Rôles
 surf_level.label: Niveau de surf
 username.label: Nom d'utilisateur
 user:
@@ -210,6 +226,7 @@ user:
         edit.label: Modifier l'avatar
         preview.label: Aperçu de l'avatar
         set.label: Définir l'avatar
+users.label: Utilisateurs
 
 # Dashboard
 dashboard:
@@ -234,3 +251,14 @@ kpis:
     total_sessions.label: Total de sessions
     sessions_this_year.label: Sessions cette année
     average_session_rating.label: Note moyenne des sessions
+
+# Reset Password Request entity
+reset_password_request.label: Demande de réinitialisation
+reset_password_requests.label: Demandes de réinitialisation
+hashed_token.label: Jeton
+requested_at.label: Demandé le
+expires_at.label: Expire le
+
+# Admin
+admin.label: Admin
+back_to_site.label: Retour au site

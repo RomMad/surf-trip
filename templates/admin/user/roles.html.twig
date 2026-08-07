@@ -1,0 +1,6 @@
+
+{%- for role in field.value -%}
+    <span class="badge badge-secondary">
+        {{- enum('App\\Enum\\User\\UserRole').tryFrom(role)|trans -}}
+    </span>
+{%- endfor -%}
