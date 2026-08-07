@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Controller\Admin;
 
 use App\Entity\SurfSession;
+use App\Entity\User;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FieldCollection;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FilterCollection;
@@ -123,5 +125,17 @@ class SurfSessionCrudController extends AbstractCrudController
             ->leftJoin('entity.user', 'u')
             ->addSelect('u', 't')
         ;
+    }
+
+    #[\Override]
+    public function persistEntity(EntityManagerInterface $entityManager, object $surfSession): void
+    {
+        $currentUser = $this->getUser();
+
+        if ($currentUser instanceof User) {
+            $surfSession->user = $currentUser;
+        }
+
+        parent::persistEntity($entityManager, $surfSession);
     }
 }
