@@ -360,6 +360,18 @@ function test(#[AsArgument()] string $options = 'tests'): void
     );
 }
 
+#[AsTask(description: 'Run tests for debug with dump', namespace: 'app', aliases: ['test-debug'])]
+function test_debug(#[AsArgument()] string $options = 'tests'): void
+{
+    run_php(
+        sprintf(
+            './vendor/bin/phpunit --no-coverage %s | sed \'s#/app#%s#g\'',
+            $options,
+            getcwd(),
+        )
+    );
+}
+
 #[AsTask(description: 'Run tests coverage with Paratest', namespace: 'app', aliases: ['test-coverage'])]
 function test_coverage(string $options = '--coverage-html ./var/coverage'): void
 {
