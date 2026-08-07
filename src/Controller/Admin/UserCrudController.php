@@ -165,8 +165,7 @@ class UserCrudController extends AbstractCrudController
                 ->orWhere('
                     entity.email LIKE :search
                     OR entity.username LIKE :search
-                    OR entity.firstName LIKE :search
-                    OR entity.lastName LIKE :search
+                    OR ILIKE(CONCAT(entity.firstName, \' \', entity.lastName, \' \', entity.firstName), :search) = TRUE
                 ')
                 ->setParameter('search', '%'.$searchDto->getQuery().'%')
             ;
