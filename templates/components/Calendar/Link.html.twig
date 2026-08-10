@@ -1,12 +1,25 @@
-<twig:Button
-    as="a"
-    variant="outline"
-    size="sm"
-    target="_blank"
-    href="{{ href }}"
-    rel="noopener noreferrer"
-    title="{{ title|trans }}"
->
-    <twig:ux:icon name="{{ icon }}" />
-    {{- label|trans -}}
-</twig:Button>
+{# This component is used to render a link to add an event to a calendar. #}
+{# @prop href The link to the calendar event. #}
+{# @prop icon The icon to display in the link. #}
+{# @prop label The label to display in the link. #}
+{# @prop help The help text to display in the tooltip. #}
+
+<twig:Tooltip id="calendar_link_{{ label|replace({'.': '_'}) }}">
+    <twig:Tooltip:Trigger>
+        <twig:Button
+            as="a"
+            variant="outline"
+            size="sm"
+            target="_blank"
+            href="{{ href }}"
+            rel="noopener noreferrer"
+             {{ ...tooltip_trigger_attrs }}
+        >
+            <twig:ux:icon name="{{ icon }}" />
+            {{- label|trans -}}
+        </twig:Button>
+    </twig:Tooltip:Trigger>
+    <twig:Tooltip:Content side="bottom">
+        <p>{{ help|trans }}</p>
+    </twig:Tooltip:Content>
+</twig:Tooltip>

@@ -23,7 +23,6 @@
                     variant="link"
                     class="p-0"
                     href="{{ path('app.trip.show', {id: surf_session.tripId, slug: surf_session.tripTitle|slug|lower}) }}"
-                    title="{{ 'trip.show.label'|trans }}"
                     data-turbo-frame="_top"
                 >
                     {{- surf_session.tripTitle -}}

@@ -1,6 +1,6 @@
-{# @prop string title Translation key for card section title #}
-{# @prop string|null icon Optional icon name to display next to the title #}
-{%- props title, icon = null -%}
+{# @prop string heading Translation key for card section title #}
+{# @prop string|null icon Optional icon name to display next to the heading #}
+{%- props heading, icon = null -%}
 
 <div class="{{ ('app-card ' ~ attributes.render('class'))|tailwind_merge }}">
     <div class="app-card-header">
@@ -8,7 +8,7 @@
             {% if icon %}
                 <twig:ux:icon name="{{ icon }}" />
             {% endif %}
-            {{- title|trans -}}
+            {{- heading|trans -}}
         </h3>
     </div>
     <div class="app-card-content">
