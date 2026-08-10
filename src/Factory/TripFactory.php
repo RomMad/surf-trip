@@ -59,6 +59,7 @@ final class TripFactory extends PersistentObjectFactory
         $levels = SurfLevel::cases();
         $count = self::faker()->numberBetween(1, 3);
         $requiredLevels = self::faker()->randomElements($levels, $count, true);
+        $requiredLevels = array_unique($requiredLevels, SORT_REGULAR);
 
         usort($requiredLevels, fn (SurfLevel $a, SurfLevel $b) => $a->value <=> $b->value);
 

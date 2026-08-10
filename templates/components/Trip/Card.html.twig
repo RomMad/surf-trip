@@ -6,9 +6,9 @@
 <twig:Card class="overflow-hidden rounded-3xl">
     <twig:Card:Header class="relative overflow-hidden text-white px-6 py-8 bg-gradient-to-bl from-white/10 via-primary to-primary">
         <div class="space-y-4">
-            <h1 class="text-3xl font-bold tracking-tight text-white">
+            <twig:Typography:H1 class="text-white">
                 {{- trip.title -}}
-            </h1>
+            </twig:Typography:H1>
             <div class="flex flex-wrap items-center gap-2">
                 <twig:Badge variant="{{ trip_status.badgeVariant }}">
                     {{- trip_status.label|trans -}}

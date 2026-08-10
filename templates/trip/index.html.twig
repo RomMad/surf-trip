@@ -4,7 +4,7 @@
 
 {% block body %}
     <div class="app-page-header">
-        <twig:Heading1 :title="title" />
+        <twig:Typography:H1>{{ title }}</twig:Typography:H1>
         <twig:Button:New href="{{ path('app.trip.new') }}" />
     </div>
 

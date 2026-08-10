@@ -6,9 +6,9 @@
     <twig:Card:Header>
         <twig:Card:Title>
             <div class="flex items-center gap-2">
-                <h3 class="heading-3 mt-0">
+                <twig:Typography:H3>
                     {{- surf_session.spot -}}
-                </h3>
+                </twig:Typography:H3>
                 {% if surf_session.rating is not null %}
                     <twig:Badge variant="{{ surf_session.rating.color }}">
                          {{- surf_session.rating.label|trans -}}

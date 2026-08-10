@@ -1,0 +1,9 @@
+{# @block content The paragraph content. #}
+<p
+    class="{{ ('app-p ' ~ attributes.render('class'))|tailwind_merge }}"
+    {{ attributes.defaults({
+        'data-slot': 'typography-p',
+    }) }}
+>
+    {%- block content %}{% endblock -%}
+</p>

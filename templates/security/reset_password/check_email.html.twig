@@ -11,10 +11,12 @@
 {% block title %}{{ 'security.reset_password.check_email.title'|trans }}{% endblock %}
 
 {% block body %}
-    <p>
+    <twig:Typography:P>
         {{- 'security.reset_password.check_email.description'|trans({
             expires: reset_token.expirationMessageKey|trans(reset_token.expirationMessageData, 'ResetPasswordBundle'),
         }) -}}
-    </p>
-    <p>{{ 'security.reset_password.check_email.retry'|trans({link: retry_link})|raw }}</p>
+    </twig:Typography:P>
+    <twig:Typography:P>
+        {{- 'security.reset_password.check_email.retry'|trans({link: retry_link})|raw -}}
+    </twig:Typography:P>
 {% endblock %}
