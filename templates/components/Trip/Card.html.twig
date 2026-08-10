@@ -37,7 +37,7 @@
     </twig:Card:Header>
 
     <twig:Card:Content class="grid gap-4 p-4 md:grid-cols-[2fr_1fr]">
-            <twig:Trip:Card:Info title="description.label" class="order-1">
+            <twig:Trip:Card:Info heading="description.label" class="order-1">
                 <twig:ReadMore>
                     {{- trip.description -}}
                 </twig:ReadMore>
@@ -45,7 +45,7 @@
             <twig:Card class="overflow-hidden order-4 md:order-2">
                 <twig:TripMap :trip="trip" class="h-full" />
             </twig:Card>
-            <twig:Trip:Card:Info title="required_levels.label" icon="noto:man-surfing" class="order-2">
+            <twig:Trip:Card:Info heading="required_levels.label" icon="noto:man-surfing" class="order-2">
                 <div class="flex flex-wrap gap-1">
                     {% for required_level in trip.requiredLevels %}
                         <twig:Badge variant="outline">
@@ -54,7 +54,7 @@
                     {% endfor %}
                 </div>
             </twig:Trip:Card:Info>
-            <twig:Trip:Card:Info title="owners.label" icon="lucide:users"  class="order-3">
+            <twig:Trip:Card:Info heading="owners.label" icon="lucide:users"  class="order-3">
                 <div class="flex flex-wrap gap-2">
                     {% for owner in trip.owners|slice(0, max_display_owners) %}
                         <div class="flex items-center gap-1 text-sm">

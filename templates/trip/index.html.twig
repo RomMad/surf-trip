@@ -19,15 +19,22 @@
                 <twig:AppPagination :pager="pager" />
             {% endif %}
             <twig:Sticky>
-                <twig:Button
-                    as="a"
-                    href="{{ path('app.trip.map', app.request.query.all) }}"
-                    title="{{ 'map.help'|trans }}"
-                    data-turbo-action="advance"
-                >
-                    <twig:ux:icon name="lucide:map" />
-                    {{- 'map.label'|trans -}}
-                </twig:Button>
+                <twig:Tooltip id="trip_map_tooltip">
+                    <twig:Tooltip:Trigger>
+                        <twig:Button
+                            as="a"
+                            href="{{ path('app.trip.map', app.request.query.all) }}"
+                            data-turbo-action="advance"
+                            {{ ...tooltip_trigger_attrs }}
+                        >
+                            <twig:ux:icon name="lucide:map" />
+                            {{- 'map.label'|trans -}}
+                        </twig:Button>
+                    </twig:Tooltip:Trigger>
+                    <twig:Tooltip:Content side="top">
+                        <p>{{ 'map.help'|trans }}</p>
+                    </twig:Tooltip:Content>
+                </twig:Tooltip>
             </twig:Sticky>
         </twig:Turbo:Frame>
     {% endblock %}

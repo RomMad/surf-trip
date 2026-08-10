@@ -7,15 +7,22 @@
                 <twig:TripsMap :trips="trips" />
             </twig:Card>
             <twig:Sticky>
-                <twig:Button
-                    as="a"
-                    href="{{ path('app.trip.index', app.request.query.all) }}"
-                    title="{{ 'list.help'|trans }}"
-                    data-turbo-action="advance"
-                >
-                    <twig:ux:icon name="lucide:table" />
-                    {{- 'list.label'|trans -}}
-                </twig:Button>
+            <twig:Tooltip id="trip_list_tooltip">
+                <twig:Tooltip:Trigger>
+                    <twig:Button
+                        as="a"
+                        href="{{ path('app.trip.index', app.request.query.all) }}"
+                        data-turbo-action="advance"
+                        {{ ...tooltip_trigger_attrs }}
+                    >
+                        <twig:ux:icon name="lucide:table" />
+                        {{- 'list.label'|trans -}}
+                    </twig:Button>
+                </twig:Tooltip:Trigger>
+                <twig:Tooltip:Content side="top">
+                    <p>{{ 'list.help'|trans }}</p>
+                </twig:Tooltip:Content>
+            </twig:Tooltip>
             </twig:Sticky>
     </twig:Turbo:Frame>
 {% endblock %}
