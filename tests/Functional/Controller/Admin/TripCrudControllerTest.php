@@ -105,8 +105,8 @@ final class TripCrudControllerTest extends CustomAbstractCrudTestCase
             $updatedTrip->endAt?->format('Y-m-d\TH:i')
         );
         $this->assertSame(
-            implode(',', array_map(fn ($level) => $level->value, $editTrip->requiredLevels)),
-            implode(',', array_map(fn ($level) => $level->value, $updatedTrip->requiredLevels))
+            array_values($editTrip->requiredLevels),
+            array_values($updatedTrip->requiredLevels),
         );
         $this->assertSame($editTrip->description, $updatedTrip->description);
     }
