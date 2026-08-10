@@ -1,0 +1,9 @@
+{# @block content The quote content. #}
+<blockquote
+    class="{{ ('app-blockquote ' ~ attributes.render('class'))|tailwind_merge }}"
+    {{ attributes.defaults({
+        'data-slot': 'typography-blockquote',
+    }) }}
+>
+    {%- block content %}{% endblock -%}
+</blockquote>

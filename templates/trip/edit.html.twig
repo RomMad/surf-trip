@@ -4,7 +4,7 @@
 
 {% block body %}
     <div class="app-page-header">
-        <twig:Heading1 :title="title" class="mb-0" />
+        <twig:Typography:H1>{{ title }}</twig:Typography:H1>
         {% if is_granted('EDIT', trip) %}
             <twig:Button:New
                 href="{{ path('app.trip.surf_session.new', {tripId: trip.id}) }}"

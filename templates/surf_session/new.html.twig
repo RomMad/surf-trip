@@ -3,7 +3,7 @@
 {% set title = 'surf_session.new.label'|trans %}
 
 {% block body %}
-    <twig:Heading1 :title="title" />
+    <twig:Typography:H1>{{ title }}</twig:Typography:H1>
 
     <twig:SurfSession:Form :form="form" />
 

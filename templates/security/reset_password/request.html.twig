@@ -11,7 +11,7 @@
         </twig:Alert>
     {% endfor %}
 
-    <twig:Heading1 :title="title" />
+    <twig:Typography:H1>{{ title }}</twig:Typography:H1>
 
     {{ form_start(form) }}
         {{ form_row(form.email) }}

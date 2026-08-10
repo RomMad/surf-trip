@@ -1,0 +1,9 @@
+{# @block content The heading content. #}
+<h2
+    class="{{ ('app-h2 ' ~ attributes.render('class'))|tailwind_merge }}"
+    {{ attributes.defaults({
+        'data-slot': 'typography-h2',
+    }) }}
+>
+    {%- block content %}{% endblock -%}
+</h2>

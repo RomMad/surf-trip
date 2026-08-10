@@ -5,7 +5,7 @@
 {% block container_class %}app-centered-container{% endblock %}
 
 {% block body %}
-    <twig:Heading1 :title="title" />
+    <twig:Typography:H1>{{ title }}</twig:Typography:H1>
 
     {{ form_start(form) }}
         {{ form_row(form.plainPassword) }}

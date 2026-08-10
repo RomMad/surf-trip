@@ -3,7 +3,7 @@
 {% set title = 'trip.new.label'|trans %}
 
 {% block body %}
-    <twig:Heading1 :title="title" />
+    <twig:Typography:H1>{{ title }}</twig:Typography:H1>
     <twig:Trip:Form :form="form" />
     <twig:Trip:BackToIndexButton />
 {% endblock %}
