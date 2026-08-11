@@ -123,7 +123,6 @@ class UserCrudController extends AbstractCrudController
             ->setFormTypeOptions([
                 'data_class' => UserLocation::class,
                 'label' => false,
-                'required' => true,
             ])
             ->onlyOnForms()
         ;
