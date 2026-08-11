@@ -1,18 +1,18 @@
 @layer components {
     .app-h1 {
-        @apply scroll-m-20 text-4xl font-extrabold tracking-tight text-balance;
+        @apply scroll-m-20 text-4xl font-extrabold tracking-tight text-balance mb-6;
     }
 
     .app-h2 {
-        @apply scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0;
+        @apply scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0 mb-4;
     }
 
     .app-h3 {
-        @apply scroll-m-20 text-2xl font-semibold tracking-tight;
+        @apply scroll-m-20 text-2xl font-semibold tracking-tight mb-2;
     }
 
     .app-h4 {
-        @apply scroll-m-20 text-xl font-semibold tracking-tight;
+        @apply scroll-m-20 text-xl font-semibold tracking-tight mb-1;
     }
 
     .app-p {
