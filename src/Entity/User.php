@@ -10,6 +10,7 @@ use App\Doctrine\Type\EmailType;
 use App\Doctrine\Type\FirstNameType;
 use App\Doctrine\Type\LastNameType;
 use App\Doctrine\Type\UsernameType;
+use App\Entity\Embeddable\UserLocation;
 use App\Entity\Traits\TimestampableTrait;
 use App\Entity\ValueObject\Email;
 use App\Entity\ValueObject\FirstName;
@@ -18,12 +19,14 @@ use App\Entity\ValueObject\Username;
 use App\Enum\User\Locale;
 use App\Enum\User\SurfLevel;
 use App\Enum\User\UserRole;
+use App\ObjectMapper\User\UserLocationToUserLocationInputTransformer;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\ObjectMapper\Attribute\Map;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Attribute\Groups;
@@ -77,9 +80,10 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface, \
     #[Groups(['user:read'])]
     public ?SurfLevel $level = null;
 
-    #[ORM\Column(nullable: true)]
+    #[ORM\Embedded(class: UserLocation::class)]
+    #[Map(transform: UserLocationToUserLocationInputTransformer::class)]
     #[Groups(['user:read'])]
-    public ?string $location = null;
+    public ?UserLocation $location = null;
 
     #[ORM\Column(length: 64, nullable: true)]
     #[Groups(['user:read'])]

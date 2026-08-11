@@ -30,9 +30,7 @@ final class ProfileFormType extends AbstractType
                 'label' => 'surf_level.label',
                 'required' => false,
             ])
-            ->add('location', null, [
-                'label' => 'location.label',
-            ])
+            ->add('location', UserLocationFormType::class)
             ->add('instagram', null, [
                 'label' => 'instagram.label',
             ])
