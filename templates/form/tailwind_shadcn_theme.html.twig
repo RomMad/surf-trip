@@ -126,3 +126,14 @@
         </ul>
     {% endif %}
 {% endblock %}
+
+{% block location_widget %}
+    <div
+        class="app-form-grid-2"
+        data-controller="location-autocomplete"
+        data-location-autocomplete-api-key-value="{{ mapbox_public_api_key }}"
+        data-location-autocomplete-no-results-text-value="{{ 'location.no_results'|trans }}"
+    >
+        {{ form_rest(form) }}
+    </div>
+{% endblock %}
