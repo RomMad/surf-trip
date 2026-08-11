@@ -19,7 +19,7 @@ use App\Entity\ValueObject\Username;
 use App\Enum\User\Locale;
 use App\Enum\User\SurfLevel;
 use App\Enum\User\UserRole;
-use App\ObjectMapper\Location\UserLocationToUserLocationInputTransformer;
+use App\ObjectMapper\User\UserLocationToUserLocationInputTransformer;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;

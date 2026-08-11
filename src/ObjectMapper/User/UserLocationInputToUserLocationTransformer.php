@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\ObjectMapper\Location;
+namespace App\ObjectMapper\User;
 
 use App\Entity\Embeddable\UserLocation;
 use App\Entity\User;

@@ -10,7 +10,7 @@ use App\Entity\ValueObject\FirstName;
 use App\Entity\ValueObject\LastName;
 use App\Entity\ValueObject\Username;
 use App\Enum\User\SurfLevel;
-use App\ObjectMapper\Location\UserLocationInputToUserLocationTransformer;
+use App\ObjectMapper\User\UserLocationInputToUserLocationTransformer;
 use Symfony\Component\ObjectMapper\Attribute\Map;
 use Symfony\Component\Validator\Constraints as Assert;
 
