@@ -22,6 +22,7 @@ final class UserLocationFormType extends AbstractType
         $resolver
             ->setDefaults([
                 'data_class' => UserLocationInput::class,
+                'required' => false,
             ])
         ;
     }
