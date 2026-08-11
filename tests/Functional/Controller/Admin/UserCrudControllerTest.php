@@ -55,7 +55,9 @@ final class UserCrudControllerTest extends CustomAbstractCrudTestCase
             'User[username]' => $newUser->username->value,
             'User[firstName]' => $newUser->firstName->value,
             'User[lastName]' => $newUser->lastName?->value,
-            'User[location]' => $newUser->location,
+            'User[location][label]' => $newUser->location?->label,
+            'User[location][latitude]' => $newUser->location?->latitude,
+            'User[location][longitude]' => $newUser->location?->longitude,
             'User[level]' => $newUser->level?->value,
             'User[instagram]' => $newUser->instagram,
             'User[description]' => $newUser->description,
@@ -104,7 +106,9 @@ final class UserCrudControllerTest extends CustomAbstractCrudTestCase
             'User[username]' => $editUser->username->value,
             'User[firstName]' => $editUser->firstName->value,
             'User[lastName]' => $editUser->lastName?->value,
-            'User[location]' => $editUser->location,
+            'User[location][label]' => $editUser->location?->label,
+            'User[location][latitude]' => $editUser->location?->latitude,
+            'User[location][longitude]' => $editUser->location?->longitude,
             'User[level]' => $editUser->level?->value,
             'User[instagram]' => $editUser->instagram,
             'User[description]' => $editUser->description,
@@ -120,7 +124,7 @@ final class UserCrudControllerTest extends CustomAbstractCrudTestCase
         $this->assertSame($editUser->username->value, $updatedUser->username->value);
         $this->assertSame($editUser->firstName->value, $updatedUser->firstName->value);
         $this->assertSame($editUser->lastName?->value, $updatedUser->lastName?->value);
-        $this->assertSame($editUser->location, $updatedUser->location);
+        $this->assertSame($editUser->location?->label, $updatedUser->location?->label);
         $this->assertSame($editUser->level, $updatedUser->level);
         $this->assertSame($editUser->instagram, $updatedUser->instagram);
         $this->assertSame($editUser->description, $updatedUser->description);

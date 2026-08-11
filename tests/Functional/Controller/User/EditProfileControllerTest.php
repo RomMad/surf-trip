@@ -67,7 +67,9 @@ final class EditProfileControllerTest extends CustomWebTestCase
                 'username' => self::UPDATED_USERNAME,
                 'firstName' => self::UPDATED_FIRST_NAME,
                 'lastName' => self::UPDATED_LAST_NAME,
-                'location' => self::UPDATED_LOCATION,
+                'location' => [
+                    'label' => self::UPDATED_LOCATION,
+                ],
                 'instagram' => self::UPDATED_INSTAGRAM,
                 'description' => self::UPDATED_DESCRIPTION,
             ],
@@ -83,7 +85,7 @@ final class EditProfileControllerTest extends CustomWebTestCase
         $this->assertSame(self::UPDATED_USERNAME, (string) $user->username);
         $this->assertSame(self::UPDATED_FIRST_NAME, (string) $user->firstName);
         $this->assertSame(self::UPDATED_LAST_NAME, (string) $user->lastName);
-        $this->assertSame(self::UPDATED_LOCATION, $user->location);
+        $this->assertSame(self::UPDATED_LOCATION, $user->location?->label);
         $this->assertSame(self::UPDATED_INSTAGRAM, $user->instagram);
         $this->assertSame(self::UPDATED_DESCRIPTION, $user->description);
     }

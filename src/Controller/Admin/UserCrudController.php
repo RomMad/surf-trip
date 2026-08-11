@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Admin;
 
 use App\Controller\Admin\Filter\UserRolesFilter;
+use App\Entity\Embeddable\UserLocation;
 use App\Entity\User;
 use App\Enum\User\SurfLevel;
 use App\Enum\User\UserRole;
@@ -12,6 +13,7 @@ use App\Form\Type\EmailType;
 use App\Form\Type\FirstNameType;
 use App\Form\Type\LastNameType;
 use App\Form\Type\UsernameType;
+use App\Form\User\UserLocationFormType;
 use Doctrine\ORM\QueryBuilder;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FieldCollection;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FilterCollection;
@@ -25,6 +27,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
@@ -69,7 +72,7 @@ class UserCrudController extends AbstractCrudController
             ->add(TextFilter::new('username', 'username.label'))
             ->add(TextFilter::new('firstName', 'first_name.label'))
             ->add(TextFilter::new('lastName', 'last_name.label'))
-            ->add(TextFilter::new('location', 'location.label'))
+            ->add(TextFilter::new('location.label', 'location.label'))
             ->add(
                 ChoiceFilter::new('level', 'surf_level.label')
                     ->canSelectMultiple()
@@ -109,8 +112,23 @@ class UserCrudController extends AbstractCrudController
             ->setLabel('last_name.label')
             ->setFormType(LastNameType::class)
         ;
-        yield TextField::new('location')
+        yield TextField::new('location.label')
             ->setLabel('location.label')
+            ->formatValue(fn ($value, User $user) => $user->location?->label)
+            ->hideOnForm()
+        ;
+        yield Field::new('location')
+            ->setLabel('location.label')
+            ->setFormType(UserLocationFormType::class)
+            ->setFormTypeOptions([
+                'data_class' => UserLocation::class,
+                'label' => false,
+                'required' => true,
+            ])
+            ->onlyOnForms()
+        ;
+        yield TextField::new('location.label', 'location.label')
+            ->hideOnForm()
         ;
         yield ChoiceField::new('level')
             ->setLabel('surf_level.label')

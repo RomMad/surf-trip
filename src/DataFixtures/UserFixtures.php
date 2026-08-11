@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\DataFixtures;
 
+use App\Entity\Embeddable\UserLocation;
 use App\Entity\User;
 use App\Entity\ValueObject\Email;
 use App\Entity\ValueObject\FirstName;
@@ -85,7 +86,7 @@ class UserFixtures extends Fixture
             $user->roles = [$role->value];
             $user->isVerified = true;
             $user->level = $this->faker->randomElement(SurfLevel::cases());
-            $user->location = $this->faker->city();
+            $user->location = $this->faker->numberBetween(1, 100) <= 80 ? new UserLocation($this->faker->city()) : null;
             $user->description = $this->faker->paragraph();
             $user->avatarPath = $this->faker->optional(0.7)->randomElement($avatarFileNames);
 
@@ -106,7 +107,7 @@ class UserFixtures extends Fixture
         $user->roles = [UserRole::User->value];
         $user->isVerified = true;
         $user->level = $this->faker->randomElement(SurfLevel::cases());
-        $user->location = $this->faker->city();
+        $user->location = $this->faker->numberBetween(1, 100) <= 80 ? new UserLocation($this->faker->city()) : null;
         $user->description = $this->faker->paragraph();
         $user->avatarPath = $this->faker->optional(0.6)->randomElement($avatarFileNames);
 

@@ -10,6 +10,7 @@ use App\Entity\ValueObject\FirstName;
 use App\Entity\ValueObject\LastName;
 use App\Entity\ValueObject\Username;
 use App\Enum\User\SurfLevel;
+use App\ObjectMapper\Location\UserLocationInputToUserLocationTransformer;
 use Symfony\Component\ObjectMapper\Attribute\Map;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -27,8 +28,9 @@ final class ProfileWriteModel
 
     public ?SurfLevel $level = null;
 
-    #[Assert\Length(max: 255, maxMessage: 'user.location.max_length')]
-    public ?string $location = null;
+    #[Assert\Valid]
+    #[Map(transform: UserLocationInputToUserLocationTransformer::class)]
+    public ?UserLocationInput $location = null;
 
     #[Assert\Regex(pattern: '/^(?:@)?[A-Za-z0-9._]{1,30}$/', message: 'user.instagram.invalid_format')]
     public ?string $instagram = null;

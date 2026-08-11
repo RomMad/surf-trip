@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Factory;
 
+use App\Entity\Embeddable\UserLocation;
 use App\Entity\User;
 use App\Entity\ValueObject\Email;
 use App\Entity\ValueObject\FirstName;
@@ -53,7 +54,7 @@ final class UserFactory extends PersistentObjectFactory
             'password' => self::DEFAULT_PASSWORD,
             'roles' => [UserRole::USER],
             'level' => self::faker()->randomElement(SurfLevel::cases()),
-            'location' => self::faker()->city(),
+            'location' => new UserLocation(self::faker()->city()),
             'description' => self::faker()->paragraph(),
         ];
     }
