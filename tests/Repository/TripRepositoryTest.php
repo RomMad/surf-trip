@@ -127,10 +127,19 @@ final class TripRepositoryTest extends CustomKernelTestCase
 
         $user = UserStory::getJohnUser();
 
+        $userTripCount = $this->repository->createQueryBuilder('t')
+            ->select('COUNT(t.id)')
+            ->leftJoin('t.owners', 'o')
+            ->where('o.id = :userId')
+            ->setParameter('userId', $user->id)
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+
         $trips = $this->getTrips($searchInput, $user);
 
         $this->assertNotEmpty($trips);
-        $this->assertCount($user->trips->count(), $trips);
+        $this->assertCount($userTripCount, $trips);
     }
 
     public function testCreateOrderedQueryBuilderWithMyTripsOnlyFilterAndAnonymousUser(): void
