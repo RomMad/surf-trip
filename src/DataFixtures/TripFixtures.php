@@ -199,6 +199,7 @@ DESC,
                 /** @var User $owner */
                 $owner = $this->getReference(UserFixtures::USER_REFERENCE.$ownerIndex, User::class);
                 $trip->addOwner($owner);
+                $trip->setCreatedBy($owner);
             }
 
             yield $trip;
@@ -227,6 +228,7 @@ DESC,
                 /** @var User $owner */
                 $owner = $this->getReference(UserFixtures::USER_REFERENCE.$ownerIndex, User::class);
                 $trip->addOwner($owner);
+                $trip->setCreatedBy($owner);
             }
 
             yield $trip;

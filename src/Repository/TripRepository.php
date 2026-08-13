@@ -209,6 +209,7 @@ class TripRepository extends ServiceEntityRepository
                     t.requiredLevels,
                     t.description,
                     t.createdAt,
+                    CONCAT(cb.firstName, \' \', SUBSTRING(cb.lastName, 1, 1), \'.\'),
                     JSON_AGG(
                         JSON_BUILD_ARRAY(
                             o.id,
@@ -221,8 +222,9 @@ class TripRepository extends ServiceEntityRepository
                 TripShowReadModel::class,
                 LocationReadModel::class,
             ))
+            ->leftJoin('t.createdBy', 'cb')
             ->leftJoin('t.owners', 'o')
-            ->groupBy('t.id')
+            ->groupBy('t.id', 'cb.firstName', 'cb.lastName')
         ;
     }
 

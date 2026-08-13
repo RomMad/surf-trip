@@ -14,6 +14,8 @@ back_to_list.label: Retour à la liste
 # Common
 app_name: Surf Trip
 created_at.label: Créé le
+created_by.label: Créé par
+created_by_with_name.label: Créé par {name}
 dashboard.label: Tableau de bord
 dark_mode.label: Mode sombre
 dropzone.label: Déposez votre image

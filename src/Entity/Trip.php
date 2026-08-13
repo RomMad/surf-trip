@@ -14,9 +14,12 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\QueryParameter;
+use App\Doctrine\Contract\CreatedByInterface;
 use App\Doctrine\Type\SlugType;
 use App\Doctrine\Type\TitleType;
 use App\Entity\Embeddable\Location;
+use App\Entity\Traits\CreatedByTrait;
+use App\Entity\Traits\TimestampableTrait;
 use App\Entity\ValueObject\Slug;
 use App\Entity\ValueObject\Title;
 use App\Enum\User\SurfLevel;
@@ -33,6 +36,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TripRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 #[ORM\Index(name: 'idx_trip_location', columns: ['location_label', 'location_comment'])]
 #[ORM\Index(name: 'idx_trip_required_levels', fields: ['requiredLevels'], flags: ['gin'])]
 #[ORM\Index(name: 'idx_trip_search', columns: ['title', 'location_label'])]
@@ -68,8 +72,11 @@ use Symfony\Component\Validator\Constraints as Assert;
         ),
     ]
 )]
-final class Trip implements \Stringable
+final class Trip implements \Stringable, CreatedByInterface
 {
+    use TimestampableTrait;
+    use CreatedByTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]

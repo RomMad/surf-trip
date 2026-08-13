@@ -15,6 +15,8 @@ back_to_list.label: Back to list
 app_name: Surf Trip
 dark_mode.label: Dark mode
 created_at.label: Created at
+created_by.label: Created by
+created_by_with_name.label: Created by {name}
 dashboard.label: Dashboard
 dropzone.label: Drop your image
 id.label: ID

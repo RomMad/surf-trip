@@ -34,6 +34,7 @@ final class TripFactory extends PersistentObjectFactory
         $words = self::faker()->words(random_int(2, 4), true);
         $title = sprintf('%s Surf Trip', ucfirst(is_string($words) ? $words : ''));
         $location = sprintf('%s, %s', self::faker()->city(), self::faker()->country());
+        $creator = UserFactory::randomOrCreate();
 
         return [
             'title' => Title::from($title),
@@ -46,7 +47,8 @@ final class TripFactory extends PersistentObjectFactory
             'endAt' => $startAt->modify(sprintf('+%d days', self::faker()->numberBetween(3, 14))),
             'requiredLevels' => self::randomSurfLevels(),
             'description' => self::faker()->paragraphs(self::faker()->numberBetween(1, 3), true),
-            'owners' => [UserFactory::randomOrCreate()],
+            'owners' => [$creator],
+            'createdBy' => $creator,
             'createdAt' => $createdAt,
         ];
     }

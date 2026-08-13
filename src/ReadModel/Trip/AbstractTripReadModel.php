@@ -32,6 +32,7 @@ abstract readonly class AbstractTripReadModel implements TripOwnershipAwareInter
         public array $requiredLevels,
         public ?string $description,
         public \DateTimeImmutable $createdAt,
+        public string $creatorName,
         string $ownersJson,
     ) {
         $decoded = json_decode($ownersJson, true);
