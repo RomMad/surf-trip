@@ -126,7 +126,6 @@ final class TripRepositoryTest extends CustomKernelTestCase
         $searchInput->myTripsOnly = true;
 
         $user = UserStory::getJohnUser();
-
         $trips = $this->getTrips($searchInput, $user);
 
         $this->assertNotEmpty($trips);
