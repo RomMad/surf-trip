@@ -131,13 +131,14 @@ final class TripRepositoryTest extends CustomKernelTestCase
             ->select('COUNT(t.id)')
             ->leftJoin('t.owners', 'o')
             ->where('o.id = :userId')
-            ->setParameter('userId', $user->id)
+            ->setParameter('userId', $user)
             ->getQuery()
             ->getSingleScalarResult()
         ;
 
         $trips = $this->getTrips($searchInput, $user);
 
+        $this->assertIsInt($userTripCount);
         $this->assertNotEmpty($trips);
         $this->assertCount($userTripCount, $trips);
     }
