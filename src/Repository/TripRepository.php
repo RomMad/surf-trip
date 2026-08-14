@@ -172,7 +172,7 @@ class TripRepository extends ServiceEntityRepository
     public function createOrderedQueryBuilder(TripSearchInput $searchInput, ?User $user = null): QueryBuilder
     {
         $queryBuilder = $this->createDtoBaseQueryBuilder()
-            ->orderBy('t.id', 'DESC')
+            ->orderBy('t.publishedAt', 'DESC')
         ;
 
         $this->applyFilters($queryBuilder, $searchInput, $user);
@@ -208,8 +208,8 @@ class TripRepository extends ServiceEntityRepository
                     t.endAt,
                     t.requiredLevels,
                     t.description,
-                    t.createdAt,
                     CONCAT(cb.firstName, \' \', SUBSTRING(cb.lastName, 1, 1), \'.\'),
+                    t.publishedAt,
                     JSON_AGG(
                         JSON_BUILD_ARRAY(
                             o.id,

@@ -31,8 +31,8 @@ abstract readonly class AbstractTripReadModel implements TripOwnershipAwareInter
         public \DateTimeImmutable $endAt,
         public array $requiredLevels,
         public ?string $description,
-        public \DateTimeImmutable $createdAt,
         public string $creatorName,
+        public ?\DateTimeImmutable $publishedAt,
         string $ownersJson,
     ) {
         $decoded = json_decode($ownersJson, true);
@@ -50,6 +50,15 @@ abstract readonly class AbstractTripReadModel implements TripOwnershipAwareInter
 
     public function getStatus(): TripStatus
     {
+        if (!$this->isPublished()) {
+            return TripStatus::Draft;
+        }
+
         return TripStatus::fromPeriod($this->startAt, $this->endAt);
+    }
+
+    public function isPublished(): bool
+    {
+        return null !== $this->publishedAt;
     }
 }

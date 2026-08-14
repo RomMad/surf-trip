@@ -1,0 +1,9 @@
+{%- props trip -%}
+
+{% if trip.isPublished %}
+    {{- trip.publishedAt|format_datetime(pattern: 'd MMM yy, HH:mm') -}}
+{% else %}
+    <twig:Badge variant="secondary">
+        {{- 'trip.status.draft.label'|trans -}}
+    </twig:Badge>
+{% endif %}

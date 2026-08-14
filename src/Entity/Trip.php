@@ -44,6 +44,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Index(name: 'idx_trip_required_levels', fields: ['requiredLevels'], flags: ['gin'])]
 #[ORM\Index(name: 'idx_trip_search', columns: ['title', 'location_label'])]
 #[ORM\Index(name: 'idx_trip_start_at', fields: ['startAt'])]
+#[ORM\Index(name: 'idx_trip_published_at', fields: ['publishedAt'])]
 #[ApiResource(
     operations: [
         new Get(

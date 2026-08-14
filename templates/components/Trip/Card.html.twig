@@ -31,11 +31,17 @@
                 <p class="flex items-center gap-1" title="{{ 'period.label'|trans }}">
                     <twig:ux:icon name="lucide:calendar" class="text-white"/>
                     {{ trip.startAt|format_datetime(pattern: 'd MMM yyyy') }} - {{ trip.endAt|format_datetime(pattern: 'd MMM yyyy') -}}
-                    </p>
+                </p>
                 <p class="flex items-center gap-1">
                     <twig:ux:icon name="lucide:user-star" class="text-white"/>
                     {{ 'created_by_with_name.label'|trans({name: trip.creatorName}) }}
                 </p>
+                {% if trip.isPublished %}
+                    <p class="flex items-center gap-1">
+                        <twig:ux:icon name="lucide:calendar-check" class="text-white"/>
+                        {{ 'published_at_with_date.label'|trans({date: trip.publishedAt|format_datetime(pattern: 'd MMM yy, HH:mm')}) }}
+                    </p>
+                {% endif %}
             </div>
         </div>
     </twig:Card:Header>

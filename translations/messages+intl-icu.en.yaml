@@ -151,6 +151,7 @@ surf_session:
 trip:
     label: Trip
     status:
+        draft.label: Draft
         upcoming.label: Upcoming
         in_progress.label: In progress
         finished.label: Finished
@@ -179,7 +180,8 @@ location:
 my_trips_only.label: My trips only
 period.label: Period
 publish.label: Publish trip
-published_at.label: Published on {date}
+published_at.label: Published on
+published_at_with_date.label: Published on {date}
 start_at.label: Start date
 end_at.label: End date
 required_levels:
