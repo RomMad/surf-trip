@@ -14,6 +14,7 @@
     {% if form.owners is defined %}
         {{ form_row(form.owners) }}
     {% endif %}
+    {{ form_row(form.isPublished) }}
     {{ form_rest(form) }}
 
     <twig:Button:Save :label="button_label" />

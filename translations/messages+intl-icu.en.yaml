@@ -178,6 +178,8 @@ location:
     no_results: No results found for
 my_trips_only.label: My trips only
 period.label: Period
+publish.label: Publish trip
+published_at.label: Published on {date}
 start_at.label: Start date
 end_at.label: End date
 required_levels:

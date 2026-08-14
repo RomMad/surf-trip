@@ -67,4 +67,12 @@ final class TripFactory extends PersistentObjectFactory
 
         return $requiredLevels;
     }
+
+    #[\Override]
+    protected function initialize(): static
+    {
+        return $this->afterInstantiate(function (Trip $trip): void {
+            $trip->publish();
+        });
+    }
 }

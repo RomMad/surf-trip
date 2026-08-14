@@ -25,8 +25,11 @@ use App\Entity\ValueObject\Title;
 use App\Enum\User\SurfLevel;
 use App\Filter\JsonContainsFilter;
 use App\ObjectMapper\Location\LocationToLocationInputTransformer;
+use App\ObjectMapper\Trip\PublishedAtToIsPublishedTransformer;
 use App\ObjectMapper\Trip\UserToOwnerReadModelToUserTransformer;
 use App\Repository\TripRepository;
+use App\State\Trip\PublishTripProcessor;
+use App\State\Trip\UnpublishTripProcessor;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -69,6 +72,18 @@ use Symfony\Component\Validator\Constraints as Assert;
         ),
         new Delete(
             security: 'is_granted("DELETE", object)',
+        ),
+        new Post(
+            uriTemplate: '/trips/{id}/publish',
+            security: 'is_granted("EDIT", object)',
+            name: 'publish_trip',
+            processor: PublishTripProcessor::class,
+        ),
+        new Post(
+            uriTemplate: '/trips/{id}/unpublish',
+            security: 'is_granted("EDIT", object)',
+            name: 'unpublish_trip',
+            processor: UnpublishTripProcessor::class,
         ),
     ]
 )]
@@ -134,6 +149,11 @@ final class Trip implements \Stringable, CreatedByInterface
     #[Map(transform: UserToOwnerReadModelToUserTransformer::class)]
     public private(set) Collection $owners;
 
+    #[ORM\Column(nullable: true)]
+    #[Groups(['trip:read'])]
+    #[Map('isPublished', transform: PublishedAtToIsPublishedTransformer::class)]
+    public private(set) ?\DateTimeImmutable $publishedAt = null;
+
     public function __construct(
         #[ORM\Column]
         #[Groups(['trip:read'])]
@@ -177,5 +197,27 @@ final class Trip implements \Stringable, CreatedByInterface
         foreach ($users as $owner) {
             $this->addOwner($owner);
         }
+    }
+
+    public function isPublished(): bool
+    {
+        return null !== $this->publishedAt;
+    }
+
+    public function togglePublished(bool $isPublished): void
+    {
+        $isPublished ? $this->publish() : $this->unpublish();
+    }
+
+    public function publish(): void
+    {
+        if (!$this->isPublished()) {
+            $this->publishedAt = new \DateTimeImmutable();
+        }
+    }
+
+    public function unpublish(): void
+    {
+        $this->publishedAt = null;
     }
 }

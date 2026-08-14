@@ -251,11 +251,15 @@ class TripRepository extends ServiceEntityRepository
 
     private function applyFilters(QueryBuilder $queryBuilder, TripSearchInput $searchInput, ?User $user = null): void
     {
+        $queryBuilder->where('t.publishedAt IS NOT NULL OR t.createdBy = :currentUser')
+            ->setParameter('currentUser', $user)
+        ;
+
         if ($searchInput->myTripsOnly && null !== $user) {
             $membershipsQueryBuilder = $this->createQueryBuilder('tm')
                 ->select('1')
                 ->innerJoin('tm.owners', 'tmu')
-                ->where('tm = t')
+                ->andWhere('tm = t')
                 ->andWhere('tmu = :ownerUser')
             ;
 
