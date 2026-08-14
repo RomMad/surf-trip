@@ -6,15 +6,26 @@ namespace App\Filter;
 
 use ApiPlatform\Doctrine\Orm\Filter\FilterInterface;
 use ApiPlatform\Doctrine\Orm\Util\QueryNameGeneratorInterface;
-use ApiPlatform\Metadata\BackwardCompatibleFilterDescriptionTrait;
 use ApiPlatform\Metadata\Operation;
 use App\Repository\JsonContainsFilterTrait;
 use Doctrine\ORM\QueryBuilder;
 
 class JsonContainsFilter implements FilterInterface
 {
-    use BackwardCompatibleFilterDescriptionTrait; // Here for backward compatibility, keep it until 5.0.
     use JsonContainsFilterTrait;
+
+    /**
+     * Here for backward compatibility with API Platform 4.x, which requires the getDescription method to be implemented.
+     */
+    public function getDescription(string $resourceClass): array
+    {
+        return ['json_contains' => [
+            'property' => 'json_contains',
+            'type' => 'string',
+            'required' => false,
+            'description' => 'Filter by JSON array contains.',
+        ]];
+    }
 
     public function apply(
         QueryBuilder $queryBuilder,
