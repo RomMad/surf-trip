@@ -113,5 +113,8 @@ jobs:
       - name: Lint JS
         run: yarn lint
 
+      - name: Symfony LSP check
+        run: docker compose exec -T php symfony lsp:check --source-only --format=github
+
       - name: Run Paratest
         run: docker compose exec -T php vendor/bin/paratest tests --runner WrapperRunner --no-coverage
