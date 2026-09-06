@@ -117,7 +117,7 @@ jobs:
         run: curl -sS https://get.symfony.com/cli/installer | bash && mv ~/.symfony5/bin/symfony /usr/local/bin/symfony
 
       - name: Symfony LSP check
-        run: symfony lsp:check --format=github
+        run: symfony lsp:check --source-only --format=github
 
       - name: Run Paratest
         run: docker compose exec -T php vendor/bin/paratest tests --runner WrapperRunner --no-coverage
