@@ -45,6 +45,12 @@ function restart(): void
     up('--build');
 }
 
+#[AsTask(description: 'Enter the PHP container shell', namespace: 'app', aliases: ['shell', 'bash'])]
+function shell(): void
+{
+    run_docker_compose('exec php bash');
+}
+
 // ========================================================
 //                  SETUP & CONFIGURATION
 // ========================================================
@@ -330,7 +336,7 @@ function lint_js_fix(): void
 #[AsTask(description: 'Run Symfony LSP check', namespace: 'app', aliases: ['lsp-check'])]
 function lsp_check(): void
 {
-    run('symfony lsp:check');
+    run_php('symfony lsp:check');
 }
 
 // ========================================================
