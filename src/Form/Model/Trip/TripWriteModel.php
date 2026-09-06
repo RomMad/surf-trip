@@ -9,6 +9,7 @@ use App\Entity\ValueObject\Title;
 use App\Enum\User\SurfLevel;
 use App\Form\Model\Shared\LocationInput;
 use App\ObjectMapper\Location\LocationInputToLocationTransformer;
+use App\ObjectMapper\Trip\IsPublishedToPublishedAtTransformer;
 use App\ObjectMapper\Trip\OwnerReadModelToUserTransformer;
 use App\ReadModel\Trip\TripOwnerReadModel;
 use Symfony\Component\ObjectMapper\Attribute\Map;
@@ -49,6 +50,9 @@ final class TripWriteModel
     #[Assert\Count(min: 1, minMessage: 'trip.owner.min_count')]
     #[Map(transform: OwnerReadModelToUserTransformer::class)]
     public array $owners = [];
+
+    #[Map('publishedAt', transform: IsPublishedToPublishedAtTransformer::class)]
+    public bool $isPublished = true;
 
     public function __construct()
     {

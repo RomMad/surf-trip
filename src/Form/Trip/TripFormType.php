@@ -9,6 +9,7 @@ use App\Form\Model\Trip\TripWriteModel;
 use App\Form\Type\Autocomplete\OwnersAutocompleteType;
 use App\Form\Type\DateTimeImmutableType;
 use App\Form\Type\LocationType;
+use App\Form\Type\SwitchType;
 use App\Form\Type\TitleType;
 use App\ReadModel\Trip\TripOwnerReadModel;
 use App\Repository\UserRepository;
@@ -52,6 +53,10 @@ class TripFormType extends AbstractType
             ])
             ->add('owners', OwnersAutocompleteType::class, [
                 'choices' => $trip->owners,
+            ])
+            ->add('isPublished', SwitchType::class, [
+                'label' => 'publish.label',
+                'required' => false,
             ])
             ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) use ($trip): void {
                 $ownerIds = array_map(
