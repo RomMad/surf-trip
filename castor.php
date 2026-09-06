@@ -45,6 +45,12 @@ function restart(): void
     up('--build');
 }
 
+#[AsTask(description: 'Enter the PHP container shell', namespace: 'app', aliases: ['shell', 'bash'])]
+function shell(): void
+{
+    run_docker_compose('exec php bash');
+}
+
 // ========================================================
 //                  SETUP & CONFIGURATION
 // ========================================================
@@ -215,6 +221,7 @@ function quality_check(): void
     lint_twig();
     twigcs_fix();
     lint_js_fix();
+    lsp_check();
 }
 
 #[AsTask(description: 'Run PHP Coding Standards Fixer', namespace: 'app', aliases: ['php-cs-fixer'])]
@@ -326,6 +333,12 @@ function lint_js_fix(): void
     run('yarn eslint ./assets --fix');
 }
 
+#[AsTask(description: 'Run Symfony LSP check', namespace: 'app', aliases: ['lsp-check'])]
+function lsp_check(): void
+{
+    run_php('symfony lsp:check');
+}
+
 // ========================================================
 //                       TESTING
 // ========================================================
@@ -345,6 +358,7 @@ function test_all(): void
     lint_twig();
     twigcs();
     lint_js();
+    lsp_check();
     test();
 }
 
