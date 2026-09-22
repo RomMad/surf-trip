@@ -18,6 +18,7 @@ final readonly class MissingLocaleRedirectListener
     private const array EXCLUDED_PREFIXES = [
         '/admin',
         '/api',
+        '/autocomplete',
         '/docs',
         '/build',
         '/bundles',

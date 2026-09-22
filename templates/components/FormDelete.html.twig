@@ -1,0 +1,10 @@
+{% if is_granted('DELETE', entity) %}
+    <form method="post"
+          action="{{ path(route.delete, {id: entity.id}) }}"
+          class="mb-4"
+          onsubmit="return confirm('{{ 'delete.confirm'|trans({}, 'crud_messages')|e('js') }}');"
+    >
+        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ entity.id) }}">
+        <twig:Button:Delete />
+    </form>
+{% endif %}

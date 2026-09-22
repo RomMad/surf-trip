@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="app-page-header">
+        <twig:Typography:H1>{{ entity._toString ?? crud.entityLabelInSingular|trans }}</twig:Typography:H1>
+    </div>
+
+    <twig:Form :form="form" />
+    {% if is_granted('DELETE', entity) %}
+        <twig:FormDelete :entity="entity" :route="route" />
+    {% endif %}
+    <twig:Button:Back href="{{ path(route.index) }}" />
+{% endblock %}

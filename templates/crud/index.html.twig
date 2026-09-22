@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="app-page-header">
+        <twig:Typography:H1>{{ crud.entityLabelInPlural|trans }}</twig:Typography:H1>
+        <twig:Button:New href="{{ path(route.new) }}" />
+    </div>
+
+    {# <twig:Trip:Form:Search :form="form" /> #}
+
+    {% block trip_results %}
+        <twig:DataTable :headers="headers" :data="data" />
+        <twig:Turbo:Frame id="crud_list">
+            {# <twig:ResultsCount :count="pager.nbResults" /> #}
+
+            {# {% if pager.nbResults > 0 %}
+                <twig:Trip:IndexTable :trips="pager" />
+                <twig:AppPagination :pager="pager" />
+            {% endif %} #}
+        </twig:Turbo:Frame>
+    {% endblock %}
+{% endblock %}

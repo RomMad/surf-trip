@@ -1,0 +1,4 @@
+created_successfully: 'Créé avec succès'
+updated_successfully: 'Mis à jour avec succès'
+deleted_successfully: 'Supprimé avec succès'
+delete.confirm: 'Êtes-vous sûr de vouloir supprimer cet élément ?'

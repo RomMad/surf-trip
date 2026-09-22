@@ -7,7 +7,7 @@ namespace App\Entity\Embeddable;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Embeddable]
-final class Location
+final class Location implements \Stringable
 {
     use LocationValidationTrait;
 
@@ -26,6 +26,11 @@ final class Location
         $this->validateLabel($label);
         $this->validateCoordinates($latitude, $longitude, $placeId);
         $this->validateComment($comment);
+    }
+
+    public function __toString(): string
+    {
+        return $this->label;
     }
 
     public function getFullLabel(): string

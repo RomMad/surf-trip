@@ -19,10 +19,10 @@
                     <td>
                         {%- if cell?.component is defined -%}
                             {{- component(cell.component, cell.context|default({})) -}}
-                        {%- elseif cell is iterable -%}
-                            {{- cell|join(', ') -}}
+                        {# {%- elseif cell is iterable -%}
+                            {{- cell|join(', ') -}} #}
                         {%- else -%}
-                            {{- cell -}}
+                            {{- cell|to_string -}}
                         {%- endif -%}
                     </td>
                 {% endfor %}

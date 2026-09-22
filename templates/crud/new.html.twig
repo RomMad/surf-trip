@@ -1,0 +1,7 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <twig:Typography:H1>{{ crud.entityLabelInSingular|trans }}</twig:Typography:H1>
+    <twig:Form :form="form" />
+    <twig:Button:Back href="{{ path(route.index) }}" />
+{% endblock %}

@@ -1,0 +1,4 @@
+created_successfully: 'Created successfully'
+updated_successfully: 'Updated successfully'
+deleted_successfully: 'Deleted successfully'
+delete.confirm: 'Are you sure you want to delete this item?'

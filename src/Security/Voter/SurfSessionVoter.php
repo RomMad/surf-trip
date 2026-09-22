@@ -15,14 +15,14 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
  */
 final class SurfSessionVoter extends Voter
 {
-    public const string VIEW = 'VIEW';
+    public const string SHOW = 'SHOW';
     public const string EDIT = 'EDIT';
     public const string DELETE = 'DELETE';
 
     protected function supports(string $attribute, mixed $subject): bool
     {
         return ($subject instanceof SurfSession)
-            && \in_array($attribute, [self::VIEW, self::EDIT, self::DELETE], true);
+            && \in_array($attribute, [self::SHOW, self::EDIT, self::DELETE], true);
     }
 
     /**
@@ -37,7 +37,7 @@ final class SurfSessionVoter extends Voter
         }
 
         return match ($attribute) {
-            self::VIEW, self::EDIT, self::DELETE => $surfSession->user === $user,
+            self::SHOW, self::EDIT, self::DELETE => $surfSession->user === $user,
             default => false,
         };
     }
