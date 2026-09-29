@@ -19,7 +19,6 @@ final class Version20260813145723 extends AbstractMigration
         $this->addSql('ALTER TABLE trip ADD updated_at TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL');
         $this->addSql('ALTER TABLE trip ADD created_by_id INT DEFAULT NULL');
         $this->addSql('ALTER TABLE trip ADD published_at TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL');
-        $this->addSql('ALTER TABLE trip ADD CONSTRAINT FK_7656F53BB03A8386 FOREIGN KEY (created_by_id) REFERENCES "user" (id) ON DELETE SET NULL NOT DEFERRABLE');
         $this->addSql('CREATE INDEX IDX_7656F53BB03A8386 ON trip (created_by_id)');
 
         $this->addSql('UPDATE trip SET updated_at = created_at');
@@ -28,6 +27,7 @@ final class Version20260813145723 extends AbstractMigration
 
         $this->addSql('ALTER TABLE trip ALTER COLUMN updated_at SET NOT NULL');
         $this->addSql('ALTER TABLE trip ALTER COLUMN created_by_id SET NOT NULL');
+        $this->addSql('ALTER TABLE trip ADD CONSTRAINT FK_7656F53BB03A8386 FOREIGN KEY (created_by_id) REFERENCES "user" (id) NOT DEFERRABLE');
 
         $this->addSql('CREATE INDEX idx_trip_published_at ON trip (published_at)');
     }
