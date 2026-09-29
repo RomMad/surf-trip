@@ -10,6 +10,8 @@ use Symfony\Component\Process\Process;
 
 use function Castor\run;
 
+defined('CASTOR_USE_CHDIR') || define('CASTOR_USE_CHDIR', true);
+
 // ========================================================
 //                      DOCKER
 // ========================================================
