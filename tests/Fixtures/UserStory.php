@@ -60,6 +60,11 @@ final class UserStory extends Story
         return UserFactory::find(['email' => Email::from(self::JOHN_EMAIL)]);
     }
 
+    public static function getJaneUser(): User
+    {
+        return UserFactory::find(['email' => Email::from(self::JANE_EMAIL)]);
+    }
+
     public static function getAdminUser(): User
     {
         return UserFactory::find(['email' => Email::from(self::ADMIN_EMAIL)]);
