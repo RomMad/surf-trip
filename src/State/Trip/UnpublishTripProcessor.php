@@ -9,7 +9,7 @@ use ApiPlatform\State\ProcessorInterface;
 use App\Cache\Trip\TripCacheInvalidator;
 use App\Entity\Trip;
 use App\Repository\TripRepository;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * @implements ProcessorInterface<Trip, Trip>
@@ -23,23 +23,15 @@ final readonly class UnpublishTripProcessor implements ProcessorInterface
 
     public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): Trip
     {
-        $tripId = $uriVariables['id'] ?? null;
-
-        if (!$tripId) {
-            throw new \InvalidArgumentException('Trip ID is required');
+        if (!$data instanceof Trip) {
+            throw new BadRequestHttpException('Invalid data provided');
         }
 
-        $trip = $this->tripRepository->find($tripId);
+        $data->unpublish();
 
-        if (null === $trip) {
-            throw new NotFoundHttpException('Trip not found');
-        }
+        $this->tripRepository->save($data, true);
+        $this->tripCacheInvalidator->invalidate($data);
 
-        $trip->unpublish();
-
-        $this->tripRepository->save($trip, true);
-        $this->tripCacheInvalidator->invalidate($trip);
-
-        return $trip;
+        return $data;
     }
 }
