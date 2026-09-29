@@ -14,16 +14,22 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\QueryParameter;
+use App\Doctrine\Contract\CreatedByInterface;
 use App\Doctrine\Type\SlugType;
 use App\Doctrine\Type\TitleType;
 use App\Entity\Embeddable\Location;
+use App\Entity\Traits\CreatedByTrait;
+use App\Entity\Traits\TimestampableTrait;
 use App\Entity\ValueObject\Slug;
 use App\Entity\ValueObject\Title;
 use App\Enum\User\SurfLevel;
 use App\Filter\JsonContainsFilter;
 use App\ObjectMapper\Location\LocationToLocationInputTransformer;
+use App\ObjectMapper\Trip\PublishedAtToIsPublishedTransformer;
 use App\ObjectMapper\Trip\UserToOwnerReadModelToUserTransformer;
 use App\Repository\TripRepository;
+use App\State\Trip\PublishTripProcessor;
+use App\State\Trip\UnpublishTripProcessor;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -33,10 +39,12 @@ use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TripRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 #[ORM\Index(name: 'idx_trip_location', columns: ['location_label', 'location_comment'])]
 #[ORM\Index(name: 'idx_trip_required_levels', fields: ['requiredLevels'], flags: ['gin'])]
 #[ORM\Index(name: 'idx_trip_search', columns: ['title', 'location_label'])]
 #[ORM\Index(name: 'idx_trip_start_at', fields: ['startAt'])]
+#[ORM\Index(name: 'idx_trip_published_at', fields: ['publishedAt'])]
 #[ApiResource(
     operations: [
         new Get(
@@ -66,10 +74,25 @@ use Symfony\Component\Validator\Constraints as Assert;
         new Delete(
             security: 'is_granted("DELETE", object)',
         ),
+        new Post(
+            uriTemplate: '/trips/{id}/publish',
+            security: 'is_granted("EDIT", object)',
+            name: 'publish_trip',
+            processor: PublishTripProcessor::class,
+        ),
+        new Post(
+            uriTemplate: '/trips/{id}/unpublish',
+            security: 'is_granted("EDIT", object)',
+            name: 'unpublish_trip',
+            processor: UnpublishTripProcessor::class,
+        ),
     ]
 )]
-final class Trip implements \Stringable
+final class Trip implements \Stringable, CreatedByInterface
 {
+    use TimestampableTrait;
+    use CreatedByTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -127,6 +150,11 @@ final class Trip implements \Stringable
     #[Map(transform: UserToOwnerReadModelToUserTransformer::class)]
     public private(set) Collection $owners;
 
+    #[ORM\Column(nullable: true)]
+    #[Groups(['trip:read'])]
+    #[Map('isPublished', transform: PublishedAtToIsPublishedTransformer::class)]
+    public private(set) ?\DateTimeImmutable $publishedAt = null;
+
     public function __construct(
         #[ORM\Column]
         #[Groups(['trip:read'])]
@@ -170,5 +198,27 @@ final class Trip implements \Stringable
         foreach ($users as $owner) {
             $this->addOwner($owner);
         }
+    }
+
+    public function isPublished(): bool
+    {
+        return null !== $this->publishedAt;
+    }
+
+    public function togglePublished(bool $isPublished): void
+    {
+        $isPublished ? $this->publish() : $this->unpublish();
+    }
+
+    public function publish(): void
+    {
+        if (!$this->isPublished()) {
+            $this->publishedAt = new \DateTimeImmutable();
+        }
+    }
+
+    public function unpublish(): void
+    {
+        $this->publishedAt = null;
     }
 }

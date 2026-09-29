@@ -6,6 +6,7 @@ namespace App\Enum\Trip;
 
 enum TripStatus: string
 {
+    case Draft = 'draft';
     case Upcoming = 'upcoming';
     case InProgress = 'in_progress';
     case Finished = 'finished';
@@ -26,6 +27,7 @@ enum TripStatus: string
     public function label(): string
     {
         return match ($this) {
+            self::Draft => 'trip.status.draft.label',
             self::Upcoming => 'trip.status.upcoming.label',
             self::Finished => 'trip.status.finished.label',
             self::InProgress => 'trip.status.in_progress.label',
@@ -35,6 +37,7 @@ enum TripStatus: string
     public function badgeVariant(): string
     {
         return match ($this) {
+            self::Draft => 'secondary',
             self::Upcoming => 'lightgreen',
             self::Finished => 'secondary',
             self::InProgress => 'green',

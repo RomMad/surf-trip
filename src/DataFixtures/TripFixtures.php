@@ -192,6 +192,10 @@ DESC,
             $trip->requiredLevels = TripFactory::randomSurfLevels();
             $trip->description = $description;
 
+            if (random_int(0, 100) < 80) {
+                $trip->publish();
+            }
+
             /** @var list<int> $owners */
             $owners = $this->faker->randomElements(range(0, UserFixtures::USERS_COUNT - 1), $this->faker->numberBetween(1, 3));
 
@@ -199,6 +203,7 @@ DESC,
                 /** @var User $owner */
                 $owner = $this->getReference(UserFixtures::USER_REFERENCE.$ownerIndex, User::class);
                 $trip->addOwner($owner);
+                $trip->setCreatedBy($owner);
             }
 
             yield $trip;
@@ -223,10 +228,15 @@ DESC,
             $trip->requiredLevels = $tripData['requiredLevels'];
             $trip->description = $tripData['description'];
 
+            if (random_int(0, 100) < 80) {
+                $trip->publish();
+            }
+
             foreach ($tripData['owners'] as $ownerIndex) {
                 /** @var User $owner */
                 $owner = $this->getReference(UserFixtures::USER_REFERENCE.$ownerIndex, User::class);
                 $trip->addOwner($owner);
+                $trip->setCreatedBy($owner);
             }
 
             yield $trip;

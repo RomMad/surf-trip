@@ -15,6 +15,8 @@ back_to_list.label: Back to list
 app_name: Surf Trip
 dark_mode.label: Dark mode
 created_at.label: Created at
+created_by.label: Created by
+created_by_with_name.label: Created by {name}
 dashboard.label: Dashboard
 dropzone.label: Drop your image
 id.label: ID
@@ -149,6 +151,7 @@ surf_session:
 trip:
     label: Trip
     status:
+        draft.label: Draft
         upcoming.label: Upcoming
         in_progress.label: In progress
         finished.label: Finished
@@ -176,6 +179,9 @@ location:
     no_results: No results found for
 my_trips_only.label: My trips only
 period.label: Period
+publish.label: Publish trip
+published_at.label: Published on
+published_at_with_date.label: Published on {date}
 start_at.label: Start date
 end_at.label: End date
 required_levels:

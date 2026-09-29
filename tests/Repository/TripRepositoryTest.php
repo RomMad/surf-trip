@@ -6,6 +6,7 @@ namespace App\Tests\Repository;
 
 use App\Entity\Trip;
 use App\Entity\User;
+use App\Entity\ValueObject\Title;
 use App\Enum\User\SurfLevel;
 use App\Factory\TripFactory;
 use App\Form\Model\Trip\TripSearchInput;
@@ -199,6 +200,101 @@ final class TripRepositoryTest extends CustomKernelTestCase
         $result = $this->repository->findShowReadModelById(999999);
 
         $this->assertNull($result);
+    }
+
+    public function testDraftTripIsHiddenFromAnonymousUser(): void
+    {
+        $creator = UserStory::getJohnUser();
+        $draftTrip = TripFactory::createOne([
+            'title' => Title::from('Draft Trip'),
+            'createdBy' => $creator,
+            'owners' => [$creator],
+        ]);
+        $draftTrip->unpublish();
+
+        $this->getEntityManager()->flush();
+
+        $searchInput = new TripSearchInput();
+        $trips = $this->getTrips($searchInput, null);
+
+        $tripIds = array_map(static fn (TripShowReadModel $trip): int => $trip->id, $trips);
+
+        $this->assertNotContains($draftTrip->id, $tripIds);
+    }
+
+    public function testDraftTripIsHiddenFromNonCreatorUser(): void
+    {
+        $creator = UserStory::getJohnUser();
+        $nonCreator = UserStory::getJaneUser();
+
+        $draftTrip = TripFactory::createOne([
+            'title' => Title::from('Draft Trip'),
+            'createdBy' => $creator,
+            'owners' => [$creator],
+        ]);
+        $draftTrip->unpublish();
+
+        $this->getEntityManager()->flush();
+
+        $searchInput = new TripSearchInput();
+        $trips = $this->getTrips($searchInput, $nonCreator);
+
+        $tripIds = array_map(static fn (TripShowReadModel $trip): int => $trip->id, $trips);
+
+        $this->assertNotContains($draftTrip->id, $tripIds);
+    }
+
+    public function testDraftTripIsVisibleToItsCreator(): void
+    {
+        $creator = UserStory::getJohnUser();
+
+        $draftTrip = TripFactory::createOne([
+            'title' => Title::from('My Draft Trip'),
+            'createdBy' => $creator,
+            'owners' => [$creator],
+        ]);
+        $draftTrip->unpublish();
+
+        $this->getEntityManager()->flush();
+
+        $searchInput = new TripSearchInput();
+        $trips = $this->getTrips($searchInput, $creator);
+
+        $tripIds = array_map(static fn (TripShowReadModel $trip): int => $trip->id, $trips);
+
+        $this->assertContains($draftTrip->id, $tripIds);
+    }
+
+    public function testPublishedTripIsVisibleToAll(): void
+    {
+        $creator = UserStory::getJohnUser();
+        $otherUser = UserStory::getJaneUser();
+
+        $publishedTrip = TripFactory::createOne([
+            'title' => Title::from('Published Trip'),
+            'createdBy' => $creator,
+            'owners' => [$creator],
+        ]);
+        $publishedTrip->publish();
+
+        $this->getEntityManager()->flush();
+
+        $searchInput = new TripSearchInput();
+
+        // Visible to anonymous user
+        $tripsForAnonymous = $this->getTrips($searchInput, null);
+        $anonymousTripIds = array_map(static fn (TripShowReadModel $trip): int => $trip->id, $tripsForAnonymous);
+        $this->assertContains($publishedTrip->id, $anonymousTripIds);
+
+        // Visible to other user
+        $tripsForOtherUser = $this->getTrips($searchInput, $otherUser);
+        $otherUserTripIds = array_map(static fn (TripShowReadModel $trip): int => $trip->id, $tripsForOtherUser);
+        $this->assertContains($publishedTrip->id, $otherUserTripIds);
+
+        // Visible to creator
+        $tripsForCreator = $this->getTrips($searchInput, $creator);
+        $creatorTripIds = array_map(static fn (TripShowReadModel $trip): int => $trip->id, $tripsForCreator);
+        $this->assertContains($publishedTrip->id, $creatorTripIds);
     }
 
     protected function tearDown(): void

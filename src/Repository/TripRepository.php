@@ -172,7 +172,7 @@ class TripRepository extends ServiceEntityRepository
     public function createOrderedQueryBuilder(TripSearchInput $searchInput, ?User $user = null): QueryBuilder
     {
         $queryBuilder = $this->createDtoBaseQueryBuilder()
-            ->orderBy('t.id', 'DESC')
+            ->orderBy('t.publishedAt', 'DESC')
         ;
 
         $this->applyFilters($queryBuilder, $searchInput, $user);
@@ -208,7 +208,8 @@ class TripRepository extends ServiceEntityRepository
                     t.endAt,
                     t.requiredLevels,
                     t.description,
-                    t.createdAt,
+                    CONCAT(cb.firstName, \' \', SUBSTRING(cb.lastName, 1, 1), \'.\'),
+                    t.publishedAt,
                     JSON_AGG(
                         JSON_BUILD_ARRAY(
                             o.id,
@@ -221,8 +222,9 @@ class TripRepository extends ServiceEntityRepository
                 TripShowReadModel::class,
                 LocationReadModel::class,
             ))
+            ->leftJoin('t.createdBy', 'cb')
             ->leftJoin('t.owners', 'o')
-            ->groupBy('t.id')
+            ->groupBy('t.id', 'cb.firstName', 'cb.lastName')
         ;
     }
 
@@ -249,11 +251,15 @@ class TripRepository extends ServiceEntityRepository
 
     private function applyFilters(QueryBuilder $queryBuilder, TripSearchInput $searchInput, ?User $user = null): void
     {
+        $queryBuilder->where('t.publishedAt IS NOT NULL OR t.createdBy = :currentUser')
+            ->setParameter('currentUser', $user)
+        ;
+
         if ($searchInput->myTripsOnly && null !== $user) {
             $membershipsQueryBuilder = $this->createQueryBuilder('tm')
                 ->select('1')
                 ->innerJoin('tm.owners', 'tmu')
-                ->where('tm = t')
+                ->andWhere('tm = t')
                 ->andWhere('tmu = :ownerUser')
             ;
 

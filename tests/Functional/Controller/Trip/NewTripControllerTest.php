@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\Controller\Trip;
 
+use App\Entity\Trip;
 use App\Enum\User\SurfLevel;
 use App\Tests\CustomWebTestCase;
 use App\Tests\Fixtures\DefaultStory;
@@ -60,11 +61,19 @@ final class NewTripControllerTest extends CustomWebTestCase
             'trip[startAt]' => new \DateTimeImmutable('+1 month')->format(self::FORMAT_DATETIME),
             'trip[endAt]' => new \DateTimeImmutable('+1 month +1 week')->format(self::FORMAT_DATETIME),
             'trip[requiredLevels]' => [SurfLevel::Beginner->value],
+            'trip[isPublished]' => true,
         ]);
 
         $this->assertResponseIsSuccessful();
         $this->assertAlertSuccessExists();
         $this->assertSelectorTextContains(self::ALERT_SUCCESS, self::MESSAGE_SUCCESS);
-        $this->assertSelectorTextContains(self::FIRST_ROW, self::TRIP_TITLE);
+
+        $trip = $this->getRepository(Trip::class)->findOneBy([], ['id' => 'DESC']);
+
+        $this->assertInstanceOf(Trip::class, $trip);
+        $this->assertSame(self::TRIP_TITLE, $trip->title->value);
+        $this->assertSame(self::TRIP_LOCATION, $trip->location->label);
+        $this->assertSame([SurfLevel::Beginner], $trip->requiredLevels);
+        $this->assertTrue($trip->isPublished());
     }
 }

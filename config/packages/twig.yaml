@@ -4,6 +4,8 @@ twig:
         mapbox_public_api_key: '%env(string:MAPBOX_PUBLIC_TOKEN)%'
     form_themes:
         - 'form/tailwind_shadcn_theme.html.twig'
+    date:
+        timezone: '%app_timezone%'
 
 when@test:
     twig:

@@ -5,7 +5,7 @@
     'required_levels.label'|trans,
     'description.label'|trans,
     'owners.label'|trans,
-    ['created_at.label'|trans, 't.id', 'w-32'],
+    ['published_at.label'|trans, 't.publishedAt', 'w-32'],
     'actions.label'|trans,
 ] %}
 
@@ -17,8 +17,8 @@
     trip.requiredLevels|map(rl => rl.label|trans),
     trip.description|u.truncate(120, '…', false),
     {component: 'Trip:OwnersAvatarGroup', context: {trip: trip}},
-    trip.createdAt|format_datetime(pattern: 'd MMM yy'),
+    {component: 'Trip:Published', context: {trip: trip}},
     {component: 'Trip:IndexActionsCell', context: {trip: trip}},
-]) %}
+    ]) %}
 
 <twig:DataTable :headers="headers" :data="data" />
