@@ -17,9 +17,7 @@ trait CreatedByTrait
 
     public function setCreatedBy(User $user): static
     {
-        if (null === $this->createdBy) {
-            $this->createdBy = $user;
-        }
+        $this->createdBy ??= $user;
 
         return $this;
     }
