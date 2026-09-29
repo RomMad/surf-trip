@@ -28,10 +28,14 @@ final class Version20260813145723 extends AbstractMigration
 
         $this->addSql('ALTER TABLE trip ALTER COLUMN updated_at SET NOT NULL');
         $this->addSql('ALTER TABLE trip ALTER COLUMN created_by_id SET NOT NULL');
+
+        $this->addSql('CREATE INDEX idx_trip_published_at ON trip (published_at)');
     }
 
     public function down(Schema $schema): void
     {
+        $this->addSql('DROP INDEX idx_trip_published_at');
+
         $this->addSql('ALTER TABLE trip DROP CONSTRAINT FK_7656F53BB03A8386');
         $this->addSql('DROP INDEX IDX_7656F53BB03A8386');
         $this->addSql('ALTER TABLE trip DROP published_at');
