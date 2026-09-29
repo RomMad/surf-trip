@@ -11,7 +11,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
 trait CreatedByTrait
 {
     #[ORM\ManyToOne(targetEntity: User::class)]
-    #[ORM\JoinColumn(nullable: false, onDelete: 'SET NULL')]
+    #[ORM\JoinColumn(nullable: false)]
     #[Groups(['read'])]
     public ?User $createdBy = null;
 
